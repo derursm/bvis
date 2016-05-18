@@ -1,7 +1,6 @@
 package org.camunda.bpm.bvis.bvis;
 
 import org.camunda.bpm.engine.cdi.BusinessProcess;
-import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
