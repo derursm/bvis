@@ -4,7 +4,7 @@
     <packageImport xmi:type="uml:PackageImport" xmi:id="_dUkPkB54Eeavr4o1u6w3MQ">
       <importedPackage xmi:type="uml:Profile" href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
     </packageImport>
-    <packagedElement xmi:type="uml:Class" xmi:id="_wydBEB53Eeavr4o1u6w3MQ" name="User">
+    <packagedElement xmi:type="uml:Class" xmi:id="_wydBEB53Eeavr4o1u6w3MQ" name="Customer">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_4thaMB53Eeavr4o1u6w3MQ" name="userID" visibility="private">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
         <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BJMmAB54Eeavr4o1u6w3MQ" value="1"/>
@@ -63,7 +63,7 @@
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ChdukB56Eeavr4o1u6w3MQ" value="*"/>
       </ownedEnd>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_MAB6wB56Eeavr4o1u6w3MQ" name="Location">
+    <packagedElement xmi:type="uml:Class" xmi:id="_MAB6wB56Eeavr4o1u6w3MQ" name="PickUpLocation">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_M99ioB56Eeavr4o1u6w3MQ" name="locationID" visibility="private">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
       </ownedAttribute>
@@ -204,7 +204,7 @@
       </ownedOperation>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_mbZ-oB6AEeavr4o1u6w3MQ" name="ModifySingleOrder">
-      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_mbZ-oR6AEeavr4o1u6w3MQ" client="_mbZ-oB6AEeavr4o1u6w3MQ _mbZ-oB6AEeavr4o1u6w3MQ _mbZ-oB6AEeavr4o1u6w3MQ" supplier="_WnUa0B6AEeavr4o1u6w3MQ" contract="_WnUa0B6AEeavr4o1u6w3MQ"/>
+      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_mbZ-oR6AEeavr4o1u6w3MQ" client="_mbZ-oB6AEeavr4o1u6w3MQ" supplier="_WnUa0B6AEeavr4o1u6w3MQ" contract="_WnUa0B6AEeavr4o1u6w3MQ"/>
       <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_ofsxoB6AEeavr4o1u6w3MQ" client="_mbZ-oB6AEeavr4o1u6w3MQ" supplier="_WnUa0B6AEeavr4o1u6w3MQ" contract="_WnUa0B6AEeavr4o1u6w3MQ"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_Bi9awB6BEeavr4o1u6w3MQ" name="InformCustomer">
@@ -299,7 +299,7 @@
       </ownedOperation>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_FSFTsB6IEeavr4o1u6w3MQ" name="EditClaim">
-      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_FSFTsR6IEeavr4o1u6w3MQ" client="_FSFTsB6IEeavr4o1u6w3MQ _FSFTsB6IEeavr4o1u6w3MQ _FSFTsB6IEeavr4o1u6w3MQ" supplier="_6u_IYB6HEeavr4o1u6w3MQ" contract="_6u_IYB6HEeavr4o1u6w3MQ"/>
+      <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_FSFTsR6IEeavr4o1u6w3MQ" client="_FSFTsB6IEeavr4o1u6w3MQ" supplier="_6u_IYB6HEeavr4o1u6w3MQ" contract="_6u_IYB6HEeavr4o1u6w3MQ"/>
       <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_MpxS8B6IEeavr4o1u6w3MQ" client="_FSFTsB6IEeavr4o1u6w3MQ" supplier="_6u_IYB6HEeavr4o1u6w3MQ" contract="_6u_IYB6HEeavr4o1u6w3MQ"/>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_FSFTsh6IEeavr4o1u6w3MQ" name="editClaim">
         <ownedParameter xmi:type="uml:Parameter" xmi:id="_JY9pgB6IEeavr4o1u6w3MQ" name="editedClaim" type="_Km5vMB57Eeavr4o1u6w3MQ"/>
