@@ -228,9 +228,16 @@
       <ownedAttribute xmi:type="uml:Property" xmi:id="_USD-MB6BEeavr4o1u6w3MQ" name="insuranceID" visibility="private">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#long"/>
       </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_WYL9MB6BEeavr4o1u6w3MQ" name="excess" visibility="private" type="_zWagsB55Eeavr4o1u6w3MQ" isUnique="false"/>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_dl12sB6BEeavr4o1u6w3MQ" name="insurancePrice" visibility="private" type="_zWagsB55Eeavr4o1u6w3MQ" isUnique="false"/>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_oPO3QB6BEeavr4o1u6w3MQ" name="additionalServices" visibility="private" type="_gucVcB54Eeavr4o1u6w3MQ" isUnique="false"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_WYL9MB6BEeavr4o1u6w3MQ" name="excess" visibility="private" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_dl12sB6BEeavr4o1u6w3MQ" name="insurancePrice" visibility="private" isUnique="false">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/JavaPrimitiveTypes.library.uml#double"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_oPO3QB6BEeavr4o1u6w3MQ" name="additionalServices" visibility="private" type="_gucVcB54Eeavr4o1u6w3MQ" isUnique="false">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_gvnegB6WEea6ZseODQ-OaQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_gvsXAB6WEea6ZseODQ-OaQ" value="*"/>
+      </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Association" xmi:id="_qwXXQB6BEeavr4o1u6w3MQ" memberEnd="_qwX-UB6BEeavr4o1u6w3MQ _qwX-UR6BEeavr4o1u6w3MQ">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_qwXXQR6BEeavr4o1u6w3MQ" source="org.eclipse.papyrus">
@@ -281,7 +288,7 @@
     <packagedElement xmi:type="uml:Dependency" xmi:id="_1-vXYB6FEeavr4o1u6w3MQ" client="_Bi9awB6BEeavr4o1u6w3MQ" supplier="_ETQtQB6DEeavr4o1u6w3MQ"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_3E2q4B6FEeavr4o1u6w3MQ" client="_ETQtQB6DEeavr4o1u6w3MQ" supplier="_OUUuEB55Eeavr4o1u6w3MQ"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_BhaJUB6GEeavr4o1u6w3MQ" client="_ETQtQB6DEeavr4o1u6w3MQ" supplier="_S8xmQB6BEeavr4o1u6w3MQ"/>
-    <packagedElement xmi:type="uml:Dependency" xmi:id="_KjFlMB6GEeavr4o1u6w3MQ" client="_ETQtQB6DEeavr4o1u6w3MQ" supplier="_wydBEB53Eeavr4o1u6w3MQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_KjFlMB6GEeavr4o1u6w3MQ" client="_kAMPgB53Eeavr4o1u6w3MQ" supplier="_wydBEB53Eeavr4o1u6w3MQ"/>
     <packagedElement xmi:type="uml:Class" xmi:id="_kxgZ4B6GEeavr4o1u6w3MQ" name="CheckNeedForTowingService">
       <interfaceRealization xmi:type="uml:InterfaceRealization" xmi:id="_D5kooB6IEeavr4o1u6w3MQ" client="_kxgZ4B6GEeavr4o1u6w3MQ" supplier="_6u_IYB6HEeavr4o1u6w3MQ" contract="_6u_IYB6HEeavr4o1u6w3MQ"/>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_nqgnUB6GEeavr4o1u6w3MQ" name="submitDecision"/>
@@ -326,15 +333,12 @@
       <ownedOperation xmi:type="uml:Operation" xmi:id="_uCOFYB6IEeavr4o1u6w3MQ" name="initiateRepair">
         <ownedParameter xmi:type="uml:Parameter" xmi:id="_yE-JIB6IEeavr4o1u6w3MQ" name="claim" type="_Km5vMB57Eeavr4o1u6w3MQ"/>
       </ownedOperation>
-      <ownedOperation xmi:type="uml:Operation" xmi:id="_zDfm4B6IEeavr4o1u6w3MQ" name="payWorkshop">
-        <ownedParameter xmi:type="uml:Parameter" xmi:id="_0_VogB6IEeavr4o1u6w3MQ" name="claim" type="_Km5vMB57Eeavr4o1u6w3MQ"/>
-      </ownedOperation>
       <ownedOperation xmi:type="uml:Operation" xmi:id="_2V06UB6IEeavr4o1u6w3MQ" name="sendClaimDetails">
         <ownedParameter xmi:type="uml:Parameter" xmi:id="_4uxHoB6IEeavr4o1u6w3MQ" name="claim" type="_Km5vMB57Eeavr4o1u6w3MQ"/>
       </ownedOperation>
     </packagedElement>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_Q-epYB6IEeavr4o1u6w3MQ" client="_kxgZ4B6GEeavr4o1u6w3MQ" supplier="_PFPP0B6IEeavr4o1u6w3MQ"/>
-    <packagedElement xmi:type="uml:Dependency" xmi:id="_RWHtUB6IEeavr4o1u6w3MQ" client="_ypr1MB6HEeavr4o1u6w3MQ" supplier="_PFPP0B6IEeavr4o1u6w3MQ"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_RWHtUB6IEeavr4o1u6w3MQ" client="_kAMPgB53Eeavr4o1u6w3MQ" supplier="_PFPP0B6IEeavr4o1u6w3MQ"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_RrfgYB6IEeavr4o1u6w3MQ" client="_FSFTsB6IEeavr4o1u6w3MQ" supplier="_PFPP0B6IEeavr4o1u6w3MQ"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_SLiSYB6IEeavr4o1u6w3MQ" client="_PFPP0B6IEeavr4o1u6w3MQ" supplier="_Km5vMB57Eeavr4o1u6w3MQ"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_XpyDwB6IEeavr4o1u6w3MQ" client="_PFPP0B6IEeavr4o1u6w3MQ" supplier="_wydBEB53Eeavr4o1u6w3MQ"/>
