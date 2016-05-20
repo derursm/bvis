@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.bvis;
+package org.camunda.bpm.bvis.bvis.ExamplesREST;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
  * Interface for adder resource
  */
 @Path("add")
-public interface RestExample2AdderResource {
+public interface AdderResource {
 
 	/**
 	 * Redirects a client which invokes GET on the resources to a resource with
@@ -33,7 +33,7 @@ public interface RestExample2AdderResource {
 	 */
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addTwoNumbers(RestExample2AdderRequest adderRequest);
+	public Response addTwoNumbers(AdderRequest adderRequest);
 
 	/**
 	 * Adds two numbers that are transmitted as part of the path template
@@ -45,7 +45,7 @@ public interface RestExample2AdderResource {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("{first}/{second}")
-	public RestExample2AdderResult addTwoNumbers(
+	public AdderResult addTwoNumbers(
 			@PathParam("first") int first,
 			@PathParam("second") int second);
 

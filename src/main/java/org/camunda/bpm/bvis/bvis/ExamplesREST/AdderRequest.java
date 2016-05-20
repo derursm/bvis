@@ -1,6 +1,6 @@
-package org.camunda.bpm.bvis.bvis;
+package org.camunda.bpm.bvis.bvis.ExamplesREST;
 
-public class RestExample2AdderRequest {
+public class AdderRequest {
 
 	private int first;
 	private int second;
@@ -8,13 +8,13 @@ public class RestExample2AdderRequest {
 	/**
 	 * Convenience constructor
 	 */
-	public RestExample2AdderRequest(int first, int second) {
+	public AdderRequest(int first, int second) {
 		this.first = first;
 		this.second = second;
 	}
 
 	// default constructor
-	RestExample2AdderRequest() { }
+	AdderRequest() { }
 
 	public int getFirst() {
 		return first;

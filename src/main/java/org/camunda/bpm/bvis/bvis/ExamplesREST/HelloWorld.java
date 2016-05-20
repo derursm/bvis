@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.bvis;
+package org.camunda.bpm.bvis.bvis.ExamplesREST;
 
 /*
  * Simple Rest Service Example
@@ -8,7 +8,7 @@ package org.camunda.bpm.bvis.bvis;
 import javax.ws.rs.*;
 
 @Path("tutorial")
-public class RestExample1HelloWorld {
+public class HelloWorld {
 	
 	@GET
 	@Path("helloworld")
