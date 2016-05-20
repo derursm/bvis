@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:profileext="http://www.eclipse.org/Papyrus/2014/profile/profileExternalization" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+  <uml:Package xmi:id="_NUP-4B5-Eeavr4o1u6w3MQ" name="profile application">
+    <packagedElement xmi:type="uml:Package" xmi:id="_NUVecB5-Eeavr4o1u6w3MQ" name="RootElement">
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_NUWFgB5-Eeavr4o1u6w3MQ" supplier="_NUVecB5-Eeavr4o1u6w3MQ">
+        <client xmi:type="uml:Model" href="classmodel.uml#_kAMPgB53Eeavr4o1u6w3MQ"/>
+      </packagedElement>
+      <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_nsV7sB54Eeavr4o1u6w3MQ">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_nsXw4B54Eeavr4o1u6w3MQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+          <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+        </eAnnotations>
+        <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
+      </profileApplication>
+    </packagedElement>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_NUU3YB5-Eeavr4o1u6w3MQ">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_NUU3YR5-Eeavr4o1u6w3MQ" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/Papyrus/2014/profile/profileExternalization#/"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_PROFILEEXT/ProfileExternalization.profile.uml#_Mzzc0EWjEeSNXJj2G3jVCw"/>
+    </profileApplication>
+  </uml:Package>
+  <profileext:ApplyProfiles xmi:id="_NUXToB5-Eeavr4o1u6w3MQ" base_Dependency="_NUWFgB5-Eeavr4o1u6w3MQ"/>
+</xmi:XMI>
