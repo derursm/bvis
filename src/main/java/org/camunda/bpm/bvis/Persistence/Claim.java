@@ -1,11 +1,8 @@
-package org.camunda.bpm.bvis.bvis.claimHandling;
+package org.camunda.bpm.bvis.Persistence;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.camunda.bpm.bvis.bvis.contractingComplex.Order;
-import org.camunda.bpm.bvis.bvis.contractingComplex.Car;
 
 import java.io.Serializable;
 import java.util.Date;

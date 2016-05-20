@@ -1,8 +1,9 @@
-package org.camunda.bpm.bvis.bvis.contractingComplex;
+package org.camunda.bpm.bvis.Persistence;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import java.io.Serializable;
 
 @Entity
@@ -17,7 +18,7 @@ public class Car implements Serializable {
 	protected String brand;
 	protected String type;
 	protected boolean rented;
-	protected Store StoreName;
+	protected PickUpLocation StoreName;
 	public Long getCar_ID() {
 		return car_ID;
 	}
@@ -42,10 +43,10 @@ public class Car implements Serializable {
 	public void setRented(boolean rented) {
 		this.rented = rented;
 	}
-	public Store getStoreName() {
+	public PickUpLocation getStoreName() {
 		return StoreName;
 	}
-	public void setStoreName(Store storeName) {
+	public void setStoreName(PickUpLocation storeName) {
 		StoreName = storeName;
 	}
 	

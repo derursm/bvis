@@ -1,8 +1,9 @@
-package org.camunda.bpm.bvis.bvis.contractingComplex;
+package org.camunda.bpm.bvis.Persistence;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,8 +20,8 @@ public class Order implements Serializable {
 	
 	protected Date pick_up_date;
 	protected Date return_date;
-	protected Store pick_up_store;
-	protected Store return_store;
+	protected PickUpLocation pick_up_store;
+	protected PickUpLocation return_store;
 	protected Integer insurance_type;
 	protected String inquiry_text;
 	protected boolean fleet_rental;
@@ -51,19 +52,19 @@ public class Order implements Serializable {
 		this.return_date = return_date;
 	}
 	
-	public Store getPick_up_store() {
+	public PickUpLocation getPick_up_store() {
 		return pick_up_store;
 	}
 
-	public void setPick_up_store(Store pick_up_store) {
+	public void setPick_up_store(PickUpLocation pick_up_store) {
 		this.pick_up_store = pick_up_store;
 	}
 
-	public Store getReturn_store() {
+	public PickUpLocation getReturn_store() {
 		return return_store;
 	}
 
-	public void setReturn_store(Store return_store) {
+	public void setReturn_store(PickUpLocation return_store) {
 		this.return_store = return_store;
 	}
 

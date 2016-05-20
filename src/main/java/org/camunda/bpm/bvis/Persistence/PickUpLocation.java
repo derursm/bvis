@@ -1,12 +1,13 @@
-package org.camunda.bpm.bvis.bvis.contractingComplex;
+package org.camunda.bpm.bvis.Persistence;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import java.io.Serializable;
 
 @Entity
-public class Store implements Serializable {
+public class PickUpLocation implements Serializable {
 	
 	private static  final long serialVersionUID = 1L;
 	
