@@ -1,9 +1,17 @@
 package org.camunda.bpm.bvis.EJB;
 
-import org.camunda.bpm.bvis.Persistence.Claim;
-import org.camunda.bpm.bvis.Persistence.Customer;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+import org.camunda.bpm.bvis.Entites.Claim;
+import org.camunda.bpm.bvis.Entites.Customer;
+
+@Stateless
 public class ClaimHandler {
+	
+	@PersistenceContext
+	protected EntityManager em;
 	
 	public Customer getUser(long claimID) {
 		return null;

@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.Persistence;
+package org.camunda.bpm.bvis.Entites;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,15 +18,15 @@ public class Order implements Serializable {
 	
 	protected Customer cust;
 	
-	protected Date pick_up_date;
-	protected Date return_date;
-	protected PickUpLocation pick_up_store;
-	protected PickUpLocation return_store;
-	protected Integer insurance_type;
-	protected String inquiry_text;
-	protected boolean fleet_rental;
+	protected Date pickUpDate;
+	protected Date returnDate;
+	protected PickUpLocation pickUpStore;
+	protected PickUpLocation returnStore;
+	protected Integer insuranceType;
+	protected String inquiryText;
+	protected boolean fleetRental;
 	protected Car[] cars;
-	protected long insurance_ID;
+	protected long insuranceID;
 	
 	public Long getId() {
 		return order_ID;
@@ -37,59 +37,59 @@ public class Order implements Serializable {
 	}
 	
 	public Date getPick_up_date() {
-		return pick_up_date;
+		return pickUpDate;
 	}
 	
 	public void setPick_up_date(Date pick_up_date) {
-		this.pick_up_date = pick_up_date;
+		this.pickUpDate = pick_up_date;
 	}
 	
 	public Date getReturn_date() {
-		return return_date;
+		return returnDate;
 	}
 	
 	public void setReturn_date(Date return_date) {
-		this.return_date = return_date;
+		this.returnDate = return_date;
 	}
 	
 	public PickUpLocation getPick_up_store() {
-		return pick_up_store;
+		return pickUpStore;
 	}
 
 	public void setPick_up_store(PickUpLocation pick_up_store) {
-		this.pick_up_store = pick_up_store;
+		this.pickUpStore = pick_up_store;
 	}
 
 	public PickUpLocation getReturn_store() {
-		return return_store;
+		return returnStore;
 	}
 
 	public void setReturn_store(PickUpLocation return_store) {
-		this.return_store = return_store;
+		this.returnStore = return_store;
 	}
 
 	public Integer getInsurance_type() {
-		return insurance_type;
+		return insuranceType;
 	}
 	
 	public void setInsurance_type(Integer insurance_type) {
-		this.insurance_type = insurance_type;
+		this.insuranceType = insurance_type;
 	}
 	
 	public String getInquiry_text() {
-		return inquiry_text;
+		return inquiryText;
 	}
 	
 	public void setInquiry_text(String inquiry_text) {
-		this.inquiry_text = inquiry_text;
+		this.inquiryText = inquiry_text;
 	}
 	
 	public boolean isFleet_rental() {
-		return fleet_rental;
+		return fleetRental;
 	}
 	
 	public void setFleet_rental(boolean fleet_rental) {
-		this.fleet_rental = fleet_rental;
+		this.fleetRental = fleet_rental;
 	}
 	
 	public Car[] getCars() {
@@ -101,11 +101,11 @@ public class Order implements Serializable {
 	}
 	
 	public long getInsurance_ID() {
-		return insurance_ID;
+		return insuranceID;
 	}
 	
 	public void setInsurance_ID(long insurance_ID) {
-		this.insurance_ID = insurance_ID;
+		this.insuranceID = insurance_ID;
 	}
 	
 }
