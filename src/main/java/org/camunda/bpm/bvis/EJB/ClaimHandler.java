@@ -39,7 +39,11 @@ public class ClaimHandler {
 		return null;
 	}
 	
-	public void informUser(long userID) {
+	public void informUser(long claimID) {
+		
+	}
+	
+	public void informTowingService(long claimID) {
 		
 	}
 	
@@ -47,7 +51,7 @@ public class ClaimHandler {
 		return null;
 	}
 	
-	public void initiateRepair(Claim claim) {
+	public void initiateRepair(long claimID) {
 		
 	}
 	
