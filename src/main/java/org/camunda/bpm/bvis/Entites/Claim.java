@@ -27,6 +27,9 @@ public class Claim implements Serializable {
 	protected String damageAddress;
 	protected double amountOfCoverage;
 	protected String clerkNotice;
+	protected boolean reportedByCustomer;
+	protected boolean towingServiceNeeded;
+	
 	public Long getClaimID() {
 		return claimID;
 	}

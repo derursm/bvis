@@ -14,7 +14,7 @@ public class Order implements Serializable {
 	
 	@Id
 	@GeneratedValue
-	protected Long order_ID;
+	protected Long orderID;
 	
 	protected Customer cust;
 	
@@ -29,11 +29,11 @@ public class Order implements Serializable {
 	protected long insuranceID;
 	
 	public Long getId() {
-		return order_ID;
+		return orderID;
 	}
 	
 	public void setId(Long id) {
-		this.order_ID = id;
+		this.orderID = id;
 	}
 	
 	public Date getPick_up_date() {

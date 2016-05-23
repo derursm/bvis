@@ -26,7 +26,14 @@ public class Customer implements Serializable {
 	protected String country;
 	protected Date dateOfBirth;
 	protected boolean company;
+	protected boolean eligibility;
 	
+	public boolean isEligibility() {
+		return eligibility;
+	}
+	public void setEligibility(boolean eligibility) {
+		this.eligibility = eligibility;
+	}
 	public Long getCustomerID() {
 		return customerID;
 	}

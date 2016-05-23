@@ -7,6 +7,14 @@
 
   <persistence-unit name="primary">
     <jta-data-source>java:jboss/datasources/ProcessEngine</jta-data-source>
+    <class>org.camunda.bpm.bvis.bvis.OrderEntity</class>
+    <class>org.camunda.bpm.bvis.Entites.Car</class>
+    <class>org.camunda.bpm.bvis.Entites.Claim</class>
+    <class>org.camunda.bpm.bvis.Entites.Customer</class>
+    <class>org.camunda.bpm.bvis.Entites.Insurance</class>
+    <class>org.camunda.bpm.bvis.Entites.InvolvedParty</class>
+    <class>org.camunda.bpm.bvis.Entites.PickUpLocation</class>
+    <class>org.camunda.bpm.bvis.Entites.Order</class>
     <properties>
       <!-- Properties for Hibernate -->
       <property name="hibernate.hbm2ddl.auto" value="create-drop" />

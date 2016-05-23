@@ -51,7 +51,7 @@
       <bpmndi:BPMNShape id="ExclusiveGateway_1wb56cp_di" bpmnElement="ExclusiveGateway_1wb56cp" isMarkerVisible="true">
         <dc:Bounds x="642.9473684210526" y="95" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="622.9473684210526" y="145" width="90" height="20" />
+          <dc:Bounds x="696" y="110" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0gl8m7x_di" bpmnElement="SequenceFlow_0gl8m7x">
@@ -59,7 +59,7 @@
         <di:waypoint xsi:type="dc:Point" x="668" y="58" />
         <di:waypoint xsi:type="dc:Point" x="740" y="58" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="671" y="125.5" width="90" height="20" />
+          <dc:Bounds x="649" y="39" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_1dls14k_di" bpmnElement="EndEvent_1dls14k">
@@ -82,7 +82,7 @@
         <di:waypoint xsi:type="dc:Point" x="668" y="186" />
         <di:waypoint xsi:type="dc:Point" x="740" y="186" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="623" y="187.5" width="90" height="20" />
+          <dc:Bounds x="647" y="189" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="EndEvent_09hgpey_di" bpmnElement="EndEvent_09hgpey">
