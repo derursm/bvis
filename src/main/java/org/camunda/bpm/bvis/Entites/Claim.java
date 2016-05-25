@@ -4,14 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -34,7 +41,8 @@ public class Claim implements Serializable {
 	@Min(value=0)
 	protected BigDecimal costsCoverage;
 	@NotNull
-	protected InvolvedParty involvedParty;
+	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "claims")
+	protected Collection<InvolvedParty> involvedParties;
 	@NotNull
 	protected Order orderID;	
 	@NotNull
@@ -82,11 +90,11 @@ public class Claim implements Serializable {
 	public void setCostsCoverage(BigDecimal costsCoverage) {
 		this.costsCoverage = costsCoverage;
 	}
-	public InvolvedParty getInvolvedParty() {
-		return involvedParty;
+	public Collection<InvolvedParty> getInvolvedParties() {
+		return involvedParties;
 	}
-	public void setInvolvedParty(InvolvedParty involvedParty) {
-		this.involvedParty = involvedParty;
+	public void setInvolvedParty(Collection<InvolvedParty> involvedParties) {
+		this.involvedParties = involvedParties;
 	}
 	public Order getOrderID() {
 		return orderID;
