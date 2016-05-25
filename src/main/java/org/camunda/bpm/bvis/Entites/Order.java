@@ -1,10 +1,18 @@
 package org.camunda.bpm.bvis.Entites;
 
 import javax.persistence.Entity;
+import static javax.persistence.CascadeType.*;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -13,19 +21,22 @@ public class Order implements Serializable {
 	private static  final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long orderID;
-	
+	@NotNull
 	protected Customer cust;
-	
+	@Temporal(TemporalType.DATE)
 	protected Date pickUpDate;
+	@Temporal(TemporalType.DATE)
 	protected Date returnDate;
 	protected PickUpLocation pickUpStore;
 	protected PickUpLocation returnStore;
-	protected Integer insuranceType;
+	protected InsuranceType insuranceType;
 	protected String inquiryText;
+	@NotNull
 	protected boolean fleetRental;
-	protected Car[] cars;
+	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "orders")
+	protected Collection<Car> cars;
 	protected long insuranceID;
 	
 	public Long getId() {
@@ -68,11 +79,11 @@ public class Order implements Serializable {
 		this.returnStore = return_store;
 	}
 
-	public Integer getInsurance_type() {
+	public InsuranceType getInsurance_type() {
 		return insuranceType;
 	}
 	
-	public void setInsurance_type(Integer insurance_type) {
+	public void setInsurance_type(InsuranceType insurance_type) {
 		this.insuranceType = insurance_type;
 	}
 	
@@ -92,11 +103,11 @@ public class Order implements Serializable {
 		this.fleetRental = fleet_rental;
 	}
 	
-	public Car[] getCars() {
+	public Collection<Car> getCars() {
 		return cars;
 	}
 	
-	public void setCars(Car[] cars) {
+	public void setCars(Collection<Car> cars) {
 		this.cars = cars;
 	}
 	

@@ -2,7 +2,9 @@ package org.camunda.bpm.bvis.Entites;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
@@ -12,81 +14,72 @@ public class PickUpLocation implements Serializable {
 	private static  final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
-	protected Long store_ID;
-	
-	protected Customer cust;
-	
-	protected Integer pick_up_location;
-	protected Integer return_location;
-	protected Integer insurance_type;
-	protected String inquiry_text;
-	protected boolean fleet_rental;
-	protected String cars[];
-	protected long insurance_ID;
-	
-	public Long getId() {
-		return store_ID;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	protected Long storeID;
+	@NotNull
+	protected String storeName;
+	@NotNull
+	protected String phoneNumber;
+	@NotNull	
+	protected String street;
+	@NotNull
+	protected String houseNumber;
+	@NotNull
+	protected String postcode;
+	@NotNull
+	protected String city;
+	@NotNull
+	protected String country;
+	public Long getStoreID() {
+		return storeID;
 	}
-	
-	public void setId(Long id) {
-		this.store_ID = id;
+	public void setStoreID(Long storeID) {
+		this.storeID = storeID;
 	}
-	
-	public Integer getPick_up_location() {
-		return pick_up_location;
+	public String getStoreName() {
+		return storeName;
 	}
-	
-	public void setPick_up_location(Integer pick_up_location) {
-		this.pick_up_location = pick_up_location;
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
-	
-	public Integer getReturn_location() {
-		return return_location;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-	
-	public void setReturn_location(Integer return_location) {
-		this.return_location = return_location;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
-	
-	public Integer getInsurance_type() {
-		return insurance_type;
+	public String getStreet() {
+		return street;
 	}
-	
-	public void setInsurance_type(Integer insurance_type) {
-		this.insurance_type = insurance_type;
+	public void setStreet(String street) {
+		this.street = street;
 	}
-	
-	public String getInquiry_text() {
-		return inquiry_text;
+	public String getHouseNumber() {
+		return houseNumber;
 	}
-	
-	public void setInquiry_text(String inquiry_text) {
-		this.inquiry_text = inquiry_text;
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
 	}
-	
-	public boolean isFleet_rental() {
-		return fleet_rental;
+	public String getPostcode() {
+		return postcode;
 	}
-	
-	public void setFleet_rental(boolean fleet_rental) {
-		this.fleet_rental = fleet_rental;
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
 	}
-	
-	public String[] getCars() {
-		return cars;
+	public String getCity() {
+		return city;
 	}
-	
-	public void setCars(String[] cars) {
-		this.cars = cars;
+	public void setCity(String city) {
+		this.city = city;
 	}
-	
-	public long getInsurance_ID() {
-		return insurance_ID;
+	public String getCountry() {
+		return country;
 	}
-	
-	public void setInsurance_ID(long insurance_ID) {
-		this.insurance_ID = insurance_ID;
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

@@ -2,9 +2,20 @@ package org.camunda.bpm.bvis.Entites;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 @Entity
 public class Car implements Serializable {
@@ -12,18 +23,30 @@ public class Car implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
-	protected Long vehicleIdentificationNumber;
-	
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	protected Long vehicleIdentificationNumber;	
+	@NotNull
 	protected String brand;
+	@NotNull
+	@Min(value=1900)
 	protected Integer constructionYear;
+	@NotNull
 	protected String fuelType;
+	@NotNull
 	protected String model;
+	@NotNull
+	@Min(value=0)
 	protected Integer ps;
+	@NotNull
 	protected String registrationNumber;
+	@NotNull
 	protected String type;
-	protected boolean rented;
-	protected PickUpLocation CurrentLocation;
+	@NotNull
+	protected boolean returned;
+	protected PickUpLocation currentLocation;
+
+	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH})
+	protected Collection<Order> orders;
 	
 	public Long getVehicleIdentificationNumber() {
 		return vehicleIdentificationNumber;
@@ -73,17 +96,17 @@ public class Car implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public boolean isRented() {
-		return rented;
+	public boolean isReturned() {
+		return returned;
 	}
-	public void setRented(boolean rented) {
-		this.rented = rented;
+	public void setRented(boolean returned) {
+		this.returned = returned;
 	}
 	public PickUpLocation getCurrentLocation() {
-		return CurrentLocation;
+		return currentLocation;
 	}
 	public void setCurrentLocation(PickUpLocation currentLocation) {
-		CurrentLocation = currentLocation;
+		currentLocation = currentLocation;
 	}
 	
 }

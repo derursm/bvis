@@ -2,7 +2,10 @@ package org.camunda.bpm.bvis.Entites;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 
 @Entity
@@ -11,9 +14,9 @@ public class InvolvedParty implements Serializable {
 	private static  final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected Long party_ID;
-	
+	@NotNull
 	protected String name;
 	protected String address;
 	protected String insurance_company_name;

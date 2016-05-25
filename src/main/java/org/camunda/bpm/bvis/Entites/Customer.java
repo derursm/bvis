@@ -2,7 +2,13 @@ package org.camunda.bpm.bvis.Entites;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,27 +18,35 @@ public class Customer implements Serializable {
 	private static  final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected Long customerID;
-	
 	protected String firstname;
+	@NotNull
 	protected String surname;
 	protected String email;
+	@NotNull
 	protected String phoneNumber;
+	@NotNull	
 	protected String street;
+	@NotNull
 	protected String houseNumber;
-	protected Integer postcode;
+	@NotNull
+	protected String postcode;
+	@NotNull
 	protected String city;
+	@NotNull
 	protected String country;
+	@Temporal(TemporalType.DATE)
+	@Past
 	protected Date dateOfBirth;
 	protected boolean company;
-	protected boolean eligibility;
+	protected boolean isEligible;
 	
-	public boolean isEligibility() {
-		return eligibility;
+	public boolean isEligible() {
+		return isEligible;
 	}
-	public void setEligibility(boolean eligibility) {
-		this.eligibility = eligibility;
+	public void setEligibility(boolean isEligible) {
+		this.isEligible = isEligible;
 	}
 	public Long getCustomerID() {
 		return customerID;
@@ -76,10 +90,10 @@ public class Customer implements Serializable {
 	public void setHouseNumber(String houseNumber) {
 		this.houseNumber = houseNumber;
 	}
-	public Integer getPostcode() {
+	public String getPostcode() {
 		return postcode;
 	}
-	public void setPostcode(Integer postcode) {
+	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
 	public String getCity() {

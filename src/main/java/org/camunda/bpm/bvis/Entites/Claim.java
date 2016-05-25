@@ -2,9 +2,16 @@ package org.camunda.bpm.bvis.Entites;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -13,21 +20,30 @@ public class Claim implements Serializable {
 	private static  final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected Long claimID;
-	
-	protected Long insuranceID;
+	@NotNull
+	protected Long insuranceID;	
+	@Temporal(TemporalType.DATE)
+	@NotNull
 	protected Date damageDate;
-	protected double workshopPrice;
+	@Min(value=0)
+	protected BigDecimal workshopPrice;
+	@NotNull
 	protected String claimDescription;
-	protected double costsCoverage;
+	@Min(value=0)
+	protected BigDecimal costsCoverage;
+	@NotNull
 	protected InvolvedParty involvedParty;
-	protected Order orderID;
+	@NotNull
+	protected Order orderID;	
+	@NotNull
 	protected Car carID;
 	protected String damageAddress;
-	protected double amountOfCoverage;
 	protected String clerkNotice;
+	@NotNull
 	protected boolean reportedByCustomer;
+	@NotNull
 	protected boolean towingServiceNeeded;
 	
 	public Long getClaimID() {
@@ -48,10 +64,10 @@ public class Claim implements Serializable {
 	public void setDamageDate(Date damageDate) {
 		this.damageDate = damageDate;
 	}
-	public double getWorkshopPrice() {
+	public BigDecimal getWorkshopPrice() {
 		return workshopPrice;
 	}
-	public void setWorkshopPrice(double workshopPrice) {
+	public void setWorkshopPrice(BigDecimal workshopPrice) {
 		this.workshopPrice = workshopPrice;
 	}
 	public String getClaimDescription() {
@@ -60,10 +76,10 @@ public class Claim implements Serializable {
 	public void setClaimDescription(String claimDescription) {
 		this.claimDescription = claimDescription;
 	}
-	public double getCostsCoverage() {
+	public BigDecimal getCostsCoverage() {
 		return costsCoverage;
 	}
-	public void setCostsCoverage(double costsCoverage) {
+	public void setCostsCoverage(BigDecimal costsCoverage) {
 		this.costsCoverage = costsCoverage;
 	}
 	public InvolvedParty getInvolvedParty() {
@@ -90,12 +106,7 @@ public class Claim implements Serializable {
 	public void setDamageAddress(String damageAddress) {
 		this.damageAddress = damageAddress;
 	}
-	public double getAmountOfCoverage() {
-		return amountOfCoverage;
-	}
-	public void setAmountOfCoverage(double amountOfCoverage) {
-		this.amountOfCoverage = amountOfCoverage;
-	}
+
 	public String getClerkNotice() {
 		return clerkNotice;
 	}
