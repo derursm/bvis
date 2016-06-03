@@ -22,7 +22,7 @@ public class PickUpLocation implements Serializable {
 	protected String phoneNumber;
 	@NotNull	
 	protected String street;
-	@NotNull
+
 	protected String houseNumber;
 	@NotNull
 	protected String postcode;

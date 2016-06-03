@@ -47,6 +47,14 @@ public class Order implements Serializable {
 		this.orderID = id;
 	}
 	
+	public Customer getCustomer() {
+		return cust;
+	}
+	
+	public void setCustomer(Customer customer) {
+		this.cust = customer;
+	}
+	
 	public Date getPick_up_date() {
 		return pickUpDate;
 	}

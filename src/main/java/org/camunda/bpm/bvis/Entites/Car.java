@@ -24,7 +24,7 @@ public class Car implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	protected Long vehicleIdentificationNumber;	
+	protected Long id;	
 	@NotNull
 	protected String brand;
 	@NotNull
@@ -48,11 +48,11 @@ public class Car implements Serializable {
 	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH})
 	protected Collection<Order> orders;
 	
-	public Long getVehicleIdentificationNumber() {
-		return vehicleIdentificationNumber;
+	public Long getId() {
+		return id;
 	}
-	public void setVehicleIdentificationNumber(Long vehicleIdentificationNumber) {
-		this.vehicleIdentificationNumber = vehicleIdentificationNumber;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getBrand() {
 		return brand;
