@@ -16,4 +16,8 @@ public class OrderServiceBean {
 		em.flush();
 		return order;
 	}
+	
+	public Order getOrder(long id) {
+		return em.find(Order.class, id);
+	}
 }

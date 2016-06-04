@@ -26,22 +26,12 @@ public class OrderCreateBean implements Serializable{
 	
 	@EJB 
 	private PickUpLocationServiceBean locationService;
-	private String location;
 	
 	@EJB
 	private CarServiceBean carService;
-	private String car;
 	
 	public Order getOrder() {
 		return order;
-	}
-	
-	public String getCar() {
-		return car;
-	}
-
-	public void setCar(String car) {
-		this.car = car;
 	}
 	
 	public Collection<Car> getAllCars() {
@@ -50,13 +40,5 @@ public class OrderCreateBean implements Serializable{
 	
 	public Collection<PickUpLocation> getAllPickUpLocations() {
 		return locationService.getAllLocations();
-	}
-		
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
 	}
 }

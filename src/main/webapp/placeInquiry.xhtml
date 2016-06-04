@@ -22,8 +22,8 @@
 		<h:panelGroup />
 
           <label for="car">Select a car:</label>
-          <h:selectOneMenu id="car" value="#{order.car}">
-              <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.model}"/>
+          <h:selectOneMenu id="car" value="#{processVariables['car']}">
+              <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
           </h:selectOneMenu>
       
           <label for="pickUpDate">Pickup date:</label>
@@ -39,13 +39,13 @@
           </h:inputText>
           
           <label for="pickUpLocation">Pickup location:</label>
-          <h:selectOneMenu id="pickUpLocation" value="#{order.location}">
-   			<f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeName}" />
+          <h:selectOneMenu id="pickUpLocation" value="#{processVariables['pickUpLocation']}">
+   			<f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
           </h:selectOneMenu>
           
           <label for="returnStore">Return location:</label>
-          <h:selectOneMenu id="returnStore" value="#{order.location}">
-			<f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeName}" />
+          <h:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}">
+			<f:selectItems value="#{order.allPickUpLocations}" var="r" itemLabel="#{r.storeName}" itemValue="#{r.storeID}" />
           </h:selectOneMenu>
           
           <label for="insuranceType">Insurance type:</label>
@@ -114,7 +114,6 @@
       </h:panelGrid>
 
       <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
-
            NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
       -->
       <h:commandButton id="submit_button" value="Book" action="#{camundaTaskForm.completeProcessInstanceForm()}" />
