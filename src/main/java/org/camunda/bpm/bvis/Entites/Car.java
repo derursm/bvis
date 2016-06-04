@@ -46,7 +46,7 @@ public class Car implements Serializable {
 	protected PickUpLocation currentLocation;
 
 	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH})
-	protected Collection<Order> orders;
+	protected Collection<RentalOrder> rentalOrders;
 	
 	public Long getId() {
 		return id;

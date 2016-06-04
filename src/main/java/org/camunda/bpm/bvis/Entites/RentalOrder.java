@@ -6,7 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -16,7 +18,7 @@ import java.util.Collection;
 import java.util.Date;
 
 @Entity
-public class Order implements Serializable {
+public class RentalOrder implements Serializable {
 	
 	private static  final long serialVersionUID = 1L;
 	
@@ -24,18 +26,21 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long orderID;
 	@NotNull
+	@OneToOne
 	protected Customer cust;
 	@Temporal(TemporalType.DATE)
 	protected Date pickUpDate;
 	@Temporal(TemporalType.DATE)
 	protected Date returnDate;
+	@ManyToOne
 	protected PickUpLocation pickUpStore;
+	@ManyToOne
 	protected PickUpLocation returnStore;
 	protected InsuranceType insuranceType;
 	protected String inquiryText;
 	@NotNull
 	protected boolean fleetRental;
-	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "orders")
+	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "rentalOrders")
 	protected Collection<Car> cars;
 	protected long insuranceID;
 	

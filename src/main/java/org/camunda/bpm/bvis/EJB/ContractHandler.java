@@ -3,7 +3,7 @@ package org.camunda.bpm.bvis.EJB;
 import org.camunda.bpm.bvis.Entites.Car;
 import org.camunda.bpm.bvis.Entites.Customer;
 import org.camunda.bpm.bvis.Entites.InsuranceType;
-import org.camunda.bpm.bvis.Entites.Order;
+import org.camunda.bpm.bvis.Entites.RentalOrder;
 import org.camunda.bpm.bvis.Entites.PickUpLocation;
 import org.camunda.bpm.bvis.Web.OrderCreateBean;
 import org.camunda.bpm.engine.cdi.jsf.TaskForm;
@@ -54,7 +54,7 @@ public class ContractHandler {
 
   public void persistOrder(DelegateExecution delegateExecution) throws ParseException {
     // Create new order instance
-    Order order = new Order();
+    RentalOrder rentalOrder = new RentalOrder();
 	
     // Get all process variables
     Map<String, Object> variables = delegateExecution.getVariables();
@@ -73,38 +73,41 @@ public class ContractHandler {
     customer.setCountry((String) variables.get("customerCountry"));
     customer.setCompany((Boolean) variables.get("customerCompany"));
     customer.setEligibility(false);
+    
     customerService.create(customer);
     
     // Set order attributes
-    order.setCustomer(customer);
-    order.setPick_up_date((Date) variables.get("pickUpDate"));
-    order.setReturn_date((Date) variables.get("returnDate"));
+    rentalOrder.setCustomer(customer);
+    rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
+    rentalOrder.setReturn_date((Date) variables.get("returnDate"));
     
     Long pickUpLocationId = (Long.parseLong((String)variables.get("pickUpLocation")));
     Long returnStoreId = (Long.parseLong((String)variables.get("returnStore")));
     
-    order.setPick_up_store((PickUpLocation) variables.get(locationService.getPickUpLocation(pickUpLocationId)));
-    order.setReturn_store((PickUpLocation) variables.get(locationService.getPickUpLocation(returnStoreId)));
-    order.setInsurance_type((InsuranceType) InsuranceType.TYPE1);
-    order.setInquiry_text((String) variables.get("inquiryText"));
-    order.setFleet_rental((Boolean) variables.get("fleet"));
+    rentalOrder.setPick_up_store((PickUpLocation) variables.get(locationService.getPickUpLocation(pickUpLocationId)));
+    rentalOrder.setReturn_store((PickUpLocation) variables.get(locationService.getPickUpLocation(returnStoreId)));
+    
+    InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
+    rentalOrder.setInsurance_type((InsuranceType) insuranceType);
+    
+    rentalOrder.setInquiry_text((String) variables.get("inquiryText"));
+    rentalOrder.setFleet_rental((Boolean) variables.get("fleet"));
     
     Long carId = (Long.parseLong((String)variables.get("car")));
     Car car = carService.getCar(carId);
-    
     Collection<Car> cars = new ArrayList<Car>();
     cars.add(car);
     
-    order.setCars((Collection<Car>) cars);
-    order.setInsurance_ID(0);
+    rentalOrder.setCars((Collection<Car>) cars);
+    rentalOrder.setInsurance_ID(0);
    
-    //orderService.create(order);
+    orderService.create(rentalOrder);
     
     // Remove no longer needed process variables
     delegateExecution.removeVariables(variables.keySet());
 
     // Add newly created order id as process variable
-    delegateExecution.setVariable("orderId", order.getId());
+    delegateExecution.setVariable("orderId", rentalOrder.getId());
   }
 
 }

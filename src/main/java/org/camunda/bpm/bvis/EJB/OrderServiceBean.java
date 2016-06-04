@@ -4,20 +4,20 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.camunda.bpm.bvis.Entites.Order;
+import org.camunda.bpm.bvis.Entites.RentalOrder;
 
 @Stateless
 public class OrderServiceBean {
 	@PersistenceContext
 	protected EntityManager em;
 	
-	public Order create(Order order) {
-		em.persist(order);
+	public RentalOrder create(RentalOrder rentalOrder) {
+		em.persist(rentalOrder);
 		em.flush();
-		return order;
+		return rentalOrder;
 	}
 	
-	public Order getOrder(long id) {
-		return em.find(Order.class, id);
+	public RentalOrder getOrder(long id) {
+		return em.find(RentalOrder.class, id);
 	}
 }

@@ -50,9 +50,7 @@
           
           <label for="insuranceType">Insurance type:</label>
           <h:selectOneMenu id="insuranceType" value="#{processVariables['insuranceType']}">
-              <f:selectItem itemValue="Type 1" itemLabel="Type 1"/>
-              <f:selectItem itemValue="Type 2" itemLabel="Type 2"/>
-              <f:selectItem itemValue="Type 3" itemLabel="Type 3"/>
+			<f:selectItems value="#{order.insuranceTypes}" />
           </h:selectOneMenu>
      
           <label for="customer.company">Car fleet:</label>

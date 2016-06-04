@@ -11,7 +11,8 @@ import org.camunda.bpm.bvis.EJB.CarServiceBean;
 import org.camunda.bpm.bvis.EJB.OrderServiceBean;
 import org.camunda.bpm.bvis.EJB.PickUpLocationServiceBean;
 import org.camunda.bpm.bvis.Entites.Car;
-import org.camunda.bpm.bvis.Entites.Order;
+import org.camunda.bpm.bvis.Entites.InsuranceType;
+import org.camunda.bpm.bvis.Entites.RentalOrder;
 import org.camunda.bpm.bvis.Entites.PickUpLocation;
  
 @ManagedBean(name="order")
@@ -20,7 +21,7 @@ public class OrderCreateBean implements Serializable{
 
 	@EJB
 	private OrderServiceBean orderService;
-	private Order order = new Order();
+	private RentalOrder rentalOrder = new RentalOrder();
 
 	//private String errorMessage;
 	
@@ -30,8 +31,8 @@ public class OrderCreateBean implements Serializable{
 	@EJB
 	private CarServiceBean carService;
 	
-	public Order getOrder() {
-		return order;
+	public RentalOrder getOrder() {
+		return rentalOrder;
 	}
 	
 	public Collection<Car> getAllCars() {
@@ -40,5 +41,9 @@ public class OrderCreateBean implements Serializable{
 	
 	public Collection<PickUpLocation> getAllPickUpLocations() {
 		return locationService.getAllLocations();
+	}
+	
+	public InsuranceType[] getInsuranceTypes() {
+		return InsuranceType.values();
 	}
 }

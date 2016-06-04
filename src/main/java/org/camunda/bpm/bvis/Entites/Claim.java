@@ -44,7 +44,7 @@ public class Claim implements Serializable {
 	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "claims")
 	protected Collection<InvolvedParty> involvedParties;
 	@NotNull
-	protected Order orderID;	
+	protected RentalOrder orderID;	
 	@NotNull
 	protected Car carID;
 	protected String damageAddress;
@@ -96,10 +96,10 @@ public class Claim implements Serializable {
 	public void setInvolvedParty(Collection<InvolvedParty> involvedParties) {
 		this.involvedParties = involvedParties;
 	}
-	public Order getOrderID() {
+	public RentalOrder getOrderID() {
 		return orderID;
 	}
-	public void setOrderID(Order orderID) {
+	public void setOrderID(RentalOrder orderID) {
 		this.orderID = orderID;
 	}
 	public Car getCarID() {
