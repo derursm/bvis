@@ -13,6 +13,9 @@
   <collaboration id="sid-44d20fbe-8b37-4df2-b207-a52f50ff196c">
     <extensionElements>
       <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="0e59bac838d24928aae942d42fb9862f" />
+      <camunda:properties>
+        <camunda:property />
+      </camunda:properties>
     </extensionElements>
     <participant id="sid-FA621CEE-316B-47FF-816E-18525C7B5A5A" name="BVIS" processRef="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939454">
       <extensionElements>
@@ -411,11 +414,14 @@
       <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-4930D20E-DD03-40C8-98CD-5C9227D03258" name="" isImmediate="true" sourceRef="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76" targetRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" />
-    <sendTask id="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" name="Send &#10;rental request confirmation" implementation="##WebService" camunda:expression="${true}">
+    <sendTask id="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" name="Send &#10;rental request confirmation" implementation="##WebService" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
         <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">confirmation</camunda:inputParameter>
+        </camunda:inputOutput>
       </extensionElements>
       <incoming>sid-E1FA9C14-2732-4445-9423-705038FBCCC6</incoming>
       <outgoing>sid-53AB7A90-02F2-468D-8BF4-BE03E025A2E3</outgoing>

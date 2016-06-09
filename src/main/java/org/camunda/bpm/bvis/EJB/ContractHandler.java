@@ -6,6 +6,7 @@ import org.camunda.bpm.bvis.Entites.InsuranceType;
 import org.camunda.bpm.bvis.Entites.RentalOrder;
 import org.camunda.bpm.bvis.Entites.PickUpLocation;
 import org.camunda.bpm.bvis.Web.OrderCreateBean;
+import org.camunda.bpm.bvis.Util.SendHTMLEmail;
 import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
@@ -50,6 +51,8 @@ public class ContractHandler {
 	 
 	 @EJB
 	 private CarServiceBean carService;
+	 
+	 private static SendHTMLEmail sendMail;
 
 
   public void persistOrder(DelegateExecution delegateExecution) throws ParseException {
@@ -107,7 +110,30 @@ public class ContractHandler {
     delegateExecution.removeVariables(variables.keySet());
 
     // Add newly created order id as process variable
-    delegateExecution.setVariable("orderId", rentalOrder.getId());
+    delegateExecution.setVariable("orderId", rentalOrder.getId());   
   }
 
+  public void sendOrderStateNotification(DelegateExecution delegateExecution)throws ParseException{
+	  long orderId;
+	  RentalOrder order;
+	  Customer customer;
+	  String surname, subject, text, from, email;
+	  //tbc..
+	  
+	  
+	  
+  	  // Get all process variables
+      Map<String, Object> variables = delegateExecution.getVariables();
+      orderId = (long) variables.get("orderId");
+      order = orderService.getOrder(orderId);
+      customer = order.getCustomer();
+      
+      surname = customer.getSurname();
+      email = customer.getEmail();
+      subject = "Reservierungsbestätigung";
+      from = "bvis@bvis.com";
+      text = "Sehr geehrter Herr/Frau " + surname + 
+    			"! Thank you for your request. We are processing as soon as possible.";      
+      sendMail.main(subject, text , from, email);
+  }
 }

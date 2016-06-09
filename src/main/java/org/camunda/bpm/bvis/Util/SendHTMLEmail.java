@@ -17,9 +17,9 @@ public class SendHTMLEmail
 		
 		final String username 	= "tech.suppot.skype.bot@gmail.com";
 		final String password 	= "TestTest";
-
+		
 		String host 			= "smtp.gmail.com"; 
-
+			
 		Properties props 		= new Properties();
 		props.put("mail.smtp.auth", "true");
 		props.put("mail.smtp.starttls.enable", "true");
