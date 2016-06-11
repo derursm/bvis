@@ -13,9 +13,6 @@
   <collaboration id="sid-44d20fbe-8b37-4df2-b207-a52f50ff196c">
     <extensionElements>
       <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="0e59bac838d24928aae942d42fb9862f" />
-      <camunda:properties>
-        <camunda:property />
-      </camunda:properties>
     </extensionElements>
     <participant id="sid-FA621CEE-316B-47FF-816E-18525C7B5A5A" name="BVIS" processRef="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939454">
       <extensionElements>
@@ -55,10 +52,10 @@
         <flowNodeRef>sid-2C73E35B-A2C4-4486-9A41-FBF5365F8FB6</flowNodeRef>
         <flowNodeRef>sid-28A92D67-ECA0-4016-B034-3EC0FE97414E</flowNodeRef>
         <flowNodeRef>StartEvent_0m2odij</flowNodeRef>
-        <flowNodeRef>ReceiveTask_0j8gu8l</flowNodeRef>
         <flowNodeRef>SendTask_0zsnakw</flowNodeRef>
         <flowNodeRef>BoundaryEvent_10rjjgr</flowNodeRef>
         <flowNodeRef>Task_0j5akwv</flowNodeRef>
+        <flowNodeRef>SendTask_1rz1l70</flowNodeRef>
       </lane>
       <lane id="sid-46A2FE9C-6D01-4534-84A5-4E615244916C" name="Clerk">
         <extensionElements>
@@ -85,10 +82,6 @@
       <incoming>SequenceFlow_1g70gey</incoming>
       <outgoing>SequenceFlow_19vljn8</outgoing>
     </sendTask>
-    <receiveTask id="ReceiveTask_0j8gu8l" name="Finalize contract" messageRef="Message_06rmom7">
-      <incoming>SequenceFlow_12109qr</incoming>
-      <outgoing>SequenceFlow_1f1jh9i</outgoing>
-    </receiveTask>
     <startEvent id="StartEvent_0m2odij" name="Rental inquiry received" camunda:formKey="app:placeInquiry.jsf">
       <outgoing>SequenceFlow_1bi6h6c</outgoing>
     </startEvent>
@@ -132,9 +125,12 @@
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
         <signavio:signavioMetaData metaKey="nachfolgerprozesse" metaValue="[]" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">canc_single</camunda:inputParameter>
+        </camunda:inputOutput>
       </extensionElements>
       <incoming>sid-0ACCA590-4CF2-46FE-A6D9-A12B2C6128A2</incoming>
-      <messageEventDefinition id="sid-4778d0d1-9583-48fc-8791-44768d982a9d" />
+      <messageEventDefinition id="sid-4778d0d1-9583-48fc-8791-44768d982a9d" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}" />
     </endEvent>
     <exclusiveGateway id="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" name="" gatewayDirection="Diverging">
       <extensionElements>
@@ -162,9 +158,12 @@
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
         <signavio:signavioMetaData metaKey="nachfolgerprozesse" metaValue="[]" />
         <signavio:signavioLabel ref="text_name" valign="middle" x="7.0" y="-19.0" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">canc_fleet</camunda:inputParameter>
+        </camunda:inputOutput>
       </extensionElements>
       <incoming>sid-ADFE8C04-8F02-4B29-B0A2-AD7A6686F44E</incoming>
-      <messageEventDefinition id="sid-8cb3f6a5-aeb8-4976-b4f7-4e3424bac6cb" />
+      <messageEventDefinition id="sid-8cb3f6a5-aeb8-4976-b4f7-4e3424bac6cb" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}" />
     </endEvent>
     <exclusiveGateway id="sid-8EAD1CDF-4B22-413A-85CF-1FC79AB33F00" name="Negotiation&#10;outcome" gatewayDirection="Diverging">
       <extensionElements>
@@ -191,7 +190,7 @@
       <outgoing>sid-5E4184E2-80D6-44A1-B3D4-5B68CB94A315</outgoing>
     </parallelGateway>
     <sequenceFlow id="SequenceFlow_1g70gey" sourceRef="sid-2C73E35B-A2C4-4486-9A41-FBF5365F8FB6" targetRef="SendTask_0zsnakw" />
-    <sequenceFlow id="SequenceFlow_1f1jh9i" sourceRef="ReceiveTask_0j8gu8l" targetRef="sid-2C73E35B-A2C4-4486-9A41-FBF5365F8FB6" />
+    <sequenceFlow id="SequenceFlow_1f1jh9i" sourceRef="SendTask_1rz1l70" targetRef="sid-2C73E35B-A2C4-4486-9A41-FBF5365F8FB6" />
     <exclusiveGateway id="sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30" name="" gatewayDirection="Converging">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
@@ -200,7 +199,7 @@
       <incoming>sid-0EECCC98-986B-40D6-9ACD-214B11C4AFF0</incoming>
       <outgoing>SequenceFlow_12109qr</outgoing>
     </exclusiveGateway>
-    <sequenceFlow id="SequenceFlow_12109qr" sourceRef="sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30" targetRef="ReceiveTask_0j8gu8l" />
+    <sequenceFlow id="SequenceFlow_12109qr" sourceRef="sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30" targetRef="SendTask_1rz1l70" />
     <sequenceFlow id="sid-172CF00F-245E-419B-90CB-EFA0684C2013" name="Accepted" isImmediate="true" sourceRef="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" targetRef="sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30">
       <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
     </sequenceFlow>
@@ -208,9 +207,12 @@
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
         <signavio:signavioMetaData metaKey="nachfolgerprozesse" metaValue="[]" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">rej_ins</camunda:inputParameter>
+        </camunda:inputOutput>
       </extensionElements>
       <incoming>SequenceFlow_177ug14</incoming>
-      <messageEventDefinition id="sid-ddcae7e2-9606-44b8-8188-389a26a158e8" />
+      <messageEventDefinition id="sid-ddcae7e2-9606-44b8-8188-389a26a158e8" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}" />
     </endEvent>
     <sequenceFlow id="SequenceFlow_177ug14" name="" sourceRef="sid-7EBAD71E-27E6-4373-897F-29709FAC45A0" targetRef="sid-F87B7534-2839-49A3-9D8B-9A5574F413FF" />
     <endEvent id="sid-9BDFA628-513F-47D5-A564-A8BE3DB8A6B3" name="Insurance&#10;request&#10;rejected">
@@ -218,9 +220,12 @@
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
         <signavio:signavioMetaData metaKey="nachfolgerprozesse" metaValue="[]" />
         <signavio:signavioLabel align="left" ref="text_name" valign="middle" x="33.0" y="14.0" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">send_sorrow</camunda:inputParameter>
+        </camunda:inputOutput>
       </extensionElements>
       <incoming>sid-72173456-DA96-4699-B777-27388AEB719D</incoming>
-      <messageEventDefinition id="sid-41139564-6b1b-470e-b722-91591422f12f" />
+      <messageEventDefinition id="sid-41139564-6b1b-470e-b722-91591422f12f" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}" />
     </endEvent>
     <sequenceFlow id="sid-72173456-DA96-4699-B777-27388AEB719D" name="Rejected" isImmediate="true" sourceRef="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" targetRef="sid-9BDFA628-513F-47D5-A564-A8BE3DB8A6B3">
       <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
@@ -265,9 +270,12 @@
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
         <signavio:signavioMetaData metaKey="nachfolgerprozesse" metaValue="[]" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">rej_el</camunda:inputParameter>
+        </camunda:inputOutput>
       </extensionElements>
       <incoming>SequenceFlow_0ds9e05</incoming>
-      <messageEventDefinition id="sid-fe6a39f2-0878-42e4-b029-803d444ee185" />
+      <messageEventDefinition id="sid-fe6a39f2-0878-42e4-b029-803d444ee185" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}" />
     </endEvent>
     <sequenceFlow id="sid-DC881259-C4C3-4F81-9489-D39066179E85" name="" isImmediate="true" sourceRef="Task_0j5akwv" targetRef="sid-22422370-BA2B-4DFF-9C95-95F2C0FDA602" />
     <boundaryEvent id="BoundaryEvent_10rjjgr" name="Wait one day" attachedToRef="Task_0j5akwv">
@@ -420,7 +428,7 @@
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
         <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
         <camunda:inputOutput>
-          <camunda:inputParameter name="state">confirmation</camunda:inputParameter>
+          <camunda:inputParameter name="state">conf_req</camunda:inputParameter>
         </camunda:inputOutput>
       </extensionElements>
       <incoming>sid-E1FA9C14-2732-4445-9423-705038FBCCC6</incoming>
@@ -491,6 +499,15 @@
       <incoming>SequenceFlow_02w5sdm</incoming>
       <outgoing>sid-DC881259-C4C3-4F81-9489-D39066179E85</outgoing>
     </task>
+    <sendTask id="SendTask_1rz1l70" name="Finalize contract" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}">
+      <extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">send_cont</camunda:inputParameter>
+        </camunda:inputOutput>
+      </extensionElements>
+      <incoming>SequenceFlow_12109qr</incoming>
+      <outgoing>SequenceFlow_1f1jh9i</outgoing>
+    </sendTask>
   </process>
   <message id="Message_1x8fpfj" name="Message_2ho4uos" />
   <message id="Message_06rmom7" name="Message_1mfr747" />
@@ -507,9 +524,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SendTask_0zsnakw_di" bpmnElement="SendTask_0zsnakw">
         <omgdc:Bounds x="2743" y="839.2423900789177" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ReceiveTask_0j8gu8l_di" bpmnElement="ReceiveTask_0j8gu8l">
-        <omgdc:Bounds x="2506.314311594203" y="751" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_0m2odij_di" bpmnElement="StartEvent_0m2odij">
         <omgdc:Bounds x="224.71400778210116" y="773.1964980544747" width="36" height="36" />
@@ -1009,6 +1023,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Task_0j5akwv_di" bpmnElement="Task_0j5akwv">
         <omgdc:Bounds x="1927" y="751" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SendTask_1rz1l70_di" bpmnElement="SendTask_1rz1l70">
+        <omgdc:Bounds x="2506" y="751" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="sid-ebf35eae-1f3a-41f9-b9b0-355e4191caaa">

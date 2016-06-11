@@ -1,5 +1,6 @@
 package org.camunda.bpm.bvis.EJB;
 
+import org.apache.commons.io.IOUtils;
 import org.camunda.bpm.bvis.Entites.Car;
 import org.camunda.bpm.bvis.Entites.Customer;
 import org.camunda.bpm.bvis.Entites.InsuranceType;
@@ -27,11 +28,17 @@ import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REFRESH;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.IllegalFormatException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,7 +59,7 @@ public class ContractHandler {
 	 @EJB
 	 private CarServiceBean carService;
 	 
-	 private static SendHTMLEmail sendMail;
+	// private static SendHTMLEmail sendMail;
 
 
   public void persistOrder(DelegateExecution delegateExecution) throws ParseException {
@@ -113,27 +120,68 @@ public class ContractHandler {
     delegateExecution.setVariable("orderId", rentalOrder.getId());   
   }
 
+  //General send email method. State states the content of the email. Email information is caught from
+  //process variables 
   public void sendOrderStateNotification(DelegateExecution delegateExecution)throws ParseException{
 	  long orderId;
 	  RentalOrder order;
 	  Customer customer;
-	  String surname, subject, text, from, email;
+	  String surname, subject, text, from, email, state, path, pickupLocation, returnLocation, insurancePac, carModel;
+	  Date rentalStart, rentalEnd;
 	  //tbc..
-	  
-	  
-	  
+	  	  
   	  // Get all process variables
       Map<String, Object> variables = delegateExecution.getVariables();
       orderId = (long) variables.get("orderId");
+      state = variables.get("state").toString();
       order = orderService.getOrder(orderId);
       customer = order.getCustomer();
-      
+            
+      //Get rental information
       surname = customer.getSurname();
       email = customer.getEmail();
-      subject = "Reservierungsbestätigung";
       from = "bvis@bvis.com";
-      text = "Sehr geehrter Herr/Frau " + surname + 
-    			"! Thank you for your request. We are processing as soon as possible.";      
-      sendMail.main(subject, text , from, email);
+      rentalStart = order.getPick_up_date();
+      rentalEnd = order.getReturn_date();
+      pickupLocation = ""; //order.getPick_up_store().getStoreName() + order.getPick_up_store().getCity();
+      returnLocation = ""; //order.getReturn_store().getStoreName() + order.getReturn_store().getCity();
+      carModel = "Dummy"; //order.getCars();
+      
+      subject = "";
+      
+      path = "/templates/";
+      
+      //built email template path by state
+      switch(state){
+  			//case "canc_fleet": path += "canc_fleet.txt"; subject = "Booking reservation (" + String.valueOf(orderId) + ")" ; break;
+  			case "canc_single": path += "canc_single.txt"; subject = " ...("; // + String.valueOf(orderId) + ")" ; break;
+  			case "conf_req": path += "conf_req.txt"; subject = "Booking reservation (" + String.valueOf(orderId) + ")" ; break;
+  			//case "rej_el": path += "rej_el.txt"; subject = "... (" + String.valueOf(orderId) + ")" ; break;
+  			//case "rej_ins": path += "rej_ins.txt"; subject = "... (" + String.valueOf(orderId) + ")" ; break;
+  			//case "send_cont": path += "send_cont.txt"; subject = "... (" + String.valueOf(orderId) + ")" ; break;
+  			//case "send_sorrow": path += "send_sorrow.txt"; subject = "... (" + String.valueOf(orderId) + ")" ; break;
+      }	  
+             		  
+      InputStream in = this.getClass().getResourceAsStream(path);
+    
+      try{
+    	  text = IOUtils.toString(in, "UTF-8");     	  
+      } catch (IOException e) {
+    	  text = "error in file reading. path: " + path;
+    	  email = "bvis@bvis.com";
+      } catch (NullPointerException  e){
+    	  text = "null pointer file reading. path: " + path;
+    	  email = "bvis@bvis.com";
+      } 
+      
+      try{
+      text = String.format(text, surname, carModel, pickupLocation, rentalStart, returnLocation, rentalEnd, String.valueOf(orderId));  
+      } catch( IllegalFormatException e){
+    	 text = "illegal conversion ";
+    	 email = "bvis@bvis.com";
+      }
+      SendHTMLEmail.main(subject, text , from, email);
   }
 }
+
+

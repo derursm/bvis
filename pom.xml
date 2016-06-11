@@ -57,7 +57,15 @@
       </exclusions>
     </dependency>
 
-  </dependencies>
+	<!--  Apache Commons for File input  -->
+  	<dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.3</version>
+	</dependency>
+	
+  	</dependencies>
+  
   
   <build>
     <finalName>bvis</finalName>
