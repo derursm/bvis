@@ -100,8 +100,8 @@ public class ContractHandler {
     InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
     rentalOrder.setInsurance_type((InsuranceType) insuranceType);
     
-    rentalOrder.setInquiry_text((String) variables.get("inquiryText"));
-    rentalOrder.setFleet_rental((Boolean) variables.get("fleet"));
+    rentalOrder.setInquiryText((String) variables.get("inquiryText"));
+    rentalOrder.setFleetRental((Boolean) variables.get("fleet"));
     
     Long carId = (Long.parseLong((String)variables.get("car")));
     Car car = carService.getCar(carId);

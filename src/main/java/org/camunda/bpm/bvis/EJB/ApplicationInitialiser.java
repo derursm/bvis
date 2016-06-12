@@ -133,7 +133,7 @@ public class ApplicationInitialiser {
 		car.setRegistrationNumber(registrationNumber);
 		car.setType(type);
 		car.setRented(returned);
-		car.setVehicle_identification_number(vehicle_identification_number);
+		car.setVehicleIdentificationNumber(vehicle_identification_number);
 		return car;
 	}
 

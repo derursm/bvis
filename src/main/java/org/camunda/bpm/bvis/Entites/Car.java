@@ -40,13 +40,7 @@ public class Car implements Serializable {
 	@NotNull
 	protected String registrationNumber;
 	@NotNull
-	protected String vehicle_identification_number;
-	public String getVehicle_identification_number() {
-		return vehicle_identification_number;
-	}
-	public void setVehicle_identification_number(String vehicle_identification_number) {
-		this.vehicle_identification_number = vehicle_identification_number;
-	}
+	protected String vehicleIdentificationNumber;
 	@NotNull
 	protected CarType type;
 	@NotNull
@@ -74,18 +68,7 @@ public class Car implements Serializable {
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
-	public Integer getConstructionYear() {
-		return constructionYear;
-	}
-	public void setConstructionYear(Integer constructionYear) {
-		this.constructionYear = constructionYear;
-	}
-	public String getFuelType() {
-		return fuelType;
-	}
-	public void setFuelType(String fuelType) {
-		this.fuelType = fuelType;
-	}
+	
 	public String getModel() {
 		return model;
 	}
@@ -97,12 +80,6 @@ public class Car implements Serializable {
 	}
 	public void setPs(Integer ps) {
 		this.ps = ps;
-	}
-	public String getRegistrationNumber() {
-		return registrationNumber;
-	}
-	public void setRegistrationNumber(String registrationNumber) {
-		this.registrationNumber = registrationNumber;
 	}
 	
 	public boolean isReturned() {
@@ -117,5 +94,37 @@ public class Car implements Serializable {
 	public void setCurrentLocation(PickUpLocation currentLocation) {
 		currentLocation = currentLocation;
 	}
+	public Integer getConstructionYear() {
+		return constructionYear;
+	}
+	public void setConstructionYear(Integer constructionYear) {
+		this.constructionYear = constructionYear;
+	}
+	public String getFuelType() {
+		return fuelType;
+	}
+	public void setFuelType(String fuelType) {
+		this.fuelType = fuelType;
+	}
+	public String getRegistrationNumber() {
+		return registrationNumber;
+	}
+	public void setRegistrationNumber(String registrationNumber) {
+		this.registrationNumber = registrationNumber;
+	}
+	public String getVehicleIdentificationNumber() {
+		return vehicleIdentificationNumber;
+	}
+	public void setVehicleIdentificationNumber(String vehicleIdentificationNumber) {
+		this.vehicleIdentificationNumber = vehicleIdentificationNumber;
+	}
+	public Collection<RentalOrder> getRentalOrders() {
+		return rentalOrders;
+	}
+	public void setRentalOrders(Collection<RentalOrder> rentalOrders) {
+		this.rentalOrders = rentalOrders;
+	}
+	
+	
 	
 }

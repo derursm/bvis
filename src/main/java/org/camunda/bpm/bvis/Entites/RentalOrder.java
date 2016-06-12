@@ -110,22 +110,64 @@ public class RentalOrder implements Serializable {
 		this.insuranceType = insurance_type;
 	}
 	
-	public String getInquiry_text() {
+	
+
+	public Long getOrderID() {
+		return orderID;
+	}
+
+	public void setOrderID(Long orderID) {
+		this.orderID = orderID;
+	}
+
+	public PickUpLocation getPickUpStore() {
+		return pickUpStore;
+	}
+
+	public void setPickUpStore(PickUpLocation pickUpStore) {
+		this.pickUpStore = pickUpStore;
+	}
+
+	public PickUpLocation getReturnStore() {
+		return returnStore;
+	}
+
+	public void setReturnStore(PickUpLocation returnStore) {
+		this.returnStore = returnStore;
+	}
+
+	public InsuranceType getInsuranceType() {
+		return insuranceType;
+	}
+
+	public void setInsuranceType(InsuranceType insuranceType) {
+		this.insuranceType = insuranceType;
+	}
+
+	public String getInquiryText() {
 		return inquiryText;
 	}
-	
-	public void setInquiry_text(String inquiry_text) {
-		this.inquiryText = inquiry_text;
+
+	public void setInquiryText(String inquiryText) {
+		this.inquiryText = inquiryText;
 	}
-	
-	public boolean isFleet_rental() {
+
+	public boolean isFleetRental() {
 		return fleetRental;
 	}
-	
-	public void setFleet_rental(boolean fleet_rental) {
-		this.fleetRental = fleet_rental;
+
+	public void setFleetRental(boolean fleetRental) {
+		this.fleetRental = fleetRental;
 	}
-	
+
+	public long getInsuranceID() {
+		return insuranceID;
+	}
+
+	public void setInsuranceID(long insuranceID) {
+		this.insuranceID = insuranceID;
+	}
+
 	public Collection<Car> getCars() {
 		return cars;
 	}

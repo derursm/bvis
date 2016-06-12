@@ -40,14 +40,8 @@ public class Customer implements Serializable {
 	@Past
 	protected Date dateOfBirth;
 	protected boolean company;
-	protected String company_name;
+	protected String companyName;
 	
-	public String getCompany_name() {
-		return company_name;
-	}
-	public void setCompany_name(String company_name) {
-		this.company_name = company_name;
-	}
 	protected boolean isEligible;
 	
 	public boolean isEligible() {
@@ -80,24 +74,14 @@ public class Customer implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
+
 	public String getStreet() {
 		return street;
 	}
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	public String getHouseNumber() {
-		return houseNumber;
-	}
-	public void setHouseNumber(String houseNumber) {
-		this.houseNumber = houseNumber;
-	}
+	
 	public String getPostcode() {
 		return postcode;
 	}
@@ -116,17 +100,38 @@ public class Customer implements Serializable {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+	
 	public boolean isCompany() {
 		return company;
 	}
 	public void setCompany(boolean company) {
 		this.company = company;
 	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public String getHouseNumber() {
+		return houseNumber;
+	}
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
+	}
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	public String getCompanyName() {
+		return companyName;
+	}
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+	
+	
 	
 }

@@ -37,12 +37,7 @@ public class Insurance implements Serializable {
 	@Temporal(TemporalType.DATE)
 	protected Date returnDate;
 	
-	public long getInsuranceID() {
-		return insuranceID;
-	}
-	public void setInsuranceID(long insuranceID) {
-		this.insuranceID = insuranceID;
-	}
+	
 	public InsuranceType getType() {
 		return type;
 	}
@@ -74,6 +69,12 @@ public class Insurance implements Serializable {
 	public void setActualCosts(BigDecimal actualCosts) {
 		this.actualCosts = actualCosts;
 	}
+	public long getInsuranceID() {
+		return insuranceID;
+	}
+	public void setInsuranceID(long insuranceID) {
+		this.insuranceID = insuranceID;
+	}
 	public Date getPickUpDate() {
 		return pickUpDate;
 	}
@@ -86,4 +87,7 @@ public class Insurance implements Serializable {
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
 	}
+	
+	
+	
 }
