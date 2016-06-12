@@ -88,8 +88,8 @@ public class ContractHandler {
     
     // Set order attributes
     rentalOrder.setCustomer(customer);
-    rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
-    rentalOrder.setReturn_date((Date) variables.get("returnDate"));
+//    rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
+//    rentalOrder.setReturn_date((Date) variables.get("returnDate"));
     
     Long pickUpLocationId = (Long.parseLong((String)variables.get("pickUpLocation")));
     Long returnStoreId = (Long.parseLong((String)variables.get("returnStore")));
@@ -141,8 +141,8 @@ public class ContractHandler {
       surname = customer.getSurname();
       email = customer.getEmail();
       from = "bvis@bvis.com";
-      rentalStart = order.getPick_up_date();
-      rentalEnd = order.getReturn_date();
+//      rentalStart = order.getPick_up_date();
+//      rentalEnd = order.getReturn_date();
       pickupLocation = ""; //order.getPick_up_store().getStoreName() + order.getPick_up_store().getCity();
       returnLocation = ""; //order.getReturn_store().getStoreName() + order.getReturn_store().getCity();
       carModel = "Dummy"; //order.getCars();
@@ -175,7 +175,7 @@ public class ContractHandler {
       } 
       
       try{
-      text = String.format(text, surname, carModel, pickupLocation, rentalStart, returnLocation, rentalEnd, String.valueOf(orderId));  
+      text = String.format(text, surname, carModel, pickupLocation, returnLocation, String.valueOf(orderId));  
       } catch( IllegalFormatException e){
     	 text = "illegal conversion ";
     	 email = "bvis@bvis.com";

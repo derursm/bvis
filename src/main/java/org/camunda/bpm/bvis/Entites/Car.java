@@ -40,7 +40,15 @@ public class Car implements Serializable {
 	@NotNull
 	protected String registrationNumber;
 	@NotNull
-	protected String type;
+	protected String vehicle_identification_number;
+	public String getVehicle_identification_number() {
+		return vehicle_identification_number;
+	}
+	public void setVehicle_identification_number(String vehicle_identification_number) {
+		this.vehicle_identification_number = vehicle_identification_number;
+	}
+	@NotNull
+	protected CarType type;
 	@NotNull
 	protected boolean returned;
 	protected PickUpLocation currentLocation;
@@ -56,6 +64,12 @@ public class Car implements Serializable {
 	}
 	public String getBrand() {
 		return brand;
+	}
+	public CarType getType() {
+		return type;
+	}
+	public void setType(CarType type) {
+		this.type = type;
 	}
 	public void setBrand(String brand) {
 		this.brand = brand;
@@ -90,12 +104,7 @@ public class Car implements Serializable {
 	public void setRegistrationNumber(String registrationNumber) {
 		this.registrationNumber = registrationNumber;
 	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
-	}
+	
 	public boolean isReturned() {
 		return returned;
 	}

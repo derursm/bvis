@@ -54,6 +54,35 @@ public class Claim implements Serializable {
 	@NotNull
 	protected boolean towingServiceNeeded;
 	
+	protected int insurance_decision;
+	protected int claim_status;
+	protected String claim_response_description_from_Capitol;
+	protected String claim_remarks_from_Bvis;
+	
+	public int getInsurance_decision() {
+		return insurance_decision;
+	}
+	public void setInsurance_decision(int insurance_decision) {
+		this.insurance_decision = insurance_decision;
+	}
+	public int getClaim_status() {
+		return claim_status;
+	}
+	public void setClaim_status(int claim_status) {
+		this.claim_status = claim_status;
+	}
+	public String getClaim_response_description_from_Capitol() {
+		return claim_response_description_from_Capitol;
+	}
+	public void setClaim_response_description_from_Capitol(String claim_response_description_from_Capitol) {
+		this.claim_response_description_from_Capitol = claim_response_description_from_Capitol;
+	}
+	public String getClaim_remarks_from_Bvis() {
+		return claim_remarks_from_Bvis;
+	}
+	public void setClaim_remarks_from_Bvis(String claim_remarks_from_Bvis) {
+		this.claim_remarks_from_Bvis = claim_remarks_from_Bvis;
+	}
 	public Long getClaimID() {
 		return claimID;
 	}

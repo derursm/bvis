@@ -15,6 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.camunda.bpm.bvis.Entites.Car;
+import org.camunda.bpm.bvis.Entites.CarType;
 import org.camunda.bpm.bvis.Entites.PickUpLocation;
 
 @Startup
@@ -47,9 +48,9 @@ public class ApplicationInitialiser {
 				"Carretera del Aeropuerto, s/n", "", "46940", "Valencia", "Spain");
 		pickUpLocationService.create(val);
 		
-		Car aud = createCar("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "sedan", true);
+		Car aud = createCar("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123456", CarType.TYPE1, true);
 		carService.create(aud);
-		Car toy = createCar("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "sedan", true);
+		Car toy = createCar("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123456", CarType.TYPE1, true);
 		carService.create(toy);
 
 		// DeliveryOrder order = createOrderFor(johnDoe);
@@ -122,7 +123,7 @@ public class ApplicationInitialiser {
 		return location;
 	}
 	
-	private Car createCar(String brand, int constructionYear, String fuelType, String model, int ps, String registrationNumber, String type, boolean returned) {
+	private Car createCar(String brand, int constructionYear, String fuelType, String model, int ps, String registrationNumber, String vehicle_identification_number, CarType type, boolean returned) {
 		Car car = new Car();
 		car.setBrand(brand);
 		car.setConstructionYear(constructionYear);
@@ -132,6 +133,7 @@ public class ApplicationInitialiser {
 		car.setRegistrationNumber(registrationNumber);
 		car.setType(type);
 		car.setRented(returned);
+		car.setVehicle_identification_number(vehicle_identification_number);
 		return car;
 	}
 

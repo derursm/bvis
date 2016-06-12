@@ -40,6 +40,14 @@ public class Customer implements Serializable {
 	@Past
 	protected Date dateOfBirth;
 	protected boolean company;
+	protected String company_name;
+	
+	public String getCompany_name() {
+		return company_name;
+	}
+	public void setCompany_name(String company_name) {
+		this.company_name = company_name;
+	}
 	protected boolean isEligible;
 	
 	public boolean isEligible() {

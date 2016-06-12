@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
@@ -29,6 +31,11 @@ public class Insurance implements Serializable {
 	protected BigDecimal estimatedCosts;
 	@Min(value=0)
 	protected BigDecimal actualCosts;
+	
+	@Temporal(TemporalType.DATE)
+	protected Date pickUpDate;
+	@Temporal(TemporalType.DATE)
+	protected Date returnDate;
 	
 	public long getInsuranceID() {
 		return insuranceID;
@@ -54,5 +61,29 @@ public class Insurance implements Serializable {
 	}
 	public void setEstimatedCost(BigDecimal estimatedCosts) {
 		this.estimatedCosts = estimatedCosts;
+	}
+	public BigDecimal getEstimatedCosts() {
+		return estimatedCosts;
+	}
+	public void setEstimatedCosts(BigDecimal estimatedCosts) {
+		this.estimatedCosts = estimatedCosts;
+	}
+	public BigDecimal getActualCosts() {
+		return actualCosts;
+	}
+	public void setActualCosts(BigDecimal actualCosts) {
+		this.actualCosts = actualCosts;
+	}
+	public Date getPickUpDate() {
+		return pickUpDate;
+	}
+	public void setPickUpDate(Date pickUpDate) {
+		this.pickUpDate = pickUpDate;
+	}
+	public Date getReturnDate() {
+		return returnDate;
+	}
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
 	}
 }
