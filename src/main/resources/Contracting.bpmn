@@ -397,7 +397,7 @@
     <sequenceFlow id="SequenceFlow_0ds9e05" name="Rejected" isImmediate="true" sourceRef="sid-98ADDB2F-0289-467B-9C98-81BA45DA1120" targetRef="EndEvent_1ogqsf5">
       <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-DFB8E776-E887-4FC2-8B64-C0AC9CEB1C59" name="Check eligibility&#10;rejection" implementation="##WebService">
+    <userTask id="sid-DFB8E776-E887-4FC2-8B64-C0AC9CEB1C59" name="Check eligibility&#10;rejection" implementation="##WebService" camunda:formKey="app:editOrder.jsf">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -479,10 +479,10 @@
       <outgoing>sid-C807F18A-C9E4-4DDE-A7CB-719FA083B832</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="sid-5B6EE479-26F0-49BB-847F-7C23AE19F365" name="No" isImmediate="true" sourceRef="sid-BEE10A82-D4C3-4E41-A510-C319F79F42AB" targetRef="sid-DFB8E776-E887-4FC2-8B64-C0AC9CEB1C59">
-      <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-C807F18A-C9E4-4DDE-A7CB-719FA083B832" name="Yes" isImmediate="true" sourceRef="sid-BEE10A82-D4C3-4E41-A510-C319F79F42AB" targetRef="sid-0C65A9FA-229B-4891-8FD4-8F1A0B412EE0">
-      <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
     </sequenceFlow>
     <businessRuleTask id="sid-412CF1D5-8B80-45E2-A7CE-C2BFF4303299" name="Check customer eligibility" implementation="##WebService" camunda:expression="${true}">
       <extensionElements>

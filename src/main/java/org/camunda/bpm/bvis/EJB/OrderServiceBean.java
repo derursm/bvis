@@ -20,4 +20,8 @@ public class OrderServiceBean {
 	public RentalOrder getOrder(long id) {
 		return em.find(RentalOrder.class, id);
 	}
+	
+	public void updateOrder(RentalOrder rentalOrder) {
+		em.merge(rentalOrder);
+	}
 }

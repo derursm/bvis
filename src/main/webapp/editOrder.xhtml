@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core">
+
+  <f:view>
+    <f:metadata>
+      <!-- Start working on a task. Task Id is read internally from
+       request parameters and cached in the CDI conversation scope.
+      -->
+
+    <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
+  </f:metadata>
+  <h:head>
+    <title>Check the car rental order</title>
+  </h:head>
+  <h:body>
+  	The following car rental order was rejected due to the fact that provided information do not fulfill our requirements <br />
+    Please edit if needed and then confirm or reject the order
+    <h1>Car Order:</h1>
+    <h:form id="submitForm">
+      <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
+		<h3><label>Car options</label></h3>
+		<h:panelGroup />
+
+          <label for="car">Car:</label>
+          <h:selectOneMenu id="car" value="#{processVariables['car']}">
+              <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
+          </h:selectOneMenu>
+      
+          <label for="pickUpDate">Pickup date:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="pickUpDate" value="#{editOrder.rentalOrder.pick_up_date}" required="true" placeholder="dd-mm-yyyy" >
+          	<f:convertDateTime pattern="dd-mm-yyyy" />
+          </h:inputText>
+          
+          <label for="returnDate">Return date:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="returnDate" value="#{editOrder.rentalOrder.return_date}" required="true" placeholder="dd-mm-yyyy">
+            <f:convertDateTime pattern="dd-mm-yyyy" />
+          </h:inputText>
+          
+          <label for="pickUpLocation">Pickup location:</label>
+          <h:selectOneMenu id="pickUpLocation" value="#{processVariables['pickUpLocation']}">
+   			<f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
+          </h:selectOneMenu>
+          
+          <label for="returnStore">Return location:</label>
+          <h:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}">
+			<f:selectItems value="#{order.allPickUpLocations}" var="r" itemLabel="#{r.storeName}" itemValue="#{r.storeID}" />
+          </h:selectOneMenu>
+          
+          <label for="insuranceType">Insurance type:</label>
+          <h:selectOneMenu id="insuranceType" value="#{editOrder.rentalOrder.insuranceType}">
+			<f:selectItems value="#{order.insuranceTypes}" />
+          </h:selectOneMenu>
+     
+          <label for="customer.company">Car fleet:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:selectBooleanCheckbox id="fleet" value="#{editOrder.rentalOrder.fleetRental}" required="true" />
+               
+          <h3><label>Driver details</label></h3>
+          <h:panelGroup />
+          <label for="customer.firstname">First name:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="firstname" value="#{editOrder.rentalOrder.customer.firstname}" required="true" />
+          
+          <label for="customer.surname">Last name:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="surname" value="#{editOrder.rentalOrder.customer.surname}" required="true" />
+          
+          <label for="customer.email">E-mail:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="email" value="#{editOrder.rentalOrder.customer.email}" required="true" />
+          
+          <label for="phoneNumber">Phone number:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="phoneNumber" value="#{editOrder.rentalOrder.customer.phoneNumber}" required="true" />
+          
+          <label for="street">Street:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="street" value="#{editOrder.rentalOrder.customer.street}" required="true" />
+          
+          <label for="houseNumber">House number:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="houseNumber" value="#{editOrder.rentalOrder.customer.houseNumber}" required="true" />
+          
+          <label for="postcode">Postcode:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="postcode" value="#{editOrder.rentalOrder.customer.postcode}" required="true" />
+          
+          <label for="city">City:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="city" value="#{editOrder.rentalOrder.customer.city}" required="true" />
+          
+          <label for="country">Country:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="country" value="#{editOrder.rentalOrder.customer.country}" required="true" />
+          
+          <label for="customer.dateOfBirth">Date of birth:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="dateOfBirth" value="#{editOrder.rentalOrder.customer.dateOfBirth}" required="true" >
+          	<f:convertDateTime pattern="dd-mm-yyyy" />
+          </h:inputText>
+          	
+          <label for="customer.company">Company:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:selectBooleanCheckbox id="company" value="#{editOrder.rentalOrder.customer.company}" required="false" />
+          
+          <label for="inquiryText">Additional Comments</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputTextarea id="inquiryText" value="#{editOrder.rentalOrder.inquiryText}" required="false" />
+      	<br />
+      	<label>Approve Order?</label>
+
+      </h:panelGrid>
+	<h:commandButton id="submit_button" value="Submit" action="#{editOrder.submitForm()}" />
+    </h:form>
+  </h:body>
+  </f:view>
+</html>

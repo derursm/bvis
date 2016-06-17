@@ -28,10 +28,10 @@ public class RentalOrder implements Serializable {
 	@NotNull
 	@OneToOne
 	protected Customer cust;
-//	@Temporal(TemporalType.DATE)
-//	protected Date pickUpDate;
-//	@Temporal(TemporalType.DATE)
-//	protected Date returnDate;
+	@Temporal(TemporalType.DATE)
+	protected Date pickUpDate;
+	@Temporal(TemporalType.DATE)
+	protected Date returnDate;
 	@ManyToOne
 	protected PickUpLocation pickUpStore;
 	@ManyToOne
@@ -70,36 +70,20 @@ public class RentalOrder implements Serializable {
 		this.cust = customer;
 	}
 	
-//	public Date getPick_up_date() {
-//		return pickUpDate;
-//	}
-//	
-//	public void setPick_up_date(Date pick_up_date) {
-//		this.pickUpDate = pick_up_date;
-//	}
-//	
-//	public Date getReturn_date() {
-//		return returnDate;
-//	}
-//	
-//	public void setReturn_date(Date return_date) {
-//		this.returnDate = return_date;
-//	}
+	public Date getPick_up_date() {
+		return pickUpDate;
+	}
 	
-	public PickUpLocation getPick_up_store() {
-		return pickUpStore;
+	public void setPick_up_date(Date pick_up_date) {
+		this.pickUpDate = pick_up_date;
 	}
-
-	public void setPick_up_store(PickUpLocation pick_up_store) {
-		this.pickUpStore = pick_up_store;
+	
+	public Date getReturn_date() {
+		return returnDate;
 	}
-
-	public PickUpLocation getReturn_store() {
-		return returnStore;
-	}
-
-	public void setReturn_store(PickUpLocation return_store) {
-		this.returnStore = return_store;
+	
+	public void setReturn_date(Date return_date) {
+		this.returnDate = return_date;
 	}
 
 	public InsuranceType getInsurance_type() {
@@ -110,8 +94,6 @@ public class RentalOrder implements Serializable {
 		this.insuranceType = insurance_type;
 	}
 	
-	
-
 	public Long getOrderID() {
 		return orderID;
 	}

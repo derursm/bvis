@@ -59,8 +59,11 @@ public class ContractHandler {
 	 @EJB
 	 private CarServiceBean carService;
 	 
+	  // Inject task form available through the Camunda cdi artifact
+	  @Inject
+	  private TaskForm taskForm;
+	  
 	// private static SendHTMLEmail sendMail;
-
 
   public void persistOrder(DelegateExecution delegateExecution) throws ParseException {
     // Create new order instance
@@ -88,14 +91,14 @@ public class ContractHandler {
     
     // Set order attributes
     rentalOrder.setCustomer(customer);
-//    rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
-//    rentalOrder.setReturn_date((Date) variables.get("returnDate"));
+    rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
+    rentalOrder.setReturn_date((Date) variables.get("returnDate"));
     
     Long pickUpLocationId = (Long.parseLong((String)variables.get("pickUpLocation")));
     Long returnStoreId = (Long.parseLong((String)variables.get("returnStore")));
     
-    rentalOrder.setPick_up_store((PickUpLocation) variables.get(locationService.getPickUpLocation(pickUpLocationId)));
-    rentalOrder.setReturn_store((PickUpLocation) variables.get(locationService.getPickUpLocation(returnStoreId)));
+    rentalOrder.setPickUpStore((PickUpLocation) variables.get(locationService.getPickUpLocation(pickUpLocationId)));
+    rentalOrder.setReturnStore((PickUpLocation) variables.get(locationService.getPickUpLocation(returnStoreId)));
     
     InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
     rentalOrder.setInsurance_type((InsuranceType) insuranceType);
@@ -120,6 +123,24 @@ public class ContractHandler {
     delegateExecution.setVariable("orderId", rentalOrder.getId());   
   }
 
+  public RentalOrder getOrder(Long orderId) {
+	    // Load order entity from database
+	    return orderService.getOrder(orderId);
+	  }
+  
+  public void updateOrder(RentalOrder rentalOrder) {
+	    // Merge detached order entity with current persisted state
+	  orderService.updateOrder(rentalOrder);
+	  
+	    try {
+	      // Complete user task from
+	      taskForm.completeTask();
+	    } catch (IOException e) {
+	      // Rollback both transactions on error
+	      throw new RuntimeException("Cannot complete task", e);
+	    }
+	  }
+  
   //General send email method. State states the content of the email. Email information is caught from
   //process variables 
   public void sendOrderStateNotification(DelegateExecution delegateExecution)throws ParseException{
