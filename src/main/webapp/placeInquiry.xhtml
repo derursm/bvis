@@ -39,7 +39,7 @@
           </h:inputText>
           
           <label for="pickUpLocation">Pickup location:</label>
-          <h:selectOneMenu id="pickUpLocation" value="#{processVariables['pickUpLocation']}">
+          <h:selectOneMenu id="pickUpLoc" value="#{processVariables['pickUpLoc']}">
    			<f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
           </h:selectOneMenu>
           
@@ -105,7 +105,7 @@
           <!-- create process variables using the processVariables map. -->
           <h:selectBooleanCheckbox id="company" value="#{processVariables['customerCompany']}" required="false" />
           
-          <label for="inquiryText">Additional Comments</label>
+          <label for="inquiryText">Comments:</label>
           <!-- create process variables using the processVariables map. -->
           <h:inputTextarea id="inquiryText" value="#{processVariables['inquiryText']}" required="false" />
 

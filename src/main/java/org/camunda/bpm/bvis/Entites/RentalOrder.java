@@ -1,6 +1,8 @@
 package org.camunda.bpm.bvis.Entites;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+
 import static javax.persistence.CascadeType.*;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,9 +42,11 @@ public class RentalOrder implements Serializable {
 	protected String inquiryText;
 	@NotNull
 	protected boolean fleetRental;
-	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "rentalOrders")
+	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "rentalOrders", fetch = FetchType.EAGER)
 	protected Collection<Car> cars;
 	protected long insuranceID;
+	protected String clerkComments;
+	protected boolean approveStatus;
 	
 	protected int contractStatus;
 	
@@ -164,6 +168,22 @@ public class RentalOrder implements Serializable {
 	
 	public void setInsurance_ID(long insurance_ID) {
 		this.insuranceID = insurance_ID;
+	}
+	
+	public String getClerkComments() {
+		return clerkComments;
+	}
+	
+	public void setClerkComments(String clerkComments) {
+		this.clerkComments = clerkComments;
+	}
+	
+	public boolean getApproveStatus() {
+		return approveStatus;
+	}
+	
+	public void setApproveStatus(boolean approveStatus) {
+		this.approveStatus = approveStatus;
 	}
 	
 }

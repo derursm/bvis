@@ -43,6 +43,10 @@ public class OrderCreateBean implements Serializable{
 		return locationService.getAllLocations();
 	}
 	
+	public PickUpLocation getPickUpLocation() {
+		return locationService.getPickUpLocation(new Long(2));
+	}
+	
 	public InsuranceType[] getInsuranceTypes() {
 		return InsuranceType.values();
 	}

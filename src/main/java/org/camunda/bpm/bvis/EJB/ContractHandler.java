@@ -94,17 +94,19 @@ public class ContractHandler {
     rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
     rentalOrder.setReturn_date((Date) variables.get("returnDate"));
     
-    Long pickUpLocationId = (Long.parseLong((String)variables.get("pickUpLocation")));
+    Long pickUpLocationId = (Long.parseLong((String)variables.get("pickUpLoc")));
     Long returnStoreId = (Long.parseLong((String)variables.get("returnStore")));
     
-    rentalOrder.setPickUpStore((PickUpLocation) variables.get(locationService.getPickUpLocation(pickUpLocationId)));
-    rentalOrder.setReturnStore((PickUpLocation) variables.get(locationService.getPickUpLocation(returnStoreId)));
+    rentalOrder.setPickUpStore((PickUpLocation) locationService.getPickUpLocation(pickUpLocationId));
+    rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
     
     InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
     rentalOrder.setInsurance_type((InsuranceType) insuranceType);
     
     rentalOrder.setInquiryText((String) variables.get("inquiryText"));
     rentalOrder.setFleetRental((Boolean) variables.get("fleet"));
+    rentalOrder.setClerkComments("");
+    rentalOrder.setApproveStatus(false);
     
     Long carId = (Long.parseLong((String)variables.get("car")));
     Car car = carService.getCar(carId);

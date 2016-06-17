@@ -33,8 +33,4 @@ public class PickUpLocationServiceBean {
 	public PickUpLocation getPickUpLocation(long id) {
 		return em.find(PickUpLocation.class, id);
 	}
-	
-	public PickUpLocation getPickUpLocationByName(String storeName) {
-		return em.find(PickUpLocation.class, storeName);
-	}
 }

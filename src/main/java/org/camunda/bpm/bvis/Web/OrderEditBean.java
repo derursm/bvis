@@ -3,17 +3,14 @@ package org.camunda.bpm.bvis.Web;
 import java.io.IOException;
 import java.io.Serializable;
 
-import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.camunda.bpm.bvis.EJB.ContractHandler;
-import org.camunda.bpm.bvis.EJB.OrderServiceBean;
 import org.camunda.bpm.bvis.Entites.RentalOrder;
 import org.camunda.bpm.engine.cdi.BusinessProcess;
-import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 
 @Named
 @ConversationScoped

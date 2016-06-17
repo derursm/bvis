@@ -42,13 +42,13 @@
           </h:inputText>
           
           <label for="pickUpLocation">Pickup location:</label>
-          <h:selectOneMenu id="pickUpLocation" value="#{processVariables['pickUpLocation']}">
-   			<f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
+          <h:selectOneMenu id="storeID" value="#{editOrder.rentalOrder.pickUpStore.storeID}" >
+   			<f:selectItems value="#{order.allPickUpLocations}" var="l" itemValue="#{l.storeID}" itemLabel="#{l.storeName}" />
           </h:selectOneMenu>
           
           <label for="returnStore">Return location:</label>
-          <h:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}">
-			<f:selectItems value="#{order.allPickUpLocations}" var="r" itemLabel="#{r.storeName}" itemValue="#{r.storeID}" />
+          <h:selectOneMenu id="returnStore" value="#{editOrder.rentalOrder.returnStore.storeID}" >
+			<f:selectItems value="#{order.allPickUpLocations}" var="r" itemValue="#{r.storeID}" itemLabel="#{r.storeName}" />
           </h:selectOneMenu>
           
           <label for="insuranceType">Insurance type:</label>
@@ -108,12 +108,19 @@
           <!-- create process variables using the processVariables map. -->
           <h:selectBooleanCheckbox id="company" value="#{editOrder.rentalOrder.customer.company}" required="false" />
           
-          <label for="inquiryText">Additional Comments</label>
+          <label for="inquiryText">Customer comments:</label>
           <!-- create process variables using the processVariables map. -->
           <h:inputTextarea id="inquiryText" value="#{editOrder.rentalOrder.inquiryText}" required="false" />
-      	<br />
-      	<label>Approve Order?</label>
 
+      	  <h3><label>Clerk comments</label></h3>
+      	  <h:panelGroup />
+      	  <label for="inquiryText">Clerk comments</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputTextarea id="clerkComments" value="#{editOrder.rentalOrder.clerkComments}" required="false" />
+ 
+      	  <label>Approve Order?</label>
+          <h:selectBooleanCheckbox id="approved" value="#{editOrder.rentalOrder.approveStatus}" required="false" />
+            	  
       </h:panelGrid>
 	<h:commandButton id="submit_button" value="Submit" action="#{editOrder.submitForm()}" />
     </h:form>
