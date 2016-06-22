@@ -14,9 +14,9 @@ import javax.persistence.PersistenceContext;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.camunda.bpm.bvis.Entites.Car;
-import org.camunda.bpm.bvis.Entites.CarType;
-import org.camunda.bpm.bvis.Entites.PickUpLocation;
+import org.camunda.bpm.bvis.Entities.Car;
+import org.camunda.bpm.bvis.Entities.CarType;
+import org.camunda.bpm.bvis.Entities.PickUpLocation;
 
 @Startup
 @Singleton

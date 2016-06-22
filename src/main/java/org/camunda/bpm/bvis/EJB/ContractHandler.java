@@ -1,12 +1,12 @@
 package org.camunda.bpm.bvis.EJB;
 
 import org.apache.commons.io.IOUtils;
-import org.camunda.bpm.bvis.Entites.Car;
-import org.camunda.bpm.bvis.Entites.Customer;
-import org.camunda.bpm.bvis.Entites.InsuranceType;
-import org.camunda.bpm.bvis.Entites.RentalOrder;
-import org.camunda.bpm.bvis.Entites.PickUpLocation;
 import org.camunda.bpm.bvis.Web.OrderCreateBean;
+import org.camunda.bpm.bvis.Entities.Car;
+import org.camunda.bpm.bvis.Entities.Customer;
+import org.camunda.bpm.bvis.Entities.InsuranceType;
+import org.camunda.bpm.bvis.Entities.PickUpLocation;
+import org.camunda.bpm.bvis.Entities.RentalOrder;
 import org.camunda.bpm.bvis.Util.SendHTMLEmail;
 import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;

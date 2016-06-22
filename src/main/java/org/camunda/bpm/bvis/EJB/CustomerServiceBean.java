@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.camunda.bpm.bvis.Entites.Customer;
+import org.camunda.bpm.bvis.Entities.Customer;
 
 @Stateless
 public class CustomerServiceBean {

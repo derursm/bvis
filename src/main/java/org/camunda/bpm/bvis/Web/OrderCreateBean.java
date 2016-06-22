@@ -10,10 +10,10 @@ import javax.faces.bean.SessionScoped;
 import org.camunda.bpm.bvis.EJB.CarServiceBean;
 import org.camunda.bpm.bvis.EJB.OrderServiceBean;
 import org.camunda.bpm.bvis.EJB.PickUpLocationServiceBean;
-import org.camunda.bpm.bvis.Entites.Car;
-import org.camunda.bpm.bvis.Entites.InsuranceType;
-import org.camunda.bpm.bvis.Entites.RentalOrder;
-import org.camunda.bpm.bvis.Entites.PickUpLocation;
+import org.camunda.bpm.bvis.Entities.Car;
+import org.camunda.bpm.bvis.Entities.InsuranceType;
+import org.camunda.bpm.bvis.Entities.PickUpLocation;
+import org.camunda.bpm.bvis.Entities.RentalOrder;
  
 @ManagedBean(name="order")
 @SessionScoped

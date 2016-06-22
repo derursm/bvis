@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.camunda.bpm.bvis.EJB.ContractHandler;
-import org.camunda.bpm.bvis.Entites.RentalOrder;
+import org.camunda.bpm.bvis.Entities.RentalOrder;
 import org.camunda.bpm.engine.cdi.BusinessProcess;
 
 @Named

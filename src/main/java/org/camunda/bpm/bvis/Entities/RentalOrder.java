@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.Entites;
+package org.camunda.bpm.bvis.Entities;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

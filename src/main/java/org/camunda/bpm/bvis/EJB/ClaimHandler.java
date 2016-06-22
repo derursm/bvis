@@ -7,9 +7,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.camunda.bpm.bvis.Entites.Claim;
-import org.camunda.bpm.bvis.Entites.Customer;
-import org.camunda.bpm.bvis.Entites.RentalOrder;
+import org.camunda.bpm.bvis.Entities.Claim;
+import org.camunda.bpm.bvis.Entities.Customer;
+import org.camunda.bpm.bvis.Entities.RentalOrder;
 import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
