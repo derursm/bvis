@@ -1,7 +1,6 @@
 package org.camunda.bpm.bvis.EJB;
 
 import org.apache.commons.io.IOUtils;
-import org.camunda.bpm.bvis.Web.OrderCreateBean;
 import org.camunda.bpm.bvis.Entities.Car;
 import org.camunda.bpm.bvis.Entities.Customer;
 import org.camunda.bpm.bvis.Entities.InsuranceType;
@@ -15,33 +14,15 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.ManyToMany;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-
-import static javax.persistence.CascadeType.DETACH;
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.CascadeType.REFRESH;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Stateless
 @Named
@@ -150,7 +131,7 @@ public class ContractHandler {
 	  RentalOrder order;
 	  Customer customer;
 	  String surname, subject, text, from, email, state, path, pickupLocation, returnLocation, insurancePac, carModel;
-	  Date rentalStart, rentalEnd;
+	  //Date rentalStart, rentalEnd;
 	  //tbc..
 	  	  
   	  // Get all process variables

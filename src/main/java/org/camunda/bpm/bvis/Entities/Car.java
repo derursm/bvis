@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.CascadeType.MERGE;
@@ -92,7 +91,7 @@ public class Car implements Serializable {
 		return currentLocation;
 	}
 	public void setCurrentLocation(PickUpLocation currentLocation) {
-		currentLocation = currentLocation;
+		this.currentLocation = currentLocation;
 	}
 	public Integer getConstructionYear() {
 		return constructionYear;

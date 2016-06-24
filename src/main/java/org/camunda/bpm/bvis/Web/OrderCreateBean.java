@@ -19,6 +19,8 @@ import org.camunda.bpm.bvis.Entities.RentalOrder;
 @SessionScoped
 public class OrderCreateBean implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@EJB
 	private OrderServiceBean orderService;
 	private RentalOrder rentalOrder = new RentalOrder();

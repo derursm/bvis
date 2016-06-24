@@ -11,8 +11,6 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 import org.camunda.bpm.bvis.Entities.Car;
 import org.camunda.bpm.bvis.Entities.CarType;

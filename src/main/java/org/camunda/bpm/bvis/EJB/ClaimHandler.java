@@ -1,16 +1,15 @@
 package org.camunda.bpm.bvis.EJB;
 
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
-import javax.inject.Inject;
+//import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.camunda.bpm.bvis.Entities.Claim;
 import org.camunda.bpm.bvis.Entities.Customer;
-import org.camunda.bpm.bvis.Entities.RentalOrder;
-import org.camunda.bpm.engine.cdi.jsf.TaskForm;
+//import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
 @Stateless
@@ -20,14 +19,14 @@ public class ClaimHandler {
 	protected EntityManager em;
 	
 	// Inject task form available through the camunda cdi artifact
-	@Inject
-	private TaskForm taskForm;
+	//@Inject
+	//private TaskForm taskForm;
 	
-	private static Logger LOGGER = Logger.getLogger(ContractHandler.class.getName());
+	//private static Logger LOGGER = Logger.getLogger(ContractHandler.class.getName());
 	
 	public void persistClaim(DelegateExecution delegateExecution) {
 		
-		Claim claim = new Claim();
+		//Claim claim = new Claim();
 		
 		/*
 		 * ....
