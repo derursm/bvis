@@ -12,6 +12,7 @@
     <f:event type="preRenderView" listener="#{camundaTaskForm.startProcessInstanceByKeyForm()}" />
   </f:metadata>
   <h:head>
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
     <title>Create a car rent order</title>
   </h:head>
   <h:body>
@@ -20,44 +21,54 @@
       <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
 		<h3><label>Car options</label></h3>
 		<h:panelGroup />
-
+		
+		  <label for="customer.company">Car fleet:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:selectBooleanCheckbox id="fleet" value="#{processVariables['fleet']}" required="true" />
+		</h:panelGrid>
+		
+		<h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="carOptions">
           <label for="car">Select a car:</label>
           <h:selectOneMenu id="car" value="#{processVariables['car']}">
-              <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
+            <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
           </h:selectOneMenu>
-      
+
           <label for="pickUpDate">Pickup date:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="pickUpDate" value="#{processVariables['pickUpDate']}" required="true" placeholder="dd-mm-yyyy" >
+          <h:inputText id="pickUpDate" value="#{processVariables['pickUpDate']}" placeholder="dd-mm-yyyy" >
           	<f:convertDateTime pattern="dd-mm-yyyy" />
           </h:inputText>
-          
+
           <label for="returnDate">Return date:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="returnDate" value="#{processVariables['returnDate']}" required="true" placeholder="dd-mm-yyyy">
+          <h:inputText id="returnDate" value="#{processVariables['returnDate']}" placeholder="dd-mm-yyyy">
             <f:convertDateTime pattern="dd-mm-yyyy" />
           </h:inputText>
-          
+
           <label for="pickUpLocation">Pickup location:</label>
           <h:selectOneMenu id="pickUpLoc" value="#{processVariables['pickUpLoc']}">
    			<f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
           </h:selectOneMenu>
-          
+
           <label for="returnStore">Return location:</label>
           <h:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}">
 			<f:selectItems value="#{order.allPickUpLocations}" var="r" itemLabel="#{r.storeName}" itemValue="#{r.storeID}" />
           </h:selectOneMenu>
-          
+
           <label for="insuranceType">Insurance type:</label>
           <h:selectOneMenu id="insuranceType" value="#{processVariables['insuranceType']}">
 			<f:selectItems value="#{order.insuranceTypes}" />
           </h:selectOneMenu>
-     
-          <label for="customer.company">Car fleet:</label>
+         </h:panelGrid>
+          
+         <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="fleetComments">
+          <label for="inquiryText">Comments:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:selectBooleanCheckbox id="fleet" value="#{processVariables['fleet']}" required="true" />
-               
-          <h3><label>Driver details</label></h3>
+          <h:inputTextarea id="inquiryText" value="#{processVariables['inquiryText']}" required="false" />
+         </h:panelGrid>
+          
+         <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
+          <h3><label>Contact details</label></h3>
           <h:panelGroup />
           <label for="customer.firstname">First name:</label>
           <!-- create process variables using the processVariables map. -->
@@ -66,6 +77,10 @@
           <label for="customer.surname">Last name:</label>
           <!-- create process variables using the processVariables map. -->
           <h:inputText id="surname" value="#{processVariables['customerSurname']}" required="true" />
+          
+          <label for="customer.companyName">Company name:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="companyName" value="#{processVariables['customerCompanyName']}" required="false" />
           
           <label for="customer.email">E-mail:</label>
           <!-- create process variables using the processVariables map. -->
@@ -100,15 +115,7 @@
           <h:inputText id="dateOfBirth" value="#{processVariables['customerDateOfBirth']}" required="true" >
           	<f:convertDateTime pattern="dd-mm-yyyy" />
           </h:inputText>
-          	
-          <label for="customer.company">Company:</label>
-          <!-- create process variables using the processVariables map. -->
-          <h:selectBooleanCheckbox id="company" value="#{processVariables['customerCompany']}" required="false" />
           
-          <label for="inquiryText">Comments:</label>
-          <!-- create process variables using the processVariables map. -->
-          <h:inputTextarea id="inquiryText" value="#{processVariables['inquiryText']}" required="false" />
-
       </h:panelGrid>
 
       <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
@@ -118,6 +125,22 @@
 
       <h:messages style="color:red;margin:8px;" />
     </h:form>
+        <script type="text/javascript">
+            // increase the default animation speed to exaggerate the effect
+            $(function() {
+                $("#submitForm\\:fleetComments").hide();
+                $("#submitForm\\:fleet").change(function() {
+                	if($(this).is(":checked")) {
+                    	$("#submitForm\\:carOptions").hide();
+                    	$("#submitForm\\:fleetComments").show();
+                	}
+                	else {
+                    	$("#submitForm\\:carOptions").show();
+                    	$("#submitForm\\:fleetComments").hide();
+                    	}
+                });
+            });
+        </script>
   </h:body>
 </f:view>
 </html>

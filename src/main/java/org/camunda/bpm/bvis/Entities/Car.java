@@ -46,7 +46,7 @@ public class Car implements Serializable {
 	protected boolean returned;
 	protected PickUpLocation currentLocation;
 
-	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH})
+	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "cars")
 	protected Collection<RentalOrder> rentalOrders;
 	
 	public String getHTMLCarDetails(){

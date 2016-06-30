@@ -82,7 +82,7 @@
       <incoming>SequenceFlow_1g70gey</incoming>
       <outgoing>SequenceFlow_19vljn8</outgoing>
     </sendTask>
-    <startEvent id="StartEvent_0m2odij" name="Rental inquiry received" camunda:formKey="app:index.jsf">
+    <startEvent id="StartEvent_0m2odij" name="Rental inquiry received" camunda:formKey="app:placeInquiry.jsf">
       <outgoing>SequenceFlow_1bi6h6c</outgoing>
     </startEvent>
     <exclusiveGateway id="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" name="Customer decision" gatewayDirection="Diverging">
@@ -347,7 +347,7 @@
     </exclusiveGateway>
     <sequenceFlow id="SequenceFlow_02w5sdm" sourceRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" targetRef="Task_0j5akwv" />
     <sequenceFlow id="sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5" name="" sourceRef="sid-28A92D67-ECA0-4016-B034-3EC0FE97414E" targetRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" />
-    <sendTask id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" name="Transmit details to insurance provider" implementation="##WebService" camunda:expression="${contractHandler.sendInquiryToCapitol(execution)}">
+    <sendTask id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" name="Transmit details to insurance provider" implementation="##WebService" camunda:expression="${true}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -479,10 +479,10 @@
       <outgoing>sid-C807F18A-C9E4-4DDE-A7CB-719FA083B832</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="sid-5B6EE479-26F0-49BB-847F-7C23AE19F365" name="No" isImmediate="true" sourceRef="sid-BEE10A82-D4C3-4E41-A510-C319F79F42AB" targetRef="sid-DFB8E776-E887-4FC2-8B64-C0AC9CEB1C59">
-      <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-C807F18A-C9E4-4DDE-A7CB-719FA083B832" name="Yes" isImmediate="true" sourceRef="sid-BEE10A82-D4C3-4E41-A510-C319F79F42AB" targetRef="sid-0C65A9FA-229B-4891-8FD4-8F1A0B412EE0">
-      <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
     </sequenceFlow>
     <businessRuleTask id="sid-412CF1D5-8B80-45E2-A7CE-C2BFF4303299" name="Check customer eligibility" implementation="##WebService" camunda:expression="${true}">
       <extensionElements>

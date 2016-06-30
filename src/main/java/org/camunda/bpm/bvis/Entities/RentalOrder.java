@@ -41,7 +41,7 @@ public class RentalOrder implements Serializable {
 	protected String inquiryText;
 	@NotNull
 	protected boolean fleetRental;
-	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "rentalOrders", fetch = FetchType.EAGER)
+	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER)
 	protected Collection<Car> cars;
 	protected long insuranceID;
 	protected Insurance insurance;
