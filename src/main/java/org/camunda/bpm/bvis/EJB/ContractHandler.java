@@ -133,11 +133,14 @@ public class ContractHandler {
   //General send email method. State states the content of the email. Email information is caught from
   //process variables 
   public void sendOrderStateNotification(DelegateExecution delegateExecution)throws ParseException{
-	  long orderId;
 	  RentalOrder order;
 	  Customer customer;
-	  String surname, subject, text, from, email, state, path, pickupLocation, returnLocation, insurancePac, carModel;
-	  //Date rentalStart, rentalEnd;
+	  Car car;
+	  Collection<Car> cars;
+	  String surname, subject, text, from, email, state, path, pickupLocation, returnLocation,
+	  insurancePac, carModel, rentalEnd, rentalStart, orderId_str, clerkComment, towingAddress;
+	  Long orderId;
+	  boolean isFleetRental;
 	  //tbc..
 	  	  
   	  // Get all process variables
@@ -146,16 +149,37 @@ public class ContractHandler {
       state = variables.get("state").toString();
       order = orderService.getOrder(orderId);
       customer = order.getCustomer();
-            
+      cars = order.getCars(); 
+      
+      surname = "surname";
+      email = "email";
+      from = "from";
+      pickupLocation = "pickupLocation"; //order.getPick_up_store().getStoreName() + order.getPick_up_store().getCity();
+      returnLocation = "returnLocation"; //order.getReturn_store().getStoreName() + order.getReturn_store().getCity();
+      carModel = "carmodel"; //order.getCars();
+      rentalStart = "rentalStart";
+      rentalEnd = "rentalEnd";
+      orderId_str = "orderId";
+      towingAddress = "towingAddress";
+      insurancePac = "insurancePac";
+      
       //Get rental information
+      isFleetRental = order.isFleetRental();
+      orderId_str = orderId.toString();
       surname = customer.getSurname();
       email = customer.getEmail();
+      
       from = "bvis@bvis.com";
-//      rentalStart = order.getPick_up_date();
-//      rentalEnd = order.getReturn_date();
-      pickupLocation = ""; //order.getPick_up_store().getStoreName() + order.getPick_up_store().getCity();
-      returnLocation = ""; //order.getReturn_store().getStoreName() + order.getReturn_store().getCity();
-      carModel = "Dummy"; //order.getCars();
+      rentalStart = order.getPick_up_date().toString();
+      rentalEnd = order.getReturn_date().toString();
+      pickupLocation = order.getPickUpStore().getHTMLContactDetails();    
+      returnLocation = order.getReturnStore().getHTMLContactDetails();
+      clerkComment = order.getClerkComments();
+      carModel = "";
+      for (Car loop_car : cars){
+    	  carModel += loop_car.getHTMLCarDetails() + "<br>";
+      }
+      
       
       subject = "";
       
@@ -163,13 +187,13 @@ public class ContractHandler {
       
       //built email template path by state
       switch(state){
-  			//case "canc_fleet": path += "canc_fleet.txt"; subject = "Booking reservation (" + String.valueOf(orderId) + ")" ; break;
-  			case "canc_single": path += "canc_single.txt"; subject = " ...("; // + String.valueOf(orderId) + ")" ; break;
-  			case "conf_req": path += "conf_req.txt"; subject = "Booking reservation (" + String.valueOf(orderId) + ")" ; break;
-  			//case "rej_el": path += "rej_el.txt"; subject = "... (" + String.valueOf(orderId) + ")" ; break;
-  			//case "rej_ins": path += "rej_ins.txt"; subject = "... (" + String.valueOf(orderId) + ")" ; break;
-  			//case "send_cont": path += "send_cont.txt"; subject = "... (" + String.valueOf(orderId) + ")" ; break;
-  			//case "send_sorrow": path += "send_sorrow.txt"; subject = "... (" + String.valueOf(orderId) + ")" ; break;
+  			case "canc_fleet": path += "canc_fleet.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
+  			case "canc_single": path += "canc_single.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
+  			case "conf_req": path += "conf_req.txt"; subject = "Booking reservation (No. " + orderId_str + ")" ; break;
+  			case "rej_el": path += "rej_el.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
+  			case "rej_ins": path += "rej_ins.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
+  			case "send_cont": path += "send_cont.txt"; subject = "Congratulation! (No. " + orderId_str + ")" ; break;
+  			case "send_sorrow": path += "send_sorrow.txt"; subject = "Good bye (No. " + orderId_str + ")" ; break;
       }	  
              		  
       InputStream in = this.getClass().getResourceAsStream(path);
@@ -185,9 +209,9 @@ public class ContractHandler {
       } 
       
       try{
-      text = String.format(text, surname, carModel, pickupLocation, returnLocation, String.valueOf(orderId));  
+      text = String.format(text, surname, carModel, pickupLocation, rentalStart, returnLocation, rentalEnd, orderId_str, towingAddress, insurancePac);  
       } catch( IllegalFormatException e){
-    	 text = "illegal conversion ";
+    	 subject = "illegal conversion ";    	 
     	 email = "bvis@bvis.com";
       }
       SendHTMLEmail.main(subject, text , from, email);

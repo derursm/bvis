@@ -30,6 +30,12 @@ public class PickUpLocation implements Serializable {
 	protected String city;
 	@NotNull
 	protected String country;
+	
+	public String getHTMLContactDetails(){
+		String contactDetails = this.getStoreName() + "<br>" + this.getStreet() + " " + this.getHouseNumber() + "<br>" + this.getPostcode() + " " + this.getCity() + "<br>" + this.getPhoneNumber();
+		return contactDetails;
+	}
+	
 	public Long getStoreID() {
 		return storeID;
 	}
