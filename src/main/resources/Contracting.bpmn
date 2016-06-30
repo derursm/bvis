@@ -82,7 +82,7 @@
       <incoming>SequenceFlow_1g70gey</incoming>
       <outgoing>SequenceFlow_19vljn8</outgoing>
     </sendTask>
-    <startEvent id="StartEvent_0m2odij" name="Rental inquiry received" camunda:formKey="app:placeInquiry.jsf">
+    <startEvent id="StartEvent_0m2odij" name="Rental inquiry received" camunda:formKey="app:index.jsf">
       <outgoing>SequenceFlow_1bi6h6c</outgoing>
     </startEvent>
     <exclusiveGateway id="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" name="Customer decision" gatewayDirection="Diverging">
