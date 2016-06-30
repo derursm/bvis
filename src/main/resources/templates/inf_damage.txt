@@ -2,9 +2,19 @@
 <h1 style="color: #5e9ca0;">Dear Mr/Mrs %1$s!</h1>
 <p>&nbsp;</p>
 <h2 style="color: #2e6c80;">Thank you for your interest in BVIS.</h2>
-<p>Unfortunately, we have to inform you, that we cannot complete the contract. The requested car fleet is not available.</p>
-<p>Nevertheless, we hope that you will contact us again for a future request.</p>
+<p>Unfortunately, we have to inform you, that after you returned your car, a damage was found.</p>
+<p>We will keep you informed on further actions.</p>
 <p>&nbsp;</p>
+<p>Your&nbsp;booking details:</p>
+<ol style="list-style: none; font-size: 10px; line-height: 32px; font-weight: bold;">
+<li style="clear: both;">Car model: %2$s</li>
+<li style="clear: both;">Pickup location: %3$s</li>
+<li style="clear: both;">Pickup date: %4$s</li>
+<li style="clear: both;">Return location: %5$s</li>
+<li style="clear: both;">Return date: %6$s</li>
+<li style="clear: both;">Insurance package: tbd</li>
+<li style="clear: both;"></li>
+</ol>
 <p>&nbsp;If you have any questions, please contact our customer service at +44 664/5550777</p>
 <h2>Your BVIS Team.</h2>
 <p>&nbsp;</p>
