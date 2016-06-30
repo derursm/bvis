@@ -49,6 +49,10 @@ public class Car implements Serializable {
 	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH})
 	protected Collection<RentalOrder> rentalOrders;
 	
+	public String getHTMLCarDetails(){
+		String carDetails = this.getModel() + " " +  this.getBrand() + ", " + this.getFuelType() + ", PS: " + this.getPs();
+		return carDetails;
+	}
 	public Long getId() {
 		return id;
 	}
