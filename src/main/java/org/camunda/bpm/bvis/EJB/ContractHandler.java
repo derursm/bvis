@@ -8,6 +8,7 @@ import org.camunda.bpm.bvis.Entities.PickUpLocation;
 import org.camunda.bpm.bvis.Entities.RentalOrder;
 import org.camunda.bpm.bvis.Util.SendHTMLEmail;
 import org.camunda.bpm.bvis.rest.send.service.SendInquiry;
+import org.camunda.bpm.engine.cdi.BusinessProcess;
 import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
@@ -44,6 +45,9 @@ public class ContractHandler {
 	  // Inject task form available through the Camunda cdi artifact
 	  @Inject
 	  private TaskForm taskForm;
+
+	@Inject
+	private BusinessProcess businessProcess;
 	  
 	// private static SendHTMLEmail sendMail;
 
@@ -75,6 +79,7 @@ public class ContractHandler {
     rentalOrder.setCustomer(customer);
     rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
     rentalOrder.setReturn_date((Date) variables.get("returnDate"));
+    rentalOrder.setRequestDate(new Date());
     
     Long pickUpLocationId = (Long.parseLong((String)variables.get("pickUpLoc")));
     Long returnStoreId = (Long.parseLong((String)variables.get("returnStore")));
@@ -189,8 +194,11 @@ public class ContractHandler {
   }
   
   public void sendInquiryToCapitol(DelegateExecution delegateExecution) {
+	  System.out.println("SENDING TO CAPITOL INITIALIZED");	 
+	  System.out.println("BUSINESS PROCESS: " + businessProcess);
 	  SendInquiry sender = new SendInquiry();
-	  sender.sendInquiry((Integer)(delegateExecution.getVariable("orderID")), delegateExecution.getActivityInstanceId());
+	  RentalOrder entityOrder  = orderService.getOrder((Long) businessProcess.getVariable("orderId"));
+	  sender.sendInquiry(entityOrder, delegateExecution.getActivityInstanceId());
   }
 }
 

@@ -46,7 +46,7 @@ public class RentalOrder implements Serializable {
 	protected long insuranceID;
 	protected Insurance insurance;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	protected Date requestDate;
 	
 	public Date getRequestDate() {
