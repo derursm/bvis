@@ -132,6 +132,8 @@ public class Customer implements Serializable {
 		this.companyName = companyName;
 	}
 	
-	
+	public boolean getCompany() {
+		return company;
+	}
 	
 }

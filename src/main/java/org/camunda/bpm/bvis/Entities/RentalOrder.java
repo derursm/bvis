@@ -44,6 +44,27 @@ public class RentalOrder implements Serializable {
 	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "rentalOrders", fetch = FetchType.EAGER)
 	protected Collection<Car> cars;
 	protected long insuranceID;
+	protected Insurance insurance;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	protected Date requestDate;
+	
+	public Date getRequestDate() {
+		return requestDate;
+	}
+
+	public void setRequestDate(Date requestDate) {
+		this.requestDate = requestDate;
+	}
+
+	public Insurance getInsurance() {
+		return insurance;
+	}
+
+	public void setInsurance(Insurance insurance) {
+		this.insurance = insurance;
+	}
+
 	protected String clerkComments;
 	protected boolean approveStatus;
 	

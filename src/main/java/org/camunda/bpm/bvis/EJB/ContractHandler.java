@@ -7,6 +7,7 @@ import org.camunda.bpm.bvis.Entities.InsuranceType;
 import org.camunda.bpm.bvis.Entities.PickUpLocation;
 import org.camunda.bpm.bvis.Entities.RentalOrder;
 import org.camunda.bpm.bvis.Util.SendHTMLEmail;
+import org.camunda.bpm.bvis.rest.send.service.SendInquiry;
 import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
@@ -209,6 +210,11 @@ public class ContractHandler {
     	 email = "bvis@bvis.com";
       }
       SendHTMLEmail.main(subject, text , from, email);
+  }
+  
+  public void sendInquiryToCapitol(DelegateExecution delegateExecution) {
+	  SendInquiry sender = new SendInquiry();
+	  sender.sendInquiry((Integer)(delegateExecution.getVariable("orderID")), delegateExecution.getActivityInstanceId());
   }
 }
 
