@@ -5,6 +5,7 @@ import org.camunda.bpm.bvis.Entities.Car;
 import org.camunda.bpm.bvis.Entities.Customer;
 import org.camunda.bpm.bvis.Entities.InsuranceType;
 import org.camunda.bpm.bvis.Entities.PickUpLocation;
+import org.camunda.bpm.bvis.Entities.PriceMap;
 import org.camunda.bpm.bvis.Entities.RentalOrder;
 import org.camunda.bpm.bvis.Util.SendHTMLEmail;
 import org.camunda.bpm.bvis.rest.send.service.SendInquiry;
@@ -17,14 +18,17 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Stateless
 @Named
@@ -61,6 +65,16 @@ public class ContractHandler {
     
     customer.setFirstname((String) variables.get("customerFirstname"));
     customer.setSurname((String) variables.get("customerSurname"));
+    String customerCompanyName = (String) variables.get("customerCompanyName");
+   
+    boolean isCompany = true;
+    if (customerCompanyName.isEmpty()) {
+    	isCompany = false;
+    }
+    
+    customer.setCompanyName(customerCompanyName);
+    customer.setCompany(isCompany);
+    
     customer.setEmail((String) variables.get("customerEmail"));
     customer.setPhoneNumber((String) variables.get("customerPhoneNumber"));
     
@@ -70,40 +84,62 @@ public class ContractHandler {
     customer.setPostcode((String) variables.get("customerPostcode"));
     customer.setCity((String) variables.get("customerCity"));
     customer.setCountry((String) variables.get("customerCountry"));
-    customer.setCompany((Boolean) variables.get("customerCompany"));
     customer.setEligibility(false);
-    
+   
     customerService.create(customer);
     
     // Set order attributes
     rentalOrder.setCustomer(customer);
-    rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
-    rentalOrder.setReturn_date((Date) variables.get("returnDate"));
+    
+    Date PickUpDate = (Date) variables.get("pickUpDate");
+    rentalOrder.setPick_up_date(PickUpDate); 
+    Date ReturnDate = (Date) variables.get("returnDate");
+    rentalOrder.setReturn_date(ReturnDate);
     rentalOrder.setRequestDate(new Date());
     
-    Long pickUpLocationId = (Long.parseLong((String)variables.get("pickUpLoc")));
-    Long returnStoreId = (Long.parseLong((String)variables.get("returnStore")));
+    boolean isFleet = (Boolean) variables.get("fleet");
+    if (!isFleet) {
+    	rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
+    	rentalOrder.setReturn_date((Date) variables.get("returnDate"));
     
-    rentalOrder.setPickUpStore((PickUpLocation) locationService.getPickUpLocation(pickUpLocationId));
-    rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
+    	Long pickUpLocationId = (Long.parseLong((String)variables.get("pickUpLoc")));
+    	Long returnStoreId = (Long.parseLong((String)variables.get("returnStore")));
     
-    InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
-    rentalOrder.setInsurance_type((InsuranceType) insuranceType);
+    	rentalOrder.setPickUpStore((PickUpLocation) locationService.getPickUpLocation(pickUpLocationId));
+    	rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
     
+    	InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
+    	rentalOrder.setInsurance_type((InsuranceType) insuranceType);
+    	
+        Long carId = (Long.parseLong((String)variables.get("car")));
+
+        Car car = carService.getCar(carId);
+        Collection<Car> cars = new ArrayList<Car>();
+        cars.add(car);
+        
+        rentalOrder.setCars((Collection<Car>) cars);
+    }
+    rentalOrder.setFleetRental(isFleet);
     rentalOrder.setInquiryText((String) variables.get("inquiryText"));
-    rentalOrder.setFleetRental((Boolean) variables.get("fleet"));
+
     rentalOrder.setClerkComments("");
     rentalOrder.setApproveStatus(false);
     
-    Long carId = (Long.parseLong((String)variables.get("car")));
-    Car car = carService.getCar(carId);
-    Collection<Car> cars = new ArrayList<Car>();
-    cars.add(car);
-    
-    rentalOrder.setCars((Collection<Car>) cars);
     rentalOrder.setInsurance_ID(0);
-   
+
+    //calculate price for cars
+    double price_per_day = 0.0;
+    for (Car carX:cars) {
+        price_per_day += PriceMap.getPrice(carX.getType());
+    }
+    long time_diff = ReturnDate.getTime() - PickUpDate.getTime();  
+    double no_of_days = (double) TimeUnit.DAYS.convert(time_diff, TimeUnit.MILLISECONDS);
+    double priceCars = price_per_day * no_of_days;
+    
+    rentalOrder.setPriceCars(priceCars);
+    
     orderService.create(rentalOrder);
+    System.out.println("Cars: " + rentalOrder.getCars());
     
     // Remove no longer needed process variables
     delegateExecution.removeVariables(variables.keySet());
