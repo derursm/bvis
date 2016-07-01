@@ -11,7 +11,7 @@
 <li style="clear: both;">Pickup date: %4$s</li>
 <li style="clear: both;">Return location: %5$s</li>
 <li style="clear: both;">Return date: %6$s</li>
-<li style="clear: both;">Insurance package: tbd</li>
+<li style="clear: both;">Insurance package: %9$s</li>
 <li style="clear: both;"></li>
 </ol>
 <p>&nbsp;If you have any questions, please contact our customer service at +44 664/5550777</p>
