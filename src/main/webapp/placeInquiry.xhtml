@@ -64,164 +64,148 @@
 
 
     <div class="container">
-        <div class="row jumbotron">
-        <div class="col-sm-6 ">
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="inputFirstName" class="control-label col-xs-4">First name</label>
-					<div class="col-xs-8">
-						<input type="text" class="form-control" id="inputFirstName" placeholder="Your First Name" />
+		<h:form class="form-horizontal">
+	        <div class="row jumbotron">
+	        <div class="col-sm-6 ">
+					<div class="form-group">
+						<label for="inputFirstName" class="control-label col-xs-4">First name</label>
+						<div class="col-xs-8">
+							<b:text type="text" hideLabel="true" value="#{processVariables['customerFirstname']}" id="inputFirstName" placeholder="Your First Name" />
+						</div>
 					</div>
-				</div>
-				<div class="form-group">
-					<label for="inputLastName" class="control-label col-xs-4">Last name</label>
-					<div class="col-xs-8">
-						<input type="text" class="form-control" id="inputLastName" placeholder="Your Last Name" />
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="inputCompanyName" class="control-label col-xs-4">Company name</label>
-					<div class="col-xs-8">
-						<input type="text" class="form-control" id="inputCompanyName" placeholder="Company name" />
-					</div>
-				</div>
-			</form>
-			
-            <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                <h3><label>Contact details</label></h3>
-                <h:panelGroup />
-                <label for="customer.firstname">First name:</label>
-                <h:inputText id="firstname" value="#{processVariables['customerFirstname']}" required="true" />
-
-                <label for="customer.surname">Last name:</label>
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="surname" value="#{processVariables['customerSurname']}" required="true" />
-
-                <label for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
-
-                <!-- Generated markup by the plugin -->
-                <div class="tooltip top" role="tooltip">
-                    <div class="tooltip-arrow"></div>
-                    <div class="tooltip-inner">
-                        If you are a company, state your name!
-                    </div>
-                </div>
-
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="companyName" value="#{processVariables['customerCompanyName']}" required="false" />
-
-                <label for="customer.email">E-mail:</label>
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="email" value="#{processVariables['customerEmail']}" required="true" />
-
-                <label for="phoneNumber">Phone number:</label>
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="phoneNumber" value="#{processVariables['customerPhoneNumber']}" required="true" />
-
-                <label for="street">Street:</label>
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="street" value="#{processVariables['customerStreet']}" required="true" />
-
-                <label for="houseNumber">House number:</label>
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="houseNumber" value="#{processVariables['customerHouseNumber']}" required="true" />
-
-                <label for="postcode">Postcode:</label>
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="postcode" value="#{processVariables['customerPostcode']}" required="true" />
-
-                <label for="city">City:</label>
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="city" value="#{processVariables['customerCity']}" required="true" />
-
-                <label for="country">Country:</label>
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="country" value="#{processVariables['customerCountry']}" required="true" />
-
-                <label for="customer.dateOfBirth">Date of birth:</label>
-                <!-- create process variables using the processVariables map. -->
-                <h:inputText id="dateOfBirth" value="#{processVariables['customerDateOfBirth']}" required="true" >
-                    <f:convertDateTime pattern="dd-mm-yyyy" />
-                </h:inputText>
-
-            </h:panelGrid>
-
-        </div>
-
-        <div class="col-sm-6">
-        <h:form id="submitForm">
-          <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-            <h3><label>Car options</label></h3>
-            <h:panelGroup />
-
-              <label for="customer.company">Car fleet:</label>
-              <!-- create process variables using the processVariables map. -->
-              <h:selectBooleanCheckbox id="fleet" value="#{processVariables['fleet']}" required="true" />
-            </h:panelGrid>
-
-            <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="carOptions">
-              <label for="car">Select a car:</label>
-              <h:selectOneMenu id="car" value="#{processVariables['car']}">
-                <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
-              </h:selectOneMenu>
-
-              <label for="pickUpDate">Pickup date:</label>
-              <!-- create process variables using the processVariables map. -->
-              <h:inputText id="pickUpDate" value="#{processVariables['pickUpDate']}" placeholder="dd-mm-yyyy" >
-                <f:convertDateTime pattern="dd-mm-yyyy" />
-              </h:inputText>
-
-              <label for="returnDate">Return date:</label>
-              <!-- create process variables using the processVariables map. -->
-              <h:inputText id="returnDate" value="#{processVariables['returnDate']}" placeholder="dd-mm-yyyy">
-                <f:convertDateTime pattern="dd-mm-yyyy" />
-              </h:inputText>
-
-              <label for="pickUpLocation">Pickup location:</label>
-              <h:selectOneMenu id="pickUpLoc" value="#{processVariables['pickUpLoc']}">
-                <f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
-              </h:selectOneMenu>
-
-              <label for="returnStore">Return location:</label>
-              <h:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}">
-                <f:selectItems value="#{order.allPickUpLocations}" var="r" itemLabel="#{r.storeName}" itemValue="#{r.storeID}" />
-              </h:selectOneMenu>
-
-              <label for="insuranceType">Insurance type:</label>
-              <h:selectOneMenu id="insuranceType" value="#{processVariables['insuranceType']}">
-                <f:selectItems value="#{order.insuranceTypes}" />
-              </h:selectOneMenu>
-             </h:panelGrid>
-
-             <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="fleetComments">
-              <label for="inquiryText">Comments:</label>
-              <!-- create process variables using the processVariables map. -->
-              <h:inputTextarea id="inquiryText" value="#{processVariables['inquiryText']}" required="false" />
-             </h:panelGrid>
-            </h:form>
-
-        </div> <!-- END Col -->
-
-        </div> <!-- /. END ROW -->
-
-        <div class="row">
-            <div class="col-lg-12"></div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
-                <p>Please submit your booking. You will be able to check your details on the next page</p>
-
-                <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
-                  NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
-                -->
-                <h:form>
+				
+	            <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
+	                <h3><label>Contact details</label></h3>
+	                <h:panelGroup />
+	                <label for="customer.firstname">First name:</label>
+	                <h:inputText id="firstname" value="#{processVariables['customerFirstname']}" required="true" />
+	
+	                <label for="customer.surname">Last name:</label>
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="surname" value="#{processVariables['customerSurname']}" required="true" />
+	
+	                <label for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
+	
+	                <!-- Generated markup by the plugin -->
+	                <div class="tooltip top" role="tooltip">
+	                    <div class="tooltip-arrow"></div>
+	                    <div class="tooltip-inner">
+	                        If you are a company, state your name!
+	                    </div>
+	                </div>
+	
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="companyName" value="#{processVariables['customerCompanyName']}" required="false" />
+	
+	                <label for="customer.email">E-mail:</label>
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="email" value="#{processVariables['customerEmail']}" required="true" />
+	
+	                <label for="phoneNumber">Phone number:</label>
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="phoneNumber" value="#{processVariables['customerPhoneNumber']}" required="true" />
+	
+	                <label for="street">Street:</label>
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="street" value="#{processVariables['customerStreet']}" required="true" />
+	
+	                <label for="houseNumber">House number:</label>
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="houseNumber" value="#{processVariables['customerHouseNumber']}" required="true" />
+	
+	                <label for="postcode">Postcode:</label>
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="postcode" value="#{processVariables['customerPostcode']}" required="true" />
+	
+	                <label for="city">City:</label>
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="city" value="#{processVariables['customerCity']}" required="true" />
+	
+	                <label for="country">Country:</label>
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="country" value="#{processVariables['customerCountry']}" required="true" />
+	
+	                <label for="customer.dateOfBirth">Date of birth:</label>
+	                <!-- create process variables using the processVariables map. -->
+	                <h:inputText id="dateOfBirth" value="#{processVariables['customerDateOfBirth']}" required="true" >
+	                    <f:convertDateTime pattern="dd-mm-yyyy" />
+	                </h:inputText>
+	
+	            </h:panelGrid>
+	
+	        </div>
+	
+	        <div class="col-sm-6">
+	          <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
+	            <h3><label>Car options</label></h3>
+	            <h:panelGroup />
+	
+	              <label for="customer.company">Car fleet:</label>
+	              <!-- create process variables using the processVariables map. -->
+	              <h:selectBooleanCheckbox id="fleet" value="#{processVariables['fleet']}" required="true" />
+	            </h:panelGrid>
+	
+	            <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="carOptions">
+	              <label for="car">Select a car:</label>
+	              <h:selectOneMenu id="car" value="#{processVariables['car']}">
+	                <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
+	              </h:selectOneMenu>
+	
+	              <label for="pickUpDate">Pickup date:</label>
+	              <!-- create process variables using the processVariables map. -->
+	              <h:inputText id="pickUpDate" value="#{processVariables['pickUpDate']}" placeholder="dd-mm-yyyy" >
+	                <f:convertDateTime pattern="dd-mm-yyyy" />
+	              </h:inputText>
+	
+	              <label for="returnDate">Return date:</label>
+	              <!-- create process variables using the processVariables map. -->
+	              <h:inputText id="returnDate" value="#{processVariables['returnDate']}" placeholder="dd-mm-yyyy">
+	                <f:convertDateTime pattern="dd-mm-yyyy" />
+	              </h:inputText>
+	
+	              <label for="pickUpLocation">Pickup location:</label>
+	              <h:selectOneMenu id="pickUpLoc" value="#{processVariables['pickUpLoc']}">
+	                <f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
+	              </h:selectOneMenu>
+	
+	              <label for="returnStore">Return location:</label>
+	              <h:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}">
+	                <f:selectItems value="#{order.allPickUpLocations}" var="r" itemLabel="#{r.storeName}" itemValue="#{r.storeID}" />
+	              </h:selectOneMenu>
+	
+	              <label for="insuranceType">Insurance type:</label>
+	              <h:selectOneMenu id="insuranceType" value="#{processVariables['insuranceType']}">
+	                <f:selectItems value="#{order.insuranceTypes}" />
+	              </h:selectOneMenu>
+	             </h:panelGrid>
+	
+	             <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="fleetComments">
+	              <label for="inquiryText">Comments:</label>
+	              <!-- create process variables using the processVariables map. -->
+	              <h:inputTextarea id="inquiryText" value="#{processVariables['inquiryText']}" required="false" />
+	             </h:panelGrid>
+	
+	        </div> <!-- END Col -->
+	
+	        </div> <!-- /. END ROW -->
+	
+	        <div class="row">
+	            <div class="col-lg-12"></div>
+	        </div>
+	
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <p>Please submit your booking. You will be able to check your details on the next page</p>
+	
+	                <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
+	                  NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
+	                -->
                     <h:commandButton id="submit_button" value="Submit" action="#{camundaTaskForm.completeProcessInstanceForm()}" />
                     <h:messages style="color:red;margin:8px;" />
-                </h:form>
-            </div>
-        </div> <!-- /. END ROW -->
-
+	            </div>
+	        </div> <!-- /. END ROW -->
+		
+		</h:form>
     </div>
     <!-- /. END CONTAINER -->
       <script type="text/javascript">
