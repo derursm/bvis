@@ -43,19 +43,6 @@
 	    </dependency>
 	
 	    <!-- Java EE 6 Specification -->
-	    <dependency>
-	      <groupId>org.jboss.spec</groupId>
-	      <artifactId>jboss-javaee-web-6.0</artifactId>
-	      <version>3.0.2.Final</version>
-	      <type>pom</type>
-	      <scope>provided</scope>
-	      <exclusions>
-	        <exclusion>
-	          <artifactId>xalan</artifactId>
-	          <groupId>xalan</groupId>
-	        </exclusion>
-	      </exclusions>
-	    </dependency>
 	
 		<!--  Apache Commons for File input  -->
 	  	<dependency>
@@ -64,11 +51,6 @@
 	        <version>2.3</version>
 		</dependency>
 		
-	  	<dependency>
-	  		<groupId>org.jboss.resteasy</groupId>
-	  		<artifactId>resteasy-client</artifactId>
-	  		<version>3.0.9.Final</version>
-	  	</dependency>
 		
 		<dependency>
 			<groupId>de.larmic.butterfaces</groupId>
