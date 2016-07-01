@@ -1,0 +1,109 @@
+/* LESS */
+
+.container-bvis{
+    @extend .container;
+    border-style:groove;
+    border-width: 2px;
+    border-color: red;
+}
+
+.jumbotron-bvis{
+    @extend .jumpotron;
+    background: rgba(245, 245, 245, 0.5);
+    padding: 5px 0px 5px 0px;
+    margin: 0px 0px 0px 20px;
+}
+
+.jumbotron-bvis-2{
+    @extend .jumpotron;
+    background: rgba(200, 54, 54, 0.6);
+    padding: 15px 0px 0px 20px;
+    margin: 5px 0px 0px 5px;
+}
+
+.p-bvis {
+    padding: 10px;
+    color: white;
+    font-size:15px;
+}
+
+/* centered columns styles */
+.row-centered {
+    @extend .row;
+    text-align:center;
+}
+.col-centered {
+    @extend .row;
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:left;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+
+#inputText,
+.input-bvis{
+    @extend: inputText;
+    padding: 2px 0px 2px 0px;
+}
+
+#label,
+.label-bvis{
+    @extend: label;
+    padding: 2px 0px 2px 0px;
+}
+
+h1,
+.bvis-h1 {
+    color: red;
+}
+
+h2,
+.bvis-h2{
+    @extend .h2;
+    color: red;
+}
+
+h3,
+.bvis-h3{
+    color:red;
+}
+
+h4,
+.bvis-h4{
+    color:red;
+}
+
+h5,
+.bvis-h5{
+    color:red;
+}
+
+#bg-img {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+}
+#bg-img img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    min-width: 50%;
+    min-height: 50%;
+}
+
+.span.glyphicon-question-sign{
+    @extend .span;
+    padding-left: 5px;
+}
+
+#div .bvis-padding {
+    padding: 5px;
+}
