@@ -26,7 +26,7 @@
     <h:panelGroup />
       <label for="customer.company">Car fleet:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:selectBooleanCheckbox id="fleet" value="#{editOrder.rentalOrder.fleetRental}" required="true" disabled="true"/>
+          <h:selectBooleanCheckbox id="fleet" value="#{order.rentalOrder.fleetRental}" required="true" disabled="true"/>
     </h:panelGrid>
     
     <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="carOptions">
@@ -37,13 +37,13 @@
       
           <label for="pickUpDate">Pickup date:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="pickUpDate" value="#{editOrder.rentalOrder.pick_up_date}" placeholder="dd-mm-yyyy" >
+          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" placeholder="dd-mm-yyyy" >
             <f:convertDateTime pattern="dd-mm-yyyy" />
           </h:inputText>
           
           <label for="returnDate">Return date:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="returnDate" value="#{editOrder.rentalOrder.return_date}" placeholder="dd-mm-yyyy">
+          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" placeholder="dd-mm-yyyy">
             <f:convertDateTime pattern="dd-mm-yyyy" />
           </h:inputText>
           
@@ -58,7 +58,7 @@
           </h:selectOneMenu>
           
           <label for="insuranceType">Insurance type:</label>
-          <h:selectOneMenu id="insuranceType" value="#{editOrder.rentalOrder.insuranceType}">
+          <h:selectOneMenu id="insuranceType" value="#{order.rentalOrder.insuranceType}">
       <f:selectItems value="#{order.insuranceTypes}" />
           </h:selectOneMenu>
       </h:panelGrid>
@@ -66,7 +66,7 @@
         <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="fleetComments">
           <label for="inquiryText">Comments:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputTextarea id="inquiryText" value="#{editOrder.rentalOrder.inquiryText}" required="false" />
+          <h:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
          </h:panelGrid>
          
          <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
@@ -74,61 +74,61 @@
           <h:panelGroup />
           <label for="customer.firstname">First name:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="firstname" value="#{editOrder.rentalOrder.customer.firstname}" required="true" />
+          <h:inputText id="firstname" value="#{order.rentalOrder.customer.firstname}" required="true" />
           
           <label for="customer.surname">Last name:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="surname" value="#{editOrder.rentalOrder.customer.surname}" required="true" />
+          <h:inputText id="surname" value="#{order.rentalOrder.customer.surname}" required="true" />
           
           <label for="customer.email">E-mail:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="email" value="#{editOrder.rentalOrder.customer.email}" required="true" />
+          <h:inputText id="email" value="#{order.rentalOrder.customer.email}" required="true" />
           
           <label for="phoneNumber">Phone number:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="phoneNumber" value="#{editOrder.rentalOrder.customer.phoneNumber}" required="true" />
+          <h:inputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" required="true" />
           
           <label for="street">Street:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="street" value="#{editOrder.rentalOrder.customer.street}" required="true" />
+          <h:inputText id="street" value="#{order.rentalOrder.customer.street}" required="true" />
           
           <label for="houseNumber">House number:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="houseNumber" value="#{editOrder.rentalOrder.customer.houseNumber}" required="true" />
+          <h:inputText id="houseNumber" value="#{order.rentalOrder.customer.houseNumber}" required="true" />
           
           <label for="postcode">Postcode:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="postcode" value="#{editOrder.rentalOrder.customer.postcode}" required="true" />
+          <h:inputText id="postcode" value="#{order.rentalOrder.customer.postcode}" required="true" />
           
           <label for="city">City:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="city" value="#{editOrder.rentalOrder.customer.city}" required="true" />
+          <h:inputText id="city" value="#{order.rentalOrder.customer.city}" required="true" />
           
           <label for="country">Country:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="country" value="#{editOrder.rentalOrder.customer.country}" required="true" />
+          <h:inputText id="country" value="#{order.rentalOrder.customer.country}" required="true" />
           
           <label for="customer.dateOfBirth">Date of birth:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="dateOfBirth" value="#{editOrder.rentalOrder.customer.dateOfBirth}" required="true" >
+          <h:inputText id="dateOfBirth" value="#{order.rentalOrder.customer.dateOfBirth}" required="true" >
             <f:convertDateTime pattern="dd-mm-yyyy" />
           </h:inputText>
             
           <label for="customer.companyName">Company:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="companyName" value="#{editOrder.rentalOrder.customer.companyName}" required="false" />
+          <h:inputText id="companyName" value="#{order.rentalOrder.customer.companyName}" required="false" />
           
           <h3><label>Clerk comments</label></h3>
           <h:panelGroup />
           <label for="clerkComments">Clerk comments</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputTextarea id="clerkComments" value="#{editOrder.rentalOrder.clerkComments}" required="false" />
+          <h:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
  
           <label>Approve Order?</label>
-          <h:selectBooleanCheckbox id="approved" value="#{editOrder.rentalOrder.approveStatus}" required="false" />
+          <h:selectBooleanCheckbox id="approved" value="#{order.rentalOrder.approveStatus}" required="false" />
                 
       </h:panelGrid>
-  	 <h:commandButton id="submit_button" value="Submit" action="#{editOrder.submitForm()}" />
+  	 <h:commandButton id="submit_button" value="Submit" action="#{order.submitForm()}" />
     </h:form>
          <script type="text/javascript">
          	$(function() {
@@ -140,9 +140,9 @@
                   }
                   else {
                     $("#submitForm\\:fleetComments").hide();
-                  	$("#submitForm\\:storeID").val("#{editOrder.rentalOrder.pickUpStore.storeID}");
-                    $("#submitForm\\:returnStore").val("#{editOrder.rentalOrder.returnStore.storeID}");
-                    $("#submitForm\\:car").val("#{editOrder.carID}");
+                  	$("#submitForm\\:storeID").val("#{order.rentalOrder.pickUpStore.storeID}");
+                    $("#submitForm\\:returnStore").val("#{order.rentalOrder.returnStore.storeID}");
+                    $("#submitForm\\:car").val("#{order.carID}");
                   }
          	});
         </script>
