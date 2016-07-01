@@ -53,6 +53,8 @@ public class ContractHandler {
 
   public void persistOrder(DelegateExecution delegateExecution) throws ParseException {
     // Create new order instance
+		System.out.println("Process instance ID " + businessProcess.getProcessInstanceId());
+		System.out.println("Execution ID: " + businessProcess.getExecutionId());
     RentalOrder rentalOrder = new RentalOrder();
 	
     // Get all process variables
