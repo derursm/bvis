@@ -49,12 +49,6 @@ public class RentalOrder implements Serializable {
 	@Temporal(TemporalType.DATE)
 	protected Date requestDate;
 	
-	protected double priceCars;
-	protected double priceInsurance_expected;
-	protected double priceInsurance_final;
-	protected int discount;
-	protected double price;
-	
 	public Date getRequestDate() {
 		return requestDate;
 	}
@@ -211,36 +205,5 @@ public class RentalOrder implements Serializable {
 	public void setApproveStatus(boolean approveStatus) {
 		this.approveStatus = approveStatus;
 	}
-	
-	public void setPriceCars(double priceCars) {
-		this.priceCars = priceCars;
-	}
-	public double getPriceCars() {
-		return this.priceCars;
-	}
-	public void setPriceInsurance_expected(double priceInsurance_expected) {
-		this.priceInsurance_expected = priceInsurance_expected;
-	}
-	public double getPriceInsurance_expected() {
-		return this.priceInsurance_expected;
-	}
-	public void setPriceInsurance_final(double priceInsurance_fina) {
-		this.priceInsurance_final = priceInsurance_fina;
-	}
-	public double getPriceInsurance_final() {
-		return this.priceInsurance_final;
-	}
-	public void setPrice(double price) {
-		this.price = price;
-	}
-	public double getPrice() {
-		return this.price;
-	}
-	public void setDiscount(int discount) {
-		this.discount = discount;
-	}
-	public int getDiscount() {
-		return this.discount;
-	}	
 	
 }

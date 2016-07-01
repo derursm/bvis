@@ -5,7 +5,6 @@ import org.camunda.bpm.bvis.Entities.Car;
 import org.camunda.bpm.bvis.Entities.Customer;
 import org.camunda.bpm.bvis.Entities.InsuranceType;
 import org.camunda.bpm.bvis.Entities.PickUpLocation;
-import org.camunda.bpm.bvis.Entities.PriceMap;
 import org.camunda.bpm.bvis.Entities.RentalOrder;
 import org.camunda.bpm.bvis.Util.SendHTMLEmail;
 import org.camunda.bpm.bvis.rest.send.service.SendInquiry;
@@ -18,17 +17,14 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Stateless
 @Named
@@ -90,11 +86,8 @@ public class ContractHandler {
     
     // Set order attributes
     rentalOrder.setCustomer(customer);
-    
-    Date PickUpDate = (Date) variables.get("pickUpDate");
-    rentalOrder.setPick_up_date(PickUpDate); 
-    Date ReturnDate = (Date) variables.get("returnDate");
-    rentalOrder.setReturn_date(ReturnDate);
+    rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
+    rentalOrder.setReturn_date((Date) variables.get("returnDate"));
     rentalOrder.setRequestDate(new Date());
     
     boolean isFleet = (Boolean) variables.get("fleet");
@@ -126,18 +119,7 @@ public class ContractHandler {
     rentalOrder.setApproveStatus(false);
     
     rentalOrder.setInsurance_ID(0);
-
-    //calculate price for cars
-    double price_per_day = 0.0;
-    for (Car carX:cars) {
-        price_per_day += PriceMap.getPrice(carX.getType());
-    }
-    long time_diff = ReturnDate.getTime() - PickUpDate.getTime();  
-    double no_of_days = (double) TimeUnit.DAYS.convert(time_diff, TimeUnit.MILLISECONDS);
-    double priceCars = price_per_day * no_of_days;
-    
-    rentalOrder.setPriceCars(priceCars);
-    
+   
     orderService.create(rentalOrder);
     System.out.println("Cars: " + rentalOrder.getCars());
     
