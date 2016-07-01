@@ -30,7 +30,9 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 public class SendInquiry implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	private static final String BASE_URI = "http://camunda-capitol.uni-muenster.de/partner-interface";
+	//private static final String BASE_URI = "http://camunda-capitol.uni-muenster.de/partner-interface/";
+	private static final String BASE_URI = "localhost:8080/bvis/api/";
+	
 	
 	@EJB
 	private OrderServiceBean orderService;

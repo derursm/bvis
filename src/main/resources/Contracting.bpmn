@@ -54,8 +54,8 @@
         <flowNodeRef>StartEvent_0m2odij</flowNodeRef>
         <flowNodeRef>SendTask_0zsnakw</flowNodeRef>
         <flowNodeRef>BoundaryEvent_10rjjgr</flowNodeRef>
-        <flowNodeRef>Task_0j5akwv</flowNodeRef>
         <flowNodeRef>SendTask_1rz1l70</flowNodeRef>
+        <flowNodeRef>ReceiveTask_1hxwo88</flowNodeRef>
       </lane>
       <lane id="sid-46A2FE9C-6D01-4534-84A5-4E615244916C" name="Clerk">
         <extensionElements>
@@ -82,7 +82,7 @@
       <incoming>SequenceFlow_1g70gey</incoming>
       <outgoing>SequenceFlow_19vljn8</outgoing>
     </sendTask>
-    <startEvent id="StartEvent_0m2odij" name="Rental inquiry received" camunda:formKey="app:index.jsf">
+    <startEvent id="StartEvent_0m2odij" name="Rental inquiry received" camunda:formKey="app:placeInquiry.jsf">
       <outgoing>SequenceFlow_1bi6h6c</outgoing>
     </startEvent>
     <exclusiveGateway id="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" name="Customer decision" gatewayDirection="Diverging">
@@ -277,8 +277,8 @@
       <incoming>SequenceFlow_0ds9e05</incoming>
       <messageEventDefinition id="sid-fe6a39f2-0878-42e4-b029-803d444ee185" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}" />
     </endEvent>
-    <sequenceFlow id="sid-DC881259-C4C3-4F81-9489-D39066179E85" name="" isImmediate="true" sourceRef="Task_0j5akwv" targetRef="sid-22422370-BA2B-4DFF-9C95-95F2C0FDA602" />
-    <boundaryEvent id="BoundaryEvent_10rjjgr" name="Wait one day" attachedToRef="Task_0j5akwv">
+    <sequenceFlow id="sid-DC881259-C4C3-4F81-9489-D39066179E85" name="" isImmediate="true" sourceRef="ReceiveTask_1hxwo88" targetRef="sid-22422370-BA2B-4DFF-9C95-95F2C0FDA602" />
+    <boundaryEvent id="BoundaryEvent_10rjjgr" name="Wait one day" attachedToRef="ReceiveTask_1hxwo88">
       <outgoing>SequenceFlow_0qkx10v</outgoing>
       <timerEventDefinition>
         <timeDuration xsi:type="tFormalExpression">P1D</timeDuration>
@@ -345,9 +345,9 @@
       <incoming>sid-F37A7DA7-F0E9-4BC5-9A81-C362ABAAD319</incoming>
       <outgoing>SequenceFlow_02w5sdm</outgoing>
     </exclusiveGateway>
-    <sequenceFlow id="SequenceFlow_02w5sdm" sourceRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" targetRef="Task_0j5akwv" />
+    <sequenceFlow id="SequenceFlow_02w5sdm" sourceRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" targetRef="ReceiveTask_1hxwo88" />
     <sequenceFlow id="sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5" name="" sourceRef="sid-28A92D67-ECA0-4016-B034-3EC0FE97414E" targetRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" />
-    <sendTask id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" name="Transmit details to insurance provider" implementation="##WebService" camunda:expression="${contractHandler.sendInquiryToCapitol(execution)}">
+    <sendTask id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" name="Transmit details to insurance provider" implementation="##WebService" camunda:expression="${true}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -495,10 +495,6 @@
     </businessRuleTask>
     <sequenceFlow id="sid-75A9FF7F-612E-4D90-AF0F-BB9493A0F7CA" name="" isImmediate="true" sourceRef="sid-412CF1D5-8B80-45E2-A7CE-C2BFF4303299" targetRef="sid-BEE10A82-D4C3-4E41-A510-C319F79F42AB" />
     <sequenceFlow id="sid-53AB7A90-02F2-468D-8BF4-BE03E025A2E3" name="" isImmediate="true" sourceRef="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" targetRef="sid-412CF1D5-8B80-45E2-A7CE-C2BFF4303299" />
-    <task id="Task_0j5akwv" name="Wait for insurance response">
-      <incoming>SequenceFlow_02w5sdm</incoming>
-      <outgoing>sid-DC881259-C4C3-4F81-9489-D39066179E85</outgoing>
-    </task>
     <sendTask id="SendTask_1rz1l70" name="Finalize contract" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}">
       <extensionElements>
         <camunda:inputOutput>
@@ -508,6 +504,10 @@
       <incoming>SequenceFlow_12109qr</incoming>
       <outgoing>SequenceFlow_1f1jh9i</outgoing>
     </sendTask>
+    <receiveTask id="ReceiveTask_1hxwo88" name="Wait for insurance response">
+      <incoming>SequenceFlow_02w5sdm</incoming>
+      <outgoing>sid-DC881259-C4C3-4F81-9489-D39066179E85</outgoing>
+    </receiveTask>
   </process>
   <message id="Message_1x8fpfj" name="Message_2ho4uos" />
   <message id="Message_06rmom7" name="Message_1mfr747" />
@@ -1021,11 +1021,11 @@
           <omgdc:Bounds x="170" y="1127.9047880869862" width="12" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Task_0j5akwv_di" bpmnElement="Task_0j5akwv">
-        <omgdc:Bounds x="1927" y="751" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="SendTask_1rz1l70_di" bpmnElement="SendTask_1rz1l70">
         <omgdc:Bounds x="2506" y="751" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ReceiveTask_1hxwo88_di" bpmnElement="ReceiveTask_1hxwo88">
+        <omgdc:Bounds x="1927" y="751" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="sid-ebf35eae-1f3a-41f9-b9b0-355e4191caaa">
