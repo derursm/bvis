@@ -46,9 +46,9 @@ public class ApplicationInitialiser {
 				"Carretera del Aeropuerto, s/n", "", "46940", "Valencia", "Spain");
 		pickUpLocationService.create(val);
 		
-		Car aud = createCar("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123456", CarType.TYPE1, true);
+		Car aud = createCar("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123456", CarType.car, true);
 		carService.create(aud);
-		Car toy = createCar("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123456", CarType.TYPE1, true);
+		Car toy = createCar("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123456", CarType.car, true);
 		carService.create(toy);
 
 		// DeliveryOrder order = createOrderFor(johnDoe);

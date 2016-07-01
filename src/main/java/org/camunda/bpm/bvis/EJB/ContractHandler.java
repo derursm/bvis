@@ -2,7 +2,9 @@ package org.camunda.bpm.bvis.EJB;
 
 import org.apache.commons.io.IOUtils;
 import org.camunda.bpm.bvis.Entities.Car;
+import org.camunda.bpm.bvis.Entities.CarPriceMap;
 import org.camunda.bpm.bvis.Entities.Customer;
+import org.camunda.bpm.bvis.Entities.InsurancePriceMap;
 import org.camunda.bpm.bvis.Entities.InsuranceType;
 import org.camunda.bpm.bvis.Entities.PickUpLocation;
 import org.camunda.bpm.bvis.Entities.RentalOrder;
@@ -21,10 +23,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @Stateless
 @Named
@@ -86,14 +90,14 @@ public class ContractHandler {
     
     // Set order attributes
     rentalOrder.setCustomer(customer);
-    rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
-    rentalOrder.setReturn_date((Date) variables.get("returnDate"));
     rentalOrder.setRequestDate(new Date());
     
     boolean isFleet = (Boolean) variables.get("fleet");
     if (!isFleet) {
-    	rentalOrder.setPick_up_date((Date) variables.get("pickUpDate"));
-    	rentalOrder.setReturn_date((Date) variables.get("returnDate"));
+        Date PickUpDate = (Date) variables.get("pickUpDate");
+        rentalOrder.setPick_up_date(PickUpDate); 
+        Date ReturnDate = (Date) variables.get("returnDate");
+        rentalOrder.setReturn_date(ReturnDate);
     
     	Long pickUpLocationId = (Long.parseLong((String)variables.get("pickUpLoc")));
     	Long returnStoreId = (Long.parseLong((String)variables.get("returnStore")));
@@ -111,6 +115,33 @@ public class ContractHandler {
         cars.add(car);
         
         rentalOrder.setCars((Collection<Car>) cars);
+        
+        //calculate price for cars
+        double price_per_day = 0.0;
+        for (Car carX:cars) {
+            price_per_day += CarPriceMap.getPrice(carX.getType());
+        }
+        long time_diff = ReturnDate.getTime() - PickUpDate.getTime();  
+        double no_of_days = (double) TimeUnit.DAYS.convert(time_diff, TimeUnit.MILLISECONDS);
+        double priceCars = price_per_day * no_of_days;
+        
+        rentalOrder.setPriceCars(priceCars);    
+            
+        System.out.println("priceCars: " + priceCars); 
+        
+        //calculate price for insurance
+        double carTypeFactor = InsurancePriceMap.getInsuranceFactor(car.getType());
+        double insuranceTypeFactor = InsurancePriceMap.getInsuranceFactor(insuranceType);
+        int ps = car.getPs();
+        int current_year = Calendar.getInstance().get(Calendar.YEAR);
+        int construction_year = car.getConstructionYear();
+        int year_diff = current_year - construction_year;
+   
+        double price_for_insurance = (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + 20 - Math.pow(1.2, year_diff) ;
+        
+        System.out.println("expected_price_for_insurance: " + price_for_insurance);
+        
+        rentalOrder.setPriceInsurance_expected(price_for_insurance);
     }
     rentalOrder.setFleetRental(isFleet);
     rentalOrder.setInquiryText((String) variables.get("inquiryText"));
