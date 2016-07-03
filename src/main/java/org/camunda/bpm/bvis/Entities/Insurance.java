@@ -56,6 +56,9 @@ public class Insurance implements Serializable {
 
 	@OneToOne(mappedBy = "insurance")
 	protected RentalOrder order;
+
+	@OneToOne(mappedBy = "insurance")
+	protected Claim claim;
 	
 	
 	public InsuranceAnswer getInsuranceAnswer() {

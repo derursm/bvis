@@ -37,10 +37,6 @@ public class SendInquiry implements Serializable{
 	@EJB
 	private OrderServiceBean orderService;
 	
-	@Inject
-	private BusinessProcess businessProcess;
-
-	
 	public String sendInquiry(RentalOrder entityOrder, String processInstanceID) {
 		// parse RentalOrder object to Order object (which represents the agreed upon JSON format)
 		System.out.println("PARSING SENDING OBJECT");

@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
@@ -52,6 +53,39 @@ public class Claim implements Serializable {
 	protected boolean reportedByCustomer;
 	@NotNull
 	protected boolean towingServiceNeeded;
+	
+	@NotNull
+	protected String vehicleIdentificationNumber;
+	
+	public String getVehicleIdentificationNumber() {
+		return vehicleIdentificationNumber;
+	}
+	public void setVehicleIdentificationNumber(String vehicleIdentificationNumber) {
+		this.vehicleIdentificationNumber = vehicleIdentificationNumber;
+	}
+	public boolean isReportedByCustomer() {
+		return reportedByCustomer;
+	}
+	public void setReportedByCustomer(boolean reportedByCustomer) {
+		this.reportedByCustomer = reportedByCustomer;
+	}
+	public boolean isTowingServiceNeeded() {
+		return towingServiceNeeded;
+	}
+	public void setTowingServiceNeeded(boolean towingServiceNeeded) {
+		this.towingServiceNeeded = towingServiceNeeded;
+	}
+	public ClaimInsurance getInsurance() {
+		return insurance;
+	}
+	public void setInsurance(ClaimInsurance insurance) {
+		this.insurance = insurance;
+	}
+	public void setInvolvedParties(Collection<InvolvedParty> involvedParties) {
+		this.involvedParties = involvedParties;
+	}
+	@OneToOne(cascade = {DETACH,MERGE,PERSIST,REFRESH})
+	protected ClaimInsurance insurance;
 	
 	protected int insurance_decision;
 	protected int claim_status;

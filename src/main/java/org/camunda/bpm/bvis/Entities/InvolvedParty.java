@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import static javax.persistence.CascadeType.DETACH;
@@ -14,6 +16,7 @@ import static javax.persistence.CascadeType.REFRESH;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity
 public class InvolvedParty implements Serializable {
@@ -41,8 +44,10 @@ public class InvolvedParty implements Serializable {
 	protected String city;
 	@NotNull
 	protected String country;
+	
 	@NotNull
-	protected String date_of_birth;
+	@Temporal(TemporalType.DATE)
+	protected Date date_of_birth;
 
 	protected String company;
 	
@@ -117,10 +122,10 @@ public class InvolvedParty implements Serializable {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public String getDate_of_birth() {
+	public Date getDate_of_birth() {
 		return date_of_birth;
 	}
-	public void setDate_of_birth(String date_of_birth) {
+	public void setDate_of_birth(Date date_of_birth) {
 		this.date_of_birth = date_of_birth;
 	}
 	public String getCompany() {
