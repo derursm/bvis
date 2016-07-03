@@ -50,12 +50,11 @@
         <flowNodeRef>sid-22422370-BA2B-4DFF-9C95-95F2C0FDA602</flowNodeRef>
         <flowNodeRef>sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30</flowNodeRef>
         <flowNodeRef>sid-2C73E35B-A2C4-4486-9A41-FBF5365F8FB6</flowNodeRef>
-        <flowNodeRef>sid-28A92D67-ECA0-4016-B034-3EC0FE97414E</flowNodeRef>
         <flowNodeRef>StartEvent_0m2odij</flowNodeRef>
         <flowNodeRef>SendTask_0zsnakw</flowNodeRef>
-        <flowNodeRef>BoundaryEvent_10rjjgr</flowNodeRef>
         <flowNodeRef>SendTask_1rz1l70</flowNodeRef>
         <flowNodeRef>ReceiveTask_InsurancDetails</flowNodeRef>
+        <flowNodeRef>BoundaryEvent_02bjwpx</flowNodeRef>
       </lane>
       <lane id="sid-46A2FE9C-6D01-4534-84A5-4E615244916C" name="Clerk">
         <extensionElements>
@@ -72,6 +71,7 @@
         <flowNodeRef>sid-7EBAD71E-27E6-4373-897F-29709FAC45A0</flowNodeRef>
         <flowNodeRef>sid-59A05E34-58CE-4658-8FBE-A237E3F90FC0</flowNodeRef>
         <flowNodeRef>sid-C38E09EF-798B-4838-9E9D-3E6AC0334408</flowNodeRef>
+        <flowNodeRef>UserTask_0nt3b79</flowNodeRef>
       </lane>
     </laneSet>
     <userTask id="UserTask_1pqacb0" name="Negotiate customer requirements">
@@ -112,15 +112,6 @@
       <incoming>sid-ABA99636-8477-41D6-A3F5-6A490012A4A7</incoming>
       <outgoing>SequenceFlow_177ug14</outgoing>
     </userTask>
-    <sendTask id="sid-28A92D67-ECA0-4016-B034-3EC0FE97414E" name="Send reminder" implementation="##WebService" camunda:expression="${true}">
-      <extensionElements>
-        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
-        <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
-        <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
-      </extensionElements>
-      <incoming>SequenceFlow_0qkx10v</incoming>
-      <outgoing>sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5</outgoing>
-    </sendTask>
     <endEvent id="sid-C1DDD379-D98D-405F-AEE1-0ED3837D3267" name="Send&#10;rejection">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
@@ -281,13 +272,6 @@
     <sequenceFlow id="sid-DC881259-C4C3-4F81-9489-D39066179E85" name="" isImmediate="true" sourceRef="ReceiveTask_InsurancDetails" targetRef="sid-22422370-BA2B-4DFF-9C95-95F2C0FDA602">
       <conditionExpression xsi:type="tFormalExpression">${contractHandler.handleInsuranceResponse(execution)}</conditionExpression>
     </sequenceFlow>
-    <boundaryEvent id="BoundaryEvent_10rjjgr" name="Wait one day" attachedToRef="ReceiveTask_InsurancDetails">
-      <outgoing>SequenceFlow_0qkx10v</outgoing>
-      <timerEventDefinition>
-        <timeDuration xsi:type="tFormalExpression">P1D</timeDuration>
-      </timerEventDefinition>
-    </boundaryEvent>
-    <sequenceFlow id="SequenceFlow_0qkx10v" sourceRef="BoundaryEvent_10rjjgr" targetRef="sid-28A92D67-ECA0-4016-B034-3EC0FE97414E" />
     <sendTask id="SendTask_0aqkj01" name="Update Car Asset Management System" camunda:expression="${true}">
       <incoming>sid-5E4184E2-80D6-44A1-B3D4-5B68CB94A315</incoming>
       <outgoing>sid-FE7309DA-14BD-427F-A2CB-E9CD374F3FA4</outgoing>
@@ -349,7 +333,7 @@
       <outgoing>SequenceFlow_02w5sdm</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="SequenceFlow_02w5sdm" sourceRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" targetRef="ReceiveTask_InsurancDetails" />
-    <sequenceFlow id="sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5" name="" sourceRef="sid-28A92D67-ECA0-4016-B034-3EC0FE97414E" targetRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" />
+    <sequenceFlow id="sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5" name="" sourceRef="UserTask_0nt3b79" targetRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" />
     <sendTask id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" name="Transmit details to insurance provider" implementation="##WebService" camunda:expression="${contractHandler.sendInquiryToCapitol(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
@@ -511,6 +495,17 @@
       <incoming>SequenceFlow_02w5sdm</incoming>
       <outgoing>sid-DC881259-C4C3-4F81-9489-D39066179E85</outgoing>
     </receiveTask>
+    <userTask id="UserTask_0nt3b79" name="Send reminder">
+      <incoming>SequenceFlow_1880bap</incoming>
+      <outgoing>sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5</outgoing>
+    </userTask>
+    <sequenceFlow id="SequenceFlow_1880bap" sourceRef="BoundaryEvent_02bjwpx" targetRef="UserTask_0nt3b79" />
+    <boundaryEvent id="BoundaryEvent_02bjwpx" attachedToRef="ReceiveTask_InsurancDetails">
+      <outgoing>SequenceFlow_1880bap</outgoing>
+      <timerEventDefinition>
+        <timeDuration xsi:type="tFormalExpression">PT10S</timeDuration>
+      </timerEventDefinition>
+    </boundaryEvent>
   </process>
   <message id="Message_1x8fpfj" name="Message_2ho4uos" />
   <message id="Message_06rmom7" name="Message_1mfr747" />
@@ -558,12 +553,6 @@
         <omgdc:Bounds x="2130" y="1121" width="100" height="80" />
         <bpmndi:BPMNLabel labelStyle="sid-b69e93da-16c1-4f4f-a33f-7b343427a22d">
           <omgdc:Bounds x="1921.8528343032372" y="1068.4047880869862" width="87.17141723632812" height="12" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="sid-28A92D67-ECA0-4016-B034-3EC0FE97414E_gui" bpmnElement="sid-28A92D67-ECA0-4016-B034-3EC0FE97414E">
-        <omgdc:Bounds x="1977" y="927" width="100" height="80" />
-        <bpmndi:BPMNLabel labelStyle="sid-b69e93da-16c1-4f4f-a33f-7b343427a22d">
-          <omgdc:Bounds x="1947.2998646931214" y="915" width="79.4571533203125" height="12" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="sid-C1DDD379-D98D-405F-AEE1-0ED3837D3267_gui" bpmnElement="sid-C1DDD379-D98D-405F-AEE1-0ED3837D3267">
@@ -749,19 +738,6 @@
         <omgdi:waypoint xsi:type="omgdc:Point" x="2027" y="792" />
         <omgdi:waypoint xsi:type="omgdc:Point" x="2224" y="791" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="BoundaryEvent_10rjjgr_di" bpmnElement="BoundaryEvent_10rjjgr">
-        <omgdc:Bounds x="2009" y="813" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="1982" y="849" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0qkx10v_di" bpmnElement="SequenceFlow_0qkx10v">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="2027" y="849" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="2027" y="927" />
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds x="1937" y="815" width="90" height="20" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="SendTask_0aqkj01_di" bpmnElement="SendTask_0aqkj01">
         <omgdc:Bounds x="2743" y="647" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -835,8 +811,8 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5_gui" bpmnElement="sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="1977" y="953" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="1878" y="953" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1977" y="1147" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1878" y="1147" />
         <omgdi:waypoint xsi:type="omgdc:Point" x="1878" y="811" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD_gui" bpmnElement="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD">
@@ -1030,6 +1006,24 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ReceiveTask_1hxwo88_di" bpmnElement="ReceiveTask_InsurancDetails">
         <omgdc:Bounds x="1927" y="751" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0nt3b79_di" bpmnElement="UserTask_0nt3b79">
+        <omgdc:Bounds x="1977" y="1121" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1880bap_di" bpmnElement="SequenceFlow_1880bap">
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1972" y="849" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1972" y="976" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="2027" y="976" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="2027" y="1121" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1957" y="966" width="90" height="20" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BoundaryEvent_02bjwpx_di" bpmnElement="BoundaryEvent_02bjwpx">
+        <omgdc:Bounds x="1954" y="813" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds x="1927" y="849" width="90" height="20" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="sid-ebf35eae-1f3a-41f9-b9b0-355e4191caaa">

@@ -316,6 +316,11 @@ public class ContractHandler {
 	  // return true to trigger continuation
 	  return true;
   }
+  
+  public void sendReminder() {
+	  //TODO insert business logic
+	  //TODO create form
+  }
 }
 
 
