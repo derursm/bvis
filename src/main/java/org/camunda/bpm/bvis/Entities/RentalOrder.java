@@ -44,6 +44,8 @@ public class RentalOrder implements Serializable {
 	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER)
 	protected Collection<Car> cars;
 	protected long insuranceID;
+	
+	@OneToOne(cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER)
 	protected Insurance insurance;
 	
 	@Temporal(TemporalType.DATE)

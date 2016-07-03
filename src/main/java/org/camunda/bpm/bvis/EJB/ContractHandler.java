@@ -4,6 +4,8 @@ import org.apache.commons.io.IOUtils;
 import org.camunda.bpm.bvis.Entities.Car;
 import org.camunda.bpm.bvis.Entities.CarPriceMap;
 import org.camunda.bpm.bvis.Entities.Customer;
+import org.camunda.bpm.bvis.Entities.Insurance;
+import org.camunda.bpm.bvis.Entities.InsuranceAnswer;
 import org.camunda.bpm.bvis.Entities.InsurancePriceMap;
 import org.camunda.bpm.bvis.Entities.InsuranceType;
 import org.camunda.bpm.bvis.Entities.PickUpLocation;
@@ -21,6 +23,7 @@ import javax.inject.Named;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -152,6 +155,16 @@ public class ContractHandler {
     rentalOrder.setApproveStatus(false);
     
     rentalOrder.setInsurance_ID(0);
+    
+    // TODO GENERATE A PROPER INSURANCE. THIS IS JUST A DUMMY FOR TESTING PURPOSES
+    Insurance insurance = new Insurance();
+    insurance.setDeductible(new BigDecimal(1000));
+    insurance.setEstimatedCosts(new BigDecimal(20));
+    insurance.setPickUpDate(new Date());
+    insurance.setReturnDate(new Date());
+    insurance.setOrder(rentalOrder);
+    insurance.setType(InsuranceType.partial);
+    rentalOrder.setInsurance(insurance);
    
     orderService.create(rentalOrder);
     System.out.println("Cars: " + rentalOrder.getCars());
@@ -160,7 +173,8 @@ public class ContractHandler {
     delegateExecution.removeVariables(variables.keySet());
 
     // Add newly created order id as process variable
-    delegateExecution.setVariable("orderId", rentalOrder.getId());   
+    delegateExecution.setVariable("orderId", rentalOrder.getId());
+    System.out.println("CREATED ORDER WITH ORDER ID: " + rentalOrder.getId());
   }
 
   public RentalOrder getOrder(Long orderId) {
@@ -274,6 +288,32 @@ public class ContractHandler {
 	  SendInquiry sender = new SendInquiry();
 	  RentalOrder entityOrder  = orderService.getOrder((Long) businessProcess.getVariable("orderId"));
 	  sender.sendInquiry(entityOrder, delegateExecution.getActivityInstanceId());
+  }
+  
+  public boolean handleInsuranceResponse(DelegateExecution delegateExecution) {
+	  Map<String, Object> variables = delegateExecution.getVariables();
+	  int orderID = Integer.parseInt(variables.get("orderID").toString());
+	  RentalOrder order = orderService.getOrder(orderID);
+	  Insurance insurance = order.getInsurance();
+	  insurance.setActualCosts(new BigDecimal(Double.
+			  parseDouble(variables.get("finalPrice").toString())));
+	  insurance.setInquiryText(variables.get("inquiryText").toString());
+	  int insuranceAnswer = Integer.parseInt(variables.get("insuranceResult").toString());
+	  if (insuranceAnswer == 0) {
+		  insurance.setInsuranceAnswer(InsuranceAnswer.REJECTED);
+		  System.out.println("INSURANCE REJECTED");
+	  }
+	  else if (insuranceAnswer == 1) {
+		  insurance.setInsuranceAnswer(InsuranceAnswer.ACCEPTED);
+		  System.out.println("INSURANCE ACCEPTED");
+	  }
+	  else {
+		  insurance.setInsuranceAnswer(InsuranceAnswer.ADJUSTED);
+		  System.out.println("INSURANCE ADJUSTED");
+	  }
+	  delegateExecution.removeVariables();
+	  // return true to trigger continuation
+	  return true;
   }
 }
 
