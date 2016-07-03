@@ -31,7 +31,7 @@ public class SendInquiry implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	//private static final String BASE_URI = "http://camunda-capitol.uni-muenster.de/partner-interface/";
-	private static final String BASE_URI = "localhost:8080/bvis/api/";
+	private static final String BASE_URI = "http://camunda-capitol.uni-muenster.de/partner-interface/";
 	
 	
 	@EJB
@@ -41,7 +41,7 @@ public class SendInquiry implements Serializable{
 	private BusinessProcess businessProcess;
 
 	
-	public void sendInquiry(RentalOrder entityOrder, String processInstanceID) {
+	public String sendInquiry(RentalOrder entityOrder, String processInstanceID) {
 		// parse RentalOrder object to Order object (which represents the agreed upon JSON format)
 		System.out.println("PARSING SENDING OBJECT");
 		User user = parseUser(entityOrder);
@@ -57,7 +57,8 @@ public class SendInquiry implements Serializable{
 		RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 		ResteasyWebTarget target = new ResteasyClientBuilder().build().target(BASE_URI);
 		SendInquiryClient senderClient = target.proxy(SendInquiryClient.class);
-		senderClient.sendInquiry(contractDetails);
+		String result = senderClient.sendInquiry(contractDetails);
+		return result;
 	}
 	
 	/**

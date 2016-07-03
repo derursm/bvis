@@ -350,7 +350,7 @@
     </exclusiveGateway>
     <sequenceFlow id="SequenceFlow_02w5sdm" sourceRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" targetRef="ReceiveTask_InsurancDetails" />
     <sequenceFlow id="sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5" name="" sourceRef="sid-28A92D67-ECA0-4016-B034-3EC0FE97414E" targetRef="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" />
-    <sendTask id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" name="Transmit details to insurance provider" implementation="##WebService" camunda:expression="${true}">
+    <sendTask id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" name="Transmit details to insurance provider" implementation="##WebService" camunda:expression="${contractHandler.sendInquiryToCapitol(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />

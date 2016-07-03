@@ -12,5 +12,5 @@ public interface SendInquiryClient {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void sendInquiry(ContractDetailsDTO contractDetails);
+	public String sendInquiry(ContractDetailsDTO contractDetails);
 }

@@ -284,10 +284,11 @@ public class ContractHandler {
   
   public void sendInquiryToCapitol(DelegateExecution delegateExecution) {
 	  System.out.println("SENDING TO CAPITOL INITIALIZED");	 
-	  System.out.println("BUSINESS PROCESS: " + businessProcess);
 	  SendInquiry sender = new SendInquiry();
 	  RentalOrder entityOrder  = orderService.getOrder((Long) businessProcess.getVariable("orderId"));
-	  sender.sendInquiry(entityOrder, delegateExecution.getActivityInstanceId());
+	  String result = sender.sendInquiry(entityOrder, delegateExecution.getActivityInstanceId());
+	  System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
+	  //TODO handle failures
   }
   
   public boolean handleInsuranceResponse(DelegateExecution delegateExecution) {
