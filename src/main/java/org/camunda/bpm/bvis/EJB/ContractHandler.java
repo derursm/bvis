@@ -312,7 +312,9 @@ public class ContractHandler {
 		  insurance.setInsuranceAnswer(InsuranceAnswer.ADJUSTED);
 		  System.out.println("INSURANCE ADJUSTED");
 	  }
+	  order.setInsurance(insurance);
 	  delegateExecution.removeVariables();
+	  orderService.updateOrder(order);
 	  // return true to trigger continuation
 	  return true;
   }

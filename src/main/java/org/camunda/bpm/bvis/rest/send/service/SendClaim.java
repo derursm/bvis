@@ -10,7 +10,6 @@ import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
 import org.camunda.bpm.bvis.Entities.Claim;
-import org.camunda.bpm.bvis.Entities.Insurance;
 import org.camunda.bpm.bvis.Entities.InvolvedParty;
 import org.camunda.bpm.bvis.rest.send.dto.ClaimDetailsDTO;
 import org.camunda.bpm.bvis.rest.send.dto.ClaimInsurance;
@@ -21,19 +20,18 @@ import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 @ManagedBean
-@ConversationScoped
+//@ConversationScoped
 @Named
-public class SendClaim implements Serializable {
+public class SendClaim {
 
 	private static final String BASE_URI = "http://camunda-capitol.uni-muenster.de/partner-interface/";
 	
-	public String sendClaim(Claim claim, String processInstanceID) {
+	public String sendClaim(org.camunda.bpm.bvis.Entities.Claim claim, String processInstanceID) {
 		ClaimDetailsDTO claimDetails = new ClaimDetailsDTO();
 		claimDetails.setProcessinstance_id_bvis(processInstanceID);
 		claimDetails.setRequest_date(Calendar.getInstance());
-		ClaimInsurance claimInsurance = this.parseClaimInsurance(claim);
 		Collection<Involved_party> involvedParties = this.parseInvolvedParties(claim);
-		claimDetails.setClaim(this.parseClaim(claim, claimInsurance, involvedParties));
+		claimDetails.setClaim(this.parseClaim(claim, involvedParties));
 		RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 		ResteasyWebTarget target = new ResteasyClientBuilder().build().target(BASE_URI);
 		SendClaimClient senderClient = target.proxy(SendClaimClient.class);
@@ -43,7 +41,6 @@ public class SendClaim implements Serializable {
 	
 	private org.camunda.bpm.bvis.rest.send.dto.Claim parseClaim(
 			org.camunda.bpm.bvis.Entities.Claim entityClaim,
-			ClaimInsurance claimInsurance,
 			Collection<Involved_party> involvedParties) {
 		org.camunda.bpm.bvis.rest.send.dto.Claim claim = new org.camunda.bpm.bvis.rest.send.dto.Claim();
 		claim.setClaim_description(entityClaim.getClaimDescription());
@@ -84,18 +81,6 @@ public class SendClaim implements Serializable {
 			involvedParties.add(party);
 		}
 		return involvedParties;
-	}
-	
-	private ClaimInsurance parseClaimInsurance(Claim claim) {
-		ClaimInsurance insurance = new ClaimInsurance();
-		org.camunda.bpm.bvis.Entities.ClaimInsurance entityInsurance = claim.getInsurance();
-		insurance.setCity(entityInsurance.getCity());
-		insurance.setCompany(entityInsurance.getCompany());
-		insurance.setCountry(entityInsurance.getCountry());
-		insurance.setHouse_number(entityInsurance.getHouse_number());
-		insurance.setPostcode(entityInsurance.getPostcode());
-		insurance.setStreet(entityInsurance.getStreet());
-		return insurance;
 	}
 	
 	private ClaimInsurance parseClaimInsuranceForInvolvedParty(InvolvedParty party) {

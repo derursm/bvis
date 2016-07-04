@@ -28,9 +28,6 @@ public class ClaimInsurance implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected Long claimInsuranceID;
-	
-	@OneToOne(mappedBy = "insurance")
-	protected Claim claim;
 
 	public ClaimInsurance(){
 		super();

@@ -1,14 +1,10 @@
 package org.camunda.bpm.bvis.rest.send.service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.camunda.bpm.bvis.EJB.OrderServiceBean;
@@ -16,21 +12,17 @@ import org.camunda.bpm.bvis.Entities.Customer;
 import org.camunda.bpm.bvis.Entities.RentalOrder;
 import org.camunda.bpm.bvis.rest.send.dto.ContractDetailsDTO;
 import org.camunda.bpm.bvis.rest.send.dto.Order;
-import org.camunda.bpm.bvis.rest.send.dto.Insurance;
 import org.camunda.bpm.bvis.rest.send.dto.User;
-import org.camunda.bpm.engine.cdi.BusinessProcess;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 @ManagedBean
-@ConversationScoped
+//@ConversationScoped
 @Named
-public class SendInquiry implements Serializable{
+public class SendInquiry {
 
-	private static final long serialVersionUID = 1L;
-	//private static final String BASE_URI = "http://camunda-capitol.uni-muenster.de/partner-interface/";
 	private static final String BASE_URI = "http://camunda-capitol.uni-muenster.de/partner-interface/";
 	
 	

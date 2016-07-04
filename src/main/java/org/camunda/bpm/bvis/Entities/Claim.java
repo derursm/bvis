@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,6 +37,20 @@ public class Claim implements Serializable {
 	protected Date damageDate;
 	@Min(value=0)
 	protected BigDecimal workshopPrice;
+	@Min(value=0)
+	protected BigDecimal customerCosts;
+	
+	@OneToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "claim")
+	protected Collection<ClaimReview> claimReviews;
+	
+	
+	public BigDecimal getCustomerCosts() {
+		return customerCosts;
+	}
+	public void setCustomerCosts(BigDecimal customerCosts) {
+		this.customerCosts = customerCosts;
+	}
+
 	@NotNull
 	protected String claimDescription;
 	@Min(value=0)
@@ -75,20 +90,12 @@ public class Claim implements Serializable {
 	public void setTowingServiceNeeded(boolean towingServiceNeeded) {
 		this.towingServiceNeeded = towingServiceNeeded;
 	}
-	public ClaimInsurance getInsurance() {
-		return insurance;
-	}
-	public void setInsurance(ClaimInsurance insurance) {
-		this.insurance = insurance;
-	}
 	public void setInvolvedParties(Collection<InvolvedParty> involvedParties) {
 		this.involvedParties = involvedParties;
 	}
-	@OneToOne(cascade = {DETACH,MERGE,PERSIST,REFRESH})
-	protected ClaimInsurance insurance;
 	
 	protected int insurance_decision;
-	protected int claim_status;
+	protected ClaimStatus claim_status;
 	protected String claim_response_description_from_Capitol;
 	protected String claim_remarks_from_Bvis;
 	
@@ -98,10 +105,10 @@ public class Claim implements Serializable {
 	public void setInsurance_decision(int insurance_decision) {
 		this.insurance_decision = insurance_decision;
 	}
-	public int getClaim_status() {
+	public ClaimStatus getClaim_status() {
 		return claim_status;
 	}
-	public void setClaim_status(int claim_status) {
+	public void setClaim_status(ClaimStatus claim_status) {
 		this.claim_status = claim_status;
 	}
 	public String getClaim_response_description_from_Capitol() {

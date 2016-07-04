@@ -24,4 +24,18 @@ public class ClaimServiceBean {
 	public void updateClaim(Claim claim) {
 		em.merge(claim);
 	}
+	
+	public ClaimReview createClaimReview(Claim claim) {
+		em.persist(claim);
+		em.flush();
+		return claim;
+	}
+	
+	public Claim getClaim(long id) {
+		return em.find(Claim.class, id);
+	}
+	
+	public void updateClaim(Claim claim) {
+		em.merge(claim);
+	}
 }

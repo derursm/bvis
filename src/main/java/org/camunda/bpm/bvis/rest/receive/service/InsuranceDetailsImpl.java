@@ -1,6 +1,7 @@
 package org.camunda.bpm.bvis.rest.receive.service;
 
 import javax.inject.Inject;
+import javax.ws.rs.core.Response;
 
 import org.camunda.bpm.bvis.rest.receive.dto.InsuranceAnswer;
 import org.camunda.bpm.engine.RuntimeService;
@@ -16,17 +17,20 @@ public class InsuranceDetailsImpl implements InsuranceDetails {
 	private RuntimeService runtimeService;
 	
 	@Override
-	public void receiveAnswer(InsuranceAnswer insuranceAnswer) {
+	public Response receiveAnswer(InsuranceAnswer insuranceAnswer) {
 		String processInstanceID = insuranceAnswer.getProcessInstanceIDBVIS();
-		System.out.println("Insurance answer received");
-		System.out.println("ASSOCIATE WITH CORRECT EXECUTION");
-		businessProcess.associateExecutionById(processInstanceID);
-		System.out.println("ASSOCIATION SUCCESSFUL");
-		System.out.println("GET EXECUTION");
+		System.out.println("INSURANCE ANSWER RECEIVED");
+		try {
+			businessProcess.associateExecutionById(processInstanceID);
+		}
+		catch (Exception e) {
+			System.out.println("WRONG PROCESS INSTANCE ID RETURNED BY INSURANCE");
+			Response response = Response.ok("Wrong process instance ID").build();
+			return response;
+		}
 		Execution execution = runtimeService.createExecutionQuery().
 				processInstanceId(processInstanceID).
 				activityId("ReceiveTask_InsurancDetails").singleResult();
-		System.out.println("RESUME PROCESS");
 		// place insurance answer results into runtime execution variables
 		runtimeService.setVariable(execution.getId(), "insuranceResult", 
 				insuranceAnswer.getOrder().getResult());
@@ -37,7 +41,9 @@ public class InsuranceDetailsImpl implements InsuranceDetails {
 		runtimeService.setVariable(execution.getId(), "inquiryText", 
 				insuranceAnswer.getOrder().getInquiryText());
 		runtimeService.signal(execution.getId());
-		System.out.println("RESUME PROCESS SUCCESSFUL");
+
+		Response response = Response.ok("No errors").build();
+		return response;
 	}
 
 }
