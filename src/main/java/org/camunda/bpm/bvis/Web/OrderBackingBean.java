@@ -75,12 +75,20 @@ public class OrderBackingBean implements Serializable {
 		return carService.getAllCars();
 	}
 	
+	public Collection<String> getAllCarNames() {
+		return carService.getAllCarNames();
+	}
+	
 	public Collection<PickUpLocation> getAllPickUpLocations() {
 		return locationService.getAllLocations();
 	}
 	
 	public PickUpLocation getPickUpLocation() {
 		return locationService.getPickUpLocation(new Long(2));
+	}
+	
+	public Collection<String> getAllPickUpLocationNames() {
+		return locationService.getAllLocationNames();
 	}
 	
 	public InsuranceType[] getInsuranceTypes() {

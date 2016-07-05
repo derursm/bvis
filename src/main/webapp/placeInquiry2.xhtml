@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:b="http://butterfaces.org/components"
+  xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<f:view>
+  <f:metadata>
+    <!-- Start a new process instance. The Process Definition Key is read internally from
+         request parameters and cached in the CDI conversation scope.
+    -->
+    <f:event type="preRenderView" listener="#{camundaTaskForm.startProcessInstanceByKeyForm()}" />
+  </f:metadata>
+
+  <h:head>
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <title>Create a car rent order</title>
+
+
+      <!-- Custom CSS Files -->
+      <link href="/bvis/resources/css/custom.css" rel="stylesheet" />
+
+  </h:head>
+
+
+  <h:body>
+      <!-- Fixed Navigation -->
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">BVIS Luxury Car Rental</a>
+                  <ul class="nav navbar-nav navbar-left">
+                      <li><a href="#">Car Rental</a></li>
+                      <li><a href="#">Fleet Rental</a></li>
+                  </ul>
+              </div>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                      <li><a href="#">About</a></li>
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                              <li><a href="#">Claim Report</a></li>
+                              <li><a href="#">Pick Up/ Drop Service</a></li>
+                              <li><a href="#">Long Term Rental Consulting</a></li>
+                          </ul>
+                      </li>
+                      <li><a href="#">Contact</a></li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+    <!-- /. END NAVIGATION -->
+    
+    <div class="container">
+        <header class="page-header">
+            <div class="col-lg-12 ">
+                <h1 class="bvis-h1">Book this fucking car <small>Moving with elegance has never been easier</small></h1>
+            </div>
+        </header>
+    </div>
+
+	<h:form id="submitForm">
+    <div class="container">
+        <div id="bg-img">
+        	<img src="/bvis/resources/img/ny-street3.jpg" alt="" />
+        </div>
+
+        <div class="row">
+        	
+            <div class="col-sm-10 col-md-offset-1 jumbotron-bvis">
+            <div class="col-sm-6">
+            	<h3><label>Contact details</label></h3>
+				<b:text id="firstname" label="First name:" value="#{processVariables['customerFirstname']}" placeholder="First name..." required="true" rendered="true" />
+	        	<b:text id="surname" label="Last name:" value="#{processVariables['customerSurname']}" placeholder="Sur name..." required="true" rendered="true" />
+	        	<b:text id="companyName" label="Company name:" value="#{processVariables['customerCompanyName']}" placeholder="Company name..." required="false" rendered="true">
+		            <b:tooltip>If you are a company, state your name!</b:tooltip>
+	        	</b:text>
+	        	<b:text id="email" type="email" label="E-mail:" value="#{processVariables['customerEmail']}" placeholder="E-mail..." required="true" rendered="true" />
+	        	<b:text id="phoneNumber" label="Phone number:" value="#{processVariables['customerPhoneNumber']}" placeholder="Phone number..." required="true" rendered="true" />
+	        	<b:text id="street" label="Street:" value="#{processVariables['customerStreet']}" placeholder="Street..." required="true" rendered="true" />
+	        	<b:text id="houseNumber" type="number" min="1" max="9999" label="House number:" value="#{processVariables['customerHouseNumber']}" placeholder="House number..." required="true" rendered="true" />
+	        	<b:text id="postcode" label="Postcode:" value="#{processVariables['customerPostcode']}" placeholder="Postcode..." required="true" rendered="true" />
+	        	<b:text id="city" label="City:" value="#{processVariables['customerCity']}" placeholder="City..." required="true" rendered="true" />
+	        	<b:text id="country" label="Country:" value="#{processVariables['customerCity']}" placeholder="Country..." required="true" rendered="true" />
+	        	<b:calendar id="dateOfBirth" label="Date of birth:" value="#{processVariables['customerDateOfBirth']}" pickDate="true" pickTime="false" language="en"
+	        		placeholder="Enter date or click icon..." required="true" rendered="true" />
+        	</div>
+        	
+            <div class="col-sm-6">
+				<h3><label>Car options</label></h3>
+				<b:checkBox id="fleet" label="Car fleet:" value="#{processVariables['fleet']}" description="" required="false" rendered="true">
+					<b:tooltip>If you want to order multiple cars, tick this checkbox.</b:tooltip>
+				</b:checkBox>
+				<div id="carOptions">
+					<b:treeBox id="car" label="Select a car:" value="#{processVariables['car']}" values="#{order.allCars}" required="true" placeholder="Choose car..." />
+		        	<b:calendar id="pickUpDate" label="Pickup date:" value="#{processVariables['pickUpDate']}" pickDate="true" pickTime="false" language="en"
+		        		placeholder="Enter date or click icon..." required="true" rendered="true" />
+		        	<b:calendar id="returnDate" label="Return date:" value="#{processVariables['returnDate']}" pickDate="true" pickTime="false" language="en"
+		        		placeholder="Enter date or click icon..." required="true" rendered="true" />
+					<b:treeBox id="pickUpLoc" label="Pickup location:" value="#{processVariables['pickUpLoc']}" values="#{order.allPickUpLocations}" required="true" placeholder="Choose location for pickup..." />
+					<b:treeBox id="returnStore" label="Return location:" value="#{processVariables['returnStore']}" values="#{order.allPickUpLocations}" required="true" placeholder="Choose location for returning..." />
+					<b:treeBox id="insuranceType" label="Insurance type:" value="#{processVariables['insuranceType']}" values="#{order.insuranceTypes}" required="true" placeholder="Choose insurance..." />
+				</div>
+				<div id="fleetComments" >
+					<b:textArea label="Order:" value="#{processVariables['inquiryText']}" placeholder="Enter text..." required="false" rendered="true" />
+				</div>
+				
+                <!--<h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="carOptions">
+                  <label class="label-bvis"  for="car">Select a car:</label>
+                   <h:selectOneMenu id="car2" value="#{processVariables['car']}">
+                    <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
+                  </h:selectOneMenu> 
+                 </h:panelGrid>-->
+
+
+            </div> <!-- END Col -->
+           </div> <!-- /. END Col-sm-8 OPACITY-->
+        </div> <!-- /. END Upper ROW -->
+
+    </div>
+      <!-- /. END CONTAINER -->
+
+    <div class="container bvis-padding">
+        <div class="row ">
+            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
+            <div class="col-lg-10">
+                <p class="p-bvis">Please submit your booking. You will be able to check your details on the next page</p>
+            </div>
+            <div class="col-lg-2 pull-right">
+                <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
+                  NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
+                -->
+                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{camundaTaskForm.completeProcessInstanceForm()}" />
+                    <h:messages style="color:red;margin:8px;" />
+            </div>
+        </div> <!-- /. END ROW -->
+      </div> <!-- /. END Jumpotron ROW -->
+    </div> <!-- /. END CONTAINER -->
+</h:form>
+
+      <script type="text/javascript">
+          // increase the default animation speed to exaggerate the effect
+          $(function() {
+              $("#submitForm\\:fleet").change(function() {
+                  if($("#submitForm\\:fleet").prop("checked")) {
+                	  $('#carOptions').fadeOut();
+                      $("#fleetComments").fadeIn();
+                  }
+                  else {
+                	  $('#carOptions').fadeIn();
+                      $("#fleetComments").fadeOut();
+                  }
+              });
+          });
+      </script>
+
+  </h:body>
+</f:view>
+
+</html>

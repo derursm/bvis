@@ -1,5 +1,6 @@
 package org.camunda.bpm.bvis.EJB;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.ejb.Stateless;
@@ -26,6 +27,17 @@ public class CarServiceBean {
 		CriteriaQuery<Car> cq = cb.createQuery(Car.class);
 		Root<Car> rootEntry = cq.from(Car.class);
 		return em.createQuery(cq.select(rootEntry)).getResultList();
+	}
+	
+	public Collection<String> getAllCarNames() {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Car> cq = cb.createQuery(Car.class);
+		Root<Car> rootEntry = cq.from(Car.class);
+		Collection<String> nameList = new ArrayList<String>();
+		for (Car carItem : em.createQuery(cq.select(rootEntry)).getResultList()){
+			nameList.add(carItem.getModel());
+		}
+		return nameList;
 	}
 	
 	public Car getCar(long id) {
