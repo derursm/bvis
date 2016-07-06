@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.Entities;
+package org.camunda.bpm.bvis.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.Entities;
+package org.camunda.bpm.bvis.entities;
 
 import java.util.HashMap;
 

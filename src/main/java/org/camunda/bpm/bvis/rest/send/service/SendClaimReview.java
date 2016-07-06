@@ -3,7 +3,7 @@ package org.camunda.bpm.bvis.rest.send.service;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
-import org.camunda.bpm.bvis.Entities.ClaimReview;
+import org.camunda.bpm.bvis.entities.ClaimReview;
 import org.camunda.bpm.bvis.rest.send.dto.ClaimReviewDTO;
 import org.camunda.bpm.bvis.rest.send.dto.ClaimReviewDecision;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;

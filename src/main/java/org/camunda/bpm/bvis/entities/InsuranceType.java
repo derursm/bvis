@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.Entities;
+package org.camunda.bpm.bvis.entities;
 
 public enum InsuranceType {
 	total, partial, liability

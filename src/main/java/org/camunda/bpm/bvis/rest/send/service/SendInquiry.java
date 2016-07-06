@@ -7,9 +7,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
-import org.camunda.bpm.bvis.EJB.OrderServiceBean;
-import org.camunda.bpm.bvis.Entities.Customer;
-import org.camunda.bpm.bvis.Entities.RentalOrder;
+import org.camunda.bpm.bvis.ejb.OrderServiceBean;
+import org.camunda.bpm.bvis.entities.Customer;
+import org.camunda.bpm.bvis.entities.RentalOrder;
 import org.camunda.bpm.bvis.rest.send.dto.ContractDetailsDTO;
 import org.camunda.bpm.bvis.rest.send.dto.Order;
 import org.camunda.bpm.bvis.rest.send.dto.User;
@@ -74,9 +74,9 @@ public class SendInquiry {
 	
 	private Collection<org.camunda.bpm.bvis.rest.send.dto.Car> parseCars(RentalOrder order) {
 		org.camunda.bpm.bvis.rest.send.dto.Car car = new org.camunda.bpm.bvis.rest.send.dto.Car();
-		Collection<org.camunda.bpm.bvis.Entities.Car> entityCars = order.getCars();
+		Collection<org.camunda.bpm.bvis.entities.Car> entityCars = order.getCars();
 		ArrayList<org.camunda.bpm.bvis.rest.send.dto.Car> cars = new ArrayList<org.camunda.bpm.bvis.rest.send.dto.Car>();
-		for (org.camunda.bpm.bvis.Entities.Car entityCar : entityCars) {
+		for (org.camunda.bpm.bvis.entities.Car entityCar : entityCars) {
 			car.setBrand(entityCar.getBrand());
 			car.setConstruction_year(entityCar.getConstructionYear());
 			car.setFuel_type(entityCar.getFuelType());
@@ -92,7 +92,7 @@ public class SendInquiry {
 	
 	private org.camunda.bpm.bvis.rest.send.dto.Insurance parseInsurance(RentalOrder rentalOrder) {
 		org.camunda.bpm.bvis.rest.send.dto.Insurance insurance = new org.camunda.bpm.bvis.rest.send.dto.Insurance();
-		org.camunda.bpm.bvis.Entities.Insurance entityInsurance = rentalOrder.getInsurance();
+		org.camunda.bpm.bvis.entities.Insurance entityInsurance = rentalOrder.getInsurance();
 		
 		// set alternative for insurance == null for testing purposes
 		if (entityInsurance == null) {

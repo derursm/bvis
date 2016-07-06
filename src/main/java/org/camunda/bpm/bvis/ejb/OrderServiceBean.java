@@ -1,10 +1,10 @@
-package org.camunda.bpm.bvis.EJB;
+package org.camunda.bpm.bvis.ejb;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.camunda.bpm.bvis.Entities.RentalOrder;
+import org.camunda.bpm.bvis.entities.RentalOrder;
 
 @Stateless
 public class OrderServiceBean {

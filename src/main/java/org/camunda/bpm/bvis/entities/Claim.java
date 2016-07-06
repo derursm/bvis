@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.Entities;
+package org.camunda.bpm.bvis.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +11,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+
+import org.camunda.bpm.bvis.entities.RentalOrder;
 
 import static javax.persistence.CascadeType.DETACH;
 import static javax.persistence.CascadeType.MERGE;

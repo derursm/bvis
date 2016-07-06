@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.EJB;
+package org.camunda.bpm.bvis.ejb;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -10,8 +10,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.camunda.bpm.bvis.Entities.Car;
-import org.camunda.bpm.bvis.Entities.PickUpLocation;
+import org.camunda.bpm.bvis.entities.Car;
+import org.camunda.bpm.bvis.entities.PickUpLocation;
 
 @Stateless
 public class PickUpLocationServiceBean {

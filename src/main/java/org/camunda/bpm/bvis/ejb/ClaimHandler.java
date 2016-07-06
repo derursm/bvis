@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.EJB;
+package org.camunda.bpm.bvis.ejb;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -8,22 +8,27 @@ import javax.ejb.EJB;
 //import java.util.logging.Logger;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.inject.Named;
 //import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.camunda.bpm.bvis.Entities.Claim;
-import org.camunda.bpm.bvis.Entities.ClaimReview;
-import org.camunda.bpm.bvis.Entities.ClaimStatus;
-import org.camunda.bpm.bvis.Entities.Customer;
-import org.camunda.bpm.bvis.Entities.InsuranceAnswer;
-import org.camunda.bpm.bvis.Entities.RentalOrder;
+import org.camunda.bpm.bvis.entities.Claim;
+import org.camunda.bpm.bvis.entities.ClaimReview;
+import org.camunda.bpm.bvis.entities.ClaimStatus;
+import org.camunda.bpm.bvis.entities.Customer;
+import org.camunda.bpm.bvis.entities.InsuranceAnswer;
+import org.camunda.bpm.bvis.entities.RentalOrder;
 import org.camunda.bpm.bvis.rest.send.service.SendClaim;
 import org.camunda.bpm.bvis.rest.send.service.SendClaimReview;
+import org.camunda.bpm.engine.cdi.BusinessProcess;
+import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
 @Stateless
+@Named
 public class ClaimHandler {
 	
 	@PersistenceContext
@@ -31,6 +36,13 @@ public class ClaimHandler {
 	
 	@EJB
 	private ClaimServiceBean claimService;
+	
+	// Inject task form available through the Camunda cdi artifact
+	@Inject
+	private TaskForm taskForm;
+
+	@Inject
+	private BusinessProcess businessProcess;
 	
 	// Inject task form available through the camunda cdi artifact
 	//@Inject

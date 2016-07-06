@@ -9,8 +9,8 @@ import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
-import org.camunda.bpm.bvis.Entities.Claim;
-import org.camunda.bpm.bvis.Entities.InvolvedParty;
+import org.camunda.bpm.bvis.entities.Claim;
+import org.camunda.bpm.bvis.entities.InvolvedParty;
 import org.camunda.bpm.bvis.rest.send.dto.ClaimDetailsDTO;
 import org.camunda.bpm.bvis.rest.send.dto.ClaimInsurance;
 import org.camunda.bpm.bvis.rest.send.dto.Involved_party;
@@ -26,7 +26,7 @@ public class SendClaim {
 
 	private static final String BASE_URI = "http://camunda-capitol.uni-muenster.de/partner-interface/";
 	
-	public String sendClaim(org.camunda.bpm.bvis.Entities.Claim claim, String processInstanceID) {
+	public String sendClaim(org.camunda.bpm.bvis.entities.Claim claim, String processInstanceID) {
 		ClaimDetailsDTO claimDetails = new ClaimDetailsDTO();
 		claimDetails.setProcessinstance_id_bvis(processInstanceID);
 		claimDetails.setRequest_date(Calendar.getInstance());
@@ -40,7 +40,7 @@ public class SendClaim {
 	}
 	
 	private org.camunda.bpm.bvis.rest.send.dto.Claim parseClaim(
-			org.camunda.bpm.bvis.Entities.Claim entityClaim,
+			org.camunda.bpm.bvis.entities.Claim entityClaim,
 			Collection<Involved_party> involvedParties) {
 		org.camunda.bpm.bvis.rest.send.dto.Claim claim = new org.camunda.bpm.bvis.rest.send.dto.Claim();
 		claim.setClaim_description(entityClaim.getClaimDescription());

@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:b="http://butterfaces.org/components"
+  xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<f:view>
+  <f:metadata>
+    <!-- Start a new process instance. The Process Definition Key is read internally from
+         request parameters and cached in the CDI conversation scope.
+    -->
+    <f:event type="preRenderView" listener="#{camundaTaskForm.startProcessInstanceByKeyForm()}" />
+  </f:metadata>
+
+  <h:head>
+  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <title>Create a car rent order</title>
+
+
+      <!-- Custom CSS Files -->
+      <link href="/bvis/resources/css/custom.css" rel="stylesheet" />
+
+  </h:head>
+
+
+  <h:body>
+      <!-- Fixed Navigation -->
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">BVIS Luxury Car Rental</a>
+                  <ul class="nav navbar-nav navbar-left">
+                      <li><a href="#">Car Rental</a></li>
+                      <li><a href="#">Fleet Rental</a></li>
+                  </ul>
+              </div>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                      <li><a href="#">About</a></li>
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                              <li><a href="#">Claim Report</a></li>
+                              <li><a href="#">Pick Up/ Drop Service</a></li>
+                              <li><a href="#">Long Term Rental Consulting</a></li>
+                          </ul>
+                      </li>
+                      <li><a href="#">Contact</a></li>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+
+    <!-- /. END NAVIGATION -->
+    <div class="container">
+        <header class="page-header">
+            <div class="col-lg-12 ">
+                <h1 class="bvis-h1">Book this fucking car <small>Moving with elegance has never been easier</small></h1>
+            </div>
+        </header>
+    </div>
+
+   <h:form id="submitForm">
+    <div class="container">
+        <div id="bg-img">
+        <img src="/bvis/resources/img/ny-street.jpg" alt="" />
+        </div>
+
+        <div class="row">
+            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+            <div class="col-sm-16">
+            <div class="col-sm-6">
+                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
+                    <h3><label>Contact details</label></h3>
+                    <h:panelGroup />
+                    <label class="label-bvis" for="customer.firstname">First name:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="firstname" value="#{processVariables['customerFirstname']}" required="true" />
+
+                    <label class="label-bvis" for="customer.surname">Last name:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="surname" value="#{processVariables['customerSurname']}" required="true" />
+
+                    <label class="label-bvis" for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
+
+                    <!-- Generated markup by the plugin -->
+                    <div class="tooltip top" role="tooltip">
+                        <div class="tooltip-arrow"></div>
+                        <div class="tooltip-inner">
+                            If you are a company, state your name!
+                        </div>
+                    </div>
+
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="companyName" value="#{processVariables['customerCompanyName']}" required="false" />
+
+                    <label class="label-bvis" for="customer.email">E-mail:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="email" value="#{processVariables['customerEmail']}" required="true" />
+
+                    <label class="label-bvis" for="phoneNumber">Phone number:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="phoneNumber" value="#{processVariables['customerPhoneNumber']}" required="true" />
+
+                    <label class="label-bvis"  for="street">Street:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="street" value="#{processVariables['customerStreet']}" required="true" />
+
+                    <label class="label-bvis" for="houseNumber">House number:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="houseNumber" value="#{processVariables['customerHouseNumber']}" required="true" />
+
+                    <label class="label-bvis"  for="postcode">Postcode:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="postcode" value="#{processVariables['customerPostcode']}" required="true" />
+
+                    <label class="label-bvis"  for="city">City:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="city" value="#{processVariables['customerCity']}" required="true" />
+
+                    <label class="label-bvis" for="country">Country:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="country" value="#{processVariables['customerCountry']}" required="true" />
+
+                    <label class="label-bvis"  for="customer.dateOfBirth">Date of birth:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="dateOfBirth" value="#{processVariables['customerDateOfBirth']}" required="true" >
+                        <f:convertDateTime pattern="dd-mm-yyyy" />
+                    </h:inputText>
+
+                </h:panelGrid>
+
+            </div> <!-- /. END COL -->
+           </div> <!-- /. END Col-sm-8 -->
+           </div> <!-- /. END Col-sm-8 OPACITY-->
+        </div> <!-- /. END Upper ROW -->
+
+    </div>
+      <!-- /. END CONTAINER -->
+
+    <div class="container bvis-padding">
+        <div class="row ">
+            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
+            <div class="col-lg-10">
+                <p class="p-bvis">Please submit your damage details</p>
+            </div>
+            <div class="col-lg-2 pull-right">
+                <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
+                  NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
+                -->
+                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{camundaTaskForm.completeProcessInstanceForm()}" />
+                    <h:messages style="color:red;margin:8px;" />
+            </div>
+        </div> <!-- /. END ROW -->
+      </div> <!-- /. END Jumpotron ROW -->
+    </div> <!-- /. END CONTAINER -->
+</h:form>
+
+  </h:body>
+</f:view>
+
+</html>

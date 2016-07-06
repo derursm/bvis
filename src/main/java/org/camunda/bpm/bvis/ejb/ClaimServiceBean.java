@@ -1,11 +1,11 @@
-package org.camunda.bpm.bvis.EJB;
+package org.camunda.bpm.bvis.ejb;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.camunda.bpm.bvis.Entities.Claim;
-import org.camunda.bpm.bvis.Entities.ClaimReview;
+import org.camunda.bpm.bvis.entities.Claim;
+import org.camunda.bpm.bvis.entities.ClaimReview;
 
 @Stateless
 public class ClaimServiceBean {

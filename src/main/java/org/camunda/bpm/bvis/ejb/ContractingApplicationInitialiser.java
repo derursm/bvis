@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.EJB;
+package org.camunda.bpm.bvis.ejb;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -12,9 +12,9 @@ import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.camunda.bpm.bvis.Entities.Car;
-import org.camunda.bpm.bvis.Entities.CarType;
-import org.camunda.bpm.bvis.Entities.PickUpLocation;
+import org.camunda.bpm.bvis.entities.Car;
+import org.camunda.bpm.bvis.entities.CarType;
+import org.camunda.bpm.bvis.entities.PickUpLocation;
 
 @Startup
 @Singleton

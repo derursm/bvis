@@ -8,15 +8,15 @@
   <persistence-unit name="primary">
     <jta-data-source>java:jboss/datasources/ProcessEngine</jta-data-source>
     <class>org.camunda.bpm.bvis.bvis.OrderEntity</class>
-    <class>org.camunda.bpm.bvis.Entities.Car</class>
-    <class>org.camunda.bpm.bvis.Entities.Claim</class>
-    <class>org.camunda.bpm.bvis.Entities.Customer</class>
-    <class>org.camunda.bpm.bvis.Entities.Insurance</class>
-    <class>org.camunda.bpm.bvis.Entities.InvolvedParty</class>
-    <class>org.camunda.bpm.bvis.Entities.PickUpLocation</class>
-    <class>org.camunda.bpm.bvis.Entities.RentalOrder</class>
-    <class>org.camunda.bpm.bvis.Entities.ClaimInsurance</class>
-    <class>org.camunda.bpm.bvis.Entities.ClaimReview</class>
+    <class>org.camunda.bpm.bvis.entities.Car</class>
+    <class>org.camunda.bpm.bvis.entities.Claim</class>
+    <class>org.camunda.bpm.bvis.entities.Customer</class>
+    <class>org.camunda.bpm.bvis.entities.Insurance</class>
+    <class>org.camunda.bpm.bvis.entities.InvolvedParty</class>
+    <class>org.camunda.bpm.bvis.entities.PickUpLocation</class>
+    <class>org.camunda.bpm.bvis.entities.RentalOrder</class>
+    <class>org.camunda.bpm.bvis.entities.ClaimInsurance</class>
+    <class>org.camunda.bpm.bvis.entities.ClaimReview</class>
     <properties>
       <!-- Properties for Hibernate -->
       <property name="hibernate.hbm2ddl.auto" value="create-drop" />

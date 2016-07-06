@@ -40,7 +40,7 @@
     <messageFlow id="sid-28A69D0A-A04E-4013-8290-DD4631DD640D" name="Notification via e-mail" sourceRef="SendTask_SendConfirmationToCust" targetRef="sid-7E89C26D-8300-4B29-8E50-24E5D769CEA8" />
     <messageFlow id="sid-014119B8-ACD4-4DAE-8053-A5C71AB37F7B" name="Damage invoice via e-mail" sourceRef="SendTask_SendInvoiceToCust" targetRef="sid-7E89C26D-8300-4B29-8E50-24E5D769CEA8" />
     <messageFlow id="sid-1633FC56-25F3-49B5-82A6-BC2EC34070DC" name="Repair comission via e-mail" sourceRef="SendTask_InitiateRepair" targetRef="sid-2C0DB8E5-7077-4B32-BBCC-914D3826A090" />
-    <messageFlow id="sid-916FC2E8-E0D0-40B3-A358-05699F1B8E5E" name="Bill via e-mail" sourceRef="sid-2C0DB8E5-7077-4B32-BBCC-914D3826A090" targetRef="ReceiveTask_HandleBill" />
+    <messageFlow id="sid-916FC2E8-E0D0-40B3-A358-05699F1B8E5E" name="Bill via e-mail" sourceRef="sid-2C0DB8E5-7077-4B32-BBCC-914D3826A090" targetRef="UserTask_1e7ooog" />
     <messageFlow id="MessageFlow_0ec9rj5" name="Notification via e-mail" sourceRef="SendTask_InformCust" targetRef="sid-7E89C26D-8300-4B29-8E50-24E5D769CEA8" />
     <messageFlow id="MessageFlow_0dgkdge" name="Damage found notification via e-mail" sourceRef="SendTask_InformCustDmg" targetRef="sid-7E89C26D-8300-4B29-8E50-24E5D769CEA8" />
     <messageFlow id="MessageFlow_1ao7ta4" name="Towing commission via e-mail" sourceRef="SendTask_InformTowingService" targetRef="sid-2C0DB8E5-7077-4B32-BBCC-914D3826A090" />
@@ -83,9 +83,9 @@
         <flowNodeRef>UserTask_1itk27g</flowNodeRef>
         <flowNodeRef>sid-02128CF4-A73A-4442-9A75-FF4A3EE1ECDD</flowNodeRef>
         <flowNodeRef>sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03</flowNodeRef>
-        <flowNodeRef>ReceiveTask_HandleBill</flowNodeRef>
         <flowNodeRef>ExclusiveGateway_0lc15s4</flowNodeRef>
         <flowNodeRef>SendTask_SendClaimReview</flowNodeRef>
+        <flowNodeRef>UserTask_1e7ooog</flowNodeRef>
       </lane>
     </laneSet>
     <sequenceFlow id="sid-1EA2D805-C57A-495A-B1CD-970412EB73F1" name="" sourceRef="ReceiveEvent_InsuranceClaimDecision" targetRef="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03" />
@@ -95,7 +95,7 @@
     <sequenceFlow id="sid-296CF9C0-C7F4-4CF7-95EF-500F90E83BA4" name="Yes" sourceRef="sid-26944CC1-6357-43F7-9795-3A7738CE0A80" targetRef="SendTask_InformTowingService">
       <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
     </sequenceFlow>
-    <sendTask id="SendTask_SendClaimDetails" name="Send claim details" implementation="##WebService" camunda:expression="${true}">
+    <sendTask id="SendTask_SendClaimDetails" name="Send claim details" implementation="##WebService" camunda:expression="${claimHandler.sendClaimDetails(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -114,7 +114,7 @@
       <outgoing>sid-1EA2D805-C57A-495A-B1CD-970412EB73F1</outgoing>
       <messageEventDefinition id="sid-f931b57d-0368-4f98-91e8-f97ba1ed36d2" messageRef="Message_1xc7vtz" />
     </intermediateCatchEvent>
-    <sequenceFlow id="sid-B08CFAF2-04A5-4B61-9D7E-C73A5C51F1E8" name="" sourceRef="SendTask_InitiateRepair" targetRef="ReceiveTask_HandleBill" />
+    <sequenceFlow id="sid-B08CFAF2-04A5-4B61-9D7E-C73A5C51F1E8" name="" sourceRef="SendTask_InitiateRepair" targetRef="UserTask_1e7ooog" />
     <sequenceFlow id="sid-0F691A31-1C40-4CCC-B932-69B06403ECB9" name="" isImmediate="true" sourceRef="SendTask_SendClaimDetails" targetRef="ReceiveEvent_InsuranceClaimDecision" />
     <sequenceFlow id="SequenceFlow_1qvb1mt" name="Claim adapted" sourceRef="ExclusiveGateway_0lc15s4" targetRef="ExclusiveGateway_0naxz6m">
       <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
@@ -180,7 +180,7 @@
       <incoming>SequenceFlow_1iz1xey</incoming>
       <outgoing>SequenceFlow_1f832xw</outgoing>
     </exclusiveGateway>
-    <sequenceFlow id="SequenceFlow_0n8gpfx" sourceRef="ReceiveTask_HandleBill" targetRef="ExclusiveGateway_0naxz6m" />
+    <sequenceFlow id="SequenceFlow_0n8gpfx" sourceRef="UserTask_1e7ooog" targetRef="ExclusiveGateway_0naxz6m" />
     <startEvent id="sid-6A321F97-35FA-4E46-B269-1F1F021B9C83" name="Damage call received">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
@@ -238,10 +238,6 @@
       <incoming>sid-1EA2D805-C57A-495A-B1CD-970412EB73F1</incoming>
       <outgoing>SequenceFlow_0g2yxw8</outgoing>
     </userTask>
-    <receiveTask id="ReceiveTask_HandleBill" name="Handle bill" messageRef="Message_1wq2i9o">
-      <incoming>sid-B08CFAF2-04A5-4B61-9D7E-C73A5C51F1E8</incoming>
-      <outgoing>SequenceFlow_0n8gpfx</outgoing>
-    </receiveTask>
     <endEvent id="sid-5127A7FB-D489-4865-A603-039B69ACF93F" name="Customer had&#10;to pay">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
@@ -317,6 +313,10 @@
       <incoming>SequenceFlow_0g2yxw8</incoming>
       <outgoing>SequenceFlow_0vkgmy9</outgoing>
     </sendTask>
+    <userTask id="UserTask_1e7ooog" name="Handle bill">
+      <incoming>sid-B08CFAF2-04A5-4B61-9D7E-C73A5C51F1E8</incoming>
+      <outgoing>SequenceFlow_0n8gpfx</outgoing>
+    </userTask>
   </process>
   <message id="Message_1sbxnpi" name="DamageCall" />
   <message id="Message_1xc7vtz" name="ClaimDecision" />
@@ -474,9 +474,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="sid-E002729A-B310-4EDE-8728-E76137B156A4_gui" bpmnElement="sid-E002729A-B310-4EDE-8728-E76137B156A4">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="15" y="166" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="15" y="522" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="11" y="522" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="11" y="170" />
         <omgdi:waypoint xsi:type="omgdc:Point" x="11" y="878" />
         <bpmndi:BPMNLabel>
           <omgdc:Bounds x="19" y="223" width="90" height="20" />
@@ -785,9 +783,6 @@
           <omgdc:Bounds x="1279" y="472.5" width="90" height="20" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ReceiveTask_0vn0lvv_di" bpmnElement="ReceiveTask_HandleBill">
-        <omgdc:Bounds x="1083" y="771" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0g2yxw8_di" bpmnElement="SequenceFlow_0g2yxw8">
         <omgdi:waypoint xsi:type="omgdc:Point" x="1621" y="811" />
         <omgdi:waypoint xsi:type="omgdc:Point" x="1662" y="811" />
@@ -818,6 +813,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="SendTask_1b2mjks_di" bpmnElement="SendTask_SendClaimReview">
         <omgdc:Bounds x="1662" y="771" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1e7ooog_di" bpmnElement="UserTask_1e7ooog">
+        <omgdc:Bounds x="1083" y="771" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="sid-43687d85-3b31-43af-8f87-473c09497998">

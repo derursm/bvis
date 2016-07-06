@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.Web;
+package org.camunda.bpm.bvis.web;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -14,13 +14,13 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.camunda.bpm.bvis.EJB.CarServiceBean;
-import org.camunda.bpm.bvis.EJB.ContractHandler;
-import org.camunda.bpm.bvis.EJB.PickUpLocationServiceBean;
-import org.camunda.bpm.bvis.Entities.Car;
-import org.camunda.bpm.bvis.Entities.InsuranceType;
-import org.camunda.bpm.bvis.Entities.PickUpLocation;
-import org.camunda.bpm.bvis.Entities.RentalOrder;
+import org.camunda.bpm.bvis.ejb.CarServiceBean;
+import org.camunda.bpm.bvis.ejb.ContractHandler;
+import org.camunda.bpm.bvis.ejb.PickUpLocationServiceBean;
+import org.camunda.bpm.bvis.entities.Car;
+import org.camunda.bpm.bvis.entities.InsuranceType;
+import org.camunda.bpm.bvis.entities.PickUpLocation;
+import org.camunda.bpm.bvis.entities.RentalOrder;
 import org.camunda.bpm.engine.cdi.BusinessProcess;
 
 @Named

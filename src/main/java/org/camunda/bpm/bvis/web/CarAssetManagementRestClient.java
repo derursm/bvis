@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.Web;
+package org.camunda.bpm.bvis.web;
 
 public class CarAssetManagementRestClient {
 

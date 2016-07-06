@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.EJB;
+package org.camunda.bpm.bvis.ejb;
 
 import java.util.Collection;
 
@@ -9,7 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import org.camunda.bpm.bvis.Entities.Customer;
+import org.camunda.bpm.bvis.entities.Customer;
 
 @Stateless
 public class CustomerServiceBean {

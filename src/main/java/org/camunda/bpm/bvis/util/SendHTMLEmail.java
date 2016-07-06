@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.Util;
+package org.camunda.bpm.bvis.util;
 import java.util.Properties;
 
 import javax.mail.Message;
