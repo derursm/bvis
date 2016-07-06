@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.camunda.bpm.bvis.Entities.Claim;
+import org.camunda.bpm.bvis.Entities.ClaimReview;
 
 @Stateless
 public class ClaimServiceBean {
@@ -25,17 +26,17 @@ public class ClaimServiceBean {
 		em.merge(claim);
 	}
 	
-	public ClaimReview createClaimReview(Claim claim) {
-		em.persist(claim);
+	public ClaimReview createClaimReview(ClaimReview claimReview) {
+		em.persist(claimReview);
 		em.flush();
-		return claim;
+		return claimReview;
 	}
 	
-	public Claim getClaim(long id) {
-		return em.find(Claim.class, id);
+	public ClaimReview getClaimReview(long id) {
+		return em.find(ClaimReview.class, id);
 	}
 	
-	public void updateClaim(Claim claim) {
-		em.merge(claim);
+	public void updateClaimReview(ClaimReview claimReview) {
+		em.merge(claimReview);
 	}
 }

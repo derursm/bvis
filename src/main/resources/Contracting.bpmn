@@ -14,13 +14,13 @@
     <extensionElements>
       <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="0e59bac838d24928aae942d42fb9862f" />
     </extensionElements>
-    <participant id="sid-FA621CEE-316B-47FF-816E-18525C7B5A5A" name="BVIS" processRef="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939454">
+    <participant id="sid-FA621CEE-316B-47FF-816E-18525C7B5A5A" name="BVIS Contracting" processRef="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939454">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
       </extensionElements>
     </participant>
   </collaboration>
-  <process id="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939454" name="BVIS" processType="None" isClosed="false" isExecutable="true">
+  <process id="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939454" name="BVIS Contracting" processType="None" isClosed="false" isExecutable="true">
     <extensionElements />
     <laneSet id="sid-81d15846-e1fb-4a17-93bd-b0f62c01a461">
       <lane id="Lane_1igx0ht" name="Manager">

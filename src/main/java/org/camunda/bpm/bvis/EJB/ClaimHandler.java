@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.camunda.bpm.bvis.Entities.Claim;
+import org.camunda.bpm.bvis.Entities.ClaimReview;
 import org.camunda.bpm.bvis.Entities.ClaimStatus;
 import org.camunda.bpm.bvis.Entities.Customer;
 import org.camunda.bpm.bvis.Entities.InsuranceAnswer;
@@ -102,13 +103,11 @@ public class ClaimHandler {
 	
 	public void sendClaimReview(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
-		int claimID = (Integer)variables.get("claimID");
-		Claim claim = claimService.getClaim(claimID);
+		int claimReviewID = (Integer)variables.get("claimReviewID");
+		ClaimReview claimReview = claimService.getClaimReview(claimReviewID);
 		SendClaimReview sender = new SendClaimReview();
-		String result = sender.sendClaimReview(claim, delegateExecution.getActivityInstanceId());
+		String result = sender.sendClaimReview(claimReview, delegateExecution.getActivityInstanceId());
 		System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
 		//TODO handle failures		
-	}
-		
 	}
 }

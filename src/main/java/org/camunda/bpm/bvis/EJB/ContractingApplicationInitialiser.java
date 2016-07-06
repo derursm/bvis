@@ -18,7 +18,7 @@ import org.camunda.bpm.bvis.Entities.PickUpLocation;
 
 @Startup
 @Singleton
-public class ApplicationInitialiser {
+public class ContractingApplicationInitialiser {
 
 	@PersistenceContext
 	protected EntityManager em;
