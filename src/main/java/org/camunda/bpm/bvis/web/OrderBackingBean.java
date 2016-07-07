@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,11 +25,9 @@ import org.camunda.bpm.bvis.entities.RentalOrder;
 import org.camunda.bpm.engine.cdi.BusinessProcess;
 
 @Named
-@ConversationScoped
+@RequestScoped
 @ManagedBean(name = "order")
-public class OrderBackingBean implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class OrderBackingBean {
 
 	// Inject the BusinessProcess to access the process variables
 	@Inject

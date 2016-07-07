@@ -20,7 +20,7 @@
       </extensionElements>
     </participant>
   </collaboration>
-  <process id="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939454" name="BVIS Contracting" processType="None" isClosed="false" isExecutable="true">
+  <process id="contracting" name="BVIS Contracting" processType="None" isClosed="false" isExecutable="true">
     <extensionElements />
     <laneSet id="sid-81d15846-e1fb-4a17-93bd-b0f62c01a461">
       <lane id="Lane_1igx0ht" name="Manager">

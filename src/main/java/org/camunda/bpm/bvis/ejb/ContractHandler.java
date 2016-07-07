@@ -82,7 +82,7 @@ public class ContractHandler {
     
     customer.setEmail((String) variables.get("customerEmail"));
     customer.setPhoneNumber((String) variables.get("customerPhoneNumber"));
-    
+    System.out.println(variables.get("customerDateOfBirth"));
     customer.setDateOfBirth((Date) variables.get("customerDateOfBirth"));
     customer.setStreet((String) variables.get("customerStreet"));
     customer.setHouseNumber((String) variables.get("customerHouseNumber"));
