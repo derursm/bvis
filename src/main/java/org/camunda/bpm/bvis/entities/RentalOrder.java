@@ -27,7 +27,7 @@ public class RentalOrder implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long orderID;
 	@NotNull
-	@OneToOne
+	@ManyToOne
 	protected Customer cust;
 	@Temporal(TemporalType.DATE)
 	protected Date pickUpDate;
@@ -56,6 +56,11 @@ public class RentalOrder implements Serializable {
 	protected double priceInsurance_final;
 	protected int discount;
 	protected double price;	
+
+	protected String clerkComments;
+	protected boolean approveStatus;
+	
+	protected int contractStatus;
 	
 	public Date getRequestDate() {
 		return requestDate;
@@ -72,11 +77,6 @@ public class RentalOrder implements Serializable {
 	public void setInsurance(Insurance insurance) {
 		this.insurance = insurance;
 	}
-
-	protected String clerkComments;
-	protected boolean approveStatus;
-	
-	protected int contractStatus;
 	
 	public int getContractStatus() {
 		return contractStatus;

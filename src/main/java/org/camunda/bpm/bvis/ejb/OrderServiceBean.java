@@ -1,9 +1,12 @@
 package org.camunda.bpm.bvis.ejb;
 
+import java.util.Collection;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.camunda.bpm.bvis.entities.Car;
 import org.camunda.bpm.bvis.entities.RentalOrder;
 
 @Stateless
@@ -23,5 +26,30 @@ public class OrderServiceBean {
 	
 	public void updateOrder(RentalOrder rentalOrder) {
 		em.merge(rentalOrder);
+	}
+	 
+	public boolean orderExists(long id) {
+		try {
+			RentalOrder order = em.find(RentalOrder.class, id);
+			if (order != null) return true;
+			else return false;
+		}
+		catch (Exception e) {
+			return false;
+		}	
+	}
+	
+	public boolean vehicleExistsForOrder(long orderID, String vehicleID) {
+		try {
+			RentalOrder order = em.find(RentalOrder.class, orderID);
+			Collection<Car> cars = order.getCars();
+			for (Car car : cars) {
+				if (car.getVehicleIdentificationNumber().equals(vehicleID)) return true;
+			}
+			return false;
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 }

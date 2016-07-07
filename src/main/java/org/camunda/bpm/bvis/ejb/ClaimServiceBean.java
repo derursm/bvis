@@ -57,4 +57,11 @@ public class ClaimServiceBean {
 	public void updateClaimInsurance(ClaimInsurance insurance) {
 		em.merge(insurance);
 	}
+	
+	public boolean insuranceExists(String name) {
+		final String querystring = "SELECT i FROM ClaimInsurance i WHERE i.company = :name";
+		TypedQuery<ClaimInsurance> query = em.createQuery(querystring, ClaimInsurance.class);
+		query.setParameter("name", name);
+		return (query.getResultList().size() > 0);
+	}
 }

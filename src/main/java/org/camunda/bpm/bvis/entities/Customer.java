@@ -1,15 +1,23 @@
 package org.camunda.bpm.bvis.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import static javax.persistence.CascadeType.DETACH;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
+
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -43,6 +51,9 @@ public class Customer implements Serializable {
 	protected String companyName;
 	
 	protected boolean isEligible;
+	
+	@OneToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER, mappedBy = "cust")
+	protected Collection<RentalOrder> orders;
 	
 	public boolean isEligible() {
 		return isEligible;
