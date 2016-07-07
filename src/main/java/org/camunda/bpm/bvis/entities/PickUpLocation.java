@@ -22,7 +22,7 @@ public class PickUpLocation implements Serializable {
 	protected String phoneNumber;
 	@NotNull	
 	protected String street;
-
+	
 	protected String houseNumber;
 	@NotNull
 	protected String postcode;
@@ -30,6 +30,18 @@ public class PickUpLocation implements Serializable {
 	protected String city;
 	@NotNull
 	protected String country;
+	
+	public PickUpLocation(){}
+	
+	public PickUpLocation(String storeName, String phoneNumber, String street, String houseNumber, String postcode, String city, String country){
+		this.storeName = storeName;
+		this.phoneNumber = phoneNumber;
+		this.street = street;
+		this.houseNumber = houseNumber;
+		this.postcode = postcode;
+		this.city = city;
+		this.country = country;
+	}
 	
 	public String getHTMLContactDetails(){
 		String contactDetails = this.getStoreName() + "<br>" + this.getStreet() + " " + this.getHouseNumber() + "<br>" + this.getPostcode() + " " + this.getCity() + "<br>" + this.getPhoneNumber();

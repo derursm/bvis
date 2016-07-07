@@ -55,6 +55,18 @@ public class Customer implements Serializable {
 	@OneToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER, mappedBy = "cust")
 	protected Collection<RentalOrder> orders;
 	
+	public Customer (){}
+	
+	public Customer (String surname, String phoneNumber, String street, String houseNumber, String postcode, String city, String country){
+		this.surname = surname;
+		this.phoneNumber = phoneNumber;
+		this.street = street;
+		this.houseNumber = houseNumber;
+		this.postcode = postcode;
+		this.city = city;
+		this.country = country;
+	}
+	
 	public boolean isEligible() {
 		return isEligible;
 	}

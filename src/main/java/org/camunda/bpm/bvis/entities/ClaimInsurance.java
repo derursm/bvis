@@ -18,7 +18,7 @@ public class ClaimInsurance implements Serializable {
 	@NotNull
 	private String street;
 	@NotNull
-	private String house_number;
+	private String houseNumber;
 	@NotNull
 	private String postcode;
 	@NotNull
@@ -31,6 +31,15 @@ public class ClaimInsurance implements Serializable {
 
 	public ClaimInsurance(){
 		super();
+	}
+	
+	public ClaimInsurance(String company, String street, String houseNumber, String postcode, String city, String country){
+		this.company = company;
+		this.street = street;
+		this.houseNumber = houseNumber;
+		this.postcode = postcode;
+		this.city = city;
+		this.country = country;
 	}
 	
 	public String getCompany() {
@@ -46,10 +55,10 @@ public class ClaimInsurance implements Serializable {
 		this.street = street;
 	}
 	public String getHouse_number() {
-		return house_number;
+		return houseNumber;
 	}
 	public void setHouse_number(String house_number) {
-		this.house_number = house_number;
+		this.houseNumber = house_number;
 	}
 	public String getPostcode() {
 		return postcode;

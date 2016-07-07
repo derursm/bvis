@@ -62,6 +62,13 @@ public class RentalOrder implements Serializable {
 	
 	protected int contractStatus;
 	
+	public RentalOrder(){}
+	
+	public RentalOrder(Customer cust, boolean fleetRental){
+		this.cust = cust;
+		this.fleetRental = fleetRental;
+	}
+	
 	public Date getRequestDate() {
 		return requestDate;
 	}
