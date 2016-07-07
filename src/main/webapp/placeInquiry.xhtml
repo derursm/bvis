@@ -78,19 +78,16 @@
             <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
             <div class="col-sm-16">
             <div class="col-sm-6">
+                <h3><label>Contact details</label></h3>
                 <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                    <h3><label>Contact details</label></h3>
-                    <h:panelGroup />
+                    
                     <label class="label-bvis" for="customer.firstname">First name:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="firstname" value="#{processVariables['customerFirstname']}" required="true" />
 
                     <label class="label-bvis" for="customer.surname">Last name:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="surname" value="#{processVariables['customerSurname']}" required="true" />
 
                     <label class="label-bvis" for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
-
                     <!-- Generated markup by the plugin -->
                     <div class="tooltip top" role="tooltip">
                         <div class="tooltip-arrow"></div>
@@ -98,40 +95,30 @@
                             If you are a company, state your name!
                         </div>
                     </div>
-
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="companyName" value="#{processVariables['customerCompanyName']}" required="false" />
 
                     <label class="label-bvis" for="customer.email">E-mail:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="email" value="#{processVariables['customerEmail']}" required="true" />
 
                     <label class="label-bvis" for="phoneNumber">Phone number:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="phoneNumber" value="#{processVariables['customerPhoneNumber']}" required="true" />
 
                     <label class="label-bvis"  for="street">Street:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="street" value="#{processVariables['customerStreet']}" required="true" />
 
                     <label class="label-bvis" for="houseNumber">House number:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="houseNumber" value="#{processVariables['customerHouseNumber']}" required="true" />
 
                     <label class="label-bvis"  for="postcode">Postcode:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="postcode" value="#{processVariables['customerPostcode']}" required="true" />
 
                     <label class="label-bvis"  for="city">City:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="city" value="#{processVariables['customerCity']}" required="true" />
 
                     <label class="label-bvis" for="country">Country:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="country" value="#{processVariables['customerCountry']}" required="true" />
 
                     <label class="label-bvis"  for="customer.dateOfBirth">Date of birth:</label>
-                    <!-- create process variables using the processVariables map. -->
                     <h:inputText id="dateOfBirth" value="#{processVariables['customerDateOfBirth']}" required="true" >
                         <f:convertDateTime pattern="dd-mm-yyyy" />
                     </h:inputText>
@@ -147,7 +134,6 @@
                 <h:panelGroup />
 
                   <label class="label-bvis"  for="customer.company">Car fleet:</label>
-                  <!-- create process variables using the processVariables map. -->
                   <h:selectBooleanCheckbox id="fleet" value="#{processVariables['fleet']}" required="true" />
                 </h:panelGrid>
 
@@ -158,13 +144,11 @@
                   </h:selectOneMenu>
 
                   <label class="label-bvis"  for="pickUpDate">Pickup date:</label>
-                  <!-- create process variables using the processVariables map. -->
                   <h:inputText id="pickUpDate" value="#{processVariables['pickUpDate']}" placeholder="dd-mm-yyyy" >
                     <f:convertDateTime pattern="dd-mm-yyyy" />
                   </h:inputText>
 
                   <label class="label-bvis"  for="returnDate">Return date:</label>
-                  <!-- create process variables using the processVariables map. -->
                   <h:inputText id="returnDate" value="#{processVariables['returnDate']}" placeholder="dd-mm-yyyy">
                     <f:convertDateTime pattern="dd-mm-yyyy" />
                   </h:inputText>
@@ -187,7 +171,6 @@
 
                  <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="fleetComments">
                   <label class="label-bvis"  for="inquiryText">Comments:</label>
-                  <!-- create process variables using the processVariables map. -->
                   <h:inputTextarea id="inquiryText" value="#{processVariables['inquiryText']}" required="false" />
                  </h:panelGrid>
 
@@ -206,9 +189,6 @@
                 <p class="p-bvis">Please submit your booking. You will be able to check your details on the next page</p>
             </div>
             <div class="col-lg-2 pull-right">
-                <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
-                  NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
-                -->
                     <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{camundaTaskForm.completeProcessInstanceForm()}" />
                     <h:messages style="color:red;margin:8px;" />
             </div>
