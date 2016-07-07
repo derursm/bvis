@@ -10,11 +10,20 @@ import javax.inject.Named;
 
 import org.camunda.bpm.bvis.ejb.ClaimServiceBean;
 import org.camunda.bpm.bvis.ejb.OrderServiceBean;
+import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.ProcessEngineConfiguration;
+import org.camunda.bpm.engine.ProcessEngines;
+import org.camunda.bpm.engine.RepositoryService;
+import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.cdi.compat.CamundaTaskForm;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.ocpsoft.rewrite.annotation.Rule;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Named
 @ConversationScoped
@@ -45,8 +54,9 @@ public class DamageReportBackingBean implements Serializable {
 	@EJB
 	private ClaimServiceBean claimService;
 	
-	//@Inject
-	//private CamundaTaskForm taskForm;
+	@Inject 
+	private CamundaTaskForm taskForm;
+	
 	
 	public Date getParty1Birthday() {
 		return party1Birthday;
@@ -151,11 +161,17 @@ public class DamageReportBackingBean implements Serializable {
 		else if (!claimService.insuranceExists(party1Insurance)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Specified insurance does not exist"));			
 		}
-		/**try {
-			taskForm.completeProcessInstanceForm();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+		else {
+			Map<String, Object> variables = new HashMap<String, Object>();
+			variables.put("claimID", "1");
+			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+			//RepositoryService repositoryService = processEngine.getRepositoryService();
+			//repositoryService.createDeployment().addClasspathResource("Claim Handling.bpmn20.xml").deploy();
+			RuntimeService runtimeService = processEngine.getRuntimeService();
+			System.out.println("Number of process instances: " + runtimeService.createProcessInstanceQuery().count());
+			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("claimHandling", variables);
+			System.out.println("Number of process instances: " + runtimeService.createProcessInstanceQuery().count());
+		}
 	}
 	
 }

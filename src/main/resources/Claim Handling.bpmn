@@ -47,7 +47,7 @@
     <messageFlow id="MessageFlow_1o63o4f" sourceRef="SendTask_SendClaimReview" targetRef="sid-5C728932-3937-4F6D-9A03-27C6B7E9A599" />
     <messageFlow id="MessageFlow_1lfa3at" sourceRef="SendTask_SendClaimReview" targetRef="sid-5C728932-3937-4F6D-9A03-27C6B7E9A599" />
   </collaboration>
-  <process id="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939455" name="BVIS Claim Handling" processType="None" isClosed="false" isExecutable="true">
+  <process id="claimHandling" name="BVIS Claim Handling" processType="None" isClosed="false" isExecutable="true">
     <extensionElements />
     <laneSet id="sid-da4a6e83-e770-4e58-8db9-f4e2189861bf">
       <lane id="sid-588FBEC7-BD51-4D49-8D18-A1F4CAAEF310" name="WfMS">
