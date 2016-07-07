@@ -44,14 +44,6 @@ public class Claim implements Serializable {
 	
 	@OneToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "claim")
 	protected Collection<ClaimReview> claimReviews;
-	
-	
-	public BigDecimal getCustomerCosts() {
-		return customerCosts;
-	}
-	public void setCustomerCosts(BigDecimal customerCosts) {
-		this.customerCosts = customerCosts;
-	}
 
 	@NotNull
 	protected String claimDescription;
@@ -70,32 +62,8 @@ public class Claim implements Serializable {
 	protected boolean reportedByCustomer;
 	@NotNull
 	protected boolean towingServiceNeeded;
-	
 	@NotNull
 	protected String vehicleIdentificationNumber;
-	
-	public String getVehicleIdentificationNumber() {
-		return vehicleIdentificationNumber;
-	}
-	public void setVehicleIdentificationNumber(String vehicleIdentificationNumber) {
-		this.vehicleIdentificationNumber = vehicleIdentificationNumber;
-	}
-	public boolean isReportedByCustomer() {
-		return reportedByCustomer;
-	}
-	public void setReportedByCustomer(boolean reportedByCustomer) {
-		this.reportedByCustomer = reportedByCustomer;
-	}
-	public boolean isTowingServiceNeeded() {
-		return towingServiceNeeded;
-	}
-	public void setTowingServiceNeeded(boolean towingServiceNeeded) {
-		this.towingServiceNeeded = towingServiceNeeded;
-	}
-	public void setInvolvedParties(Collection<InvolvedParty> involvedParties) {
-		this.involvedParties = involvedParties;
-	}
-	
 	protected int insurance_decision;
 	protected ClaimStatus claim_status;
 	protected String claim_response_description_from_Capitol;
@@ -193,6 +161,34 @@ public class Claim implements Serializable {
 		this.clerkNotice = clerkNotice;
 	}
 	
+
 	
+	public BigDecimal getCustomerCosts() {
+		return customerCosts;
+	}
+	public void setCustomerCosts(BigDecimal customerCosts) {
+		this.customerCosts = customerCosts;
+	}
+	public String getVehicleIdentificationNumber() {
+		return vehicleIdentificationNumber;
+	}
+	public void setVehicleIdentificationNumber(String vehicleIdentificationNumber) {
+		this.vehicleIdentificationNumber = vehicleIdentificationNumber;
+	}
+	public boolean isReportedByCustomer() {
+		return reportedByCustomer;
+	}
+	public void setReportedByCustomer(boolean reportedByCustomer) {
+		this.reportedByCustomer = reportedByCustomer;
+	}
+	public boolean isTowingServiceNeeded() {
+		return towingServiceNeeded;
+	}
+	public void setTowingServiceNeeded(boolean towingServiceNeeded) {
+		this.towingServiceNeeded = towingServiceNeeded;
+	}
+	public void setInvolvedParties(Collection<InvolvedParty> involvedParties) {
+		this.involvedParties = involvedParties;
+	}
 	
 }

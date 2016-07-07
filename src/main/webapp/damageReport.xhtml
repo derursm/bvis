@@ -79,62 +79,77 @@
             <div class="col-sm-16">
             <div class="col-sm-6">
                 <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                    <h3><label>Contact details</label></h3>
+                    <h3><label>Damage report</label></h3>
                     <h:panelGroup />
-                    <label class="label-bvis" for="customer.firstname">First name:</label>
+                    <label class="label-bvis" for="orderID">Order ID:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="firstname" value="#{processVariables['customerFirstname']}" required="true" />
-
-                    <label class="label-bvis" for="customer.surname">Last name:</label>
+                    <h:inputText id="orderID" value="#{processVariables['orderID']}" required="true" />
+                    
+                    <label class="label-bvis" for="licensePlate">Vehicle identification number:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="surname" value="#{processVariables['customerSurname']}" required="true" />
+                    <h:inputText id="licensePlate" value="#{processVariables['licensePlate']}" required="true" />
 
-                    <label class="label-bvis" for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
-
-                    <!-- Generated markup by the plugin -->
-                    <div class="tooltip top" role="tooltip">
-                        <div class="tooltip-arrow"></div>
-                        <div class="tooltip-inner">
-                            If you are a company, state your name!
-                        </div>
-                    </div>
-
+               		<label class="label-bvis"  for="damageDate">Damage date:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="companyName" value="#{processVariables['customerCompanyName']}" required="false" />
-
-                    <label class="label-bvis" for="customer.email">E-mail:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="email" value="#{processVariables['customerEmail']}" required="true" />
-
-                    <label class="label-bvis" for="phoneNumber">Phone number:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="phoneNumber" value="#{processVariables['customerPhoneNumber']}" required="true" />
-
-                    <label class="label-bvis"  for="street">Street:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="street" value="#{processVariables['customerStreet']}" required="true" />
-
-                    <label class="label-bvis" for="houseNumber">House number:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="houseNumber" value="#{processVariables['customerHouseNumber']}" required="true" />
-
-                    <label class="label-bvis"  for="postcode">Postcode:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="postcode" value="#{processVariables['customerPostcode']}" required="true" />
-
-                    <label class="label-bvis"  for="city">City:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="city" value="#{processVariables['customerCity']}" required="true" />
-
-                    <label class="label-bvis" for="country">Country:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="country" value="#{processVariables['customerCountry']}" required="true" />
-
-                    <label class="label-bvis"  for="customer.dateOfBirth">Date of birth:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="dateOfBirth" value="#{processVariables['customerDateOfBirth']}" required="true" >
+                    <h:inputText id="damageDate" value="#{processVariables['damageDate']}" required="true" >
                         <f:convertDateTime pattern="dd-mm-yyyy" />
                     </h:inputText>
+                    
+                    <label class="label-bvis" for="country">Damage description:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="damageDescription" value="#{processVariables['damageDescription']}" required="true" />
+
+                </h:panelGrid>
+
+            </div> <!-- /. END COL -->
+                
+            <div class="col-sm-6">
+                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
+                    <h3><label>Other involved party</label></h3>
+                    <h4><label>Personal information</label></h4>
+                    <h:panelGroup />
+                    <label class="label-bvis" for="party1Firstname">First name:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1Firstname" value="#{processVariables['party1Firstname']}" required="true" />
+                    
+                    <label class="label-bvis" for="party1Surname">Surname:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1Surname" value="#{processVariables['party1Surname']}" required="true" />
+                    
+                    <label class="label-bvis" for="party1Email">EMail:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1Email" value="#{processVariables['party1Email']}" required="false" />
+                    
+                    <label class="label-bvis" for="party1PhoneNumber">Phone number:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1PhoneNumber" value="#{processVariables['party1PhoneNumber']}" required="true" />
+                    
+                    <label class="label-bvis" for="party1Street">Street:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1Street" value="#{processVariables['party1Street']}" required="true" />
+                    
+                    <label class="label-bvis" for="party1ZIP">Post code:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1ZIP" value="#{processVariables['party1ZIP']}" required="true" />
+                    
+                    <label class="label-bvis" for="party1Country">Country:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1Country" value="#{processVariables['party1Country']}" required="true" />
+
+               		<label class="label-bvis"  for="party1Birthday">Birthday:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1Birthday" value="#{processVariables['party1Birthday']}" required="true" >
+                        <f:convertDateTime pattern="dd-mm-yyyy" />
+                    </h:inputText>
+                    
+                    <h4><label>Other information</label></h4>
+                    <h:panelGroup />
+                    <label class="label-bvis" for="party1Company">Employer:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1Company" value="#{processVariables['party1Company']}" required="false" />
+                    <label class="label-bvis" for="party1Insurance">Insurance:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1Insurance" value="#{processVariables['party1Insurance']}" required="false" />
 
                 </h:panelGrid>
 

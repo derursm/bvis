@@ -3,9 +3,12 @@ package org.camunda.bpm.bvis.ejb;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.camunda.bpm.bvis.entities.Claim;
+import org.camunda.bpm.bvis.entities.ClaimInsurance;
 import org.camunda.bpm.bvis.entities.ClaimReview;
+
 
 @Stateless
 public class ClaimServiceBean {
@@ -38,5 +41,20 @@ public class ClaimServiceBean {
 	
 	public void updateClaimReview(ClaimReview claimReview) {
 		em.merge(claimReview);
+	}
+	
+	public void createClaimInsurance(ClaimInsurance insurance) {
+		em.persist(insurance);
+	}
+	
+	public ClaimInsurance getClaimInsuranceByName(String name) {
+		final String querystring = "SELECT i FROM ClaimInsurance i WHERE i.company = :name";
+		TypedQuery<ClaimInsurance> query = em.createQuery(querystring, ClaimInsurance.class);
+		query.setParameter("name", name);
+		return query.getResultList().get(0);
+	}
+	
+	public void updateClaimInsurance(ClaimInsurance insurance) {
+		em.merge(insurance);
 	}
 }
