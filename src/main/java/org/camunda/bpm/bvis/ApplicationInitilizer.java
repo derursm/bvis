@@ -2,10 +2,14 @@ package org.camunda.bpm.bvis;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,6 +20,29 @@ import org.camunda.bpm.bvis.entities.Customer;
 import org.camunda.bpm.bvis.entities.PickUpLocation;
 import org.camunda.bpm.bvis.entities.RentalOrder;
 
+import org.camunda.bpm.engine.AuthorizationService;
+import org.camunda.bpm.engine.FilterService;
+import org.camunda.bpm.engine.IdentityService;
+import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.authorization.Authorization;
+import org.camunda.bpm.engine.authorization.Groups;
+import org.camunda.bpm.engine.authorization.Resource;
+import org.camunda.bpm.engine.authorization.Resources;
+import org.camunda.bpm.engine.filter.Filter;
+import org.camunda.bpm.engine.identity.Group;
+import org.camunda.bpm.engine.identity.User;
+import org.camunda.bpm.engine.impl.persistence.entity.AuthorizationEntity;
+import org.camunda.bpm.engine.task.TaskQuery;
+
+import static org.camunda.bpm.engine.authorization.Authorization.ANY;
+import static org.camunda.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
+import static org.camunda.bpm.engine.authorization.Permissions.ACCESS;
+import static org.camunda.bpm.engine.authorization.Permissions.ALL;
+import static org.camunda.bpm.engine.authorization.Permissions.READ;
+import static org.camunda.bpm.engine.authorization.Resources.APPLICATION;
+import static org.camunda.bpm.engine.authorization.Resources.FILTER;
+
 @Startup
 @Singleton
 public class ApplicationInitilizer {
@@ -23,9 +50,27 @@ public class ApplicationInitilizer {
 	@PersistenceContext
 	protected EntityManager em;
 	
+	@Inject
+	protected ProcessEngine engine;
+
+	protected IdentityService identityService;
+	protected AuthorizationService authorizationService;
+	protected TaskService taskService;
+	protected FilterService filterService;
+	
 	// Creates some example data for testing purpose
 	@PostConstruct
 	public void initialise() {
+
+		identityService = engine.getIdentityService();
+		authorizationService = engine.getAuthorizationService();
+		taskService = engine.getTaskService();
+		filterService = engine.getFilterService();
+		
+		// cleanup
+		CamundaCleaner cleaner = new CamundaCleaner();
+		cleaner.clean(engine);
+		
 		// PickUpLocations
 		em.persist(new PickUpLocation("Barcelona Airport", "+34 902 40 47 04", "El Prat de Llobregat", "",
 				"08820", "Barcelona", "Spain"));
@@ -58,5 +103,231 @@ public class ApplicationInitilizer {
 		order.setCars(cars);
 		em.persist(order);
 		System.out.println("RENTAL ORDER ID: " + order.getId());
+		
+		createCamundaUsers();
+		createCamundaGroups();
+		addUsersToGroups();
+		adjustAuthorizations();
+		createFilters();
+	}
+	
+	private void createCamundaUsers(){
+		identityService.saveUser(createUser("admin","Admin","Admin","admin"));
+		identityService.saveUser(createUser("urs","Urs","the Urs","urs"));
+		identityService.saveUser(createUser("marcus","Marcus","the Marcus","marcus"));
+		identityService.saveUser(createUser("alan","Alan","the Alan","alan"));
+		identityService.saveUser(createUser("oliver","Oliver","the Oliver","oliver"));
+		identityService.saveUser(createUser("vit","Vit","the Vit","vit"));
+		identityService.saveUser(createUser("lena","Lena","the Lena","lena"));
+		identityService.saveUser(createUser("alex","Alex","the Alex","alex"));
+	}
+	
+	private User createUser(String login, String fname, String lname, String pwd) {
+		User user = identityService.newUser(login);
+		user.setFirstName(fname);
+		user.setLastName(lname);
+		user.setPassword(pwd);
+		user.setEmail(login + "@bvis.org");
+		return user;
+	}
+	
+	private void createCamundaGroups(){
+		identityService.saveGroup(CreateGroup("bvis", "BVIS", "WORKFLOW"));
+		identityService.saveGroup(CreateGroup("clerks-contract", "Clerks for Contracting", "WORKFLOW"));
+		identityService.saveGroup(CreateGroup("management-contract", "Management for Contracting", "WORKFLOW"));
+		identityService.saveGroup(CreateGroup("clerks-claims", "Clerks for Claims", "WORKFLOW"));
+		identityService.saveGroup(CreateGroup("management-claims", "Management for Claims", "WORKFLOW"));
+	}
+
+	private Group CreateGroup(String id, String name, String type) {
+		Group newGroup = identityService.newGroup(id);
+		newGroup.setName(name);
+		newGroup.setType(type);
+		return newGroup;
+	}
+	
+	private void addUsersToGroups(){
+		identityService.createMembership("admin", Groups.CAMUNDA_ADMIN);
+		
+		identityService.createMembership("urs", "bvis");
+		identityService.createMembership("marcus", "bvis");
+		identityService.createMembership("alan", "bvis");
+		identityService.createMembership("oliver", "bvis");
+		identityService.createMembership("vit", "bvis");
+		identityService.createMembership("lena", "bvis");
+		identityService.createMembership("alex", "bvis");
+		
+		identityService.createMembership("urs", "clerks-contract");
+		identityService.createMembership("marcus", "clerks-contract");
+		identityService.createMembership("alan", "clerks-contract");
+		
+		identityService.createMembership("oliver", "clerks-claims");
+		identityService.createMembership("vit", "clerks-claims");
+
+		identityService.createMembership("lena", "management-contract");
+
+		identityService.createMembership("alex", "management-claims");
+	}
+	
+	private void adjustAuthorizations(){
+		// create admin group if necessary
+		if (identityService.createGroupQuery().groupId(Groups.CAMUNDA_ADMIN).count() == 0) {
+			Group camundaAdminGroup = identityService.newGroup(Groups.CAMUNDA_ADMIN);
+			camundaAdminGroup.setName("camunda BPM Administrators");
+			camundaAdminGroup.setType(Groups.GROUP_TYPE_SYSTEM);
+			identityService.saveGroup(camundaAdminGroup);
+		}
+
+		// create ADMIN authorizations on all built-in resources
+		for (Resource resource : Resources.values()) {
+			if (authorizationService.createAuthorizationQuery()
+					.groupIdIn(Groups.CAMUNDA_ADMIN).resourceType(resource)
+					.resourceId(ANY).count() == 0) {
+				AuthorizationEntity userAdminAuth = new AuthorizationEntity(
+						AUTH_TYPE_GRANT);
+				userAdminAuth.setGroupId(Groups.CAMUNDA_ADMIN);
+				userAdminAuth.setResource(resource);
+				userAdminAuth.setResourceId(ANY);
+				userAdminAuth.addPermission(ALL);
+				authorizationService.saveAuthorization(userAdminAuth);
+			}
+		}
+
+		// Task-List
+		Authorization bvisTasklistAuth = authorizationService
+				.createNewAuthorization(AUTH_TYPE_GRANT);
+		bvisTasklistAuth.setGroupId("bvis");
+		bvisTasklistAuth.addPermission(ACCESS);
+		bvisTasklistAuth.setResourceId("tasklist");
+		bvisTasklistAuth.setResource(APPLICATION);
+		authorizationService.saveAuthorization(bvisTasklistAuth);
+	}
+	
+	private void createFilters(){
+
+		// Personal Tasks
+
+		Map<String, Object> filterProperties = new HashMap<String, Object>();
+		filterProperties.put("description", "Tasks assigned to me");
+		filterProperties.put("priority", -10);
+		addVariables(filterProperties);
+		TaskService taskService = engine.getTaskService();
+		TaskQuery query = taskService.createTaskQuery().taskAssigneeExpression("${currentUser()}");
+		Filter myTasksFilter = filterService.newTaskFilter().setName("My Tasks")
+				.setProperties(filterProperties).setOwner("admin").setQuery(query);
+		filterService.saveFilter(myTasksFilter);
+	
+		Authorization globalMyTaskFilterRead = authorizationService
+				.createNewAuthorization(Authorization.AUTH_TYPE_GLOBAL);
+		globalMyTaskFilterRead.setResource(FILTER);
+		globalMyTaskFilterRead.setResourceId(myTasksFilter.getId());
+		globalMyTaskFilterRead.addPermission(READ);
+		authorizationService.saveAuthorization(globalMyTaskFilterRead);
+		
+		// Group Filter
+		
+		filterProperties.clear();
+		filterProperties.put("description", "Unassigned / Open tasks");
+		filterProperties.put("priority", -5);
+		addVariables(filterProperties);
+		query = taskService.createTaskQuery()
+				.taskCandidateGroupInExpression("${currentUserGroups()}").taskUnassigned();
+		Filter groupTasksFilter = filterService.newTaskFilter().setName("Unassigned Tasks")
+				.setProperties(filterProperties).setOwner("admin").setQuery(query);
+		filterService.saveFilter(groupTasksFilter);
+	
+		Authorization globalGroupFilterRead = authorizationService
+				.createNewAuthorization(Authorization.AUTH_TYPE_GLOBAL);
+		globalGroupFilterRead.setResource(FILTER);
+		globalGroupFilterRead.setResourceId(groupTasksFilter.getId());
+		globalGroupFilterRead.addPermission(READ);
+		authorizationService.saveAuthorization(globalGroupFilterRead);
+		
+		// Contracting Clerk Tasks
+		
+		filterProperties.clear();
+		filterProperties.put("description",	"New Claims");
+		filterProperties.put("priority", 0);
+		filterProperties.put("refresh", true);
+		addVariables(filterProperties);
+		query = taskService.createTaskQuery().taskName("check the claim's eligibility");
+		Filter newLiabilityCasesFilter = filterService.newTaskFilter()
+				.setName("New Insurance Claims").setProperties(filterProperties)
+				.setOwner("admin").setQuery(query);
+		filterService.saveFilter(newLiabilityCasesFilter);
+
+		Authorization newLiabilityCaseGroup1FilterRead = authorizationService
+				.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+		newLiabilityCaseGroup1FilterRead.setResource(FILTER);
+		newLiabilityCaseGroup1FilterRead.setResourceId(newLiabilityCasesFilter
+				.getId());
+		newLiabilityCaseGroup1FilterRead.addPermission(READ);
+		newLiabilityCaseGroup1FilterRead.setGroupId("ClaimHandler");
+		authorizationService
+				.saveAuthorization(newLiabilityCaseGroup1FilterRead);
+
+
+		/* New Insurance Contract */
+		filterProperties.clear();
+		filterProperties.put("description", "All Rental Request");
+		filterProperties.put("priority", 0);
+		filterProperties.put("refresh", true);
+		//filterProperties.put("color", "#8ad69a");
+		addVariables(filterProperties);
+		query = taskService.createTaskQuery()
+				.taskName("negotiate agreement conditions with customer (via telephone or face2face)");
+		Filter openIncuranceContractsFilter = filterService.newTaskFilter()
+				.setName("New Cases")
+				.setProperties(filterProperties).setOwner("bvis")
+				.setQuery(query);
+		filterService.saveFilter(openIncuranceContractsFilter);
+
+		Authorization newRentalAgreementGroupFilterRead = authorizationService
+				.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+		newRentalAgreementGroupFilterRead.setResource(FILTER);
+		newRentalAgreementGroupFilterRead
+				.setResourceId(openIncuranceContractsFilter.getId());
+		newRentalAgreementGroupFilterRead.addPermission(READ);
+		newRentalAgreementGroupFilterRead.setGroupId("Contracting");
+		authorizationService
+				.saveAuthorization(newRentalAgreementGroupFilterRead);
+		
+		Authorization newRentalAgreementGroup1FilterRead = authorizationService
+				.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
+		newRentalAgreementGroup1FilterRead.setResource(FILTER);
+		newRentalAgreementGroup1FilterRead
+				.setResourceId(openIncuranceContractsFilter.getId());
+		newRentalAgreementGroup1FilterRead.addPermission(READ);
+		newRentalAgreementGroup1FilterRead.setGroupId("Negotiations");
+		authorizationService
+				.saveAuthorization(newRentalAgreementGroup1FilterRead);
+
+		// All tasks
+		
+		filterProperties.clear();
+		filterProperties.put("description", "All Tasks");
+		filterProperties.put("priority", 10);
+		addVariables(filterProperties);
+		query = taskService.createTaskQuery();
+		Filter allTasksFilter = filterService.newTaskFilter()
+				.setName("All Tasks").setProperties(filterProperties)
+				.setOwner("admin").setQuery(query);
+		filterService.saveFilter(allTasksFilter);
+	}
+
+	private void addVariables(Map<String, Object> filterProperties) {
+		List<Object> variables = new ArrayList<Object>();
+		addVariable(variables, "amount", "Invoice Amount");
+		addVariable(variables, "invoiceNumber", "Invoice Number");
+		addVariable(variables, "creditor", "Creditor");
+		addVariable(variables, "approver", "Approver");
+		filterProperties.put("variables", variables);
+	}
+
+	private void addVariable(List<Object> variables, String name, String label) {
+		Map<String, String> variable = new HashMap<String, String>();
+		variable.put("name", name);
+		variable.put("label", label);
+		variables.add(variable);
 	}
 }
