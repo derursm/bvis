@@ -1,6 +1,8 @@
 package org.camunda.bpm.bvis.ejb;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -14,11 +16,18 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.camunda.bpm.bvis.ejb.beans.CarServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.ClaimServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.InsuranceServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
+import org.camunda.bpm.bvis.entities.Car;
 import org.camunda.bpm.bvis.entities.Claim;
 import org.camunda.bpm.bvis.entities.ClaimReview;
 import org.camunda.bpm.bvis.entities.ClaimStatus;
 import org.camunda.bpm.bvis.entities.Customer;
+import org.camunda.bpm.bvis.entities.Insurance;
 import org.camunda.bpm.bvis.entities.InsuranceAnswer;
+import org.camunda.bpm.bvis.entities.InvolvedParty;
 import org.camunda.bpm.bvis.entities.RentalOrder;
 import org.camunda.bpm.bvis.rest.send.service.SendClaim;
 import org.camunda.bpm.bvis.rest.send.service.SendClaimReview;
@@ -34,8 +43,6 @@ public class ClaimHandler {
 	@PersistenceContext
 	protected EntityManager em;
 	
-	@EJB
-	private ClaimServiceBean claimService;
 	
 	// Inject task form available through the Camunda cdi artifact
 	@Inject
@@ -44,6 +51,15 @@ public class ClaimHandler {
 	@Inject
 	private BusinessProcess businessProcess;
 	
+	@EJB
+	private CarServiceBean carService;
+	@EJB
+	private ClaimServiceBean claimService;
+	@EJB
+	private InsuranceServiceBean insuranceService;
+	@EJB
+	private OrderServiceBean orderService;
+	
 	// Inject task form available through the camunda cdi artifact
 	//@Inject
 	//private TaskForm taskForm;
@@ -51,12 +67,35 @@ public class ClaimHandler {
 	//private static Logger LOGGER = Logger.getLogger(ContractHandler.class.getName());
 	
 	public void persistClaim(DelegateExecution delegateExecution) {
+		Map<String, Object> variables = delegateExecution.getVariables();
+		Claim claim = new Claim();
 		
-		//Claim claim = new Claim();
-		
-		/*
-		 * ....
-		 */
+		// Check whether car exist has been done already
+		Car car = carService.getCarByVehicleIdentificationNumber((String)variables.get("vehicleID"));
+		claim.setCar(car);
+		claim.setClaim_status(ClaimStatus.NOT_SEND_YET);
+		claim.setClaimDescription((String)variables.get("damageDescription"));
+		claim.setDamageDate((Date)variables.get("damageDate"));
+		RentalOrder order = orderService.getOrder((long)variables.get("orderID"));
+		Insurance insurance = order.getInsurance();
+		claim.setInsurance(insurance);
+		InvolvedParty party = new InvolvedParty();
+		party.setCity((String)variables.get("party1City"));
+		party.setCompany((String)variables.get("party1Company"));
+		party.setCountry((String)variables.get("party1Country"));
+		party.setDate_of_birth((Date)variables.get("party1Birthday"));
+		party.setEmail((String)variables.get("Party1EMail"));
+		party.setFirstname((String)variables.get("party1Firstname"));
+		party.setPhone_number((String)variables.get("party1Phone"));
+		party.setPostcode((String)variables.get("party1ZIP"));
+		party.setStreet((String)variables.get("party1Street"));
+		party.setStreetNo((String)variables.get("party1StreetNo"));
+		party.setSurname((String)variables.get("party1Surname"));
+		// only adds one party for now
+		ArrayList<InvolvedParty> parties = new ArrayList<InvolvedParty>();
+ 		claim.setInvolvedParties(parties);
+		claim.setRentalOrder(order);
+		claimService.createClaim(claim);
 	}
 	
 	public Customer getUser(long claimID) {

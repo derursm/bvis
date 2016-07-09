@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.ejb;
+package org.camunda.bpm.bvis.ejb.beans;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -45,23 +45,5 @@ public class ClaimServiceBean {
 	
 	public void createClaimInsurance(ClaimInsurance insurance) {
 		em.persist(insurance);
-	}
-	
-	public ClaimInsurance getClaimInsuranceByName(String name) {
-		final String querystring = "SELECT i FROM ClaimInsurance i WHERE i.company = :name";
-		TypedQuery<ClaimInsurance> query = em.createQuery(querystring, ClaimInsurance.class);
-		query.setParameter("name", name);
-		return query.getResultList().get(0);
-	}
-	
-	public void updateClaimInsurance(ClaimInsurance insurance) {
-		em.merge(insurance);
-	}
-	
-	public boolean insuranceExists(String name) {
-		final String querystring = "SELECT i FROM ClaimInsurance i WHERE i.company = :name";
-		TypedQuery<ClaimInsurance> query = em.createQuery(querystring, ClaimInsurance.class);
-		query.setParameter("name", name);
-		return (query.getResultList().size() > 0);
 	}
 }

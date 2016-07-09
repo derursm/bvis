@@ -49,9 +49,9 @@ public class SendClaim {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(entityClaim.getDamageDate());
 		claim.setDamage_date(cal);
-		claim.setInsurance_id(Integer.parseInt(entityClaim.getInsuranceID().toString()));
+		claim.setInsurance_id(Integer.parseInt(entityClaim.getInsurance().getInsuranceID() + ""));
 		claim.setInvolvedParties(involvedParties);
-		claim.setOrder_id(Integer.parseInt(entityClaim.getOrderID().toString()));
+		claim.setOrder_id(Integer.parseInt(entityClaim.getRentalOrder().getOrderID() + ""));
 		claim.setParties_involved(involvedParties.size() > 0 ? true : false);
 		claim.setVehicle_identification_number(entityClaim.getVehicleIdentificationNumber());
 		claim.setWorkshop_price(entityClaim.getWorkshopPrice().intValue());

@@ -1,6 +1,10 @@
 package org.camunda.bpm.bvis.ejb;
 
 import org.apache.commons.io.IOUtils;
+import org.camunda.bpm.bvis.ejb.beans.CarServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.CustomerServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.PickUpLocationServiceBean;
 import org.camunda.bpm.bvis.entities.Car;
 import org.camunda.bpm.bvis.entities.CarPriceMap;
 import org.camunda.bpm.bvis.entities.Customer;

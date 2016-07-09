@@ -7,7 +7,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
-import org.camunda.bpm.bvis.ejb.OrderServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
 import org.camunda.bpm.bvis.entities.Customer;
 import org.camunda.bpm.bvis.entities.RentalOrder;
 import org.camunda.bpm.bvis.rest.send.dto.ContractDetailsDTO;

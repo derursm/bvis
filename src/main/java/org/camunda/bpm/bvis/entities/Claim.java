@@ -32,8 +32,6 @@ public class Claim implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected Long claimID;
-	@NotNull
-	protected Long insuranceID;	
 	@Temporal(TemporalType.DATE)
 	@NotNull
 	protected Date damageDate;
@@ -49,13 +47,6 @@ public class Claim implements Serializable {
 	protected String claimDescription;
 	@Min(value=0)
 	protected BigDecimal costsCoverage;
-	@NotNull
-	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "claims")
-	protected Collection<InvolvedParty> involvedParties;
-	@NotNull
-	protected RentalOrder orderID;	
-	@NotNull
-	protected Car carID;
 	protected String damageAddress;
 	protected String clerkNotice;
 	@NotNull
@@ -68,6 +59,20 @@ public class Claim implements Serializable {
 	protected ClaimStatus claim_status;
 	protected String claim_response_description_from_Capitol;
 	protected String claim_remarks_from_Bvis;
+	
+
+	@NotNull
+	@OneToOne
+	protected Insurance insurance;	
+	@NotNull
+	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "claims")
+	protected Collection<InvolvedParty> involvedParties;
+	@NotNull
+	@OneToOne
+	protected Car car;
+	@NotNull
+	@OneToOne
+	protected RentalOrder rentalOrder;
 	
 	public int getInsurance_decision() {
 		return insurance_decision;
@@ -99,12 +104,6 @@ public class Claim implements Serializable {
 	public void setClaimID(Long claimID) {
 		this.claimID = claimID;
 	}
-	public Long getInsuranceID() {
-		return insuranceID;
-	}
-	public void setInsuranceID(Long insuranceID) {
-		this.insuranceID = insuranceID;
-	}
 	public Date getDamageDate() {
 		return damageDate;
 	}
@@ -132,21 +131,6 @@ public class Claim implements Serializable {
 	public Collection<InvolvedParty> getInvolvedParties() {
 		return involvedParties;
 	}
-	public void setInvolvedParty(Collection<InvolvedParty> involvedParties) {
-		this.involvedParties = involvedParties;
-	}
-	public RentalOrder getOrderID() {
-		return orderID;
-	}
-	public void setOrderID(RentalOrder orderID) {
-		this.orderID = orderID;
-	}
-	public Car getCarID() {
-		return carID;
-	}
-	public void setCarID(Car carID) {
-		this.carID = carID;
-	}
 	public String getDamageAddress() {
 		return damageAddress;
 	}
@@ -161,8 +145,31 @@ public class Claim implements Serializable {
 		this.clerkNotice = clerkNotice;
 	}
 	
-
 	
+	public Collection<ClaimReview> getClaimReviews() {
+		return claimReviews;
+	}
+	public void setClaimReviews(Collection<ClaimReview> claimReviews) {
+		this.claimReviews = claimReviews;
+	}
+	public Insurance getInsurance() {
+		return insurance;
+	}
+	public void setInsurance(Insurance insurance) {
+		this.insurance = insurance;
+	}
+	public Car getCar() {
+		return car;
+	}
+	public void setCar(Car car) {
+		this.car = car;
+	}
+	public RentalOrder getRentalOrder() {
+		return rentalOrder;
+	}
+	public void setRentalOrder(RentalOrder rentalOrder) {
+		this.rentalOrder = rentalOrder;
+	}
 	public BigDecimal getCustomerCosts() {
 		return customerCosts;
 	}

@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Class for other insurances (insurances of involved parties)
+ * To be differentiated from the Insurance class which represents an insurance for one order
+ * This insurance represents actual insurance companies, not insurance policies
+ */
 @Entity
 public class ClaimInsurance implements Serializable {
 

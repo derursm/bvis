@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.ejb;
+package org.camunda.bpm.bvis.ejb.beans;
 
 import java.util.Collection;
 

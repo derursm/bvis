@@ -44,6 +44,8 @@ public class InvolvedParty implements Serializable {
 	protected String city;
 	@NotNull
 	protected String country;
+	@NotNull
+	protected String streetNo;
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
@@ -61,6 +63,12 @@ public class InvolvedParty implements Serializable {
 	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH})
 	protected Collection<Claim> claims;
 	
+	public String getStreetNo() {
+		return streetNo;
+	}
+	public void setStreetNo(String streetNo) {
+		this.streetNo = streetNo;
+	}
 	public Long getParty_ID() {
 		return party_ID;
 	}

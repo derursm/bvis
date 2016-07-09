@@ -16,7 +16,7 @@
 
   <h:head>
   	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <title>Create a car rent order</title>
+    <title>Place a damage report</title>
 
 
       <!-- Custom CSS Files -->
@@ -131,6 +131,10 @@
                     <label class="label-bvis" for="party1ZIP">Post code:</label>
                     <!-- create process variables using the processVariables map. -->
                     <h:inputText id="party1ZIP" value="#{damageReport.party1ZIP}" required="true" />
+                    
+                    <label class="label-bvis" for="party1City">City:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1City" value="#{damageReport.party1City}" required="true" />
                     
                     <label class="label-bvis" for="party1Country">Country:</label>
                     <!-- create process variables using the processVariables map. -->

@@ -15,9 +15,9 @@ import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.camunda.bpm.bvis.ejb.CarServiceBean;
 import org.camunda.bpm.bvis.ejb.ContractHandler;
-import org.camunda.bpm.bvis.ejb.PickUpLocationServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.CarServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.PickUpLocationServiceBean;
 import org.camunda.bpm.bvis.entities.Car;
 import org.camunda.bpm.bvis.entities.InsuranceType;
 import org.camunda.bpm.bvis.entities.PickUpLocation;

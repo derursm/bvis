@@ -20,7 +20,7 @@
       </extensionElements>
     </participant>
   </collaboration>
-  <process id="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939455" name="BVIS2" processType="None" isClosed="false" isExecutable="true">
+  <process id="claimHandling" name="BVIS2" processType="None" isClosed="false" isExecutable="true">
     <extensionElements />
     <laneSet id="sid-da4a6e83-e770-4e58-8db9-f4e2189861bf">
       <lane id="sid-588FBEC7-BD51-4D49-8D18-A1F4CAAEF310" name="WfMS">
@@ -149,7 +149,7 @@
       <outgoing>SequenceFlow_1y9yj7o</outgoing>
       <outgoing>SequenceFlow_055hkdd</outgoing>
     </exclusiveGateway>
-    <serviceTask id="ServiceTask_1clk6z0" name="Create claim record" camunda:expression="${true}">
+    <serviceTask id="ServiceTask_1clk6z0" name="Create claim record" camunda:expression="${claimHandler.persistClaim(execution)}">
       <incoming>SequenceFlow_0fwikm4</incoming>
       <outgoing>SequenceFlow_0q9r8x7</outgoing>
     </serviceTask>

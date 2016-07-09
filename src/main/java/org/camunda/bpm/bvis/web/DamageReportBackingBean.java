@@ -9,8 +9,9 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.camunda.bpm.bvis.ejb.ClaimServiceBean;
-import org.camunda.bpm.bvis.ejb.OrderServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.ClaimServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.InsuranceServiceBean;
+import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.RuntimeService;
@@ -41,6 +42,7 @@ public class DamageReportBackingBean  {
 	private String party1Insurance;
 	private String party1Phone;
 	private String party1EMail;
+	private String party1City;
 	private Date party1Birthday;
 	
 	@EJB
@@ -48,6 +50,9 @@ public class DamageReportBackingBean  {
 	
 	@EJB
 	private ClaimServiceBean claimService;
+	
+	@EJB
+	private InsuranceServiceBean insuranceService;
 	
 	@Inject 
 	private CamundaTaskForm taskForm;
@@ -146,6 +151,12 @@ public class DamageReportBackingBean  {
 		party1EMail = party1eMail;
 	}
 	
+	public String getParty1City() {
+		return party1City;
+	}
+	public void setParty1City(String party1City) {
+		this.party1City = party1City;
+	}
 	public void reportDamage() {
 		if (!orderService.orderExists(orderID)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Invalid order ID"));
@@ -153,12 +164,27 @@ public class DamageReportBackingBean  {
 		else if (!orderService.vehicleExistsForOrder(orderID, vehicleID)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Specified car not part of the order"));
 		}
-		else if (!claimService.insuranceExists(party1Insurance)) {
+		else if (!insuranceService.insuranceExists(party1Insurance)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Specified insurance does not exist"));			
 		}
 		else {
 			Map<String, Object> variables = new HashMap<String, Object>();
-			variables.put("claimID", "1");
+			variables.put("orderID", orderID);
+			variables.put("damageDescription", damageDescription);
+			variables.put("damageDate", damageDate);
+			variables.put("vehicleID", vehicleID);
+			variables.put("party1Firstname", party1Firstname);
+			variables.put("party1Surname", party1Surname);
+			variables.put("party1Street", party1Street);
+			variables.put("party1StreetNo", party1StreetNo);
+			variables.put("party1Country", party1Country);
+			variables.put("party1ZIP", party1ZIP);
+			variables.put("party1City", party1City);
+			variables.put("party1Company", party1Company);
+			variables.put("party1Insurance", party1Insurance);
+			variables.put("party1Phone", party1Phone);
+			variables.put("party1EMail", party1EMail);
+			variables.put("party1Birthday", party1Birthday);
 			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 			RuntimeService runtimeService = processEngine.getRuntimeService();
 			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("claimHandling", variables);

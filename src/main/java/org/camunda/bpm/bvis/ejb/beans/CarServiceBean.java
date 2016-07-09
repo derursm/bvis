@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.ejb;
+package org.camunda.bpm.bvis.ejb.beans;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,11 +6,13 @@ import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.camunda.bpm.bvis.entities.Car;
+import org.camunda.bpm.bvis.entities.ClaimInsurance;
 
 @Stateless
 public class CarServiceBean {
@@ -42,5 +44,12 @@ public class CarServiceBean {
 	
 	public Car getCar(long id) {
 		return em.find(Car.class, id);
+	}
+	
+	public Car getCarByVehicleIdentificationNumber(String vehicleIdentificationNumber) {
+		final String querystring = "SELECT c FROM Car c WHERE c.vehicleIdentificationNumber = :vehicleIdentificationNumber";
+		TypedQuery<Car> query = em.createQuery(querystring, Car.class);
+		query.setParameter("vehicleIdentificationNumber", vehicleIdentificationNumber);
+		return query.getResultList().get(0);
 	}
 }
