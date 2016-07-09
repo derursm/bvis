@@ -81,13 +81,7 @@ public class Insurance implements Serializable {
 	public void setDeductible(BigDecimal deductible) {
 		this.deductible = deductible;
 	}
-	
-	public BigDecimal getEstimatedCost() {
-		return estimatedCosts;
-	}
-	public void setEstimatedCost(BigDecimal estimatedCosts) {
-		this.estimatedCosts = estimatedCosts;
-	}
+
 	public BigDecimal getEstimatedCosts() {
 		return estimatedCosts;
 	}

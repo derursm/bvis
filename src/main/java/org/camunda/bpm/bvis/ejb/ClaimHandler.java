@@ -76,6 +76,8 @@ public class ClaimHandler {
 		claim.setClaim_status(ClaimStatus.NOT_SEND_YET);
 		claim.setClaimDescription((String)variables.get("damageDescription"));
 		claim.setDamageDate((Date)variables.get("damageDate"));
+		claim.setTowingServiceNeeded(false); //TODO change to parameter
+		claim.setReportedByCustomer(true); //TODO change to parameter
 		RentalOrder order = orderService.getOrder((long)variables.get("orderID"));
 		Insurance insurance = order.getInsurance();
 		claim.setInsurance(insurance);
@@ -96,6 +98,25 @@ public class ClaimHandler {
  		claim.setInvolvedParties(parties);
 		claim.setRentalOrder(order);
 		claimService.createClaim(claim);
+		
+	    // Remove no longer needed process variables
+	    delegateExecution.removeVariables(variables.keySet());
+
+	    // Add newly created claim id as process variable
+	    delegateExecution.setVariable("claimID", claim.getClaimID());
+	    System.out.println("CREATED CLAIM WITH CLAIM ID: " + claim.getClaimID());
+	}
+	
+	public boolean informedByCustomer(DelegateExecution delegateExecution) {
+		Map<String, Object> variables = delegateExecution.getVariables();
+		Claim claim = claimService.getClaim((long)variables.get("claimID"));
+		return claim.isReportedByCustomer();
+	}
+	
+	public boolean towingServiceNeeded(DelegateExecution delegateExecution) {
+		Map<String, Object> variables = delegateExecution.getVariables();
+		Claim claim = claimService.getClaim((long)variables.get("claimID"));
+		return claim.isTowingServiceNeeded();
 	}
 	
 	public Customer getUser(long claimID) {
@@ -103,6 +124,10 @@ public class ClaimHandler {
 	}
 	
 	public void informUser(long claimID) {
+		
+	}
+	
+	public void sendClaimStateNotification(DelegateExecution delegateExecution) {
 		
 	}
 	
@@ -120,7 +145,7 @@ public class ClaimHandler {
 	
 	public void sendClaimDetails(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
-		int claimID = (Integer)variables.get("claimID");
+		long claimID = (long)variables.get("claimID");
 		Claim claim = claimService.getClaim(claimID);
 		SendClaim sender = new SendClaim();
 		String result = sender.sendClaim(claim, delegateExecution.getActivityInstanceId());

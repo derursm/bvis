@@ -53,8 +53,9 @@ public class SendClaim {
 		claim.setInvolvedParties(involvedParties);
 		claim.setOrder_id(Integer.parseInt(entityClaim.getRentalOrder().getOrderID() + ""));
 		claim.setParties_involved(involvedParties.size() > 0 ? true : false);
-		claim.setVehicle_identification_number(entityClaim.getVehicleIdentificationNumber());
-		claim.setWorkshop_price(entityClaim.getWorkshopPrice().intValue());
+		claim.setVehicle_identification_number(entityClaim.getCar().getVehicleIdentificationNumber());
+		//claim.setWorkshop_price(entityClaim.getWorkshopPrice().intValue());
+		claim.setWorkshop_price(1500.50); //TODO REMOVE DUMMY
 		return claim;
 	}
 	

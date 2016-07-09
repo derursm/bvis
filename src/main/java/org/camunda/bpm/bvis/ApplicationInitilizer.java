@@ -1,7 +1,9 @@
 package org.camunda.bpm.bvis;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,9 @@ import org.camunda.bpm.bvis.entities.Car;
 import org.camunda.bpm.bvis.entities.CarType;
 import org.camunda.bpm.bvis.entities.ClaimInsurance;
 import org.camunda.bpm.bvis.entities.Customer;
+import org.camunda.bpm.bvis.entities.Insurance;
+import org.camunda.bpm.bvis.entities.InsuranceAnswer;
+import org.camunda.bpm.bvis.entities.InsuranceType;
 import org.camunda.bpm.bvis.entities.PickUpLocation;
 import org.camunda.bpm.bvis.entities.RentalOrder;
 
@@ -101,6 +106,16 @@ public class ApplicationInitilizer {
 		Car car = new Car("BMW", 2000, "Diesel", "5er BMW", 210, "abc", "MS1", CarType.kombi, true);
 		carService.create(car);
 		
+		// Dummy insurance policy
+		Insurance insurance = new Insurance();
+		insurance.setActualCosts(new BigDecimal(1000));
+		insurance.setDeductible(new BigDecimal(1000));
+		insurance.setInquiryText("I need an insurance");
+		insurance.setInsuranceAnswer(InsuranceAnswer.ACCEPTED);
+		insurance.setPickUpDate(new Date());
+		insurance.setReturnDate(new Date());
+		insurance.setType(InsuranceType.partial);
+		insurance.setEstimatedCosts(new BigDecimal(999));
 		
 		// ClaimInsurances
 		insuranceService.createClaimInsurance(new ClaimInsurance("Allianz", "Marienplatz", "10", "40699", "Munich", "Germany")); 
@@ -115,6 +130,7 @@ public class ApplicationInitilizer {
 		// RentalOrder
 
 		RentalOrder order = new RentalOrder(cust, false);
+		order.setInsurance(insurance);
 		Collection<Car> cars = new ArrayList<Car>();
 		cars.add(car);
 		order.setCars(cars);

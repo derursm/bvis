@@ -14,7 +14,7 @@
     <extensionElements>
       <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="63e9b1681a3947269b2d68ddebfab80a" />
     </extensionElements>
-    <participant id="sid-FA621CEE-316B-47FF-816E-18525C7B5A5A" name="BVIS" processRef="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939455">
+    <participant id="sid-FA621CEE-316B-47FF-816E-18525C7B5A5A" name="BVIS">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
       </extensionElements>
@@ -34,7 +34,7 @@
         <flowNodeRef>EndEvent_1yhtqc4</flowNodeRef>
         <flowNodeRef>sid-57207DE9-58B6-4094-B544-7235E389643B</flowNodeRef>
         <flowNodeRef>sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD</flowNodeRef>
-        <flowNodeRef>sid-B51C3DEF-88F4-4E40-9110-5ED5AE2667AD</flowNodeRef>
+        <flowNodeRef>ReceiveTask_InsuranceClaimDecision</flowNodeRef>
         <flowNodeRef>ExclusiveGateway_1kfugps</flowNodeRef>
         <flowNodeRef>ServiceTask_1clk6z0</flowNodeRef>
         <flowNodeRef>sid-C54E9D7D-C238-4A43-BEE0-4DA53D994EB2</flowNodeRef>
@@ -60,12 +60,12 @@
         <flowNodeRef>UserTask_0zzizkn</flowNodeRef>
       </lane>
     </laneSet>
-    <sequenceFlow id="sid-1EA2D805-C57A-495A-B1CD-970412EB73F1" name="" sourceRef="sid-B51C3DEF-88F4-4E40-9110-5ED5AE2667AD" targetRef="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03" />
+    <sequenceFlow id="sid-1EA2D805-C57A-495A-B1CD-970412EB73F1" name="" sourceRef="ReceiveTask_InsuranceClaimDecision" targetRef="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03" />
     <sequenceFlow id="sid-BD0B70A9-A00D-4B87-AF2A-BC1D20FF5005" name="No" sourceRef="sid-26944CC1-6357-43F7-9795-3A7738CE0A80" targetRef="sid-C54E9D7D-C238-4A43-BEE0-4DA53D994EB2">
-      <conditionExpression xsi:type="tFormalExpression">${not claimHandler.getClaim(claimID).towingServiceNeeded}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${not claimHandler.towingServiceNeeded(execution)}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-296CF9C0-C7F4-4CF7-95EF-500F90E83BA4" name="Yes" sourceRef="sid-26944CC1-6357-43F7-9795-3A7738CE0A80" targetRef="sid-E57512F5-8C6D-4F88-9700-90B57B644889">
-      <conditionExpression xsi:type="tFormalExpression">${claimHandler.getClaim(claimID).towingServiceNeeded}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${claimHandler.towingServiceNeeded(execution)}</conditionExpression>
     </sequenceFlow>
     <endEvent id="sid-5127A7FB-D489-4865-A603-039B69ACF93F" name="Customer had&#10;to pay">
       <extensionElements>
@@ -102,7 +102,7 @@
       <outgoing>SequenceFlow_1e5624n</outgoing>
       <outgoing>SequenceFlow_15us7oa</outgoing>
     </exclusiveGateway>
-    <sendTask id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" name="Send claim details" implementation="##WebService" camunda:expression="${true}">
+    <sendTask id="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" name="Send claim details" implementation="##WebService" camunda:expression="${claimHandler.sendClaimDetails(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -111,7 +111,7 @@
       <incoming>SequenceFlow_1o5yh3r</incoming>
       <outgoing>sid-0F691A31-1C40-4CCC-B932-69B06403ECB9</outgoing>
     </sendTask>
-    <intermediateCatchEvent id="sid-B51C3DEF-88F4-4E40-9110-5ED5AE2667AD" name="Decision&#10;received">
+    <intermediateCatchEvent id="ReceiveTask_InsuranceClaimDecision" name="Decision&#10;received">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
         <signavio:signavioMetaData metaKey="viaitsystem" metaValue="" />
@@ -122,16 +122,16 @@
       <messageEventDefinition id="sid-f931b57d-0368-4f98-91e8-f97ba1ed36d2" messageRef="sid-3B5255FE-7C51-4EB9-884D-0E70ED3D60E2" />
     </intermediateCatchEvent>
     <sequenceFlow id="sid-B08CFAF2-04A5-4B61-9D7E-C73A5C51F1E8" name="" sourceRef="sid-D0E8E5D8-45E8-4FD2-9AE9-87068B812078" targetRef="UserTask_0zzizkn" />
-    <sequenceFlow id="sid-0F691A31-1C40-4CCC-B932-69B06403ECB9" name="" isImmediate="true" sourceRef="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" targetRef="sid-B51C3DEF-88F4-4E40-9110-5ED5AE2667AD" />
+    <sequenceFlow id="sid-0F691A31-1C40-4CCC-B932-69B06403ECB9" name="" isImmediate="true" sourceRef="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" targetRef="ReceiveTask_InsuranceClaimDecision" />
     <sequenceFlow id="SequenceFlow_1qvb1mt" name="Claim adapted" sourceRef="ExclusiveGateway_0lc15s4" targetRef="ExclusiveGateway_0naxz6m" />
     <sequenceFlow id="SequenceFlow_1uzrota" sourceRef="sid-C54E9D7D-C238-4A43-BEE0-4DA53D994EB2" targetRef="ExclusiveGateway_1lazbhy" />
     <sequenceFlow id="sid-AF9D4642-506C-470F-8440-714016A425E4" name="" sourceRef="sid-E57512F5-8C6D-4F88-9700-90B57B644889" targetRef="sid-C54E9D7D-C238-4A43-BEE0-4DA53D994EB2" />
     <sequenceFlow id="SequenceFlow_0q9r8x7" sourceRef="ServiceTask_1clk6z0" targetRef="ExclusiveGateway_1kfugps" />
     <sequenceFlow id="SequenceFlow_1y9yj7o" name="Clerk" sourceRef="ExclusiveGateway_1kfugps" targetRef="SendTask_1ywju1m">
-      <conditionExpression xsi:type="tFormalExpression">${not claimHandler.getClaim(claimID).reportedByCustomer}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${not claimHandler.informedByCustomer(execution)}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="SequenceFlow_055hkdd" name="Customer" sourceRef="ExclusiveGateway_1kfugps" targetRef="sid-26944CC1-6357-43F7-9795-3A7738CE0A80">
-      <conditionExpression xsi:type="tFormalExpression">${claimHandler.getClaim(claimID).reportedByCustomer}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${claimHandler.informedByCustomer(execution)}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="SequenceFlow_1f832xw" sourceRef="ExclusiveGateway_1lazbhy" targetRef="sid-D0E8E5D8-45E8-4FD2-9AE9-87068B812078" />
     <exclusiveGateway id="sid-26944CC1-6357-43F7-9795-3A7738CE0A80" name="Towing service needed?" gatewayDirection="Diverging">
@@ -307,7 +307,7 @@
           <omgdc:Bounds x="1799" y="435" width="90" height="36" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="sid-B51C3DEF-88F4-4E40-9110-5ED5AE2667AD_gui" bpmnElement="sid-B51C3DEF-88F4-4E40-9110-5ED5AE2667AD">
+      <bpmndi:BPMNShape id="sid-B51C3DEF-88F4-4E40-9110-5ED5AE2667AD_gui" bpmnElement="ReceiveTask_InsuranceClaimDecision">
         <omgdc:Bounds x="1489" y="466" width="30" height="30" />
         <bpmndi:BPMNLabel labelStyle="sid-43687d85-3b31-43af-8f87-473c09497998">
           <omgdc:Bounds x="1459" y="435" width="90" height="22" />
