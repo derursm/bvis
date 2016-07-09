@@ -95,6 +95,12 @@
                         <f:convertDateTime pattern="dd-mm-yyyy" />
                     </h:inputText>
                     
+                  	<label class="label-bvis"  for="reportedByCustomer">Reported by Customer?</label>
+                  	<h:selectBooleanCheckbox id="reportedByCustomer" value="#{damageReport.reportedByCustomer}" required="true" />
+                  	
+                  	<label class="label-bvis"  for="towingServiceNeeded">Towing service needed?</label>
+                  	<h:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}" required="true" />
+                    
                     <label class="label-bvis" for="country">Damage description:</label>
                     <!-- create process variables using the processVariables map. -->
                     <h:inputText id="damageDescription" value="#{damageReport.damageDescription}" required="true" />

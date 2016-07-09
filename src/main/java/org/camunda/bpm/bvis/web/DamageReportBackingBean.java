@@ -44,6 +44,8 @@ public class DamageReportBackingBean  {
 	private String party1EMail;
 	private String party1City;
 	private Date party1Birthday;
+	private boolean reportedByCustomer;
+	private boolean towingServiceNeeded;
 	
 	@EJB
 	private OrderServiceBean orderService;
@@ -66,6 +68,18 @@ public class DamageReportBackingBean  {
 	}
 	
 	
+	public boolean isReportedByCustomer() {
+		return reportedByCustomer;
+	}
+	public void setReportedByCustomer(boolean reportedByCustomer) {
+		this.reportedByCustomer = reportedByCustomer;
+	}
+	public boolean isTowingServiceNeeded() {
+		return towingServiceNeeded;
+	}
+	public void setTowingServiceNeeded(boolean towingServiceNeeded) {
+		this.towingServiceNeeded = towingServiceNeeded;
+	}
 	public long getOrderID() {
 		return orderID;
 	}
@@ -173,6 +187,8 @@ public class DamageReportBackingBean  {
 			variables.put("damageDescription", damageDescription);
 			variables.put("damageDate", damageDate);
 			variables.put("vehicleID", vehicleID);
+			variables.put("reportedByCustomer", reportedByCustomer);
+			variables.put("towingServiceNeeded", towingServiceNeeded);
 			variables.put("party1Firstname", party1Firstname);
 			variables.put("party1Surname", party1Surname);
 			variables.put("party1Street", party1Street);

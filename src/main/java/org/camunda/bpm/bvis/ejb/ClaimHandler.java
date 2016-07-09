@@ -76,8 +76,8 @@ public class ClaimHandler {
 		claim.setClaim_status(ClaimStatus.NOT_SEND_YET);
 		claim.setClaimDescription((String)variables.get("damageDescription"));
 		claim.setDamageDate((Date)variables.get("damageDate"));
-		claim.setTowingServiceNeeded(false); //TODO change to parameter
-		claim.setReportedByCustomer(true); //TODO change to parameter
+		claim.setTowingServiceNeeded((Boolean)variables.get("towingServiceNeeded")); 
+		claim.setReportedByCustomer((Boolean)variables.get("reportedByCustomer"));
 		RentalOrder order = orderService.getOrder((long)variables.get("orderID"));
 		Insurance insurance = order.getInsurance();
 		claim.setInsurance(insurance);
