@@ -2,6 +2,8 @@ package org.camunda.bpm.bvis;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,7 +42,14 @@ import org.camunda.bpm.engine.filter.Filter;
 import org.camunda.bpm.engine.identity.Group;
 import org.camunda.bpm.engine.identity.User;
 import org.camunda.bpm.engine.impl.persistence.entity.AuthorizationEntity;
+import org.camunda.bpm.engine.impl.util.ClockUtil;
 import org.camunda.bpm.engine.task.TaskQuery;
+import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.Task;
+
+import static org.camunda.bpm.engine.variable.Variables.createVariables;
 
 import static org.camunda.bpm.engine.authorization.Authorization.ANY;
 import static org.camunda.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -137,12 +146,15 @@ public class ApplicationInitilizer {
 		orderService.create(order);
 		System.out.println("DUMMY ORDER ID: " + order.getId());
 
-		/**
+		
 		createCamundaUsers();
 		createCamundaGroups();
 		addUsersToGroups();
 		adjustAuthorizations();
-		createFilters();*/
+		createFilters();
+		
+	    startProcessInstances(engine, "contracting", null);
+	    //startProcessInstances(engine, "claimHandling", null);
 	}
 	
 	private void createCamundaUsers(){
@@ -364,4 +376,79 @@ public class ApplicationInitilizer {
 		variable.put("label", label);
 		variables.add(variable);
 	}
+	
+	private void startProcessInstances(ProcessEngine processEngine, String processDefinitionKey, Integer version) {
+
+	    ProcessDefinitionQuery processDefinitionQuery = processEngine
+	      .getRepositoryService()
+	      .createProcessDefinitionQuery()
+	      .processDefinitionKey(processDefinitionKey);
+
+	    if (version != null) {
+	      processDefinitionQuery.processDefinitionVersion(version);
+	    }
+	    else {
+	      processDefinitionQuery.latestVersion();
+	    }
+
+	    ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
+
+	    /*
+	    // process instance 1
+	    processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
+	        .putValue("creditor", "Great Pizza for Everyone Inc.")
+	        .putValue("amount", 30.00d)
+	        .putValue("invoiceCategory", "Travel Expenses")
+	        .putValue("invoiceNumber", "GPFE-23232323"));
+
+	    // process instance 2
+	    try {
+	      Calendar calendar = Calendar.getInstance();
+	      calendar.add(Calendar.DAY_OF_MONTH, -14);
+	      ClockUtil.setCurrentTime(calendar.getTime());
+
+	      ProcessInstance pi = processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
+	          .putValue("creditor", "Bobby's Office Supplies")
+	          .putValue("amount", 900.00d)
+	          .putValue("invoiceCategory", "Misc")
+	          .putValue("invoiceNumber", "BOS-43934"));
+
+	      calendar.add(Calendar.DAY_OF_MONTH, 14);
+	      ClockUtil.setCurrentTime(calendar.getTime());
+
+	      processEngine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.CAMUNDA_ADMIN));
+	      Task task = processEngine.getTaskService().createTaskQuery().processInstanceId(pi.getId()).singleResult();
+	      processEngine.getTaskService().claim(task.getId(), "demo");
+	      processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", true));
+	    }
+	    finally{
+	      ClockUtil.reset();
+	      processEngine.getIdentityService().clearAuthentication();
+	    }
+
+	    // process instance 3
+	    try {
+	      Calendar calendar = Calendar.getInstance();
+	      calendar.add(Calendar.DAY_OF_MONTH, -5);
+	      ClockUtil.setCurrentTime(calendar.getTime());
+
+	      ProcessInstance pi = processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
+	          .putValue("creditor", "Papa Steve's all you can eat")
+	          .putValue("amount", 10.99d)
+	          .putValue("invoiceCategory", "Travel Expenses")
+	          .putValue("invoiceNumber", "PSACE-5342"));
+
+	      calendar.add(Calendar.DAY_OF_MONTH, 5);
+	      ClockUtil.setCurrentTime(calendar.getTime());
+
+	      processEngine.getIdentityService().setAuthenticatedUserId("mary");
+	      Task task = processEngine.getTaskService().createTaskQuery().processInstanceId(pi.getId()).singleResult();
+	      processEngine.getTaskService().createComment(null, pi.getId(), "I cannot approve this invoice: the amount is missing.\n\n Could you please provide the amount?");
+	      processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", false));
+	    }
+	    finally{
+	      ClockUtil.reset();
+	      processEngine.getIdentityService().clearAuthentication();
+	    }*/
+	  } 
 }
