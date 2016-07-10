@@ -15,7 +15,7 @@ public class ClaimReview {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	protected long claimReviewID;
-	protected String claimDescription;
+	protected String remarks;
 	
 	@ManyToOne
 	protected Claim claim;
@@ -48,11 +48,11 @@ public class ClaimReview {
 	public void setClaimStatus(int claimStatus) {
 		this.claimStatus = claimStatus;
 	}
-	public String getClaimDescription() {
-		return claimDescription;
+	public String getRemarks() {
+		return remarks;
 	}
-	public void setClaimDescription(String claimDescription) {
-		this.claimDescription = claimDescription;
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
 	}
 	
 }

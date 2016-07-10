@@ -119,14 +119,13 @@ public class ClaimHandler {
 		return claim.isTowingServiceNeeded();
 	}
 	
-	public void insertWorkshopBill(DelegateExecution delegateExecution) {
+	public boolean insertWorkshopBill(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
-		double repairBill = (Double)variables.get("repairBill");
-	    // Remove no longer needed process variables
-	    delegateExecution.removeVariables(variables.keySet());
+		double repairBill = Double.parseDouble((String)variables.get("repairBill"));
 	    Claim claim = claimService.getClaim((Long)variables.get("claimID"));
 	    claim.setWorkshopPrice(new BigDecimal(repairBill));
 	    claimService.updateClaim(claim);
+	    return true;
 	}
 	
 	public Customer getUser(long claimID) {
@@ -170,17 +169,21 @@ public class ClaimHandler {
 		claim.setCostsCoverage(new BigDecimal((Double)variables.get("coverageCosts")));
 		claim.setCustomerCosts(new BigDecimal((Double)variables.get("customerCosts")));
 		int insuranceDecision = ((Integer)variables.get("insuranceDecision"));
+		variables.remove("insuranceDecision");
 		  if (insuranceDecision == 0) {
 			  claim.setClaim_status(ClaimStatus.REJECTED);
 			  System.out.println("CLAIM REJECTED");
+			  variables.put("insuranceDecision", ClaimStatus.REJECTED.toString());
 		  }
 		  else if (insuranceDecision == 1) {
 			  claim.setClaim_status(ClaimStatus.ACCEPTED);
 			  System.out.println("CLAIM ACCEPTED");
+			  variables.put("insuranceDecision", ClaimStatus.ACCEPTED.toString());
 		  }
 		  else {
 			  claim.setClaim_status(ClaimStatus.ADJUSTED);
 			  System.out.println("CLAIM ADJUSTED");
+			  variables.put("insuranceDecision", ClaimStatus.ADJUSTED.toString());
 		  }
 		claimService.updateClaim(claim);
 		//return true to trigger continuation
@@ -189,11 +192,21 @@ public class ClaimHandler {
 	
 	public void sendClaimReview(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
-		int claimReviewID = (Integer)variables.get("claimReviewID");
-		ClaimReview claimReview = claimService.getClaimReview(claimReviewID);
+		ClaimReview claimReview = new ClaimReview();
+		Claim claim = claimService.getClaim((long)variables.get("claimID"));
+		claimReview.setClaim(claim);
+		claimReview.setRemarks((String)variables.get("remarks"));
+		claimReview.setClaimStatus((int)variables.get("bvisAnswer"));
+		claimReview.setProcessIDCapitol((String)variables.get("processIDCapitol"));
 		SendClaimReview sender = new SendClaimReview();
 		String result = sender.sendClaimReview(claimReview, delegateExecution.getActivityInstanceId());
 		System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
 		//TODO handle failures		
+	}
+	
+	public boolean claimDecisionAccepted(DelegateExecution delegateExecution) {
+		Map<String, Object> variables = delegateExecution.getVariables();
+		if ((int)variables.get("bvisAnswer") == 1) return true;
+		else return false;
 	}
 }

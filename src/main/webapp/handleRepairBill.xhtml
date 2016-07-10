@@ -14,14 +14,12 @@
   <h:body>
     <h1>#{task.name}</h1>
     <h:form id="someForm">
-	<div class="inputForm"><h:form>
 		<h:panelGrid columns="3" columnClasses="form-label,form-input,form-message error" footerClass="form-footer">
+			Claim ID: <h:outputLabel value="#{processVariables['claimID']}"/> <br></br>
 			<h:outputLabel value="Repair bill" for="repairBill" />
-			<h:inputText id="repairBill" value="#{processVariables['repairBill']}"/>
+			<h:inputText id="repairBill" value="#{processVariables['repairBill']}" required = "true"/>
 			<h:message for="repairBill"/>
 		</h:panelGrid>
-	</h:form></div>
-
       <h:commandButton id="complete" value="Task Completed"
           action="#{camundaTaskForm.completeTask()}" />
     </h:form>

@@ -32,7 +32,7 @@ public class SendClaimReview {
 		ClaimReviewDecision review = new ClaimReviewDecision();
 		review.setClaim_id(Integer.parseInt(entityReview.getClaim().getClaimID().toString()));
 		review.setClaim_status(entityReview.getClaimStatus());
-		review.setDescription(entityReview.getClaimDescription());
+		review.setDescription(entityReview.getRemarks());
 		return review;
 	}
 }

@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+  <h:head>
+    <f:metadata>
+      <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
+    </f:metadata>
+    <title>Review insurance claim decision</title>
+  </h:head>
+  <h:body>
+    <h1>#{task.name}</h1>
+    <h:form id="someForm">
+			Claim ID: <h:outputLabel value="#{processVariables['claimID']}"/> <br></br>
+			Covered costs: <h:outputLabel value="#{processVariables['coverageCosts']}"/> <br></br>
+			Costs for customer: <h:outputLabel value="#{processVariables['customerCosts']}"/> <br></br>
+			Insurance decision: <h:outputLabel value="#{processVariables['claimID']}"/> <br></br>
+			<h:outputLabel value="BVIS answer" for="bvisAnswer" />
+			<h:selectOneListbox id="bvisAnswer" value="#{processVariables['bvisAnswer']}">
+				<f:selectItem id="option1" itemLabel="Accept" itemValue="1" />
+				<f:selectItem id="option2" itemLabel="Decline" itemValue="0" />
+				<f:selectItem id="option3" itemLabel="Remarks" itemValue="2" />
+			</h:selectOneListbox><br></br>
+			<h:outputLabel value="BVIS remarks" for="remarks" />
+			<h:inputText id="remarks" value="#{processVariables['remarks']}" required = "false" style="height: 200px;"/>
+			
+      <h:commandButton id="complete" value="Task Completed"
+          action="#{camundaTaskForm.completeTask()}" />
+    </h:form>
+  </h:body>
+</f:view>
+</html>
