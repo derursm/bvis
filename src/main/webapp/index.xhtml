@@ -42,7 +42,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">BVIS Luxury Car Rental</a>
+                <a class="navbar-brand" href="/bvis/index.xhtml">BVIS Luxury Car Rental</a>
                 <ul class="nav navbar-nav navbar-left">
                 	<h:panelGroup rendered ="#{!webSession.loggedIn}">
                     <li><a href="/bvis/placeInquiry.xhtml">Car Rental</a></li>
@@ -51,6 +51,7 @@
                     <h:panelGroup rendered ="#{webSession.loggedIn}">
                     <li><a href="/bvis/placeInquiryLoggedIn.xhtml">Car Rental</a></li>
                     <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
+                    <li><a href="/bvis/listOrders.xhtml">Orders overview</a></li>
                     </h:panelGroup>
                 </ul>
             </div>

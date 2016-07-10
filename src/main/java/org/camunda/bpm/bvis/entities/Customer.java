@@ -79,6 +79,14 @@ public class Customer implements Serializable {
 		this.username = username;
 	}
 
+	public Collection<RentalOrder> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Collection<RentalOrder> orders) {
+		this.orders = orders;
+	}
+
 	public String getPassword() {
 		return password;
 	}

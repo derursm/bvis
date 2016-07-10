@@ -7,18 +7,8 @@
 
 
 <f:view>
-  <f:metadata>
-    <!-- Start a new process instance. The Process Definition Key is read internally from
-         request parameters and cached in the CDI conversation scope.
-    -->
-    <f:event type="preRenderView" listener="#{camundaTaskForm.startProcessInstanceByKeyForm()}" />
-  </f:metadata>
-
   <h:head>
-  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <title>User login</title>
-
-
+    <title>Orders overview</title>
       <!-- Custom CSS Files -->
       <link href="/bvis/resources/css/custom.css" rel="stylesheet" />
 
@@ -51,7 +41,6 @@
               </div>
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav navbar-right">
-                      <li><a href="#">About</a></li>
                       <li><a href="/login.xhtml">Login</a></li>
                       <li class="dropdown">
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
@@ -75,57 +64,55 @@
       </nav>
 
     <!-- /. END NAVIGATION -->
-    <div class="container">
-        <header class="page-header">
-            <div class="col-lg-12 ">
-                <h1 class="bvis-h1">Book this fucking car <small>Moving with elegance has never been easier</small></h1>
-            </div>
-        </header>
-    </div>
 
-   <h:form id="submitForm">
+   <ui:composition>
     <div class="container">
         <div id="bg-img">
         <img src="/bvis/resources/img/ny-street.jpg" alt="" />
         </div>
-
+        
         <div class="row">
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
-            <div class="col-sm-16">
-            <div class="col-sm-6">
-                <h3><label>Credentials</label></h3>
-                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                    
-                    <label class="label-bvis" for="username">First name:</label>
-                    <h:inputText id="username" value="#{login.username}" required="true" />
-
-                    <label class="label-bvis" for="password">Last name:</label>
-                    <h:inputSecret id="password" value="#{login.password}" required="true" />
-
-                </h:panelGrid>
-
-            </div> <!-- /. END COL -->
-           </div> <!-- /. END Col-sm-8 -->
-           </div> <!-- /. END Col-sm-8 OPACITY-->
-        </div> <!-- /. END Upper ROW -->
-
-    </div>
+        <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+        <div class="col-sm-16">
+        <div class="col-sm-6">
+                    <label class="label-bvis" for="party1Firstname">First name:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1Firstname" value="#{damageReport.party1Firstname}" required="true" />
+	  	<div class = "data">
+      		<h:dataTable rendered="#{not empty listOrders.orders}"
+      		value="#{listOrders.orders}" var = "cur" styleClass="data-table"
+      		columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
+      		headerClass="data-cell header-cell">
+       		<h:column>
+       			<f:facet name = "header">Order ID</f:facet>
+       			#{cur.id}
+       		</h:column>
+       		<h:column>
+       			<f:facet name = "header">Pickup location</f:facet>
+       			#{cur.pickUpStore}
+       		</h:column>
+       		<h:column>
+       			<f:facet name = "header">Return location</f:facet>
+       			#{cur.returnStore}
+       		</h:column>
+       		<h:column>
+       			<f:facet name = "header">Pickup date</f:facet>
+       			#{cur.pick_up_date}
+       		</h:column>
+       		<h:column>
+       			<f:facet name = "header">Return date</f:facet>
+       			#{cur.return_date}
+       		</h:column>
+      		</h:dataTable>	
+      	</div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </div>
       <!-- /. END CONTAINER -->
 
-    <div class="container bvis-padding">
-        <div class="row ">
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
-            <div class="col-lg-10">
-                <p class="p-bvis">Login</p>
-            </div>
-            <div class="col-lg-2 pull-right">
-                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{login.login}" />
-                    <h:messages style="color:red;margin:8px;" />
-            </div>
-        </div> <!-- /. END ROW -->
-      </div> <!-- /. END Jumpotron ROW -->
-    </div> <!-- /. END CONTAINER -->
-</h:form>
+	</ui:composition>
 
   </h:body>
 </f:view>

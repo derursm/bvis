@@ -107,3 +107,18 @@ h5,
 #div .bvis-padding {
     padding: 5px;
 }
+
+.data-table {
+	border-collapse: collapse;
+}
+
+.header-cell {
+	border-bottom: 1px solid black;
+	vertical-align: bottom;
+}
+
+.data-cell {
+	border-left: 1px solid black;
+	padding-right: 4px;
+	padding-left: 4px;
+}

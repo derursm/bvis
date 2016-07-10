@@ -45,6 +45,7 @@
                     <h:panelGroup rendered ="#{webSession.loggedIn}">
                     <li><a href="/bvis/placeInquiryLoggedIn.xhtml">Car Rental</a></li>
                     <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
+                    <li><a href="/bvis/listOrders.xhtml">Orders overview</a></li>
                     </h:panelGroup>
                   </ul>
               </div>
@@ -61,8 +62,13 @@
                           </ul>
                       </li>
                       <li><a href="#">Contact</a></li>
-                    <li><a href="login.xhtml">Login</a></li>
-                    <li><a href="registration.xhtml">Register</a></li>
+                    <h:panelGroup rendered ="#{!webSession.loggedIn}">
+                    	<li><a href="login.xhtml">Login</a></li>
+                    	<li><a href="registration.xhtml">Register</a></li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered ="#{webSession.loggedIn}">
+                    	<li><h:form><h:commandLink action="#{webSession.logout}">Logout</h:commandLink></h:form></li>
+                    </h:panelGroup>
                   </ul>
               </div>
           </div>
