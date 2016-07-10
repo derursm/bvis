@@ -203,7 +203,9 @@
       <incoming>SequenceFlow_1e5624n</incoming>
       <outgoing>sid-6AE7FB95-EAF0-45A7-B1A9-45B1A92E1958</outgoing>
     </sendTask>
-    <sequenceFlow id="SequenceFlow_0n8gpfx" sourceRef="UserTask_0zzizkn" targetRef="ExclusiveGateway_0naxz6m" />
+    <sequenceFlow id="SequenceFlow_0n8gpfx" sourceRef="UserTask_0zzizkn" targetRef="ExclusiveGateway_0naxz6m">
+      <conditionExpression xsi:type="tFormalExpression">${claimHandler.insertWorkshopBill(execution)}</conditionExpression>
+    </sequenceFlow>
     <sendTask id="sid-E57512F5-8C6D-4F88-9700-90B57B644889" name="Inform towing service" implementation="##WebService" camunda:expression="${claimHandler.sendClaimStateNotification(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
@@ -264,7 +266,7 @@
       <outgoing>SequenceFlow_0fwikm4</outgoing>
     </startEvent>
     <sequenceFlow id="SequenceFlow_0fwikm4" sourceRef="sid-02128CF4-A73A-4442-9A75-FF4A3EE1ECDD" targetRef="ServiceTask_1clk6z0" />
-    <userTask id="UserTask_0zzizkn" name="Handle bill">
+    <userTask id="UserTask_0zzizkn" name="Handle bill" camunda:formKey="app:handleRepairBill.jsf">
       <incoming>sid-B08CFAF2-04A5-4B61-9D7E-C73A5C51F1E8</incoming>
       <outgoing>SequenceFlow_0n8gpfx</outgoing>
     </userTask>

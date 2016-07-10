@@ -1,10 +1,14 @@
 package org.camunda.bpm.bvis.web;
 
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
+import org.camunda.bpm.bvis.ejb.beans.CustomerServiceBean;
+import org.camunda.bpm.bvis.entities.Customer;
 import org.camunda.bpm.bvis.web.util.WebUrls;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
@@ -42,8 +46,12 @@ public class PlaceInquiryBackingBean {
 	private String pickupLocation;
 	private String returnLocation;
 	private String insuranceType;
+
+	@ManagedProperty(value="#{webSession}")
+	private WebSession sessionBean;
 	
-	
+	@EJB
+	private CustomerServiceBean customerService;
 	
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
@@ -191,6 +199,46 @@ public class PlaceInquiryBackingBean {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Method for placing inquiries when already logged in
+	 */
+	public void placeInquiry2() {
+		long cid = sessionBean.getUid();
+		Customer customer = customerService.getCustomer(cid);
+		Map<String, Object> variables = new HashMap<String, Object>();
+		variables.put("customerFirstname", customer.getFirstname());
+		variables.put("customerSurname", customer.getSurname());
+		variables.put("customerCompanyName", customer.getCompanyName());
+		variables.put("customerEmail", customer.getEmail());
+		variables.put("customerPhoneNumber", customer.getPhoneNumber());
+		variables.put("customerDateOfBirth", customer.getDateOfBirth());
+		variables.put("customerStreet", customer.getStreet());
+		variables.put("customerHouseNumber", customer.getHouseNumber());
+		variables.put("customerPostcode", customer.getPostcode());
+		variables.put("customerCity", customer.getCity());
+		variables.put("customerCountry", customer.getCountry());
+		variables.put("fleet", fleetRental);
+		variables.put("pickUpDate", pickupDate);
+		variables.put("returnDate", returnDate);
+		variables.put("pickUpLoc", pickupLocation);
+		variables.put("returnStore", returnLocation);
+		variables.put("insuranceType", insuranceType);
+		variables.put("car", car);
+		variables.put("inquiryText", comment);
+		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+		RuntimeService runtimeService = processEngine.getRuntimeService();
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("contracting", variables);
+		System.out.println(WebUrls.getUrl(WebUrls.ORDER_SUBMITTED, false, false));
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(WebUrls.getUrl(WebUrls.ORDER_SUBMITTED, false, false));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void setSessionBean(WebSession sessionBean) {
+		this.sessionBean = sessionBean;
 	}
 
 }

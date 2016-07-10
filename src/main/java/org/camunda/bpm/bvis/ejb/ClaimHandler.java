@@ -119,6 +119,16 @@ public class ClaimHandler {
 		return claim.isTowingServiceNeeded();
 	}
 	
+	public void insertWorkshopBill(DelegateExecution delegateExecution) {
+		Map<String, Object> variables = delegateExecution.getVariables();
+		double repairBill = (Double)variables.get("repairBill");
+	    // Remove no longer needed process variables
+	    delegateExecution.removeVariables(variables.keySet());
+	    Claim claim = claimService.getClaim((Long)variables.get("claimID"));
+	    claim.setWorkshopPrice(new BigDecimal(repairBill));
+	    claimService.updateClaim(claim);
+	}
+	
 	public Customer getUser(long claimID) {
 		return null;
 	}

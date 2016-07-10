@@ -44,8 +44,14 @@
                 </button>
                 <a class="navbar-brand" href="#">BVIS Luxury Car Rental</a>
                 <ul class="nav navbar-nav navbar-left">
+                	<h:panelGroup rendered ="#{!webSession.loggedIn}">
                     <li><a href="/bvis/placeInquiry.xhtml">Car Rental</a></li>
                     <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered ="#{webSession.loggedIn}">
+                    <li><a href="/bvis/placeInquiryLoggedIn.xhtml">Car Rental</a></li>
+                    <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
+                    </h:panelGroup>
                 </ul>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -60,6 +66,13 @@
                         </ul>
                     </li>
                     <li><a href="#">Contact</a></li>
+                    <h:panelGroup rendered ="#{!webSession.loggedIn}">
+                    	<li><a href="login.xhtml">Login</a></li>
+                    	<li><a href="registration.xhtml">Register</a></li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered ="#{webSession.loggedIn}">
+                    	<li><h:form><h:commandLink action="#{webSession.logout}">Logout</h:commandLink></h:form></li>
+                    </h:panelGroup>
                 </ul>
             </div>
         </div>

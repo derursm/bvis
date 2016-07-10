@@ -12,6 +12,7 @@ public class WebUrls {
 	public static final String INDEX = "/bvis/index.xhtml";
 	public static final String DAMAGE_REPORT = "/bvis/damageReport.xhtml";
 	public static final String ORDER_SUBMITTED = "/bvis/rentalOrderSubmitted.xhtml";
+	public static final String REGISTRATION_SUCCESSFUL = "/bvis/registrationSuccessful.xhtml";
 	
 	public static String getUrl(String page, Boolean completeUrl, Boolean redirect){
 		StringBuilder sb = new StringBuilder();

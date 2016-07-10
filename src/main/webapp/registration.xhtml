@@ -16,7 +16,7 @@
 
   <h:head>
   	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <title>Create a car rent order</title>
+    <title>User login</title>
 
 
       <!-- Custom CSS Files -->
@@ -91,12 +91,40 @@
                 <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
                     
                     <label class="label-bvis" for="customer.firstname">First name:</label>
-                    <h:inputText id="firstname" value="#{placeInquiry.firstname}" required="true" />
+                    <h:inputText id="firstname" value="#{registration.firstname}" required="true" />
 
                     <label class="label-bvis" for="customer.surname">Last name:</label>
-                    <h:inputText id="surname" value="#{placeInquiry.lastname}" required="true" />
+                    <h:inputText id="surname" value="#{registration.surname}" required="true" />
 
-                    <label class="label-bvis" for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
+                    <label class="label-bvis" for="customer.email">E-mail:</label>
+                    <h:inputText id="email" value="#{registration.email}" required="true" />
+
+                    <label class="label-bvis" for="phoneNumber">Phone number:</label>
+                    <h:inputText id="phoneNumber" value="#{registration.phoneNumber}" required="true" />
+
+                    <label class="label-bvis"  for="street">Street:</label>
+                    <h:inputText id="street" value="#{registration.street}" required="true" />
+
+                    <label class="label-bvis" for="houseNumber">House number:</label>
+                    <h:inputText id="houseNumber" value="#{registration.houseNumber}" required="true" />
+
+                    <label class="label-bvis"  for="postcode">Postcode:</label>
+                    <h:inputText id="postcode" value="#{registration.postcode}" required="true" />
+
+                    <label class="label-bvis"  for="city">City:</label>
+                    <h:inputText id="city" value="#{registration.city}" required="true" />
+
+                    <label class="label-bvis" for="country">Country:</label>
+                    <h:inputText id="country" value="#{registration.country}" required="true" />
+
+                    <label class="label-bvis"  for="customer.dateOfBirth">Date of birth:</label>
+                    <h:inputText id="dateOfBirth" value="#{registration.dateOfBirth}" required="true" >
+                        <f:convertDateTime pattern="dd-mm-yyyy" />
+                    </h:inputText>
+                  <label class="label-bvis"  for="companyCustomer">Company customer?</label>
+                  <h:selectBooleanCheckbox id="companyCustomer" value="#{registration.company}" required="true" />
+                  
+                   <label class="label-bvis" for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
                     <!-- Generated markup by the plugin -->
                     <div class="tooltip top" role="tooltip">
                         <div class="tooltip-arrow"></div>
@@ -104,86 +132,25 @@
                             If you are a company, state your name!
                         </div>
                     </div>
-                    <h:inputText id="companyName" value="#{placeInquiry.companyName}" required="false" />
-
-                    <label class="label-bvis" for="customer.email">E-mail:</label>
-                    <h:inputText id="email" value="#{placeInquiry.email}" required="true" />
-
-                    <label class="label-bvis" for="phoneNumber">Phone number:</label>
-                    <h:inputText id="phoneNumber" value="#{placeInquiry.phoneNumber}" required="true" />
-
-                    <label class="label-bvis"  for="street">Street:</label>
-                    <h:inputText id="street" value="#{placeInquiry.street}" required="true" />
-
-                    <label class="label-bvis" for="houseNumber">House number:</label>
-                    <h:inputText id="houseNumber" value="#{placeInquiry.houseNumber}" required="true" />
-
-                    <label class="label-bvis"  for="postcode">Postcode:</label>
-                    <h:inputText id="postcode" value="#{placeInquiry.postcode}" required="true" />
-
-                    <label class="label-bvis"  for="city">City:</label>
-                    <h:inputText id="city" value="#{placeInquiry.city}" required="true" />
-
-                    <label class="label-bvis" for="country">Country:</label>
-                    <h:inputText id="country" value="#{placeInquiry.country}" required="true" />
-
-                    <label class="label-bvis"  for="customer.dateOfBirth">Date of birth:</label>
-                    <h:inputText id="dateOfBirth" value="#{placeInquiry.dateOfBirth}" required="true" >
-                        <f:convertDateTime pattern="dd-mm-yyyy" />
-                    </h:inputText>
+                    <h:inputText id="companyName" value="#{registration.companyName}" required="false" />
 
                 </h:panelGrid>
 
             </div> <!-- /. END COL -->
-
-
+            
             <div class="col-sm-6">
               <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                <h3><label>Car options</label></h3>
+                <h3><label>Credentials</label></h3>
                 <h:panelGroup />
+                    <label class="label-bvis" for="username">Username:</label>
+                    <h:inputText id="username" value="#{registration.username}" required="true" />
 
-                  <label class="label-bvis"  for="customer.company">Car fleet:</label>
-                  <h:selectBooleanCheckbox id="fleet" value="#placeInquiry.fleetRental}" required="true" />
+                    <label class="label-bvis" for="password">Password:</label>
+                    <h:inputSecret id="password" value="#{registration.password}" required="true" />
                 </h:panelGrid>
 
-                <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="carOptions">
-                  <label class="label-bvis"  for="car">Select a car:</label>
-                  <h:selectOneMenu id="car" value="#{placeInquiry.car}">
-                    <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
-                  </h:selectOneMenu>
-
-                  <label class="label-bvis"  for="pickUpDate">Pickup date:</label>
-                  <h:inputText id="pickUpDate" value="#{placeInquiry.pickupDate}" placeholder="dd-mm-yyyy" >
-                    <f:convertDateTime pattern="dd-mm-yyyy" />
-                  </h:inputText>
-
-                  <label class="label-bvis"  for="returnDate">Return date:</label>
-                  <h:inputText id="returnDate" value="#{placeInquiry.returnDate}" placeholder="dd-mm-yyyy">
-                    <f:convertDateTime pattern="dd-mm-yyyy" />
-                  </h:inputText>
-
-                  <label class="label-bvis"  for="pickUpLocation">Pickup location:</label>
-                  <h:selectOneMenu id="pickUpLoc" value="#{placeInquiry.pickupLocation}">
-                    <f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
-                  </h:selectOneMenu>
-
-                  <label for="returnStore">Return location:</label>
-                  <h:selectOneMenu id="returnStore" value="#{placeInquiry.returnLocation}">
-                    <f:selectItems value="#{order.allPickUpLocations}" var="r" itemLabel="#{r.storeName}" itemValue="#{r.storeID}" />
-                  </h:selectOneMenu>
-
-                  <label class="label-bvis"  for="insuranceType">Insurance type:</label>
-                  <h:selectOneMenu id="insuranceType" value="#{placeInquiry.insuranceType}">
-                    <f:selectItems value="#{order.insuranceTypes}" />
-                  </h:selectOneMenu>
-                 </h:panelGrid>
-
-                 <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="fleetComments">
-                  <label class="label-bvis"  for="inquiryText">Comments:</label>
-                  <h:inputTextarea id="inquiryText" value="#{placeInquiry.comment}" required="false" />
-                 </h:panelGrid>
-
             </div> <!-- END Col -->
+            
            </div> <!-- /. END Col-sm-8 -->
            </div> <!-- /. END Col-sm-8 OPACITY-->
         </div> <!-- /. END Upper ROW -->
@@ -195,10 +162,10 @@
         <div class="row ">
             <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
             <div class="col-lg-10">
-                <p class="p-bvis">Please submit your booking. You will be able to check your details on the next page</p>
+                <p class="p-bvis">Register</p>
             </div>
             <div class="col-lg-2 pull-right">
-                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{placeInquiry.placeInquiry}" />
+                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{registration.register}" />
                     <h:messages style="color:red;margin:8px;" />
             </div>
         </div> <!-- /. END ROW -->

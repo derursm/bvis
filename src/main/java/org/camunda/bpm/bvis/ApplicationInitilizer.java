@@ -134,10 +134,13 @@ public class ApplicationInitilizer {
 		Customer cust = new Customer("Becker", "0123 456789", "Leonardo Campus", "3", "48159", "Muenster", "Germany");
 		cust.setCompanyName("ERCIS");
 		cust.setCompany(true);
+		cust.setUsername("test");
+		cust.setPassword("test");
+		cust.setEmail("test");
+		cust.setDateOfBirth(new Date());
 		customerService.create(cust); // used in RentalOrder
 		
 		// RentalOrder
-
 		RentalOrder order = new RentalOrder(cust, false);
 		order.setInsurance(insurance);
 		Collection<Car> cars = new ArrayList<Car>();
@@ -146,7 +149,7 @@ public class ApplicationInitilizer {
 		orderService.create(order);
 		System.out.println("DUMMY ORDER ID: " + order.getId());
 
-		
+		/**
 		createCamundaUsers();
 		createCamundaGroups();
 		addUsersToGroups();
@@ -154,7 +157,7 @@ public class ApplicationInitilizer {
 		createFilters();
 		
 	    startProcessInstances(engine, "contracting", null);
-	    //startProcessInstances(engine, "claimHandling", null);
+	    //startProcessInstances(engine, "claimHandling", null); */
 	}
 	
 	private void createCamundaUsers(){

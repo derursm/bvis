@@ -86,58 +86,8 @@
         <div class="row">
             <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
             <div class="col-sm-16">
-            <div class="col-sm-6">
-                <h3><label>Contact details</label></h3>
-                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                    
-                    <label class="label-bvis" for="customer.firstname">First name:</label>
-                    <h:inputText id="firstname" value="#{placeInquiry.firstname}" required="true" />
-
-                    <label class="label-bvis" for="customer.surname">Last name:</label>
-                    <h:inputText id="surname" value="#{placeInquiry.lastname}" required="true" />
-
-                    <label class="label-bvis" for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
-                    <!-- Generated markup by the plugin -->
-                    <div class="tooltip top" role="tooltip">
-                        <div class="tooltip-arrow"></div>
-                        <div class="tooltip-inner">
-                            If you are a company, state your name!
-                        </div>
-                    </div>
-                    <h:inputText id="companyName" value="#{placeInquiry.companyName}" required="false" />
-
-                    <label class="label-bvis" for="customer.email">E-mail:</label>
-                    <h:inputText id="email" value="#{placeInquiry.email}" required="true" />
-
-                    <label class="label-bvis" for="phoneNumber">Phone number:</label>
-                    <h:inputText id="phoneNumber" value="#{placeInquiry.phoneNumber}" required="true" />
-
-                    <label class="label-bvis"  for="street">Street:</label>
-                    <h:inputText id="street" value="#{placeInquiry.street}" required="true" />
-
-                    <label class="label-bvis" for="houseNumber">House number:</label>
-                    <h:inputText id="houseNumber" value="#{placeInquiry.houseNumber}" required="true" />
-
-                    <label class="label-bvis"  for="postcode">Postcode:</label>
-                    <h:inputText id="postcode" value="#{placeInquiry.postcode}" required="true" />
-
-                    <label class="label-bvis"  for="city">City:</label>
-                    <h:inputText id="city" value="#{placeInquiry.city}" required="true" />
-
-                    <label class="label-bvis" for="country">Country:</label>
-                    <h:inputText id="country" value="#{placeInquiry.country}" required="true" />
-
-                    <label class="label-bvis"  for="customer.dateOfBirth">Date of birth:</label>
-                    <h:inputText id="dateOfBirth" value="#{placeInquiry.dateOfBirth}" required="true" >
-                        <f:convertDateTime pattern="dd-mm-yyyy" />
-                    </h:inputText>
-
-                </h:panelGrid>
-
-            </div> <!-- /. END COL -->
-
-
-            <div class="col-sm-6">
+ 
+           <div class="col-sm-6">
               <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
                 <h3><label>Car options</label></h3>
                 <h:panelGroup />
@@ -198,7 +148,7 @@
                 <p class="p-bvis">Please submit your booking. You will be able to check your details on the next page</p>
             </div>
             <div class="col-lg-2 pull-right">
-                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{placeInquiry.placeInquiry}" />
+                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{placeInquiry.placeInquiry2}" />
                     <h:messages style="color:red;margin:8px;" />
             </div>
         </div> <!-- /. END ROW -->

@@ -52,6 +52,10 @@ public class Customer implements Serializable {
 	
 	protected boolean isEligible;
 	
+	// only used if the user is actually registered
+	protected String username;
+	protected String password;
+	
 	@OneToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER, mappedBy = "cust")
 	protected Collection<RentalOrder> orders;
 	
@@ -67,6 +71,22 @@ public class Customer implements Serializable {
 		this.country = country;
 	}
 	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public boolean isEligible() {
 		return isEligible;
 	}
