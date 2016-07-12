@@ -90,16 +90,15 @@ public class ApplicationInitilizer {
 	// Creates some example data for testing purpose
 	@PostConstruct
 	public void initialise() {
+
+		// delete history
+		CamundaCleaner cleaner = new CamundaCleaner();
+		cleaner.clean(engine);
 		
-		/**identityService = engine.getIdentityService();
+		identityService = engine.getIdentityService();
 		authorizationService = engine.getAuthorizationService();
 		taskService = engine.getTaskService();
 		filterService = engine.getFilterService();
-		
-		
-		// cleanup
-		CamundaCleaner cleaner = new CamundaCleaner();
-		cleaner.clean(engine); */
 		
 		// PickUpLocations
 		pickupLocationService.create(new PickUpLocation("Barcelona Airport", "+34 902 40 47 04", "El Prat de Llobregat", "",
@@ -149,15 +148,14 @@ public class ApplicationInitilizer {
 		orderService.create(order);
 		System.out.println("DUMMY ORDER ID: " + order.getId());
 
-		/**
-		createCamundaUsers();
-		createCamundaGroups();
-		addUsersToGroups();
-		adjustAuthorizations();
-		createFilters();
+		//createCamundaUsers();
+		//createCamundaGroups();
+		//addUsersToGroups();
+		//adjustAuthorizations();
+		//createFilters();
 		
-	    startProcessInstances(engine, "contracting", null);
-	    //startProcessInstances(engine, "claimHandling", null); */
+	    //startContractingInstances(null);
+	    //startClaimInstances(null); */
 	}
 	
 	private void createCamundaUsers(){
@@ -259,7 +257,6 @@ public class ApplicationInitilizer {
 		Map<String, Object> filterProperties = new HashMap<String, Object>();
 		filterProperties.put("description", "Tasks assigned to me");
 		filterProperties.put("priority", -10);
-		addVariables(filterProperties);
 		TaskService taskService = engine.getTaskService();
 		TaskQuery query = taskService.createTaskQuery().taskAssigneeExpression("${currentUser()}");
 		Filter myTasksFilter = filterService.newTaskFilter().setName("My Tasks")
@@ -278,7 +275,6 @@ public class ApplicationInitilizer {
 		filterProperties.clear();
 		filterProperties.put("description", "Unassigned / Open tasks");
 		filterProperties.put("priority", -5);
-		addVariables(filterProperties);
 		query = taskService.createTaskQuery()
 				.taskCandidateGroupInExpression("${currentUserGroups()}").taskUnassigned();
 		Filter groupTasksFilter = filterService.newTaskFilter().setName("Unassigned Tasks")
@@ -298,7 +294,6 @@ public class ApplicationInitilizer {
 		filterProperties.put("description",	"New Claims");
 		filterProperties.put("priority", 0);
 		filterProperties.put("refresh", true);
-		addVariables(filterProperties);
 		query = taskService.createTaskQuery().taskName("check the claim's eligibility");
 		Filter newLiabilityCasesFilter = filterService.newTaskFilter()
 				.setName("New Insurance Claims").setProperties(filterProperties)
@@ -322,7 +317,6 @@ public class ApplicationInitilizer {
 		filterProperties.put("priority", 0);
 		filterProperties.put("refresh", true);
 		//filterProperties.put("color", "#8ad69a");
-		addVariables(filterProperties);
 		query = taskService.createTaskQuery()
 				.taskName("negotiate agreement conditions with customer (via telephone or face2face)");
 		Filter openIncuranceContractsFilter = filterService.newTaskFilter()
@@ -356,36 +350,19 @@ public class ApplicationInitilizer {
 		filterProperties.clear();
 		filterProperties.put("description", "All Tasks");
 		filterProperties.put("priority", 10);
-		addVariables(filterProperties);
 		query = taskService.createTaskQuery();
 		Filter allTasksFilter = filterService.newTaskFilter()
 				.setName("All Tasks").setProperties(filterProperties)
 				.setOwner("admin").setQuery(query);
 		filterService.saveFilter(allTasksFilter);
 	}
-
-	private void addVariables(Map<String, Object> filterProperties) {
-		List<Object> variables = new ArrayList<Object>();
-		addVariable(variables, "amount", "Invoice Amount");
-		addVariable(variables, "invoiceNumber", "Invoice Number");
-		addVariable(variables, "creditor", "Creditor");
-		addVariable(variables, "approver", "Approver");
-		filterProperties.put("variables", variables);
-	}
-
-	private void addVariable(List<Object> variables, String name, String label) {
-		Map<String, String> variable = new HashMap<String, String>();
-		variable.put("name", name);
-		variable.put("label", label);
-		variables.add(variable);
-	}
 	
-	private void startProcessInstances(ProcessEngine processEngine, String processDefinitionKey, Integer version) {
+	private void startContractingInstances(Integer version) {
 
-	    ProcessDefinitionQuery processDefinitionQuery = processEngine
+	    ProcessDefinitionQuery processDefinitionQuery = engine
 	      .getRepositoryService()
 	      .createProcessDefinitionQuery()
-	      .processDefinitionKey(processDefinitionKey);
+	      .processDefinitionKey("contracting");
 
 	    if (version != null) {
 	      processDefinitionQuery.processDefinitionVersion(version);
@@ -396,14 +373,14 @@ public class ApplicationInitilizer {
 
 	    ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
 
-	    /*
+	    
 	    // process instance 1
-	    processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
+	    engine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
 	        .putValue("creditor", "Great Pizza for Everyone Inc.")
 	        .putValue("amount", 30.00d)
 	        .putValue("invoiceCategory", "Travel Expenses")
 	        .putValue("invoiceNumber", "GPFE-23232323"));
-
+	    /*
 	    // process instance 2
 	    try {
 	      Calendar calendar = Calendar.getInstance();
@@ -419,7 +396,7 @@ public class ApplicationInitilizer {
 	      calendar.add(Calendar.DAY_OF_MONTH, 14);
 	      ClockUtil.setCurrentTime(calendar.getTime());
 
-	      processEngine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.CAMUNDA_ADMIN));
+	      engine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.CAMUNDA_ADMIN));
 	      Task task = processEngine.getTaskService().createTaskQuery().processInstanceId(pi.getId()).singleResult();
 	      processEngine.getTaskService().claim(task.getId(), "demo");
 	      processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", true));
@@ -427,27 +404,52 @@ public class ApplicationInitilizer {
 	    finally{
 	      ClockUtil.reset();
 	      processEngine.getIdentityService().clearAuthentication();
+	    }*/
+	  } 
+	
+	private void startClaimInstances(Integer version) {
+
+	    ProcessDefinitionQuery processDefinitionQuery = engine
+	      .getRepositoryService()
+	      .createProcessDefinitionQuery()
+	      .processDefinitionKey("claimHandling");
+
+	    if (version != null) {
+	      processDefinitionQuery.processDefinitionVersion(version);
+	    }
+	    else {
+	      processDefinitionQuery.latestVersion();
 	    }
 
-	    // process instance 3
+	    ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
+
+	    
+	    // process instance 1
+	    engine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
+	        .putValue("creditor", "Great Pizza for Everyone Inc.")
+	        .putValue("amount", 30.00d)
+	        .putValue("invoiceCategory", "Travel Expenses")
+	        .putValue("invoiceNumber", "GPFE-23232323"));
+	    /*
+	    // process instance 2
 	    try {
 	      Calendar calendar = Calendar.getInstance();
-	      calendar.add(Calendar.DAY_OF_MONTH, -5);
+	      calendar.add(Calendar.DAY_OF_MONTH, -14);
 	      ClockUtil.setCurrentTime(calendar.getTime());
 
 	      ProcessInstance pi = processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
-	          .putValue("creditor", "Papa Steve's all you can eat")
-	          .putValue("amount", 10.99d)
-	          .putValue("invoiceCategory", "Travel Expenses")
-	          .putValue("invoiceNumber", "PSACE-5342"));
+	          .putValue("creditor", "Bobby's Office Supplies")
+	          .putValue("amount", 900.00d)
+	          .putValue("invoiceCategory", "Misc")
+	          .putValue("invoiceNumber", "BOS-43934"));
 
-	      calendar.add(Calendar.DAY_OF_MONTH, 5);
+	      calendar.add(Calendar.DAY_OF_MONTH, 14);
 	      ClockUtil.setCurrentTime(calendar.getTime());
 
-	      processEngine.getIdentityService().setAuthenticatedUserId("mary");
+	      engine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.CAMUNDA_ADMIN));
 	      Task task = processEngine.getTaskService().createTaskQuery().processInstanceId(pi.getId()).singleResult();
-	      processEngine.getTaskService().createComment(null, pi.getId(), "I cannot approve this invoice: the amount is missing.\n\n Could you please provide the amount?");
-	      processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", false));
+	      processEngine.getTaskService().claim(task.getId(), "demo");
+	      processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", true));
 	    }
 	    finally{
 	      ClockUtil.reset();
