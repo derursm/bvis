@@ -18,7 +18,7 @@ public class InsuranceDetailsImpl implements InsuranceDetails {
 	
 	@Override
 	public Response receiveAnswer(InsuranceAnswer insuranceAnswer) {
-		String processInstanceID = insuranceAnswer.getProcessInstanceIDBVIS();
+		String processInstanceID = insuranceAnswer.getProcessinstance_id_bvis();
 		System.out.println("INSURANCE ANSWER RECEIVED");
 		try {
 			businessProcess.associateExecutionById(processInstanceID);
@@ -35,11 +35,11 @@ public class InsuranceDetailsImpl implements InsuranceDetails {
 		runtimeService.setVariable(execution.getId(), "insuranceResult", 
 				insuranceAnswer.getOrder().getResult());
 		runtimeService.setVariable(execution.getId(), "finalPrice", 
-				insuranceAnswer.getOrder().getFinalPrice());
+				insuranceAnswer.getOrder().getFinal_price());
 		runtimeService.setVariable(execution.getId(), "orderID", 
-				insuranceAnswer.getOrder().getOrderID());
+				insuranceAnswer.getOrder().getOrder_id());
 		runtimeService.setVariable(execution.getId(), "inquiryText", 
-				insuranceAnswer.getOrder().getInquiryText());
+				insuranceAnswer.getOrder().getInquiry_text());
 		runtimeService.signal(execution.getId());
 
 		Response response = Response.ok("No errors").build();

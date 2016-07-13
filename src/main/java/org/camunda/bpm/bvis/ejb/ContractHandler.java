@@ -178,6 +178,8 @@ public class ContractHandler {
 
     // Add newly created order id as process variable
     delegateExecution.setVariable("orderId", rentalOrder.getId());
+    delegateExecution.setVariable("fleet", rentalOrder.isFleetRental());
+    delegateExecution.setVariable("processId", delegateExecution.getActivityInstanceId());
     System.out.println("CREATED ORDER WITH ORDER ID: " + rentalOrder.getId());
   }
 
@@ -185,6 +187,12 @@ public class ContractHandler {
 	    // Load order entity from database
 	    return orderService.getOrder(orderId);
 	  }
+  
+  public boolean isFleetOrder(DelegateExecution delegateExecution) {
+	    Map<String, Object> variables = delegateExecution.getVariables();
+	    boolean isFleetOrder = (Boolean)variables.get("fleet");
+	    return isFleetOrder;  
+  }
   
   public void updateOrder(RentalOrder rentalOrder) {
 	    // Merge detached order entity with current persisted state

@@ -1,8 +1,8 @@
 package org.camunda.bpm.bvis.rest.receive.dto;
 
 public class InsuranceAnswer {
-	private String processInstanceIDBVIS;
-	private String processInstanceIDCapitol;
+	private String processinstance_id_bvis;
+	private String processinstance_id_capitol;
 	private Order order;
 	
 	public InsuranceAnswer() {}
@@ -10,23 +10,27 @@ public class InsuranceAnswer {
 	public InsuranceAnswer(String processInstanceIDBVIS,
 			String processInstanceIDCapitol,
 			Order order) {
-		this.processInstanceIDBVIS = processInstanceIDBVIS;
-		this.processInstanceIDCapitol = processInstanceIDCapitol;
+		this.processinstance_id_bvis = processInstanceIDBVIS;
+		this.processinstance_id_capitol = processInstanceIDCapitol;
 		this.order = order;  
 	}
-	
-	public String getProcessInstanceIDBVIS() {
-		return processInstanceIDBVIS;
+
+	public String getProcessinstance_id_bvis() {
+		return processinstance_id_bvis;
 	}
-	public void setProcessInstanceIDBVIS(String processInstanceIDBVIS) {
-		this.processInstanceIDBVIS = processInstanceIDBVIS;
+
+	public void setProcess_instance_bvis(String processinstance_id_bvis) {
+		this.processinstance_id_bvis = processinstance_id_bvis;
 	}
-	public String getProcessInstanceIDCapitol() {
-		return processInstanceIDCapitol;
+
+	public String getProcessinstance_id_capitol() {
+		return processinstance_id_capitol;
 	}
-	public void setProcessInstanceIDCapitol(String processInstanceIDCapitol) {
-		this.processInstanceIDCapitol = processInstanceIDCapitol;
+
+	public void setProcessinstance_id_capitol(String processinstance_id_capitol) {
+		this.processinstance_id_capitol = processinstance_id_capitol;
 	}
+
 	public Order getOrder() {
 		return order;
 	}

@@ -255,8 +255,8 @@
       <outgoing>SequenceFlow_0nqiz4b</outgoing>
       <outgoing>sid-89B676A5-1C72-4B50-BC7D-32E985BC402F</outgoing>
     </exclusiveGateway>
-    <sequenceFlow id="SequenceFlow_0nqiz4b" sourceRef="sid-42AA59C1-337A-4E54-AB37-AD9A2DCC5F9F" targetRef="UserTask_1pqacb0">
-      <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
+    <sequenceFlow id="SequenceFlow_0nqiz4b" name="Fleet rental" sourceRef="sid-42AA59C1-337A-4E54-AB37-AD9A2DCC5F9F" targetRef="UserTask_1pqacb0">
+      <conditionExpression xsi:type="tFormalExpression">${contractHandler.isFleetOrder(execution)}</conditionExpression>
     </sequenceFlow>
     <endEvent id="EndEvent_1ogqsf5" name="Inform customer">
       <extensionElements>
@@ -322,7 +322,7 @@
       <extensionElements>
         <signavio:signavioLabel align="right" distance="6.4835963" from="0" orientation="lr" ref="text_name" to="1" valign="bottom" x="1237.0619379531256" y="789.296072880281" />
       </extensionElements>
-      <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${not contractHandler.isFleetOrder(execution)}</conditionExpression>
     </sequenceFlow>
     <exclusiveGateway id="sid-50026C0E-D4D4-4210-9526-9FE4851652A3" name="" gatewayDirection="Converging">
       <extensionElements>
@@ -495,7 +495,7 @@
       <incoming>SequenceFlow_02w5sdm</incoming>
       <outgoing>sid-DC881259-C4C3-4F81-9489-D39066179E85</outgoing>
     </receiveTask>
-    <userTask id="UserTask_0nt3b79" name="Send reminder">
+    <userTask id="UserTask_0nt3b79" name="Send reminder" camunda:formKey="app:sendContractReminder.jsf">
       <incoming>SequenceFlow_1880bap</incoming>
       <outgoing>sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5</outgoing>
     </userTask>

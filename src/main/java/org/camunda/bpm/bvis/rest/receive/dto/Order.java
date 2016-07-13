@@ -1,53 +1,62 @@
 package org.camunda.bpm.bvis.rest.receive.dto;
 
+import java.util.Date;
+
 public class Order {
 
-	private long orderID;
-	private String requestDate;
-	private String inquiryText;
+	private long order_id;
+	private Date request_date;
+	private String inquiry_text;
 	private int result;
-	private double finalPrice;
+	private double final_price;
 	
 	public Order() {}
 	
-	public Order(long orderID, String requestDate, String inquiryText, int result, double finalPrice) {
-		this.orderID = orderID;
-		this.requestDate = requestDate;
-		this.inquiryText = inquiryText;
+	public Order(long orderID, Date requestDate, String inquiryText, int result, double finalPrice) {
+		this.order_id = orderID;
+		this.request_date = requestDate;
+		this.inquiry_text = inquiryText;
 		this.result = result;
-		this.finalPrice = finalPrice;
+		this.final_price = finalPrice;
 	}
 	
-	
-	public long getOrderID() {
-		return orderID;
-	}
-	public void setOrderID(long orderID) {
-		this.orderID = orderID;
-	}
-	public String getRequestDate() {
-		return requestDate;
-	}
-	public void setRequestDate(String requestDate) {
-		this.requestDate = requestDate;
-	}
-	public String getInquiryText() {
-		return inquiryText;
-	}
-	public void setInquiryText(String inquiryText) {
-		this.inquiryText = inquiryText;
-	}
 	public int getResult() {
 		return result;
 	}
 	public void setResult(int result) {
 		this.result = result;
 	}
-	public double getFinalPrice() {
-		return finalPrice;
+
+	public long getOrder_id() {
+		return order_id;
 	}
-	public void setFinalPrice(double finalPrice) {
-		this.finalPrice = finalPrice;
+
+	public void setOrder_id(long order_id) {
+		this.order_id = order_id;
+	}
+
+	public Date getRequest_date() {
+		return request_date;
+	}
+
+	public void setRequest_date(Date request_date) {
+		this.request_date = request_date;
+	}
+
+	public String getInquiry_text() {
+		return inquiry_text;
+	}
+
+	public void setInquiry_text(String inquiry_text) {
+		this.inquiry_text = inquiry_text;
+	}
+
+	public double getFinal_price() {
+		return final_price;
+	}
+
+	public void setFinal_price(double final_price) {
+		this.final_price = final_price;
 	}
 	
 	
