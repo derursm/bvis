@@ -297,6 +297,27 @@
       <incoming>sid-D9D4A290-2855-4F50-9F68-5A144AA1593B</incoming>
     </endEvent>
     <sequenceFlow id="sid-D9D4A290-2855-4F50-9F68-5A144AA1593B" name="" sourceRef="sid-A37C4B31-B229-4BE0-92C2-BBE4981622BF" targetRef="sid-85049955-5FB4-4372-A0E4-27B0E5B62374" />
+    <serviceTask id="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76" name="Handle requirements" implementation="##WebService" camunda:expression="${true}">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
+        <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
+        <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
+      </extensionElements>
+      <incoming>sid-89B676A5-1C72-4B50-BC7D-32E985BC402F</incoming>
+      <outgoing>sid-4930D20E-DD03-40C8-98CD-5C9227D03258</outgoing>
+      <ioSpecification id="sid-f420ee31-64fb-483c-9781-e709c8c0cff8">
+        <dataInput id="sid-63085118-cf8b-452e-8307-289862a189ca" />
+        <dataOutput id="sid-c62d6d6a-1aa4-4b61-a236-e751ca8aaf30" />
+        <inputSet id="sid-2d795a66-31dc-491a-b59a-48566d613684" name="DefaultInputSet">
+          <dataInputRefs>sid-63085118-cf8b-452e-8307-289862a189ca</dataInputRefs>
+          <outputSetRefs>sid-ca58a69e-90cf-4022-a911-5bec3de04846</outputSetRefs>
+        </inputSet>
+        <outputSet id="sid-ca58a69e-90cf-4022-a911-5bec3de04846" name="DefaultOutputSet">
+          <dataOutputRefs>sid-c62d6d6a-1aa4-4b61-a236-e751ca8aaf30</dataOutputRefs>
+          <inputSetRefs>sid-2d795a66-31dc-491a-b59a-48566d613684</inputSetRefs>
+        </outputSet>
+      </ioSpecification>
+    </serviceTask>
     <sequenceFlow id="sid-89B676A5-1C72-4B50-BC7D-32E985BC402F" name="Single car&#10;rental" isImmediate="true" sourceRef="sid-42AA59C1-337A-4E54-AB37-AD9A2DCC5F9F" targetRef="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76">
       <extensionElements>
         <signavio:signavioLabel align="right" distance="6.4835963" from="0" orientation="lr" ref="text_name" to="1" valign="bottom" x="1237.0619379531256" y="789.296072880281" />
@@ -388,7 +409,7 @@
       <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-4930D20E-DD03-40C8-98CD-5C9227D03258" name="" isImmediate="true" sourceRef="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76" targetRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" />
-    <sendTask id="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" name="Send &#10;rental request confirmation" implementation="##WebService" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}">
+    <sendTask id="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" name="Send &#10;rental request confirmation" implementation="##WebService" camunda:expression="${true}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -485,27 +506,6 @@
         <timeDuration xsi:type="tFormalExpression">PT10S</timeDuration>
       </timerEventDefinition>
     </boundaryEvent>
-    <serviceTask id="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76" name="Handle requirements" implementation="##WebService" camunda:expression="${true}">
-      <extensionElements>
-        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
-        <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
-        <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
-      </extensionElements>
-      <incoming>sid-89B676A5-1C72-4B50-BC7D-32E985BC402F</incoming>
-      <outgoing>sid-4930D20E-DD03-40C8-98CD-5C9227D03258</outgoing>
-      <ioSpecification id="sid-f420ee31-64fb-483c-9781-e709c8c0cff8">
-        <dataInput id="sid-63085118-cf8b-452e-8307-289862a189ca" />
-        <dataOutput id="sid-c62d6d6a-1aa4-4b61-a236-e751ca8aaf30" />
-        <inputSet id="sid-2d795a66-31dc-491a-b59a-48566d613684" name="DefaultInputSet">
-          <dataInputRefs>sid-63085118-cf8b-452e-8307-289862a189ca</dataInputRefs>
-          <outputSetRefs>sid-ca58a69e-90cf-4022-a911-5bec3de04846</outputSetRefs>
-        </inputSet>
-        <outputSet id="sid-ca58a69e-90cf-4022-a911-5bec3de04846" name="DefaultOutputSet">
-          <dataOutputRefs>sid-c62d6d6a-1aa4-4b61-a236-e751ca8aaf30</dataOutputRefs>
-          <inputSetRefs>sid-2d795a66-31dc-491a-b59a-48566d613684</inputSetRefs>
-        </outputSet>
-      </ioSpecification>
-    </serviceTask>
   </process>
   <message id="Message_1x8fpfj" name="Message_2ho4uos" />
   <message id="Message_06rmom7" name="Message_1mfr747" />
@@ -785,16 +785,14 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76_gui" bpmnElement="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76">
-        <omgdc:Bounds x="1195" y="729" width="100" height="80" />
+        <omgdc:Bounds x="1191" y="751" width="100" height="80" />
         <bpmndi:BPMNLabel labelStyle="sid-b69e93da-16c1-4f4f-a33f-7b343427a22d">
           <omgdc:Bounds x="1252.1285705566406" y="777.271592926648" width="71.74285888671875" height="24" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="sid-89B676A5-1C72-4B50-BC7D-32E985BC402F_gui" bpmnElement="sid-89B676A5-1C72-4B50-BC7D-32E985BC402F">
         <omgdi:waypoint xsi:type="omgdc:Point" x="1046" y="790" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="1121" y="790" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="1121" y="767" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="1195" y="767" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1191" y="789" />
         <bpmndi:BPMNLabel labelStyle="sid-ebf35eae-1f3a-41f9-b9b0-355e4191caaa">
           <omgdc:Bounds x="1092" y="760" width="90" height="24" />
         </bpmndi:BPMNLabel>
@@ -911,9 +909,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="sid-4930D20E-DD03-40C8-98CD-5C9227D03258_gui" bpmnElement="sid-4930D20E-DD03-40C8-98CD-5C9227D03258">
-        <omgdi:waypoint xsi:type="omgdc:Point" x="1295" y="769" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="1329" y="769" />
-        <omgdi:waypoint xsi:type="omgdc:Point" x="1329" y="791.271592926648" />
+        <omgdi:waypoint xsi:type="omgdc:Point" x="1291" y="791" />
         <omgdi:waypoint xsi:type="omgdc:Point" x="1363" y="791.271592926648" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="sid-28D1E10C-5834-4C50-BDE7-2DD235722704_gui" bpmnElement="sid-28D1E10C-5834-4C50-BDE7-2DD235722704">
