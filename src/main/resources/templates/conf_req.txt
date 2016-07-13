@@ -1,9 +1,17 @@
-<p style="color: #5e9ca0; text-align: right;"><span style="color: #000000;">&nbsp;booking number: %7$s</span></p>
-<h1 style="color: #5e9ca0;">Dear Mr/Mrs %1$s!</h1>
-<p>&nbsp;</p>
-<h2 style="color: #2e6c80;">Congratulations to your successful booking at BVIS Corp.</h2>
-<p><strong>IMPORTANT: This is a reservation notification. The contract will be sent to you as soon as our team has handled your request.</strong></p>
-<p>We are happy to welcome you as our customer. Please see below your&nbsp;booking details:</p>
+<style type="text/css">
+div.bg {
+background-image: url(http://camunda-bvis.uni-muenster.de/bvis/resources/img/ny-street.jpg);
+margin: auto;
+background-repeat: no-repeat;
+}
+</style>
+<body>
+<div class="bg">
+<p class="size-36" lang="x-size-36" style="margin-top: 0; margin-bottom: 0; font-size: 30px; line-height: 38px; text-align: center;"><span style="color: #ffffff;">Congratulations to your successful booking at BVIS Corp.</span></p>
+<p class="size-36" lang="x-size-36" style="margin-top: 0; margin-bottom: 0; font-size: 18px; line-height: 38px; text-align: center;"><span style="color: #ffffff;">IMPORTANT: This is a reservation notification. The contract will be sent to you as soon as our team has handled your request.</span></p>
+</div>
+<div>
+<p style="font-size: 18px;">We are happy to welcome you as our customer. Please see below your&nbsp;booking details:</p>
 <ol style="list-style: none; font-size: 14px; line-height: 32px; font-weight: bold;">
 <li style="clear: both;">Car model: %2$s</li>
 <li style="clear: both;">Pickup location: %3$s</li>
@@ -13,8 +21,10 @@
 <li style="clear: both;">Insurance package: %9$s</li>
 <li style="clear: both;"></li>
 </ol>
+</div>
 <p>&nbsp;If you wish to make any changes to your booking, please contact our customer service at +44 664/5550777</p>
 <h2>Have a nice ride.&nbsp;Your BVIS Team.</h2>
+<img src="/bvis/resources/img/logo.jpg" alt="Logo"/>
 <p>&nbsp;</p>
 <p>This is an automatically created mail. Do not reply on this mail or the FBI will take you down, bastard.</p>
 <p><strong>&nbsp;</strong></p>
