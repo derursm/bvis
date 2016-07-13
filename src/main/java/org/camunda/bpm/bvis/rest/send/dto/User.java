@@ -1,5 +1,7 @@
 package org.camunda.bpm.bvis.rest.send.dto;
 
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
@@ -14,7 +16,7 @@ public class User {
 	private String postcode;
 	private String city;
 	private String country;
-	private String date_of_birth;
+	private Date date_of_birth;
 	private String company;
 	private String company_name;
 	
@@ -72,11 +74,16 @@ public class User {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public String getDate_of_birth() {
+	
+	
+	public Date getDate_of_birth() {
 		return date_of_birth;
 	}
-	public void setDate_of_birth(String date_of_birth) {
+	public void setDate_of_birth(Date date_of_birth) {
 		this.date_of_birth = date_of_birth;
+	}
+	public String getCompany() {
+		return company;
 	}
 	public String isCompany() {
 		return company;

@@ -1,5 +1,7 @@
 package org.camunda.bpm.bvis.rest.send.dto;
 
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 
@@ -8,8 +10,8 @@ public class Insurance {
 	private int insurance_id;
 	private String type;
 	private double deductible;
-	private String pick_up_date;
-	private String return_date;
+	private Date pick_up_date;
+	private Date return_date;
 	
 	public int getInsurance_id() {
 		return insurance_id;
@@ -29,16 +31,17 @@ public class Insurance {
 	public void setDeductible(double deductible) {
 		this.deductible = deductible;
 	}
-	public String getPick_up_date() {
+	public Date getPick_up_date() {
 		return pick_up_date;
 	}
-	public void setPick_up_date(String pick_up_date) {
+	public void setPick_up_date(Date pick_up_date) {
 		this.pick_up_date = pick_up_date;
 	}
-	public String getReturn_date() {
+	public Date getReturn_date() {
 		return return_date;
 	}
-	public void setReturn_date(String return_date) {
+	public void setReturn_date(Date return_date) {
 		this.return_date = return_date;
 	}
+	
 }

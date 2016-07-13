@@ -1,5 +1,6 @@
 package org.camunda.bpm.bvis.rest.send.service;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -61,7 +62,7 @@ public class SendInquiry {
 		user.setCompany(customer.getCompany());
 		user.setCompany_name(customer.getCompanyName());
 		user.setCountry(customer.getCountry());
-		user.setDate_of_birth(customer.getDateOfBirth().toString());
+		user.setDate_of_birth(customer.getDateOfBirth());
 		user.setEmail(customer.getEmail());
 		user.setFirstname(customer.getFirstname());
 		user.setHouse_number(customer.getHouseNumber());
@@ -98,15 +99,15 @@ public class SendInquiry {
 		if (entityInsurance == null) {
 			insurance.setDeductible(1337);
 			insurance.setInsurance_id(1337);
-			insurance.setPick_up_date("PickupDate");
-			insurance.setReturn_date("ReturnDate");
+			insurance.setPick_up_date(new Date());
+			insurance.setReturn_date(new Date());
 			insurance.setType("TestType");
 		}
 		else {
 			insurance.setDeductible(Double.parseDouble(entityInsurance.getDeductible().toString()));
 			insurance.setInsurance_id(Integer.parseInt(entityInsurance.getInsuranceID()+""));
-			insurance.setPick_up_date(entityInsurance.getPickUpDate().toString());
-			insurance.setReturn_date(entityInsurance.getReturnDate().toString());
+			insurance.setPick_up_date(entityInsurance.getPickUpDate());
+			insurance.setReturn_date(entityInsurance.getReturnDate());
 			insurance.setType(entityInsurance.getType().toString());	
 		}
 		return insurance;
@@ -121,7 +122,7 @@ public class SendInquiry {
 		order.setInquiry_text(rentalOrder.getInquiryText());
 		order.setInsurance(insurance);
 		order.setOrder_id(Integer.parseInt(rentalOrder.getOrderID()+""));
-		order.setRequest_date(rentalOrder.getRequestDate().toString());
+		order.setRequest_date(rentalOrder.getRequestDate());
 		return order;
 	}
 }

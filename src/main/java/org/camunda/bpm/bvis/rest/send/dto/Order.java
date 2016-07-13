@@ -1,6 +1,7 @@
 package org.camunda.bpm.bvis.rest.send.dto;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,7 +9,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Order {
 	private int order_id;
-	private String request_date;
+	private Date request_date;
 	private boolean fleet_rental;
 	private String inquiry_text;
 	private User user;
@@ -22,12 +23,14 @@ public class Order {
 	public void setOrder_id(int order_id) {
 		this.order_id = order_id;
 	}
+	
+	
 
-	public String getRequest_date() {
+	public Date getRequest_date() {
 		return request_date;
 	}
 
-	public void setRequest_date(String request_date) {
+	public void setRequest_date(Date request_date) {
 		this.request_date = request_date;
 	}
 

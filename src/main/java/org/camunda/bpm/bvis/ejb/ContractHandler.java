@@ -164,8 +164,8 @@ public class ContractHandler {
     Insurance insurance = new Insurance();
     insurance.setDeductible(new BigDecimal(1000));
     insurance.setEstimatedCosts(new BigDecimal(20));
-    insurance.setPickUpDate(new Date());
-    insurance.setReturnDate(new Date());
+    insurance.setPickUpDate((Date)variables.get("pickUpDate"));
+    insurance.setReturnDate((Date)variables.get("returnDate"));
     insurance.setOrder(rentalOrder);
     insurance.setType(InsuranceType.partial);
     rentalOrder.setInsurance(insurance);

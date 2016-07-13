@@ -14,7 +14,7 @@
     <extensionElements>
       <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="0e59bac838d24928aae942d42fb9862f" />
     </extensionElements>
-    <participant id="sid-FA621CEE-316B-47FF-816E-18525C7B5A5A" name="BVIS Contracting" processRef="sid-D365C6C7-55F8-418B-8A0E-8ACAF2939454">
+    <participant id="sid-FA621CEE-316B-47FF-816E-18525C7B5A5A" name="BVIS Contracting">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
       </extensionElements>
