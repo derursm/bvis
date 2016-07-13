@@ -503,7 +503,7 @@
     <boundaryEvent id="BoundaryEvent_02bjwpx" attachedToRef="ReceiveTask_InsurancDetails">
       <outgoing>SequenceFlow_1880bap</outgoing>
       <timerEventDefinition>
-        <timeDuration xsi:type="tFormalExpression">PT10S</timeDuration>
+        <timeDuration xsi:type="tFormalExpression">P10D</timeDuration>
       </timerEventDefinition>
     </boundaryEvent>
   </process>
