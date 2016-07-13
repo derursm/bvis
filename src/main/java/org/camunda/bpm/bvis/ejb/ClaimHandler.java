@@ -78,7 +78,7 @@ public class ClaimHandler {
 		claim.setDamageDate((Date)variables.get("damageDate"));
 		claim.setTowingServiceNeeded((Boolean)variables.get("towingServiceNeeded")); 
 		claim.setReportedByCustomer((Boolean)variables.get("reportedByCustomer"));
-		RentalOrder order = orderService.getOrder((long)variables.get("orderID"));
+		RentalOrder order = orderService.getOrder(Long.parseLong((String)variables.get("orderID")));
 		Insurance insurance = order.getInsurance();
 		claim.setInsurance(insurance);
 		InvolvedParty party = new InvolvedParty();
@@ -132,7 +132,7 @@ public class ClaimHandler {
 		return null;
 	}
 	
-	public void informUser(long claimID) {
+	public void informCustomerAboutDamage(DelegateExecution delegateExecution) {
 		
 	}
 	
@@ -140,7 +140,7 @@ public class ClaimHandler {
 		
 	}
 	
-	public void informTowingService(long claimID) {
+	public void informTowingService(DelegateExecution delegateExecution) {
 		
 	}
 	
@@ -223,5 +223,16 @@ public class ClaimHandler {
 		else if ((int)variables.get("coverageCosts") > 0) return 1;
 		// else if insurance does not cover costs and customer does not have to pay -> third party has to pay
 		else return 2;
+	}
+	
+	/**
+	 * Either inform customer about 
+	 * 1) He has to pay
+	 * 2) Insurance pays
+	 * 3) Third party has to pay
+	 * @param delegateExecution
+	 */
+	public void sendFinalCustomerNotification(DelegateExecution delegateExecution) {
+		
 	}
 }

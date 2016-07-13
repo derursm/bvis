@@ -186,7 +186,7 @@
     <sequenceFlow id="SequenceFlow_0n8gpfx" sourceRef="UserTask_0zzizkn" targetRef="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD">
       <conditionExpression xsi:type="tFormalExpression">${claimHandler.insertWorkshopBill(execution)}</conditionExpression>
     </sequenceFlow>
-    <sendTask id="sid-E57512F5-8C6D-4F88-9700-90B57B644889" name="Inform towing service" implementation="##WebService" camunda:expression="${claimHandler.sendClaimStateNotification(execution)}">
+    <sendTask id="sid-E57512F5-8C6D-4F88-9700-90B57B644889" name="Inform towing service" implementation="##WebService" camunda:expression="${claimHandler.informTowingService(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -198,7 +198,7 @@
       <incoming>sid-296CF9C0-C7F4-4CF7-95EF-500F90E83BA4</incoming>
       <outgoing>sid-AF9D4642-506C-470F-8440-714016A425E4</outgoing>
     </sendTask>
-    <sendTask id="SendTask_1ywju1m" name="Inform customer about damage" camunda:expression="${claimHandler.sendClaimStateNotification(execution)}">
+    <sendTask id="SendTask_1ywju1m" name="Inform customer about damage" camunda:expression="${claimHandler.informCustomerAboutDamage(execution)}">
       <extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="Input_1c43me2">inf_damage</camunda:inputParameter>
@@ -233,7 +233,7 @@
     </userTask>
     <sequenceFlow id="SequenceFlow_1qi1gpu" sourceRef="IntermediateThrowEvent_0v23rf1" targetRef="ExclusiveGateway_0lc15s4" />
     <sequenceFlow id="SequenceFlow_0e7e87s" sourceRef="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03" targetRef="IntermediateThrowEvent_0v23rf1" />
-    <startEvent id="sid-02128CF4-A73A-4442-9A75-FF4A3EE1ECDD" name="Damage report&#10;entered" camunda:formKey="app:damageReport.jsf">
+    <startEvent id="sid-02128CF4-A73A-4442-9A75-FF4A3EE1ECDD" name="Damage report&#10;entered" camunda:formKey="app:damageReportCamundaStart.jsf">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
         <signavio:signavioMetaData metaKey="vorgngerprozesse" metaValue="[]" />

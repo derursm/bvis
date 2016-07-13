@@ -92,13 +92,13 @@ public class ApplicationInitilizer {
 	public void initialise() {
 
 		// delete history
-		CamundaCleaner cleaner = new CamundaCleaner();
+		/**CamundaCleaner cleaner = new CamundaCleaner();
 		cleaner.clean(engine);
 		
 		identityService = engine.getIdentityService();
 		authorizationService = engine.getAuthorizationService();
 		taskService = engine.getTaskService();
-		filterService = engine.getFilterService();
+		filterService = engine.getFilterService();*/
 		
 		// PickUpLocations
 		pickupLocationService.create(new PickUpLocation("Barcelona Airport", "+34 902 40 47 04", "El Prat de Llobregat", "",

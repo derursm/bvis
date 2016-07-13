@@ -44,7 +44,8 @@ public class DamageReportBackingBean  {
 	private String party1EMail;
 	private String party1City;
 	private Date party1Birthday;
-	private boolean reportedByCustomer;
+	// set to true per default, since this bean is only invoked if the damage is reported by customer
+	private boolean reportedByCustomer = true;
 	private boolean towingServiceNeeded;
 	
 	@EJB
@@ -54,11 +55,7 @@ public class DamageReportBackingBean  {
 	private ClaimServiceBean claimService;
 	
 	@EJB
-	private InsuranceServiceBean insuranceService;
-	
-	@Inject 
-	private CamundaTaskForm taskForm;
-	
+	private InsuranceServiceBean insuranceService;	
 	
 	public Date getParty1Birthday() {
 		return party1Birthday;
