@@ -17,7 +17,6 @@ public class Claim {
 	private String damage_address;
 	private String claim_description;
 	private double workshop_price;
-	private boolean parties_involved;
 	@XmlElement(name = "involved_parties")
 	private Collection<Involved_party> involvedParties;
 
@@ -83,14 +82,6 @@ public class Claim {
 
 	public void setWorkshop_price(double workshop_price) {
 		this.workshop_price = workshop_price;
-	}
-
-	public boolean isParties_involved() {
-		return parties_involved;
-	}
-
-	public void setParties_involved(boolean parties_involved) {
-		this.parties_involved = parties_involved;
 	}
 
 	public Collection<Involved_party> getInvolvedParties() {

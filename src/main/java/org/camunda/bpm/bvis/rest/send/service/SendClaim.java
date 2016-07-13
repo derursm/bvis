@@ -1,11 +1,9 @@
 package org.camunda.bpm.bvis.rest.send.service;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.inject.Named;
 
@@ -20,7 +18,6 @@ import org.jboss.resteasy.plugins.providers.RegisterBuiltin;
 import org.jboss.resteasy.spi.ResteasyProviderFactory;
 
 @ManagedBean
-//@ConversationScoped
 @Named
 public class SendClaim {
 
@@ -52,10 +49,9 @@ public class SendClaim {
 		claim.setInsurance_id(Integer.parseInt(entityClaim.getInsurance().getInsuranceID() + ""));
 		claim.setInvolvedParties(involvedParties);
 		claim.setOrder_id(Integer.parseInt(entityClaim.getRentalOrder().getOrderID() + ""));
-		claim.setParties_involved(involvedParties.size() > 0 ? true : false);
 		claim.setVehicle_identification_number(entityClaim.getCar().getVehicleIdentificationNumber());
 		//claim.setWorkshop_price(entityClaim.getWorkshopPrice().intValue());
-		claim.setWorkshop_price(1500.50); //TODO REMOVE DUMMY
+		claim.setWorkshop_price(entityClaim.getWorkshopPrice().doubleValue());
 		return claim;
 	}
 	
@@ -86,12 +82,12 @@ public class SendClaim {
 	
 	private ClaimInsurance parseClaimInsuranceForInvolvedParty(InvolvedParty party) {
 		ClaimInsurance insurance = new ClaimInsurance();
-		insurance.setCity(party.getInsurance_company_city());
-		insurance.setCompany(party.getInsurance_company_name());
-		insurance.setCountry(party.getInsurance_company_country());
-		insurance.setHouse_number(party.getInsurance_company_house_number());
-		insurance.setPostcode(party.getInsurance_company_postcode());
-		insurance.setStreet(party.getInsurance_company_street());
+		insurance.setCity(party.getClaimInsurance().getCity());
+		insurance.setCompany(party.getClaimInsurance().getCompany());
+		insurance.setCountry(party.getClaimInsurance().getCountry());
+		insurance.setHouse_number(party.getClaimInsurance().getHouse_number());
+		insurance.setPostcode(party.getClaimInsurance().getPostcode());
+		insurance.setStreet(party.getClaimInsurance().getStreet());
 		return insurance;
 	}
 }

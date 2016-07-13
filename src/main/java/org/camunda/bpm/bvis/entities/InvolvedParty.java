@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -44,8 +46,6 @@ public class InvolvedParty implements Serializable {
 	protected String city;
 	@NotNull
 	protected String country;
-	@NotNull
-	protected String streetNo;
 	
 	@NotNull
 	@Temporal(TemporalType.DATE)
@@ -53,22 +53,12 @@ public class InvolvedParty implements Serializable {
 
 	protected String company;
 	
-	protected String insurance_company_name;
-	protected String insurance_company_street;
-	protected String insurance_company_house_number;
-	protected String insurance_company_postcode;
-	protected String insurance_company_city;
-	protected String insurance_company_country;
+	@ManyToOne
+	protected ClaimInsurance claimInsurance;
 	
-	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH})
-	protected Collection<Claim> claims;
+	@ManyToOne
+	protected Claim claim;
 	
-	public String getStreetNo() {
-		return streetNo;
-	}
-	public void setStreetNo(String streetNo) {
-		this.streetNo = streetNo;
-	}
 	public Long getParty_ID() {
 		return party_ID;
 	}
@@ -142,47 +132,18 @@ public class InvolvedParty implements Serializable {
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	public String getInsurance_company_street() {
-		return insurance_company_street;
+
+	public Claim getClaim() {
+		return claim;
 	}
-	public void setInsurance_company_street(String insurance_company_street) {
-		this.insurance_company_street = insurance_company_street;
+	public void setClaim(Claim claim) {
+		this.claim = claim;
 	}
-	public String getInsurance_company_house_number() {
-		return insurance_company_house_number;
+	public ClaimInsurance getClaimInsurance() {
+		return claimInsurance;
 	}
-	public void setInsurance_company_house_number(String insurance_company_house_number) {
-		this.insurance_company_house_number = insurance_company_house_number;
-	}
-	public String getInsurance_company_postcode() {
-		return insurance_company_postcode;
-	}
-	public void setInsurance_company_postcode(String insurance_company_postcode) {
-		this.insurance_company_postcode = insurance_company_postcode;
-	}
-	public String getInsurance_company_city() {
-		return insurance_company_city;
-	}
-	public void setInsurance_company_city(String insurance_company_city) {
-		this.insurance_company_city = insurance_company_city;
-	}
-	public String getInsurance_company_country() {
-		return insurance_company_country;
-	}
-	public void setInsurance_company_country(String insurance_company_country) {
-		this.insurance_company_country = insurance_company_country;
-	}
-	public Collection<Claim> getClaims() {
-		return claims;
-	}
-	public void setClaims(Collection<Claim> claims) {
-		this.claims = claims;
-	}
-	public String getInsurance_company_name() {
-		return insurance_company_name;
-	}
-	public void setInsurance_company_name(String insurance_company_name) {
-		this.insurance_company_name = insurance_company_name;
+	public void setClaimInsurance(ClaimInsurance claimInsurance) {
+		this.claimInsurance = claimInsurance;
 	}
 	
 	

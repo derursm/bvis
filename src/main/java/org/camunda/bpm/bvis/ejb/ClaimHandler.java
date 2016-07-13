@@ -22,6 +22,7 @@ import org.camunda.bpm.bvis.ejb.beans.InsuranceServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
 import org.camunda.bpm.bvis.entities.Car;
 import org.camunda.bpm.bvis.entities.Claim;
+import org.camunda.bpm.bvis.entities.ClaimInsurance;
 import org.camunda.bpm.bvis.entities.ClaimReview;
 import org.camunda.bpm.bvis.entities.ClaimStatus;
 import org.camunda.bpm.bvis.entities.Customer;
@@ -78,25 +79,35 @@ public class ClaimHandler {
 		claim.setDamageDate((Date)variables.get("damageDate"));
 		claim.setTowingServiceNeeded((Boolean)variables.get("towingServiceNeeded")); 
 		claim.setReportedByCustomer((Boolean)variables.get("reportedByCustomer"));
-		RentalOrder order = orderService.getOrder(Long.parseLong((String)variables.get("orderID")));
+		RentalOrder order = orderService.getOrder(Long.parseLong(variables.get("orderID")+""));
 		Insurance insurance = order.getInsurance();
 		claim.setInsurance(insurance);
-		InvolvedParty party = new InvolvedParty();
-		party.setCity((String)variables.get("party1City"));
-		party.setCompany((String)variables.get("party1Company"));
-		party.setCountry((String)variables.get("party1Country"));
-		party.setDate_of_birth((Date)variables.get("party1Birthday"));
-		party.setEmail((String)variables.get("Party1EMail"));
-		party.setFirstname((String)variables.get("party1Firstname"));
-		party.setPhone_number((String)variables.get("party1Phone"));
-		party.setPostcode((String)variables.get("party1ZIP"));
-		party.setStreet((String)variables.get("party1Street"));
-		party.setStreetNo((String)variables.get("party1StreetNo"));
-		party.setSurname((String)variables.get("party1Surname"));
-		// only adds one party for now
+		
+		// check if there is a party involved
 		ArrayList<InvolvedParty> parties = new ArrayList<InvolvedParty>();
+		InvolvedParty party = new InvolvedParty();
+		if (variables.get("party1Surname") != null) {
+			party.setCity((String)variables.get("party1City"));
+			party.setCompany((String)variables.get("party1Company"));
+			party.setCountry((String)variables.get("party1Country"));
+			party.setDate_of_birth((Date)variables.get("party1Birthday"));
+			party.setEmail((String)variables.get("party1EMail"));
+			party.setFirstname((String)variables.get("party1Firstname"));
+			party.setPhone_number((String)variables.get("party1Phone"));
+			party.setPostcode((String)variables.get("party1ZIP"));
+			party.setStreet((String)variables.get("party1Street"));
+			party.setSurname((String)variables.get("party1Surname"));
+			party.setHouse_number((String)variables.get("party1HouseNo"));
+			// find claim insurance data
+			ClaimInsurance claimInsurance = insuranceService.getClaimInsuranceByName((String)variables.get("party1Insurance"));
+			party.setClaimInsurance(claimInsurance);
+			party.setClaim(claim);
+			// only adds one party for now
+			parties.add(party);
+		}
  		claim.setInvolvedParties(parties);
 		claim.setRentalOrder(order);
+		System.out.println("1NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size());
 		claimService.createClaim(claim);
 		
 	    // Remove no longer needed process variables
@@ -105,26 +116,31 @@ public class ClaimHandler {
 	    // Add newly created claim id as process variable
 	    delegateExecution.setVariable("claimID", claim.getClaimID());
 	    System.out.println("CREATED CLAIM WITH CLAIM ID: " + claim.getClaimID());
+		System.out.println("2NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size());
 	}
 	
 	public boolean informedByCustomer(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		Claim claim = claimService.getClaim((long)variables.get("claimID"));
+		System.out.println("3NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size());
 		return claim.isReportedByCustomer();
 	}
 	
 	public boolean towingServiceNeeded(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		Claim claim = claimService.getClaim((long)variables.get("claimID"));
+		System.out.println("4NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size() + " FOR CLAIM ID " + variables.get("claimID"));
 		return claim.isTowingServiceNeeded();
 	}
 	
 	public boolean insertWorkshopBill(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		double repairBill = Double.parseDouble((String)variables.get("repairBill"));
-	    Claim claim = claimService.getClaim((Long)variables.get("claimID"));
+	    Claim claim = claimService.getClaim((long)variables.get("claimID"));
+		System.out.println("5NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size() + " FOR CLAIM ID " + variables.get("claimID"));
 	    claim.setWorkshopPrice(new BigDecimal(repairBill));
 	    claimService.updateClaim(claim);
+		System.out.println("6NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size());
 	    return true;
 	}
 	

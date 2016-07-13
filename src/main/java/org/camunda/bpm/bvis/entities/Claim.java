@@ -63,7 +63,7 @@ public class Claim implements Serializable {
 	@OneToOne
 	protected Insurance insurance;	
 	@NotNull
-	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "claims")
+	@OneToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "claim")
 	protected Collection<InvolvedParty> involvedParties;
 	@NotNull
 	@OneToOne

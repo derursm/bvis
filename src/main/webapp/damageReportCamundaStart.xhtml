@@ -26,9 +26,67 @@
 
 
   <h:body>
+      <!-- Fixed Navigation -->
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="/bvis/index.xhtml">BVIS Luxury Car Rental</a>
+                  <ul class="nav navbar-nav navbar-left">
+                	<h:panelGroup rendered ="#{!webSession.loggedIn}">
+                    <li><a href="/bvis/placeInquiry.xhtml">Car Rental</a></li>
+                    <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered ="#{webSession.loggedIn}">
+                    <li><a href="/bvis/placeInquiryLoggedIn.xhtml">Car Rental</a></li>
+                    <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
+                    <li><a href="/bvis/listOrders.xhtml">Orders overview</a></li>
+                    </h:panelGroup>
+                  </ul>
+              </div>
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav navbar-right">
+                      <li><a href="#">About</a></li>
+                      <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
+                          <ul class="dropdown-menu">
+                              <li><a href="#">Claim Report</a></li>
+                              <li><a href="#">Pick Up/ Drop Service</a></li>
+                              <li><a href="#">Long Term Rental Consulting</a></li>
+                          </ul>
+                      </li>
+                      <li><a href="#">Contact</a></li>
+                    <h:panelGroup rendered ="#{!webSession.loggedIn}">
+                    	<li><a href="login.xhtml">Login</a></li>
+                    	<li><a href="registration.xhtml">Register</a></li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered ="#{webSession.loggedIn}">
+                    	<li><h:form><h:commandLink action="#{webSession.logout}">Logout</h:commandLink></h:form></li>
+                    </h:panelGroup>
+                  </ul>
+              </div>
+          </div>
+      </nav>
+
+    <!-- /. END NAVIGATION -->
+    <div class="container">
+        <header class="page-header">
+            <div class="col-lg-12 ">
+                <h1 class="bvis-h1">Book this fucking car <small>Moving with elegance has never been easier</small></h1>
+            </div>
+        </header>
+    </div>
 
    <h:form id="submitForm">
     <div class="container">
+        <div id="bg-img">
+        <img src="/bvis/resources/img/ny-street.jpg" alt="" />
+        </div>
 
         <div class="row">
             <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
@@ -39,27 +97,27 @@
                     <h:panelGroup />
                     <label class="label-bvis" for="orderID">Order ID:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="orderID" value="#{processVariables['orderID']}" required="true" />
+                    <h:inputText id="orderID" value="#{damageReport.orderID}" required="true" />
                     
                     <label class="label-bvis" for="licensePlate">Vehicle identification number:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="licensePlate" value="#{processVariables['vehicleID']}" required="true" />
+                    <h:inputText id="licensePlate" value="#{damageReport.vehicleID}" required="true" />
 
                		<label class="label-bvis"  for="damageDate">Damage date:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="damageDate" value="#{processVariables['damageDate']}" required="true" >
+                    <h:inputText id="damageDate" value="#{damageReport.damageDate}" required="true" >
                         <f:convertDateTime pattern="dd-mm-yyyy" />
                     </h:inputText>
                     
-                  	<label class="label-bvis"  for="reportedByCustomer">Reported by Customer?</label>
-                  	<h:selectBooleanCheckbox id="reportedByCustomer" value="#{processVariables['reportedByCustomer']}" required="true" />
-                  	
                   	<label class="label-bvis"  for="towingServiceNeeded">Towing service needed?</label>
-                  	<h:selectBooleanCheckbox id="towingServiceNeeded" value="#{processVariables['towingServiceNeeded']}" required="true" />
+                  	<h:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}"/>
+                         
+                  	<label class="label-bvis"  for="reportedByCustomer">Reported by customer?</label>
+                  	<h:selectBooleanCheckbox id="reportedByCustomer" value="#{damageReport.reportedByCustomer}" />
                     
                     <label class="label-bvis" for="country">Damage description:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="damageDescription" value="#{processVariables['damageDescription']}" required="true" />
+                    <h:inputText id="damageDescription" value="#{damageReport.damageDescription}" required="true" />
 
                 </h:panelGrid>
 
@@ -72,39 +130,43 @@
                     <h:panelGroup />
                     <label class="label-bvis" for="party1Firstname">First name:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Firstname" value="#{processVariables['party1Firstname']}" required="true" />
+                    <h:inputText id="party1Firstname" value="#{damageReport.party1Firstname}" required="true" />
                     
                     <label class="label-bvis" for="party1Surname">Surname:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Surname" value="#{processVariables['party1Surname']}" required="true" />
+                    <h:inputText id="party1Surname" value="#{damageReport.party1Surname}" required="true" />
                     
                     <label class="label-bvis" for="party1Email">EMail:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Email" value="#{processVariables['party1EMail']}" required="false" />
+                    <h:inputText id="party1Email" value="#{damageReport.party1EMail}" required="false" />
                     
                     <label class="label-bvis" for="party1PhoneNumber">Phone number:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1PhoneNumber" value="#{processVariables['party1Phone']}" required="true" />
+                    <h:inputText id="party1PhoneNumber" value="#{damageReport.party1Phone}" required="true" />
                     
                     <label class="label-bvis" for="party1Street">Street:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Street" value="#{processVariables['party1Street']}" required="true" />
+                    <h:inputText id="party1Street" value="#{damageReport.party1Street}" required="true" />
+                    
+                    <label class="label-bvis" for="party1HouseNo">House number:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1HouseNo" value="#{damageReport.party1HouseNo}" required="true" />
                     
                     <label class="label-bvis" for="party1ZIP">Post code:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1ZIP" value="#{processVariables['party1ZIP']}" required="true" />
+                    <h:inputText id="party1ZIP" value="#{damageReport.party1ZIP}" required="true" />
                     
                     <label class="label-bvis" for="party1City">City:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1City" value="#{processVariables['party1City']}" required="true" />
+                    <h:inputText id="party1City" value="#{damageReport.party1City}" required="true" />
                     
                     <label class="label-bvis" for="party1Country">Country:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Country" value="#{processVariables['party1Country']}" required="true" />
+                    <h:inputText id="party1Country" value="#{damageReport.party1Country}" required="true" />
 
                		<label class="label-bvis"  for="party1Birthday">Birthday:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Birthday" value="#{processVariables['party1Birthday']}" required="true" >
+                    <h:inputText id="party1Birthday" value="#{damageReport.party1Birthday}" required="true" >
                         <f:convertDateTime pattern="dd-mm-yyyy" />
                     </h:inputText>
                     
@@ -112,10 +174,10 @@
                     <h:panelGroup />
                     <label class="label-bvis" for="party1Company">Employer:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Company" value="#{processVariables['party1Company']}" required="false" />
+                    <h:inputText id="party1Company" value="#{damageReport.party1Company}" required="false" />
                     <label class="label-bvis" for="party1Insurance">Insurance:</label>
                     <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Insurance" value="#{processVariables['party1Insurance']}" required="false" />
+                    <h:inputText id="party1Insurance" value="#{damageReport.party1Insurance}" required="false" />
 
                 </h:panelGrid>
 
@@ -137,7 +199,7 @@
                 <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
                   NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
                 -->
-                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{camundaTaskForm.completeProcessInstanceForm()}" />
+                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{damageReport.reportDamageCamunda()}" />
                     <h:messages style="color:red;margin:8px;" />
             </div>
         </div> <!-- /. END ROW -->

@@ -110,7 +110,7 @@
                     </h:inputText>
                     
                   	<label class="label-bvis"  for="towingServiceNeeded">Towing service needed?</label>
-                  	<h:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}" required="true" />
+                  	<h:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}"/>
                     
                     <label class="label-bvis" for="country">Damage description:</label>
                     <!-- create process variables using the processVariables map. -->
@@ -144,6 +144,10 @@
                     <label class="label-bvis" for="party1Street">Street:</label>
                     <!-- create process variables using the processVariables map. -->
                     <h:inputText id="party1Street" value="#{damageReport.party1Street}" required="true" />
+                    
+                    <label class="label-bvis" for="party1HouseNo">House number:</label>
+                    <!-- create process variables using the processVariables map. -->
+                    <h:inputText id="party1HouseNo" value="#{damageReport.party1HouseNo}" required="true" />
                     
                     <label class="label-bvis" for="party1ZIP">Post code:</label>
                     <!-- create process variables using the processVariables map. -->
