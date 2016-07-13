@@ -12,12 +12,14 @@ import javax.inject.Named;
 import org.camunda.bpm.bvis.ejb.beans.ClaimServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.InsuranceServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
+import org.camunda.bpm.bvis.web.util.WebUrls;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.cdi.compat.CamundaTaskForm;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -237,6 +239,12 @@ public class DamageReportBackingBean  {
 			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 			RuntimeService runtimeService = processEngine.getRuntimeService();
 			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("claimHandling", variables);
+			
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("/camunda/app/tasklist/default/#/");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

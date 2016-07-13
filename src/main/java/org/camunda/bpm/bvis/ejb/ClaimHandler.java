@@ -101,13 +101,13 @@ public class ClaimHandler {
 			// find claim insurance data
 			ClaimInsurance claimInsurance = insuranceService.getClaimInsuranceByName((String)variables.get("party1Insurance"));
 			party.setClaimInsurance(claimInsurance);
+			// set claim because somehow hibernate gets the mapping from
 			party.setClaim(claim);
 			// only adds one party for now
 			parties.add(party);
 		}
  		claim.setInvolvedParties(parties);
 		claim.setRentalOrder(order);
-		System.out.println("1NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size());
 		claimService.createClaim(claim);
 		
 	    // Remove no longer needed process variables
@@ -116,20 +116,17 @@ public class ClaimHandler {
 	    // Add newly created claim id as process variable
 	    delegateExecution.setVariable("claimID", claim.getClaimID());
 	    System.out.println("CREATED CLAIM WITH CLAIM ID: " + claim.getClaimID());
-		System.out.println("2NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size());
 	}
 	
 	public boolean informedByCustomer(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		Claim claim = claimService.getClaim((long)variables.get("claimID"));
-		System.out.println("3NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size());
 		return claim.isReportedByCustomer();
 	}
 	
 	public boolean towingServiceNeeded(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		Claim claim = claimService.getClaim((long)variables.get("claimID"));
-		System.out.println("4NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size() + " FOR CLAIM ID " + variables.get("claimID"));
 		return claim.isTowingServiceNeeded();
 	}
 	
@@ -137,10 +134,8 @@ public class ClaimHandler {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		double repairBill = Double.parseDouble((String)variables.get("repairBill"));
 	    Claim claim = claimService.getClaim((long)variables.get("claimID"));
-		System.out.println("5NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size() + " FOR CLAIM ID " + variables.get("claimID"));
 	    claim.setWorkshopPrice(new BigDecimal(repairBill));
 	    claimService.updateClaim(claim);
-		System.out.println("6NUMBER OF INVOLVED PARTIES " + claim.getInvolvedParties().size());
 	    return true;
 	}
 	
