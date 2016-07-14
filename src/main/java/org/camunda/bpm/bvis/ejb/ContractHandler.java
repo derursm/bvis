@@ -14,6 +14,8 @@ import org.camunda.bpm.bvis.entities.InsurancePriceMap;
 import org.camunda.bpm.bvis.entities.InsuranceType;
 import org.camunda.bpm.bvis.entities.PickUpLocation;
 import org.camunda.bpm.bvis.entities.RentalOrder;
+import org.camunda.bpm.bvis.rest.send.service.SendContractConfirmation;
+import org.camunda.bpm.bvis.rest.send.service.SendContractConfirmationClient;
 import org.camunda.bpm.bvis.rest.send.service.SendInquiry;
 import org.camunda.bpm.bvis.util.SendHTMLEmail;
 import org.camunda.bpm.engine.cdi.BusinessProcess;
@@ -210,6 +212,7 @@ public class ContractHandler {
   //General send email method. State states the content of the email. Email information is caught from
   //process variables 
   public void sendOrderStateNotification(DelegateExecution delegateExecution)throws ParseException{
+	  
 	  RentalOrder order;
 	  Customer customer;
 	  Car car;
@@ -292,13 +295,14 @@ public class ContractHandler {
     	 email = "bvis@bvis.com";
       }
       SendHTMLEmail.main(subject, text , from, email);
+      
   }
   
   public void sendInquiryToCapitol(DelegateExecution delegateExecution) {
-	  System.out.println("SENDING TO CAPITOL INITIALIZED");	 
+	  System.out.println("SENDING TO CAPITOL INITIALIZED");
 	  SendInquiry sender = new SendInquiry();
 	  RentalOrder entityOrder  = orderService.getOrder((Long) businessProcess.getVariable("orderId"));
-	  String result = sender.sendInquiry(entityOrder, delegateExecution.getActivityInstanceId());
+	  String result = sender.sendInquiry(entityOrder, delegateExecution.getProcessInstanceId());
 	  System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
 	  //TODO handle failures
   }
@@ -329,6 +333,17 @@ public class ContractHandler {
 	  orderService.updateOrder(order);
 	  // return true to trigger continuation
 	  return true;
+  }
+  
+  public void sendContractConfirmation(DelegateExecution delegateExecution) {
+	  Map<String, Object> variables = delegateExecution.getVariables();
+	  int orderID = Integer.parseInt(variables.get("orderID").toString());
+	  RentalOrder order = orderService.getOrder(orderID);
+	  SendContractConfirmation client = new SendContractConfirmation();
+	  String processInstanceIDBVIS = (String)variables.get("processId");
+	  String processInstanceIDCapitol = (String)variables.get("processIdCapitol");
+	  client.sendContractConfirmation(order, processInstanceIDBVIS, processInstanceIDCapitol, 1); //TODO insert proper contract status
+	  
   }
   
   public void sendReminder() {

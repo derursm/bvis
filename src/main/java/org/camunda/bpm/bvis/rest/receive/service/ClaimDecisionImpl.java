@@ -22,6 +22,7 @@ public class ClaimDecisionImpl implements ClaimDecision{
 	public Response receiveAnswer(InsuranceClaimDecision insuranceClaimDecision) {
 		String processInstanceID = insuranceClaimDecision.getProcessinstance_id_bvis();
 		System.out.println("INSURANCE ANSWER RECEIVED");
+		
 		try {
 			businessProcess.associateExecutionById(processInstanceID);
 		}

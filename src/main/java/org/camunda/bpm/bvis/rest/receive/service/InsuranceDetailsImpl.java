@@ -40,10 +40,29 @@ public class InsuranceDetailsImpl implements InsuranceDetails {
 				insuranceAnswer.getOrder().getOrder_id());
 		runtimeService.setVariable(execution.getId(), "inquiryText", 
 				insuranceAnswer.getOrder().getInquiry_text());
-		runtimeService.signal(execution.getId());
+		runtimeService.setVariable(execution.getId(), "processIdCapitol", 
+				insuranceAnswer.getProcessinstance_id_capitol());
+		
+		// dirty fix using multithreading as else signalling the process to continue would block this method
+		new Thread(new ContinueProcess(runtimeService, execution)).start();
 
 		Response response = Response.ok("No errors").build();
+		System.out.println("RETURNING RESPONSE TO INSURANCE");
 		return response;
 	}
-
+	
+	private class ContinueProcess implements Runnable {
+		private RuntimeService runtimeService;
+		private Execution execution;
+		
+		public ContinueProcess(RuntimeService runtimeService, Execution execution) {
+			this.runtimeService = runtimeService;
+			this.execution = execution;
+		}
+		@Override
+		public void run() {
+			runtimeService.signal(execution.getId());
+		}
+		
+	}
 }

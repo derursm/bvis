@@ -78,7 +78,7 @@
       <incoming>SequenceFlow_0nqiz4b</incoming>
       <outgoing>SequenceFlow_1qrfjth</outgoing>
     </userTask>
-    <sendTask id="SendTask_0zsnakw" name="Inform insurance partner about contract" camunda:expression="${true}">
+    <sendTask id="SendTask_0zsnakw" name="Inform insurance partner about contract" camunda:expression="${contractHandler.sendContractConfirmation(execution)}">
       <incoming>SequenceFlow_1g70gey</incoming>
       <outgoing>SequenceFlow_19vljn8</outgoing>
     </sendTask>
@@ -241,7 +241,7 @@
       <extensionElements>
         <signavio:signavioLabel align="center" distance="-13.0" from="0" ref="text_name" to="1" valign="middle" x="2174.5828045086982" y="1038.8352545782764" />
       </extensionElements>
-      <conditionExpression xsi:type="tFormalExpression">${insuranceResult == 1}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${insuranceResult == 2}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-0EECCC98-986B-40D6-9ACD-214B11C4AFF0" name="Accepted" isImmediate="true" sourceRef="sid-22422370-BA2B-4DFF-9C95-95F2C0FDA602" targetRef="sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30">
       <conditionExpression xsi:type="tFormalExpression">${insuranceResult == 1}</conditionExpression>
