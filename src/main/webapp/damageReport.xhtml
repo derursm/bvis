@@ -6,26 +6,10 @@
   xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
-<f:view>
-  <f:metadata>
-    <!-- Start a new process instance. The Process Definition Key is read internally from
-         request parameters and cached in the CDI conversation scope.
-    -->
-    <f:event type="preRenderView" listener="#{camundaTaskForm.startProcessInstanceByKeyForm()}" />
-  </f:metadata>
-
-  <h:head>
-  	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <title>Place a damage report</title>
-
-
-      <!-- Custom CSS Files -->
-      <link href="/bvis/resources/css/custom.css" rel="stylesheet" />
-
-  </h:head>
-
-
-  <h:body>
+<h:body>
+<ui:composition template="/resources/default.xhtml">
+<ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
+<ui:define name="content">
       <!-- Fixed Navigation -->
       <nav class="navbar navbar-inverse navbar-fixed-top">
           <div class="container">
@@ -204,7 +188,8 @@
     </div> <!-- /. END CONTAINER -->
 </h:form>
 
-  </h:body>
-</f:view>
+</ui:define>
+</ui:composition>
+</h:body>
 
 </html>
