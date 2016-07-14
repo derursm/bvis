@@ -59,6 +59,8 @@ public class InsuranceDetailsImpl implements InsuranceDetails {
 			this.runtimeService = runtimeService;
 			this.execution = execution;
 		}
+		
+		public ContinueProcess() {}
 		@Override
 		public void run() {
 			runtimeService.signal(execution.getId());

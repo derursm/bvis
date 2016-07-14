@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import org.camunda.bpm.bvis.ejb.beans.CustomerServiceBean;
 import org.camunda.bpm.bvis.entities.Customer;
+import org.camunda.bpm.bvis.web.util.EmailValidator;
 import org.camunda.bpm.bvis.web.util.WebUrls;
 
 @Named
@@ -129,6 +130,9 @@ public class RegistrationBackingBean {
 		}
 		else if (customerService.getCustomerByEmail(email) != null) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Email already taken"));
+		}
+		else if (!EmailValidator.validate(email)) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Invalid Email format"));
 		}
 		else {
 			Customer customer = new Customer();

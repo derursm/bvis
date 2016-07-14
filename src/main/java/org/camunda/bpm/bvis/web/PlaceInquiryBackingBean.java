@@ -1,6 +1,7 @@
 package org.camunda.bpm.bvis.web;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -9,6 +10,7 @@ import javax.inject.Named;
 
 import org.camunda.bpm.bvis.ejb.beans.CustomerServiceBean;
 import org.camunda.bpm.bvis.entities.Customer;
+import org.camunda.bpm.bvis.web.util.EmailValidator;
 import org.camunda.bpm.bvis.web.util.WebUrls;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
@@ -170,34 +172,39 @@ public class PlaceInquiryBackingBean {
 	}
 	
 	public void placeInquiry() {
-		Map<String, Object> variables = new HashMap<String, Object>();
-		variables.put("customerFirstname", firstname);
-		variables.put("customerSurname", lastname);
-		variables.put("customerCompanyName", companyName);
-		variables.put("customerEmail", email);
-		variables.put("customerPhoneNumber", phoneNumber);
-		variables.put("customerDateOfBirth", dateOfBirth);
-		variables.put("customerStreet", street);
-		variables.put("customerHouseNumber", houseNumber);
-		variables.put("customerPostcode", postcode);
-		variables.put("customerCity", city);
-		variables.put("customerCountry", country);
-		variables.put("fleet", fleetRental);
-		variables.put("pickUpDate", pickupDate);
-		variables.put("returnDate", returnDate);
-		variables.put("pickUpLoc", pickupLocation);
-		variables.put("returnStore", returnLocation);
-		variables.put("insuranceType", insuranceType);
-		variables.put("car", car);
-		variables.put("inquiryText", comment);
-		ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-		RuntimeService runtimeService = processEngine.getRuntimeService();
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("contracting", variables);
-		System.out.println(WebUrls.getUrl(WebUrls.ORDER_SUBMITTED, false, false));
-		try {
-			FacesContext.getCurrentInstance().getExternalContext().redirect(WebUrls.getUrl(WebUrls.ORDER_SUBMITTED, false, false));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!EmailValidator.validate(email)) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Invalid Email format"));
+		}
+		else {
+			Map<String, Object> variables = new HashMap<String, Object>();
+			variables.put("customerFirstname", firstname);
+			variables.put("customerSurname", lastname);
+			variables.put("customerCompanyName", companyName);
+			variables.put("customerEmail", email);
+			variables.put("customerPhoneNumber", phoneNumber);
+			variables.put("customerDateOfBirth", dateOfBirth);
+			variables.put("customerStreet", street);
+			variables.put("customerHouseNumber", houseNumber);
+			variables.put("customerPostcode", postcode);
+			variables.put("customerCity", city);
+			variables.put("customerCountry", country);
+			variables.put("fleet", fleetRental);
+			variables.put("pickUpDate", pickupDate);
+			variables.put("returnDate", returnDate);
+			variables.put("pickUpLoc", pickupLocation);
+			variables.put("returnStore", returnLocation);
+			variables.put("insuranceType", insuranceType);
+			variables.put("car", car);
+			variables.put("inquiryText", comment);
+			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+			RuntimeService runtimeService = processEngine.getRuntimeService();
+			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("contracting", variables);
+			System.out.println(WebUrls.getUrl(WebUrls.ORDER_SUBMITTED, false, false));
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect(WebUrls.getUrl(WebUrls.ORDER_SUBMITTED, false, false));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
