@@ -27,6 +27,7 @@ public class SendContractConfirmation {
 		order.setOrder_id(entityOrder.getOrderID());
 		order.setRequest_date(entityOrder.getRequestDate());
 		order.setContract_status(contractStatus);
+		contractConfirmation.setOrder(order);
 		
 		RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 		ResteasyWebTarget target = new ResteasyClientBuilder().build().target(BASE_URI);
