@@ -52,13 +52,25 @@ public class OrderBackingBean {
 
 	// Caches the RentalOrder during the conversation
 	private RentalOrder rentalOrder;
-
+	private int numberOfCars;
+	
 	public RentalOrder getRentalOrder() {
 		if (rentalOrder == null) {
 			// Load the order entity from the database if not already cached
 			rentalOrder = contractHandler.getOrder((Long) businessProcess.getVariable("orderId"));
 		}
 		return rentalOrder;
+	}
+	
+	public int getNumberOfCars() {
+		if (rentalOrder == null) {
+			rentalOrder = contractHandler.getOrder((Long) businessProcess.getVariable("orderId"));
+		}
+		return rentalOrder.getCars().size();
+	}
+	
+	public void setNumberOfCars(int num) {
+		numberOfCars = num;
 	}
 
 	public Long getCarID() {
@@ -107,12 +119,10 @@ public class OrderBackingBean {
 	}
 
 	public void setFleetSize() throws IOException {
-		String numberOfCars = businessProcess.getVariable("numberOfCars");
-
 		Car car = getAllCars().iterator().next();
 		Collection<Car> cars = new ArrayList<Car>();
 
-		for (int i = 0; i < Integer.parseInt(numberOfCars); i++) {
+		for (int i = 0; i < numberOfCars; i++) {
 			cars.add(car);
 		}
 		rentalOrder.setCars(cars);

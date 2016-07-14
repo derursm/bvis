@@ -224,7 +224,12 @@
 	<script type="text/javascript">
 		// increase the default animation speed to exaggerate the effect
 		$(function() {
-		    $("#submitForm\\:fleetComments").hide();
+		    if($("#submitForm\\:fleet").is(":checked") == false) {
+		    	$("#submitForm\\:fleetComments").hide();
+			}
+		    else {
+		    	$("#submitForm\\:carOptions").hide();
+			}
 		    $("#submitForm\\:fleet").change(function() {
 		        if($(this).is(":checked")) {
 		            $("#submitForm\\:carOptions").hide();

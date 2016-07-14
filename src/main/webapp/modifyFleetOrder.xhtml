@@ -34,7 +34,7 @@
           <h:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
     
           <label for="numberOfCars">Number of Cars:</label>
-          <h:selectOneMenu id="numberOfCars" name="numberOfCars" value="#{processVariables['numberOfCars']}" >
+          <h:selectOneMenu id="numberOfCars" name="numberOfCars" value="#{order.numberOfCars}" >
        	  	<f:selectItems value="#{order.validAmounts}" />
           </h:selectOneMenu>
          
