@@ -1,0 +1,25 @@
+<form class="form-horizontal"
+	role="form">
+	<p>Add the Bill to this repair claim?</p>
+	<div class="form-group">
+		<label class="control-label col-md-2">Claim ID:</label>
+		<div class="col-md-10">
+			<input cam-variable-name="claimID"
+				type="text"
+				name="theCclaimID"
+				readonly="true"
+				class="form-control" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="control-label col-md-2">Repair bill:</label>
+		<div class="col-md-10">
+			<input cam-variable-name="repairBill"
+				type="text"
+				name="theRepairBill"
+				class="form-control"
+				required="true" />
+		</div>
+	</div>
+</form>
