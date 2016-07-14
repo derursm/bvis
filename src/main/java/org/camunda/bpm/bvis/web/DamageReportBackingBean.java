@@ -12,6 +12,7 @@ import javax.inject.Named;
 import org.camunda.bpm.bvis.ejb.beans.ClaimServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.InsuranceServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
+import org.camunda.bpm.bvis.web.util.EmailValidator;
 import org.camunda.bpm.bvis.web.util.WebUrls;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
@@ -179,6 +180,9 @@ public class DamageReportBackingBean  {
 		else if (!insuranceService.insuranceExists(party1Insurance)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Specified insurance does not exist"));			
 		}
+		else if (!EmailValidator.validate(party1EMail)) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Invalid Email format"));
+		}
 		else {
 			Map<String, Object> variables = new HashMap<String, Object>();
 			variables.put("orderID", orderID);
@@ -221,6 +225,9 @@ public class DamageReportBackingBean  {
 		}
 		else if (!insuranceService.insuranceExists(party1Insurance)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Specified insurance does not exist"));
+		}
+		else if (!EmailValidator.validate(party1EMail)) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Invalid Email format"));
 		}
 		else {
 			Map<String, Object> variables = new HashMap<String, Object>();

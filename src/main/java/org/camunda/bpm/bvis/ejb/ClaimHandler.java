@@ -142,7 +142,7 @@ public class ClaimHandler {
 	
 	public boolean insertWorkshopBill(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
-		double repairBill = Double.parseDouble((String)variables.get("repairBill"));
+		double repairBill = (double)variables.get("repairBill");
 	    Claim claim = claimService.getClaim((long)variables.get("claimID"));
 	    claim.setWorkshopPrice(new BigDecimal(repairBill));
 	    claimService.updateClaim(claim);
