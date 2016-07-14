@@ -184,6 +184,32 @@ public class ContractHandler {
     delegateExecution.setVariable("processId", delegateExecution.getActivityInstanceId());
     System.out.println("CREATED ORDER WITH ORDER ID: " + rentalOrder.getId());
   }
+  
+  //Create contract and send to user's email
+  public void sentContract(DelegateExecution delegateExecution){
+//	  public static final String DEST = "results/objects/chapter_title.pdf";
+//	  
+//	    public static void main(String[] args) throws IOException, DocumentException {
+//	        File file = new File(DEST);
+//	        file.getParentFile().mkdirs();
+//	        new ChapterAndTitle().createPdf(DEST);
+//	    }
+//	 
+//	    public void createPdf(String dest) throws IOException, DocumentException {
+//	        Document document = new Document();
+//	        PdfWriter.getInstance(document, new FileOutputStream(dest));
+//	        document.open();
+//	        Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
+//	        Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+//	        Chunk chunk = new Chunk("This is the title", chapterFont);
+//	        Chapter chapter = new Chapter(new Paragraph(chunk), 1);
+//	        chapter.setNumberDepth(0);
+//	        chapter.add(new Paragraph("This is the paragraph", paragraphFont));
+//	        document.add(chapter);
+//	        document.close();
+//	    }
+	  
+  }
 
   public RentalOrder getOrder(Long orderId) {
 	    // Load order entity from database
@@ -249,8 +275,13 @@ public class ContractHandler {
       surname = customer.getSurname();
       email = customer.getEmail();
       
+      System.out.println("FLEET");
+      System.out.println(isFleetRental);
+      
       from = "bvis@bvis.com";
-      rentalStart = order.getPick_up_date().toString();
+      if (!isFleetRental)
+      {
+    	        rentalStart = order.getPick_up_date().toString();
       rentalEnd = order.getReturn_date().toString();
       pickupLocation = order.getPickUpStore().getHTMLContactDetails();    
       returnLocation = order.getReturnStore().getHTMLContactDetails();
@@ -259,7 +290,7 @@ public class ContractHandler {
       for (Car loop_car : cars){
     	  carModel += loop_car.getHTMLCarDetails() + "<br>";
       }
-      
+      }
       
       subject = "";
       
@@ -269,7 +300,16 @@ public class ContractHandler {
       switch(state){
   			case "canc_fleet": path += "canc_fleet.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
   			case "canc_single": path += "canc_single.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
-  			case "conf_req": path += "conf_req.txt"; subject = "Booking reservation (No. " + orderId_str + ")" ; break;
+  			case "conf_req":
+  				if (isFleetRental)
+					{ 	path += "conf_req_fleet.txt";
+						subject = "Booking reservation (No. " + orderId_str + ")"; 
+						break; }
+				else if (!isFleetRental)
+					{	path += "conf_req_single.txt";
+						subject = "Booking reservation (No. " + orderId_str + ")";
+						break; }
+				break;
   			case "rej_el": path += "rej_el.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
   			case "rej_ins": path += "rej_ins.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
   			case "send_cont": path += "send_cont.txt"; subject = "Congratulation! (No. " + orderId_str + ")" ; break;

@@ -147,7 +147,8 @@
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
         <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
         <camunda:inputOutput>
-          <camunda:inputParameter name="Input_144sr6s">init_repair</camunda:inputParameter>
+          <camunda:inputParameter name="state">init_repair</camunda:inputParameter>
+          <camunda:inputParameter name="receiver">car.repair24h@gmail.com</camunda:inputParameter>
         </camunda:inputOutput>
       </extensionElements>
       <incoming>SequenceFlow_1f832xw</incoming>
@@ -158,11 +159,14 @@
       <incoming>SequenceFlow_1iz1xey</incoming>
       <outgoing>SequenceFlow_1f832xw</outgoing>
     </exclusiveGateway>
-    <sendTask id="sid-37740588-FB9F-4F35-BD6C-C81979BE6588" name="Send confirmation" implementation="##WebService" camunda:expression="${true}">
+    <sendTask id="sid-37740588-FB9F-4F35-BD6C-C81979BE6588" name="Send confirmation" implementation="##WebService" camunda:expression="${claimHandler.sendClaimStateNotification(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
         <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">send_conf</camunda:inputParameter>
+        </camunda:inputOutput>
       </extensionElements>
       <incoming>SequenceFlow_1063tvw</incoming>
       <outgoing>sid-08E288AA-A415-4644-A36F-76B766B3F4E9</outgoing>
@@ -174,11 +178,14 @@
       </extensionElements>
       <incoming>sid-08E288AA-A415-4644-A36F-76B766B3F4E9</incoming>
     </endEvent>
-    <sendTask id="sid-87C5D90C-2677-483C-B015-0760F9C944AA" name="Send invoice to customer" implementation="##WebService" camunda:expression="${true}">
+    <sendTask id="sid-87C5D90C-2677-483C-B015-0760F9C944AA" name="Send invoice to customer" implementation="##WebService" camunda:expression="${claimHandler.sendClaimStateNotification(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
         <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">send_inv</camunda:inputParameter>
+        </camunda:inputOutput>
       </extensionElements>
       <incoming>SequenceFlow_1e5624n</incoming>
       <outgoing>sid-6AE7FB95-EAF0-45A7-B1A9-45B1A92E1958</outgoing>
@@ -186,29 +193,35 @@
     <sequenceFlow id="SequenceFlow_0n8gpfx" sourceRef="UserTask_0zzizkn" targetRef="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD">
       <conditionExpression xsi:type="tFormalExpression">${claimHandler.insertWorkshopBill(execution)}</conditionExpression>
     </sequenceFlow>
-    <sendTask id="sid-E57512F5-8C6D-4F88-9700-90B57B644889" name="Inform towing service" implementation="##WebService" camunda:expression="${claimHandler.informTowingService(execution)}">
+    <sendTask id="sid-E57512F5-8C6D-4F88-9700-90B57B644889" name="Inform towing service" implementation="##WebService" camunda:expression="${claimHandler.sendClaimStateNotification(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
         <signavio:signavioMetaData metaKey="externaldocuments" metaValue="[]" />
         <camunda:inputOutput>
-          <camunda:inputParameter name="Input_2opfp27">init_towing</camunda:inputParameter>
+          <camunda:inputParameter name="state">init_towing</camunda:inputParameter>
+          <camunda:inputParameter name="receiver">towing.service24h@gmail.com</camunda:inputParameter>
         </camunda:inputOutput>
       </extensionElements>
       <incoming>sid-296CF9C0-C7F4-4CF7-95EF-500F90E83BA4</incoming>
       <outgoing>sid-AF9D4642-506C-470F-8440-714016A425E4</outgoing>
     </sendTask>
-    <sendTask id="SendTask_1ywju1m" name="Inform customer about damage" camunda:expression="${claimHandler.informCustomerAboutDamage(execution)}">
+    <sendTask id="SendTask_1ywju1m" name="Inform customer about damage" camunda:expression="${claimHandler.sendClaimStateNotification(execution)}">
       <extensionElements>
         <camunda:inputOutput>
-          <camunda:inputParameter name="Input_1c43me2">inf_damage</camunda:inputParameter>
+          <camunda:inputParameter name="state">inf_damage</camunda:inputParameter>
         </camunda:inputOutput>
       </extensionElements>
       <incoming>SequenceFlow_1y9yj7o</incoming>
       <outgoing>SequenceFlow_1iz1xey</outgoing>
     </sendTask>
     <sequenceFlow id="SequenceFlow_1o5yh3r" sourceRef="sid-2277B148-7E93-433D-A5E0-AF43ED4FDFAD" targetRef="ExclusiveGateway_0naxz6m" />
-    <sendTask id="SendTask_005sjnx" name="Inform customer" camunda:expression="${true}">
+    <sendTask id="SendTask_005sjnx" name="Inform customer" camunda:expression="${claimHandler.sendClaimStateNotification(execution)}">
+      <extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="state">inf_costs</camunda:inputParameter>
+        </camunda:inputOutput>
+      </extensionElements>
       <incoming>SequenceFlow_15us7oa</incoming>
       <outgoing>SequenceFlow_00iwodg</outgoing>
     </sendTask>

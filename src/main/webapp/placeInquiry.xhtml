@@ -5,7 +5,6 @@
   xmlns:b="http://butterfaces.org/components"
   xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-
 <f:view>
   <f:metadata>
     <!-- Start a new process instance. The Process Definition Key is read internally from
@@ -104,15 +103,22 @@
                     <label class="label-bvis" for="customer.surname">Last name:</label>
                     <h:inputText id="surname" value="#{placeInquiry.lastname}" required="true" />
 
-                    <label class="label-bvis" for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
-                    <!-- Generated markup by the plugin -->
-                    <div class="tooltip top" role="tooltip">
-                        <div class="tooltip-arrow"></div>
-                        <div class="tooltip-inner">
-                            If you are a company, state your name!
-                        </div>
-                    </div>
+                    <label class="label-bvis" for="customer.companyName">Company name:</label>
                     <h:inputText id="companyName" value="#{placeInquiry.companyName}" required="false" />
+
+                   <!-- <b:text class="label-bvis" label="Company: " id="companyName" value="#{placeInquiry.companyName}" placeholder="company name" required="false" >
+                    <f:ajax event="blur" execute="@this" render="@this" />
+                    <f:validateLength minimum="5" maximum="10" />
+                    <b:tooltip title="Company Name"
+                               trigger="hover"
+                               placement="null"
+                               viewport="body"
+                               rendered="true">
+                        <h:panelGroup>If you are renting as a company member please state your company's name</h:panelGroup>
+                        <br />
+                    </b:tooltip>
+                    </b:text> -->
+                    <!-- / end h:inputtext -->
 
                     <label class="label-bvis" for="customer.email">E-mail:</label>
                     <h:inputText id="email" value="#{placeInquiry.email}" required="true" />

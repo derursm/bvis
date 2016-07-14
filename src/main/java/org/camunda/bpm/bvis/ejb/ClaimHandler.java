@@ -3,6 +3,7 @@ package org.camunda.bpm.bvis.ejb;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.IllegalFormatException;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -32,10 +33,18 @@ import org.camunda.bpm.bvis.entities.InvolvedParty;
 import org.camunda.bpm.bvis.entities.RentalOrder;
 import org.camunda.bpm.bvis.rest.send.service.SendClaim;
 import org.camunda.bpm.bvis.rest.send.service.SendClaimReview;
+import org.camunda.bpm.bvis.util.SendHTMLEmail;
 import org.camunda.bpm.engine.cdi.BusinessProcess;
 import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+
+import java.io.IOException;
+import java.io.InputStream;
+import org.apache.commons.io.IOUtils;
+import java.text.ParseException;
+
+
 
 @Stateless
 @Named
@@ -121,6 +130,7 @@ public class ClaimHandler {
 	public boolean informedByCustomer(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		Claim claim = claimService.getClaim((long)variables.get("claimID"));
+		System.out.println("Claim informed by customer?:" + claim.isReportedByCustomer());
 		return claim.isReportedByCustomer();
 	}
 	
@@ -147,9 +157,113 @@ public class ClaimHandler {
 		
 	}
 	
-	public void sendClaimStateNotification(DelegateExecution delegateExecution) {
-		
-	}
+	//General send email method. State states the content of the email. Email information from
+	  //process variables 
+	public void sendClaimStateNotification(DelegateExecution delegateExecution)throws ParseException{
+				  
+		  //RentalOrder order;
+		  Customer customer;
+		  Claim claim;
+		  Car car;
+		  RentalOrder order;
+		  
+		  String surname, subject, text, from, email, state, path, pickupLocation, returnLocation,
+		  insurancePac, carModel, rentalEnd, rentalStart, claimId_str, orderId_str, clerkComment, towingAddress;
+		  Long claimId, orderId;
+		  boolean isFleetRental;
+		  //tbc..
+		  	  
+	  	  // Get all process variables
+	      Map<String, Object> variables = delegateExecution.getVariables();
+	      claimId = (long) variables.get("claimID");
+	      state = variables.get("state").toString();
+	      claim = claimService.getClaim(claimId);
+	      car = claim.getCar();
+	      order = claim.getRentalOrder();
+	      customer = order.getCustomer();
+
+	           
+	            
+	      surname = "surname";
+	      email = "email";
+	      from = "from";
+	      pickupLocation = "pickupLocation"; //order.getPick_up_store().getStoreName() + order.getPick_up_store().getCity();
+	      returnLocation = "returnLocation"; //order.getReturn_store().getStoreName() + order.getReturn_store().getCity();
+	      carModel = "carmodel"; //order.getCars();
+	      rentalStart = "rentalStart";
+	      rentalEnd = "rentalEnd";
+	      claimId_str = "claimId";
+	      towingAddress = "towingAddress";
+	      insurancePac = "insurancePac";
+	      
+	      surname = customer.getSurname();
+	      email = customer.getEmail();
+	      from = "bvis@bvis.com";
+	      
+	      //rentalStart = order.getPick_up_date().toString();
+	      //rentalEnd = order.getReturn_date().toString();
+	      //pickupLocation = order.getPickUpStore().getHTMLContactDetails();    
+	      //returnLocation = order.getReturnStore().getHTMLContactDetails();
+	      clerkComment = order.getClerkComments();
+	      carModel = car.getHTMLCarDetails();	      
+	    		  
+	      //Get rental information
+	      claimId_str = claimId.toString();
+	      
+	      //check for special recepient, else take customer mail
+	      try{
+	    	  email = (String) variables.get("receiver");
+	      } catch (NullPointerException  e){
+		      email = customer.getEmail();
+	      }
+	      
+	      orderId = order.getId();
+	      orderId_str = orderId.toString();
+	      
+	      from = "bvis@bvis.com";
+	           	      
+	      subject = "";
+	      
+	      path = "/templates/";
+	      
+	      System.out.println("Email sent status: " + state);	      
+	      
+	      //built email template path by state
+	      switch(state){
+	  			case "inf_costs": path += "inf_costs.txt"; subject = "Claim settled (Claim No. " + claimId_str + ")" ; break;
+	  			case "inf_damage": path += "inf_damage.txt"; subject = "Damage found (Claim No. " + claimId_str + ")" ; break;
+	  			case "init_repair": 
+	  				if(claim.isTowingServiceNeeded()){
+	  					path += "init_repair_with_towing.txt";
+	  				}else {
+	  					path += "init_repair.txt";
+	  				}
+	  				subject = "New order (Claim No. " + claimId_str + ")" ; break;	  						
+	  			case "init_towing": path += "init_towing.txt"; subject = "New order (Claim No. " + claimId_str + ")" ; break;
+	  			case "send_conf": path += "send_conf.txt"; subject = "Claim settled (Claim No. " + claimId_str + ")" ; break;
+	  			case "send_inv": path += "send_inv.txt"; subject = "Invoice (Claim No. " + claimId_str + ")" ; break;
+	      }	  
+	             		  
+	      InputStream in = this.getClass().getResourceAsStream(path);
+	    
+	      try{
+	    	  text = IOUtils.toString(in, "UTF-8");     	  
+	      } catch (IOException e) {
+	    	  text = "error in file reading. path: " + path;
+	    	  email = "bvis@bvis.com";
+	      } catch (NullPointerException  e){
+	    	  text = "null pointer file reading. path: " + path;
+	    	  email = "bvis@bvis.com";
+	      } 
+	      
+	      try{
+	      text = String.format(text, surname, carModel, pickupLocation, rentalStart, returnLocation, rentalEnd, orderId_str, towingAddress, insurancePac);  
+	      } catch( IllegalFormatException e){
+	    	 subject = "illegal conversion ";    	 
+	    	 email = "bvis@bvis.com";
+	      }
+	      SendHTMLEmail.main(subject, text , from, email);
+	  }
 	
 	public void informTowingService(DelegateExecution delegateExecution) {
 		

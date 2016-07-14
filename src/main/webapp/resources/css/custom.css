@@ -55,6 +55,12 @@
     padding: 2px 0px 2px 0px;
 }
 
+#text,
+.label-bvis{
+    @extend: text;
+    padding: 2px 0px 2px 0px;
+}
+
 h1,
 .bvis-h1 {
     padding: 0px 0px 30px 0px;
