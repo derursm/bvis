@@ -119,8 +119,8 @@ public class OrderBackingBean {
 		contractHandler.updateOrder(rentalOrder,false);
 		
 		FacesContext.getCurrentInstance().getExternalContext()
-				.redirect("http://localhost:8080/bvis/modifyFleetCars.jsf?taskId=" + businessProcess.getTaskId()
-						+ "&callbackUrl=http://localhost:8080/camunda/app/tasklist/default/#/&back=true");
+				.redirect(WebUrls.MODIFY_FLEET_CARS + "?taskId=" + businessProcess.getTaskId()
+						+ "&callbackUrl=" + WebUrls.DEFAULT_TASKLIST);
 
 	}
 
@@ -134,10 +134,10 @@ public class OrderBackingBean {
 		contractHandler.updateOrder(rentalOrder, true);
 	}
 	
-	public void backtoModifyFleetOrder() throws IOException {
+	public void backToModifyFleetOrder() throws IOException {
 		FacesContext.getCurrentInstance().getExternalContext()
-				.redirect("http://localhost:8080/bvis/modifyFleetOrder.jsf?taskId=" + businessProcess.getTaskId()
-						+ "&callbackUrl=http://localhost:8080/camunda/app/tasklist/default/#/&back=true");
+				.redirect(WebUrls.MODIFY_FLEET_ORDER + "?taskId=" + businessProcess.getTaskId()
+						+ "&callbackUrl=/#/");
 
 		
 	}
