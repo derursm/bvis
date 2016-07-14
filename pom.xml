@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-  
+
 	<groupId>org.camunda.bpm.bvis</groupId>
 	<artifactId>bvis</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -23,55 +24,73 @@
 
 	<dependencies>
 
-	    <!-- Camunda engine dependency -->
-	    <dependency>
-	      <groupId>org.camunda.bpm</groupId>
-	      <artifactId>camunda-engine</artifactId>
-	      <scope>provided</scope>
-	    </dependency>
-	
-	    <!-- Camunda cdi beans -->
-	    <dependency>
-	      <groupId>org.camunda.bpm</groupId>
-	      <artifactId>camunda-engine-cdi</artifactId>
-	    </dependency>
-	
-	    <!-- provides a default EjbProcessApplication -->
-	    <dependency>
-	      <groupId>org.camunda.bpm.javaee</groupId>
-	      <artifactId>camunda-ejb-client</artifactId>
-	    </dependency>
-	
-	    <!-- Java EE 6 Specification -->
-	
-		<!--  Apache Commons for File input  -->
-	  	<dependency>
-	        <groupId>commons-io</groupId>
-	        <artifactId>commons-io</artifactId>
-	        <version>2.3</version>
+		<!-- Camunda engine dependency -->
+		<dependency>
+			<groupId>org.camunda.bpm</groupId>
+			<artifactId>camunda-engine</artifactId>
+			<scope>provided</scope>
 		</dependency>
-		
-		
+
+		<!-- Camunda cdi beans -->
+		<dependency>
+			<groupId>org.camunda.bpm</groupId>
+			<artifactId>camunda-engine-cdi</artifactId>
+		</dependency>
+
+		<!-- provides a default EjbProcessApplication -->
+		<dependency>
+			<groupId>org.camunda.bpm.javaee</groupId>
+			<artifactId>camunda-ejb-client</artifactId>
+		</dependency>
+
+		<!-- Java EE 6 Specification -->
+		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-web-6.0</artifactId>
+			<version>3.0.2.Final</version>
+			<type>pom</type>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>xalan</artifactId>
+					<groupId>xalan</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!--  Apache Commons for File input  -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.resteasy</groupId>
+			<artifactId>resteasy-client</artifactId>
+			<version>3.0.9.Final</version>
+		</dependency>
+
 		<dependency>
 			<groupId>de.larmic.butterfaces</groupId>
 			<artifactId>components</artifactId>
 			<version>2.0.0</version>
 		</dependency>
-		
+
 		<dependency>
-		    <groupId>org.ocpsoft.rewrite</groupId>
-		    <artifactId>rewrite-servlet</artifactId>
-		    <version>2.0.12.Final</version>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-servlet</artifactId>
+			<version>2.0.12.Final</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.ocpsoft.rewrite</groupId>
-		    <artifactId>rewrite-config-prettyfaces</artifactId>
-		    <version>2.0.12.Final</version>
+			<groupId>org.ocpsoft.rewrite</groupId>
+			<artifactId>rewrite-config-prettyfaces</artifactId>
+			<version>2.0.12.Final</version>
 		</dependency>
-	
-  	</dependencies>
-  
-  
+
+	</dependencies>
+
+
 	<build>
 		<finalName>bvis</finalName>
 		<plugins>

@@ -61,7 +61,7 @@
     <div class="container">
         <header class="page-header">
             <div class="col-lg-12 ">
-                <h1 class="bvis-h1">Book this fucking car <small>Moving with elegance has never been easier</small></h1>
+                <h1 class="bvis-h1"> So sad that this happend! <small>Send us your damage report</small></h1>
             </div>
         </header>
     </div>
@@ -180,9 +180,11 @@
                 <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
                   NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
                 -->
-                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{damageReport.reportDamage()}" />
-                    <h:messages style="color:red;margin:8px;" />
+                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{damageReport.reportDamage()}" onclick="window.location = '/bvis/index.xhtml';"/>
             </div>
+                <div class="col-lg-10">
+                    <h:messages class="error-message"/>
+                </div>
         </div> <!-- /. END ROW -->
       </div> <!-- /. END Jumpotron ROW -->
     </div> <!-- /. END CONTAINER -->

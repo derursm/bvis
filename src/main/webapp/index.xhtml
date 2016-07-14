@@ -5,13 +5,89 @@
      xmlns:b="http://butterfaces.org/components"
      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
+<h:head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="BVIS Luxury Car Rental Servie - we make you enjoying every ride. Order your next rental now" />
+    <meta name="author" content="" />
+
+    <title>BVIS Luxury Car Rental - keep on rolling</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom CSS -->
+    <link href="/bvis/resources/css/heroic-features.css" rel="stylesheet" />
+    <link href="/bvis/resources/css/myNavBar.css" rel="stylesheet" />
+    <link href="resources/css/custom.css" rel="stylesheet" />
+</h:head>
+
 <h:body>
-<ui:composition template="/resources/default.xhtml">
-<ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
-<ui:define name="content">
+    <!-- Fixed Navigation -->
+    <nav class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/bvis/index.xhtml">BVIS Luxury Car Rental</a>
+                <ul class="nav navbar-nav navbar-left">
+                	<h:panelGroup rendered ="#{!webSession.loggedIn}">
+                    <li><a href="/bvis/placeInquiry.xhtml">Car Rental</a></li>
+                    <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered ="#{webSession.loggedIn}">
+                    <li><a href="/bvis/placeInquiryLoggedIn.xhtml">Car Rental</a></li>
+                    <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
+                    <li><a href="/bvis/listOrders.xhtml">Orders overview</a></li>
+                    </h:panelGroup>
+                </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">About</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Claim Report</a></li>
+                            <li><a href="#">Pick Up/ Drop Service</a></li>
+                            <li><a href="#">Long Term Rental Consulting</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Contact</a></li>
+
+                    <h:panelGroup rendered ="#{!webSession.loggedIn}">
+                    	<li><a href="login.xhtml">Login</a></li>
+                    	<li><a href="registration.xhtml">Register</a></li>
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered ="#{webSession.loggedIn}">
+                    	<li><h:form><h:commandLink action="#{webSession.logout}">Logout</h:commandLink></h:form></li>
+                    </h:panelGroup>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <!-- Page Content -->
     <div class="container">
+    <h:form id="submitForm">
+        <!-- Background Image -->
+        <div id="bg-img">
+            <img src="/bvis/resources/img/ny-street.jpg" alt="" />
+        </div>
 
         <!-- Jumbotron Header -->
         <header class="jumbotron hero-spacer">
@@ -19,14 +95,14 @@
             <img src="/bvis/resources/img/car-banner.png" alt="bvis-car-banner" class="img-rounded pull-right" height="170px" width="170px"  />
             <p>We keep things rolling in over 92 countries since 1946.</p>
             <p>More than 100 satisfied partners collaborate with us worldwide. Every day more happy people join us and choose the number one partner in car rental. Experience create service. </p>
-            <p><a class="btn btn-primary btn-large">Make a reservation now! </a></p>
+            <p><a class="btn btn-primary btn-large" href="/bvis/placeInquiryLoggedIn.xhtml">Make a reservation now! </a></p>
         </header>
 
 
         <!-- Title -->
         <div class="row">
             <div class="col-lg-12">
-                <h3>Experience our cars!</h3>
+                <h3 class="bvis-h3">Experience our cars!</h3>
             </div>
         </div>
         <!-- /.row -->
@@ -156,6 +232,8 @@
 
             </div>
         </div>
+    </div>
+    </h:form>
 
         <div class="col-md-3"></div>
 
@@ -170,7 +248,6 @@
             </div>
         </footer>
 
-    </div>
     <!-- /.container -->
 
 
@@ -178,9 +255,10 @@
     <script src="/bvis/resources/js/myNavBar.js"></script>
 
 
-    <b:activateLibraries />
-</ui:define>
-</ui:composition>
+    <!--<b:activateLibraries />-->
+<!--</ui:define>
+</ui:composition>-->
+
 </h:body>
 
 </html>

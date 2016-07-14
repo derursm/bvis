@@ -76,11 +76,13 @@
 
     <!-- /. END NAVIGATION -->
     <div class="container">
+        <div class="container">
         <header class="page-header">
             <div class="col-lg-12 ">
-                <h1 class="bvis-h1">Book this fucking car <small>Moving with elegance has never been easier</small></h1>
+                <h1 class="bvis-h1"> Customer Area Login<small>Moving with elegance has never been easier</small></h1>
             </div>
         </header>
+        </div>
     </div>
 
    <h:form id="submitForm">
@@ -120,7 +122,9 @@
             </div>
             <div class="col-lg-2 pull-right">
                     <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{login.login}" />
-                    <h:messages style="color:red;margin:8px;" />
+            </div>
+            <div class="col-lg-10">
+                <h:messages class="error-message"/>
             </div>
         </div> <!-- /. END ROW -->
       </div> <!-- /. END Jumpotron ROW -->

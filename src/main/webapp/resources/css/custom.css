@@ -57,7 +57,13 @@
 
 h1,
 .bvis-h1 {
-    color: red;
+    padding: 0px 0px 30px 0px;
+    color: white;
+    /*color: rgba(200, 54, 54, 0.6); */
+}
+h1 small,
+.bvis-h1-small{
+    test-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white
 }
 
 h2,
@@ -68,7 +74,8 @@ h2,
 
 h3,
 .bvis-h3{
-    color:red;
+    color: white;
+    /*color: rgba(200, 54, 54, 0.6); */
 }
 
 h4,
@@ -82,6 +89,7 @@ h5,
 }
 
 #bg-img {
+    z-index: -1;
     position: fixed;
     top: -50%;
     left: -50%;
@@ -115,10 +123,18 @@ h5,
 .header-cell {
 	border-bottom: 1px solid black;
 	vertical-align: bottom;
+
 }
 
 .data-cell {
 	border-left: 1px solid black;
 	padding-right: 4px;
 	padding-left: 4px;
+}
+
+#ul
+.error-message{
+    background-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    display: inline-flex;
 }

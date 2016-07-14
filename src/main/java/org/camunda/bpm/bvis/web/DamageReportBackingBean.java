@@ -204,6 +204,12 @@ public class DamageReportBackingBean  {
 			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 			RuntimeService runtimeService = processEngine.getRuntimeService();
 			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("claimHandling", variables);
+
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect(WebUrls.getUrl(WebUrls.DAMAGE_REPORT_SUBMITTED, false, false));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	public void reportDamageCamunda() {
@@ -214,7 +220,7 @@ public class DamageReportBackingBean  {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Specified car not part of the order"));
 		}
 		else if (!insuranceService.insuranceExists(party1Insurance)) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Specified insurance does not exist"));			
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Specified insurance does not exist"));
 		}
 		else {
 			Map<String, Object> variables = new HashMap<String, Object>();
@@ -239,7 +245,7 @@ public class DamageReportBackingBean  {
 			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 			RuntimeService runtimeService = processEngine.getRuntimeService();
 			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("claimHandling", variables);
-			
+
 			try {
 				FacesContext.getCurrentInstance().getExternalContext().redirect("/camunda/app/tasklist/default/#/");
 			} catch (IOException e) {
@@ -247,5 +253,5 @@ public class DamageReportBackingBean  {
 			}
 		}
 	}
-	
+
 }
