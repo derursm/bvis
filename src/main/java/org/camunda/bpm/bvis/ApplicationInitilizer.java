@@ -135,13 +135,14 @@ public class ApplicationInitilizer {
 		cust.setCompany(true);
 		cust.setUsername("test");
 		cust.setPassword("test");
-		cust.setEmail("test");
+		cust.setEmail("oli90@web.de");
 		cust.setDateOfBirth(new Date());
 		customerService.create(cust); // used in RentalOrder
 		
 		// RentalOrder
 		RentalOrder order = new RentalOrder(cust, false);
 		order.setInsurance(insurance);
+		
 		Collection<Car> cars = new ArrayList<Car>();
 		cars.add(car);
 		order.setCars(cars);

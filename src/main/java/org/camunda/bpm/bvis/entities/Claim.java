@@ -162,6 +162,7 @@ public class Claim implements Serializable {
 	public void setCar(Car car) {
 		this.car = car;
 	}
+	
 	public RentalOrder getRentalOrder() {
 		return rentalOrder;
 	}

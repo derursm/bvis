@@ -184,6 +184,32 @@ public class ContractHandler {
     delegateExecution.setVariable("processId", delegateExecution.getActivityInstanceId());
     System.out.println("CREATED ORDER WITH ORDER ID: " + rentalOrder.getId());
   }
+  
+  //Create contract and send to user's email
+  public void sentContract(DelegateExecution delegateExecution){
+//	  public static final String DEST = "results/objects/chapter_title.pdf";
+//	  
+//	    public static void main(String[] args) throws IOException, DocumentException {
+//	        File file = new File(DEST);
+//	        file.getParentFile().mkdirs();
+//	        new ChapterAndTitle().createPdf(DEST);
+//	    }
+//	 
+//	    public void createPdf(String dest) throws IOException, DocumentException {
+//	        Document document = new Document();
+//	        PdfWriter.getInstance(document, new FileOutputStream(dest));
+//	        document.open();
+//	        Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
+//	        Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+//	        Chunk chunk = new Chunk("This is the title", chapterFont);
+//	        Chapter chapter = new Chapter(new Paragraph(chunk), 1);
+//	        chapter.setNumberDepth(0);
+//	        chapter.add(new Paragraph("This is the paragraph", paragraphFont));
+//	        document.add(chapter);
+//	        document.close();
+//	    }
+	  
+  }
 
   public RentalOrder getOrder(Long orderId) {
 	    // Load order entity from database
