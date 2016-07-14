@@ -4,9 +4,9 @@
 <p>Hereby, we send you an order based on our usual terms of contract.</p>
 <p>A towing services transports the car directly to your location.</p>
 <ol style="list-style: none; font-size: 14px; line-height: 32px; font-weight: bold;">
-<li style="clear: both;">Car model: %2$s</li>
-<li style="clear: both;">Office location to pick up: %5$s</li>
-<li style="clear: both;"></li>
+<li class="mail-li">Car model: %2$s</li>
+<li class="mail-li">Office location to pick up: %5$s</li>
+<li class="mail-li"></li>
 </ol>
 <br>
 <p>Thanks in advance.</p>

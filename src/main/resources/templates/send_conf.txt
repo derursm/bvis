@@ -6,13 +6,13 @@
 <p>&nbsp;</p>
 <p>Your&nbsp;booking details:</p>
 <ol style="list-style: none; font-size: 10px; line-height: 32px; font-weight: bold;">
-<li style="clear: both;">Car model: %2$s</li>
-<li style="clear: both;">Pickup location: %3$s</li>
-<li style="clear: both;">Pickup date: %4$s</li>
-<li style="clear: both;">Return location: %5$s</li>
-<li style="clear: both;">Return date: %6$s</li>
-<li style="clear: both;">Insurance package: %9$s</li>
-<li style="clear: both;"></li>
+<li class="mail-li">Car model: %2$s</li>
+<li class="mail-li">Pickup location: %3$s</li>
+<li class="mail-li">Pickup date: %4$s</li>
+<li class="mail-li">Return location: %5$s</li>
+<li class="mail-li">Return date: %6$s</li>
+<li class="mail-li">Insurance package: %9$s</li>
+<li class="mail-li"></li>
 </ol>
 <p>&nbsp;If you have any questions, please contact our customer service at +44 664/5550777</p>
 <h2>Your BVIS Team.</h2>

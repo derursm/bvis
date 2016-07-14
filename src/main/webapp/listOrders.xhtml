@@ -78,7 +78,7 @@
                     <label class="label-bvis" for="party1Firstname">First name:</label>
                     <!-- create process variables using the processVariables map. -->
                     <h:inputText id="party1Firstname" value="#{damageReport.party1Firstname}" required="true" />
-	  	<div class = "data">
+
       		<h:dataTable rendered="#{not empty listOrders.orders}"
       		value="#{listOrders.orders}" var = "cur" styleClass="data-table"
       		columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
@@ -104,7 +104,7 @@
        			#{cur.return_date}
        		</h:column>
       		</h:dataTable>	
-      	</div>
+
       </div>
       </div>
       </div>

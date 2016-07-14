@@ -1,6 +1,14 @@
+<!DOCTYPE HTML
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets>
+
+      <!-- Custom CSS Files -->
+      <link href="/bvis/resources/css/custom.css" rel="stylesheet" />
+      <link href="/bvis/resources/css/mail-styles.css" rel="stylesheet" />
+
 <p style="color: #5e9ca0; text-align: right;"><span style="color: #000000;">&nbsp;booking number: %7$s</span></p>
-<h1 style="color: #5e9ca0;">Dear Mr/Mrs %1$s!</h1>
 <p>&nbsp;</p>
+<h1 style="color: #5e9ca0;">Dear Mr/Mrs %1$s!</h1>
 <h2 style="color: #2e6c80;">Thank you for your interest in BVIS.</h2>
 <p>Unfortunately, we have to inform you, that we cannot complete the contract. The requested car fleet is not available.</p>
 <p>Nevertheless, we hope that you will contact us again for a future request.</p>
@@ -11,3 +19,6 @@
 <p>This is an automatically created mail. Do not reply on this mail or the FBI will take you down, bastard.</p>
 <p><strong>&nbsp;</strong></p>
 <p><strong>Copyright &copy; 1999-2016 BVIS. All rights reserved.<br /> <br />BVIS&nbsp;(Europe) S.&agrave; r.l. &amp; Cie, S.C.A.<br /> Soci&eacute;t&eacute; en Commandite par Actions<br />22-24 Boulevard Royal, L-2449, Luxemburg<br /> RCS Luxemburg B 118 349</strong></p>
+
+
+</html>
