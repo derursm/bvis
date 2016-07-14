@@ -249,8 +249,13 @@ public class ContractHandler {
       surname = customer.getSurname();
       email = customer.getEmail();
       
+      System.out.println("FLEET");
+      System.out.println(isFleetRental);
+      
       from = "bvis@bvis.com";
-      rentalStart = order.getPick_up_date().toString();
+      if (!isFleetRental)
+      {
+    	        rentalStart = order.getPick_up_date().toString();
       rentalEnd = order.getReturn_date().toString();
       pickupLocation = order.getPickUpStore().getHTMLContactDetails();    
       returnLocation = order.getReturnStore().getHTMLContactDetails();
@@ -259,7 +264,7 @@ public class ContractHandler {
       for (Car loop_car : cars){
     	  carModel += loop_car.getHTMLCarDetails() + "<br>";
       }
-      
+      }
       
       subject = "";
       
@@ -269,7 +274,16 @@ public class ContractHandler {
       switch(state){
   			case "canc_fleet": path += "canc_fleet.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
   			case "canc_single": path += "canc_single.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
-  			case "conf_req": path += "conf_req.txt"; subject = "Booking reservation (No. " + orderId_str + ")" ; break;
+  			case "conf_req":
+  				if (isFleetRental)
+					{ 	path += "conf_req_fleet.txt";
+						subject = "Booking reservation (No. " + orderId_str + ")"; 
+						break; }
+				else if (!isFleetRental)
+					{	path += "conf_req_single.txt";
+						subject = "Booking reservation (No. " + orderId_str + ")";
+						break; }
+				break;
   			case "rej_el": path += "rej_el.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
   			case "rej_ins": path += "rej_ins.txt"; subject = "We are sorry... (No. " + orderId_str + ")" ; break;
   			case "send_cont": path += "send_cont.txt"; subject = "Congratulation! (No. " + orderId_str + ")" ; break;

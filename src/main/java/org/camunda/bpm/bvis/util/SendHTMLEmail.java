@@ -15,8 +15,8 @@ public class SendHTMLEmail
 	public static void main(String subject, String content, String from, String to)
 	{
 		
-		final String username 	= "tech.suppot.skype.bot@gmail.com";
-		final String password 	= "TestTest";
+		final String username 	= "bvis.car.rental@gmail.com";
+		final String password 	= "workflownervt";
 		
 		String host 			= "smtp.gmail.com"; 
 			
