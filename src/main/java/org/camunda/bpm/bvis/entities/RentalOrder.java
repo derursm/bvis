@@ -27,7 +27,7 @@ public class RentalOrder implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long orderID;
 	@NotNull
-	@ManyToOne
+	@ManyToOne(cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER)
 	protected Customer cust;
 	@Temporal(TemporalType.DATE)
 	protected Date pickUpDate;
@@ -41,7 +41,7 @@ public class RentalOrder implements Serializable {
 	protected String inquiryText;
 	@NotNull
 	protected boolean fleetRental;
-	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
 	protected Collection<Car> cars;
 	protected long insuranceID;
 	

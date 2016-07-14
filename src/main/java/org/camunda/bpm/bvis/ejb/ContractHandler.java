@@ -222,10 +222,11 @@ public class ContractHandler {
 	    return isFleetOrder;  
   }
   
-  public void updateOrder(RentalOrder rentalOrder) {
+  public void updateOrder(RentalOrder rentalOrder, boolean completeTask) {
 	    // Merge detached order entity with current persisted state
 	  orderService.updateOrder(rentalOrder);
 	  
+	  if(completeTask) {
 	    try {
 	      // Complete user task from
 	      taskForm.completeTask();
@@ -234,6 +235,7 @@ public class ContractHandler {
 	      throw new RuntimeException("Cannot complete task", e);
 	    }
 	  }
+  }
   
   //General send email method. State states the content of the email. Email information is caught from
   //process variables 

@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+  <f:view>
+    <f:metadata>
+      <!-- Start working on a task. Task Id is read internally from
+       request parameters and cached in the CDI conversation scope.
+      -->
+
+    <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
+  </f:metadata>
+  <h:head>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <title>Check the car rental order</title>
+  </h:head>
+  <h:body>
+    Text here
+    <h1>Car Order:</h1>
+    <h:form id="submitForm">
+      <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
+    <h3><label>Car options</label></h3>
+    <h:panelGroup />
+      <label for="customer.company">Car fleet:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:selectBooleanCheckbox id="fleet" value="#{order.rentalOrder.fleetRental}" required="true" disabled="true"/>
+          
+          <label for="inquiryText">Comments:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
+         
+          <label for="cars">Car Models:</label>
+          <ui:repeat id="cars" var="car" value="#{order.rentalOrder.cars}" varStatus="status"> 
+          <h:selectOneMenu id="car" value="#{car.id}">
+              <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
+          </h:selectOneMenu>
+          <br />
+          </ui:repeat>
+          
+          <label for="pickUpDate">Pickup date:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" placeholder="dd-mm-yyyy" >
+            <f:convertDateTime pattern="dd-mm-yyyy" />
+          </h:inputText>
+          
+          <label for="returnDate">Return date:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" placeholder="dd-mm-yyyy">
+            <f:convertDateTime pattern="dd-mm-yyyy" />
+          </h:inputText>
+          
+          <label for="pickUpLocation">Pickup location:</label>
+          <h:selectOneMenu id="storeID" value="#{processVariables['pickUpLoc']}" >
+       	  <f:selectItems value="#{order.allPickUpLocations}" var="l" itemValue="#{l.storeID}" itemLabel="#{l.storeName}" />
+          </h:selectOneMenu>
+          
+          <label for="returnStore">Return location:</label>
+          <h:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}" >
+      	  <f:selectItems value="#{order.allPickUpLocations}" var="r" itemValue="#{r.storeID}" itemLabel="#{r.storeName}" />
+          </h:selectOneMenu>
+          
+          <label for="insuranceType">Insurance type:</label>
+          <h:selectOneMenu id="insuranceType" value="#{order.rentalOrder.insuranceType}">
+      	  <f:selectItems value="#{order.insuranceTypes}" />
+          </h:selectOneMenu>
+          
+          <h3><label>Clerk comments</label></h3>
+          <h:panelGroup />
+          <label for="clerkComments">Clerk comments</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
+        
+      </h:panelGrid>
+     <h:commandButton id="return_button" value="Back" action="#{order.backtoModifyFleetOrder()}" />
+  	 <h:commandButton id="submit_button" value="Save" action="#{order.updateFleetOrder()}" />
+    </h:form>
+  </h:body>
+  </f:view>
+</html>
