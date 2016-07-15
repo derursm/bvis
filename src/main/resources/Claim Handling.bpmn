@@ -235,7 +235,7 @@
       <outgoing>SequenceFlow_1qi1gpu</outgoing>
       <messageEventDefinition camunda:expression="${true}" />
     </intermediateThrowEvent>
-    <userTask id="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03" name="Review claim decision" implementation="##WebService" camunda:candidateGroups="clerk_claim">
+    <userTask id="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03" name="Review claim decision" implementation="##WebService" camunda:candidateGroups="clerks-claims">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -254,7 +254,7 @@
       <outgoing>SequenceFlow_0fwikm4</outgoing>
     </startEvent>
     <sequenceFlow id="SequenceFlow_0fwikm4" sourceRef="sid-02128CF4-A73A-4442-9A75-FF4A3EE1ECDD" targetRef="ServiceTask_1clk6z0" />
-    <userTask id="UserTask_0zzizkn" name="Handle bill" camunda:formKey="embedded:app:forms/handleBill.html" camunda:candidateGroups="clerk_claim">
+    <userTask id="UserTask_0zzizkn" name="Handle bill" camunda:formKey="embedded:app:forms/handleBill.html" camunda:candidateGroups="clerks-claims">
       <incoming>sid-B08CFAF2-04A5-4B61-9D7E-C73A5C51F1E8</incoming>
       <outgoing>SequenceFlow_0n8gpfx</outgoing>
     </userTask>
