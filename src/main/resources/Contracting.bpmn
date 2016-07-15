@@ -74,11 +74,11 @@
         <flowNodeRef>UserTask_0nt3b79</flowNodeRef>
       </lane>
     </laneSet>
-    <userTask id="UserTask_1pqacb0" name="Negotiate customer requirements">
+    <userTask id="UserTask_1pqacb0" name="Negotiate customer requirements" camunda:candidateGroups="manager_contracting">
       <incoming>SequenceFlow_0nqiz4b</incoming>
       <outgoing>SequenceFlow_1qrfjth</outgoing>
     </userTask>
-    <sendTask id="SendTask_0zsnakw" name="Inform insurance partner about contract" camunda:expression="${contractHandler.sendContractConfirmation(execution)}">
+    <sendTask id="SendTask_0zsnakw" name="Inform insurance partner about contract" camunda:expression="${true}">
       <incoming>SequenceFlow_1g70gey</incoming>
       <outgoing>SequenceFlow_19vljn8</outgoing>
     </sendTask>
@@ -93,7 +93,7 @@
       <outgoing>sid-172CF00F-245E-419B-90CB-EFA0684C2013</outgoing>
       <outgoing>sid-72173456-DA96-4699-B777-27388AEB719D</outgoing>
     </exclusiveGateway>
-    <userTask id="sid-59A05E34-58CE-4658-8FBE-A237E3F90FC0" name="Inform customer about new conditions" implementation="##WebService">
+    <userTask id="sid-59A05E34-58CE-4658-8FBE-A237E3F90FC0" name="Inform customer about new conditions" implementation="##WebService" camunda:candidateGroups="clerk_contracting">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -103,7 +103,7 @@
       <outgoing>sid-28677BF2-86F6-41E7-8CC7-E83406A6A8F2</outgoing>
     </userTask>
     <sequenceFlow id="sid-28677BF2-86F6-41E7-8CC7-E83406A6A8F2" name="" isImmediate="true" sourceRef="sid-59A05E34-58CE-4658-8FBE-A237E3F90FC0" targetRef="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" />
-    <userTask id="sid-7EBAD71E-27E6-4373-897F-29709FAC45A0" name="Handle rejection" implementation="##WebService">
+    <userTask id="sid-7EBAD71E-27E6-4373-897F-29709FAC45A0" name="Handle rejection" implementation="##WebService" camunda:candidateGroups="clerk_contracting">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -134,7 +134,7 @@
     <sequenceFlow id="sid-0ACCA590-4CF2-46FE-A6D9-A12B2C6128A2" name="Request cancelled" isImmediate="true" sourceRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" targetRef="sid-C1DDD379-D98D-405F-AEE1-0ED3837D3267">
       <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" name="Adjust customer requirements and update" implementation="##WebService">
+    <userTask id="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" name="Adjust customer requirements and update" implementation="##WebService" camunda:candidateGroups="clerk_contracting">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -384,7 +384,7 @@
     <sequenceFlow id="SequenceFlow_0ds9e05" name="Rejected" isImmediate="true" sourceRef="sid-98ADDB2F-0289-467B-9C98-81BA45DA1120" targetRef="EndEvent_1ogqsf5">
       <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-DFB8E776-E887-4FC2-8B64-C0AC9CEB1C59" name="Check eligibility&#10;rejection" implementation="##WebService" camunda:formKey="app:editOrder.jsf">
+    <userTask id="sid-DFB8E776-E887-4FC2-8B64-C0AC9CEB1C59" name="Check eligibility&#10;rejection" implementation="##WebService" camunda:formKey="app:editOrder.jsf" camunda:candidateGroups="clerk_contracting">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -495,7 +495,7 @@
       <incoming>SequenceFlow_02w5sdm</incoming>
       <outgoing>sid-DC881259-C4C3-4F81-9489-D39066179E85</outgoing>
     </receiveTask>
-    <userTask id="UserTask_0nt3b79" name="Send reminder" camunda:formKey="app:sendContractReminder.jsf">
+    <userTask id="UserTask_0nt3b79" name="Send reminder" camunda:formKey="app:sendContractReminder.jsf" camunda:candidateGroups="clerk_contracting">
       <incoming>SequenceFlow_1880bap</incoming>
       <outgoing>sid-CF2D0FB3-8804-469C-97CE-98A9C9A344E5</outgoing>
     </userTask>
