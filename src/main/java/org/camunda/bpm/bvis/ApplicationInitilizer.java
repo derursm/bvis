@@ -92,21 +92,22 @@ public class ApplicationInitilizer {
 	public void initialise() {
 
 		// delete history
-		/**CamundaCleaner cleaner = new CamundaCleaner();
+		CamundaCleaner cleaner = new CamundaCleaner();
 		cleaner.clean(engine);
 		
 		identityService = engine.getIdentityService();
 		authorizationService = engine.getAuthorizationService();
 		taskService = engine.getTaskService();
-		filterService = engine.getFilterService();*/
+		filterService = engine.getFilterService();
 		
 		// PickUpLocations
 		pickupLocationService.create(new PickUpLocation("Barcelona Airport", "+34 902 40 47 04", "El Prat de Llobregat", "",
 				"08820", "Barcelona", "Spain"));
 		pickupLocationService.create(new PickUpLocation("Madrid Airport", "+34 913 21 10 00", "Avenida de la Hispanidad, s/n", "",
 				"28042", "Madrid", "Spain"));
-		pickupLocationService.create(new PickUpLocation("Valencia Airport", "+34 902 40 47 04",
-				"Carretera del Aeropuerto, s/n", "", "46940", "Valencia", "Spain"));
+		PickUpLocation loc = new PickUpLocation("Valencia Airport", "+34 902 40 47 04",
+				"Carretera del Aeropuerto, s/n", "", "46940", "Valencia", "Spain");
+		pickupLocationService.create(loc);
 		
 		// Cars
 		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123456", CarType.car, true));
@@ -149,13 +150,13 @@ public class ApplicationInitilizer {
 		orderService.create(order);
 		System.out.println("DUMMY ORDER ID: " + order.getId());
 		
-		//createCamundaUsers();
-		//createCamundaGroups();
-		//addUsersToGroups();
-		//adjustAuthorizations();
-		//createFilters();
+		createCamundaUsers();
+		createCamundaGroups();
+		addUsersToGroups();
+		adjustAuthorizations();
+		createFilters();
 		
-	    //startContractingInstances(null);
+	    //startContractingInstances(null, car.getId(), loc.getStoreID());
 	    //startClaimInstances(null); */
 	}
 	
@@ -278,7 +279,7 @@ public class ApplicationInitilizer {
 		filterProperties.put("priority", -5);
 		query = taskService.createTaskQuery()
 				.taskCandidateGroupInExpression("${currentUserGroups()}").taskUnassigned();
-		Filter groupTasksFilter = filterService.newTaskFilter().setName("Unassigned Tasks")
+		Filter groupTasksFilter = filterService.newTaskFilter().setName("Unassigned Group Tasks")
 				.setProperties(filterProperties).setOwner("admin").setQuery(query);
 		filterService.saveFilter(groupTasksFilter);
 	
@@ -358,7 +359,7 @@ public class ApplicationInitilizer {
 		filterService.saveFilter(allTasksFilter);
 	}
 	
-	private void startContractingInstances(Integer version) {
+	private void startContractingInstances(Integer version, long carId, long locationId) {
 
 	    ProcessDefinitionQuery processDefinitionQuery = engine
 	      .getRepositoryService()
@@ -376,14 +377,30 @@ public class ApplicationInitilizer {
 
 	    
 	    // process instance 1
-	    engine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
+	    /*engine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
 	        .putValue("creditor", "Great Pizza for Everyone Inc.")
-	        .putValue("amount", 30.00d)
-	        .putValue("invoiceCategory", "Travel Expenses")
-	        .putValue("invoiceNumber", "GPFE-23232323"));
-	    /*
+	        .putValue("customerFirstname", "Erik")
+			.putValue("customerSurname", "Weisz")
+			.putValue("customerCompanyName", "")
+			.putValue("customerEmail", "ErikWeisz@cuvox.de")
+			.putValue("customerPhoneNumber", "06096 49 86 90")
+			.putValue("customerDateOfBirth", new Date("01-03-1990") )
+			.putValue("customerStreet", "Konstanzer Strasse")
+			.putValue("customerHouseNumber", "74")
+			.putValue("customerPostcode", "63831")
+			.putValue("customerCity", "Wiesen")
+			.putValue("customerCountry", "Germany")
+			.putValue("fleet", false)
+			.putValue("pickUpDate", new Date())
+			.putValue("returnDate", new Date())
+			.putValue("pickUpLoc", locationId)
+			.putValue("returnStore", locationId)
+			.putValue("insuranceType", "total")
+			.putValue("car", carId)
+			.putValue("inquiryText", ""));
+			
 	    // process instance 2
-	    try {
+	    /*try {
 	      Calendar calendar = Calendar.getInstance();
 	      calendar.add(Calendar.DAY_OF_MONTH, -14);
 	      ClockUtil.setCurrentTime(calendar.getTime());
