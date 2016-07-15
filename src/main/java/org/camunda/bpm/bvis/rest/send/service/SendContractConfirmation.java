@@ -16,7 +16,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 @Named
 public class SendContractConfirmation {
 
-	private static final String BASE_URI = "http://camunda-capitol.uni-muenster.de/partner-interface/";
+	private static final String BASE_URI = "http://ec2-52-42-80-207.us-west-2.compute.amazonaws.com/partner-interface/";
 	
 	public String sendContractConfirmation(RentalOrder entityOrder, String processInstanceIDBVIS, 
 			String processInstanceIDCapitol, int contractStatus) {
