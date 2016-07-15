@@ -21,6 +21,8 @@ import org.camunda.bpm.bvis.util.SendHTMLEmail;
 import org.camunda.bpm.engine.cdi.BusinessProcess;
 import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.joda.time.LocalDate;
+import org.joda.time.Years;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -174,6 +176,18 @@ public class ContractHandler {
    
     orderService.create(rentalOrder);
     System.out.println("Cars: " + rentalOrder.getCars());
+
+    //calculate age
+    LocalDate currentDate = new LocalDate();
+    LocalDate birthDate = new LocalDate (customer.getDateOfBirth());
+    Years years = Years.yearsBetween(currentDate, birthDate);
+    int age = years.getYears();
+    System.out.println("AGE");
+    System.out.println(age);    
+    
+    //Add process variables for eligibility decision
+    delegateExecution.setVariable("age", age);
+    delegateExecution.setVariable("blacklist", true);    
     
     // Remove no longer needed process variables
     delegateExecution.removeVariables(variables.keySet());

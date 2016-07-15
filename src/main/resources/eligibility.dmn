@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101/dmn11.xsd" id="definitions" name="definitions" namespace="http://camunda.org/schema/1.0/dmn">
+  <decision id="decision" name="eligibility">
+    <decisionTable id="decisionTable">
+      <input id="input1" label="Is there a blacklist entry?">
+        <inputExpression id="inputExpression1" typeRef="boolean">        
+        	<text>blacklist</text>
+		</inputExpression>
+      </input>
+      <input id="InputClause_091fjag" label="How old is the customer?">
+        <inputExpression id="LiteralExpression_1cp1dua" typeRef="integer">
+                <text>age</text>
+		</inputExpression>
+      </input>
+      <output id="output1" label="eligibility" name="eligibility" typeRef="boolean" />
+      <rule id="row-525981784-1">
+        <description>There is a blacklist entry in our database.</description>
+        <inputEntry id="UnaryTests_1efldhb">
+                <text>true</text>
+		</inputEntry>
+        <inputEntry id="UnaryTests_1n1j692">
+                <text></text>
+		</inputEntry>
+        <outputEntry id="LiteralExpression_0apqk5c">
+                <text>false</text>
+		</outputEntry>
+      </rule>
+      <rule id="row-525981784-2">
+        <inputEntry id="UnaryTests_108pxvf">
+                <text>false</text>
+		</inputEntry>
+        <inputEntry id="UnaryTests_1o9i03p">
+                <text><![CDATA[>18]]></text>
+		</inputEntry>
+        <outputEntry id="LiteralExpression_14od8u5">
+                <text>true</text>
+		</outputEntry>
+      </rule>
+      <rule id="row-525981784-3">
+        <description>The customer is too young.</description>
+        <inputEntry id="UnaryTests_0fbzsg4">
+                <text>false</text>
+		</inputEntry>
+        <inputEntry id="UnaryTests_0iwmcel">
+                <text><![CDATA[<18]]></text>
+		</inputEntry>
+        <outputEntry id="LiteralExpression_020djmv">
+                <text>false</text>
+		</outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>
