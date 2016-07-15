@@ -167,7 +167,7 @@ public class ClaimHandler {
 		  Car car;
 		  RentalOrder order;
 		  
-		  String surname, subject, text, from, email, state, path, pickupLocation, returnLocation,
+		  String surname, subject, text, textCss, from, email, state, path, pathCss, pickupLocation, returnLocation,
 		  insurancePac, carModel, rentalEnd, rentalStart, claimId_str, orderId_str, clerkComment, towingAddress;
 		  Long claimId, orderId;
 		  boolean isFleetRental;
@@ -225,6 +225,7 @@ public class ClaimHandler {
 	      subject = "";
 	      
 	      path = "/templates/";
+	      pathCss = "/templates/css.txt";
 	      
 	      System.out.println("Email sent status: " + state);	      
 	      
@@ -245,24 +246,28 @@ public class ClaimHandler {
 	      }	  
 	             		  
 	      InputStream in = this.getClass().getResourceAsStream(path);
-	    
+	      InputStream inCss = this.getClass().getResourceAsStream(pathCss);
+
 	      try{
-	    	  text = IOUtils.toString(in, "UTF-8");     	  
+	    	  text = IOUtils.toString(in, "UTF-8");  
+	    	   textCss = IOUtils.toString(inCss, "UTF-8"); 
 	      } catch (IOException e) {
 	    	  text = "error in file reading. path: " + path;
+	    	  textCss= "";
 	    	  email = "bvis@bvis.com";
 	      } catch (NullPointerException  e){
 	    	  text = "null pointer file reading. path: " + path;
+	    	  textCss= "";
 	    	  email = "bvis@bvis.com";
 	      } 
 	      
 	      try{
 	      text = String.format(text, surname, carModel, pickupLocation, rentalStart, returnLocation, rentalEnd, orderId_str, towingAddress, insurancePac);  
-	      } catch( IllegalFormatException e){
+	      } catch( IllegalFormatException e){	
 	    	 subject = "illegal conversion ";    	 
-	    	 email = "bvis@bvis.com";
+	    	 email = "bvis@bvis.com";	    	 
 	      }
-	      SendHTMLEmail.main(subject, text , from, email);
+	      SendHTMLEmail.main(subject, textCss+text , from, email);
 	  }
 	
 	public void informTowingService(DelegateExecution delegateExecution) {

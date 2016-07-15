@@ -405,7 +405,7 @@ public class ContractHandler {
 	  Car car;
 	  Collection<Car> cars;
 	  String surname, subject, text, from, email, state, path, pickupLocation, returnLocation,
-	  insurancePac, carModel, rentalEnd, rentalStart, orderId_str, clerkComment, towingAddress;
+	  insurancePac, carModel, rentalEnd, rentalStart, orderId_str, clerkComment, towingAddress, pathCss, textCss;
 	  Long orderId;
 	  boolean isFleetRental;
 	  //tbc..
@@ -456,6 +456,7 @@ public class ContractHandler {
       subject = "";
       
       path = "/templates/";
+      pathCss =  "/templates/css.txt";
       
       //built email template path by state
       switch(state){
@@ -478,14 +479,18 @@ public class ContractHandler {
       }	  
              		  
       InputStream in = this.getClass().getResourceAsStream(path);
-    
+      InputStream inCss = this.getClass().getResourceAsStream(pathCss);
+
       try{
-    	  text = IOUtils.toString(in, "UTF-8");     	  
+    	  text = IOUtils.toString(in, "UTF-8");     	
+    	  textCss = IOUtils.toString(inCss, "UTF-8"); 
       } catch (IOException e) {
     	  text = "error in file reading. path: " + path;
+    	  textCss = "";
     	  email = "bvis@bvis.com";
       } catch (NullPointerException  e){
     	  text = "null pointer file reading. path: " + path;
+    	  textCss = "";
     	  email = "bvis@bvis.com";
       } 
       
@@ -495,7 +500,7 @@ public class ContractHandler {
     	 subject = "illegal conversion ";    	 
     	 email = "bvis@bvis.com";
       }
-      SendHTMLEmail.main(subject, text , from, email);
+      SendHTMLEmail.main(subject, textCss+text , from, email);
       
   }
   
