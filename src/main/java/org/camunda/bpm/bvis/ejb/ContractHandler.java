@@ -366,7 +366,7 @@ public class ContractHandler {
 	    
 	    SendHTMLEmail.mainAtt("Final contract", "Dear Mr/Mrs " + surname +". <br> Please find attached your contract.", "bvis@test.de", email, baosPDF, "bvis_contract_"+surname);
 	} catch (DocumentException e){
-		System.out.println("Contracting DocumentException");
+		System.out.println("Contracting DocumentException");	
 	}
   }
 
