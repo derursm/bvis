@@ -1,23 +1,89 @@
-<style type="text/css">
-div.bg {
-background-image: url(http://camunda-bvis.uni-muenster.de/bvis/resources/img/ny-street.jpg);
-margin: auto;
-background-repeat: no-repeat;
-}
-</style>
-<body>
-<div class="bg">
-<p class="size-36" lang="x-size-36" style="margin-top: 0; margin-bottom: 0; font-size: 30px; line-height: 38px; text-align: center;"><span style="color: #ffffff;">Congratulations to your successful booking at BVIS Corp.</span></p>
-<p class="size-36" lang="x-size-36" style="margin-top: 0; margin-bottom: 0; font-size: 18px; line-height: 38px; text-align: center;"><span style="color: #ffffff;">IMPORTANT: This is a reservation notification. The contract will be sent to you as soon as our team has handled your request.</span></p>
-</div>
-<div>
-<p style="font-size: 18px;">We are happy to welcome you as our customer.</p>
-<p style="font-size: 18px;">We will contact you soon to negotiate the requirements.</p>
-</div>
-<p>&nbsp;If you wish to make any changes to your booking, please contact our customer service at +44 664/5550777</p>
-<h2>Have a nice ride.&nbsp;Your BVIS Team.</h2>
-<img src="/bvis/resources/img/logo.jpg" alt="Logo"/>
-<p>&nbsp;</p>
-<p>This is an automatically created mail. Do not reply on this mail or the FBI will take you down, bastard.</p>
-<p><strong>&nbsp;</strong></p>
-<p><strong>Copyright &copy; 1999-2016 BVIS. All rights reserved.<br /> <br />BVIS&nbsp;(Europe) S.&agrave; r.l. &amp; Cie, S.C.A.<br /> Soci&eacute;t&eacute; en Commandite par Actions<br />22-24 Boulevard Royal, L-2449, Luxemburg<br /> RCS Luxemburg B 118 349</strong></p>
+
+<body class="body" >
+
+<table class="body-wrap">
+    <tbody>
+    <tr>
+        <td class="container">
+            <!-- Message start -->
+            <table>
+                <tr>
+                    <td align="center" class="masthead">
+
+                        <h1>BVIS Car Rental<br><small>Congratuliaton - you now move with elegance!</small></h1>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="content">
+
+                        <h2>Dear Mrs/ Mr %1$s,</h2>
+
+                        <h4>We are so excited to welcome you as our customer.</h4>
+                        <p>This is the beginning of something awesoem. Please see below your & booking details:</p>
+                        <div class="col-md-2">
+                            <ol>
+                                <li class="mail-li">Car model: %2$s</li>
+                                <li class="mail-li">Pickup location: %3$s</li>
+                                <li class="mail-li">Pickup date: %4$s</li>
+                                <li class="mail-li">Return location: %5$s</li>
+                                <li class="mail-li">Return date: %6$s</li>
+                                <li class="mail-li">Insurance package: %9$s</li>
+                                <li class="mail-li">booking number: %7$s</li>
+                                <li class="mail-li"></li>
+                            </ol>
+                        </div>
+                        <samp>IMPORTANT: This is a reservation notification. The contract will be sent to you as soon as our team has handled your request.</samp>
+                        <p>If you wish to make any changes to your booking, please contact our customer service at +49 251 83 38 100</p>
+
+                        <table>
+                            <tr>
+                                <td align="center">
+                                    <p>
+                                    <br>
+                                        <a href="http://camunda-bvis.uni-muenster.de/bvis/login.xhtml" class="button">check your order details online</a>
+                                    <br>
+                                    <br>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                        <table>
+                            <tr>
+                            <p>Enjoy your ride and drive safely</p>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://baconipsum.com">BVIS Car Rental</a>.</p>
+                                    <p><em>Your Beavis and Butt-Head Team</em></p>
+                                </td>
+                                <td>
+                                <img src="http://camunda-bvis.uni-muenster.de/bvis/resources/img/bvis-logo.png" style=" width: 50px; height: 50px; float: right;">
+                                </td>
+                        </table
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="container">
+            <footer class="footer-mail">
+            <!-- Message start -->
+            <table>
+                <tr>
+                    <td class="content footer footer-mail" align="center">
+                        <p>Sent by <a href="#">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 098765</p>
+                        <p><a href="mailto:">awesomeness@bvis.com</a> | <a href="#">Unsubscribe - Not Possible</a></p>
+                    </td>
+                </tr>
+            </table>
+            </footer>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

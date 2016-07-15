@@ -1,17 +1,85 @@
-<p style="color: #5e9ca0; text-align: right;"><span style="color: #000000;">&nbsp;booking number: %7$s</span></p>
-<br>
-<h2 style="color: #2e6c80;">Order</h2>
-<p>Hereby, we send you an order based on our usual terms of contract.</p>
-<p>A towing services transports the car directly to your location.</p>
-<ol style="list-style: none; font-size: 14px; line-height: 32px; font-weight: bold;">
-<li class="mail-li">Car model: %2$s</li>
-<li class="mail-li">Office location to pick up: %5$s</li>
-<li class="mail-li"></li>
-</ol>
-<br>
-<p>Thanks in advance.</p>
-<h2>Your BVIS Team.</h2>
-<p>&nbsp;</p>
-<p>This is an automatically created mail. Do not reply on this mail or the FBI will take you down, bastard.</p>
-<p><strong>&nbsp;</strong></p>
-<p><strong>Copyright &copy; 1999-2016 BVIS. All rights reserved.<br /> <br />BVIS&nbsp;(Europe) S.&agrave; r.l. &amp; Cie, S.C.A.<br /> Soci&eacute;t&eacute; en Commandite par Actions<br />22-24 Boulevard Royal, L-2449, Luxemburg<br /> RCS Luxemburg B 118 349</strong></p>
+
+<body class="body" >
+
+<table class="body-wrap">
+    <tbody>
+    <tr>
+        <td class="container">
+            <!-- Message start -->
+            <table>
+                <tr>
+                    <td align="center" class="masthead">
+
+                        <h1>BVIS Car Rental<br><small>The most elegant ride worldwide!</small></h1>
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="content">
+
+                        <h2>Order %7$s</h2>
+
+                        <h4>Hereby, we send you an order based on our usual terms of contract.</h4>
+                        <p>A towing services transports the car directly to your location.</p>
+
+                        <p>Please see below the referenced booking</p>
+                        <div class="col-md-2">
+                            <ol>
+                                <li class="mail-li">Car model: %2$s</li>
+                                <li class="mail-li">Pickup location: %5$s</li>
+                            </ol>
+                        </div>
+                        <p>In case of any questions, please contact our customer service at +49 251 83 38 100</p>
+
+                        <table>
+                            <tr>
+                                <td align="center">
+                                    <p>
+                                    <br>
+                                        <a href="http://camunda-bvis.uni-muenster.de/bvis/login.xhtml" class="button">check your order details online</a>
+                                    <br>
+                                    <br>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table>
+                            <tr>
+                            <p>Be save, be elegant, be BVIS</p>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://baconipsum.com">BVIS Car Rental</a>.</p>
+                                    <p><em>Your Beavis and Butt-Head Team</em></p>
+                                </td>
+                                <td>
+                                <img src="http://camunda-bvis.uni-muenster.de/bvis/resources/img/bvis-logo.png" style=" width: 50px; height: 50px; float: right;">
+                                </td>
+                        </table
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="container">
+            <footer class="footer-mail">
+            <!-- Message start -->
+            <table>
+                <tr>
+                    <td class="content footer footer-mail" align="center">
+                        <p>Sent by <a href="#">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 098765</p>
+                        <p><a href="mailto:">awesomeness@bvis.com</a> | <a href="#">Unsubscribe - Not Possible</a></p>
+                    </td>
+                </tr>
+            </table>
+            </footer>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -103,5 +103,9 @@
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-addressbuilder:2.0.12.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-annotations-api:2.0.12.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-integration-faces:2.0.12.Final" level="project" />
+    <orderEntry type="library" name="Maven: com.itextpdf:itextpdf:5.0.6" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcmail-jdk14:1.38" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk14:1.38" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bctsp-jdk14:1.38" level="project" />
   </component>
 </module>
