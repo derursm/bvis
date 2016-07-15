@@ -67,7 +67,8 @@ public class Car implements Serializable {
 	public String getHTMLCarDetails(){
 		String carDetails = this.getModel() + " " +  this.getBrand() + ", " + this.getFuelType() + ", PS: " + this.getPs();
 		return carDetails;
-	}
+	}	
+	
 	public Long getId() {
 		return id;
 	}
