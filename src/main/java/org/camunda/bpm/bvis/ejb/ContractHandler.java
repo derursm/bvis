@@ -30,7 +30,9 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -38,6 +40,26 @@ import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+//pdf
+import com.itextpdf.text.Chapter;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.List;
+import com.itextpdf.text.ListItem;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 
 @Stateless
 @Named
@@ -187,28 +209,165 @@ public class ContractHandler {
   
   //Create contract and send to user's email
   public void sentContract(DelegateExecution delegateExecution){
-//	  public static final String DEST = "results/objects/chapter_title.pdf";
-//	  
-//	    public static void main(String[] args) throws IOException, DocumentException {
-//	        File file = new File(DEST);
-//	        file.getParentFile().mkdirs();
-//	        new ChapterAndTitle().createPdf(DEST);
-//	    }
-//	 
-//	    public void createPdf(String dest) throws IOException, DocumentException {
-//	        Document document = new Document();
-//	        PdfWriter.getInstance(document, new FileOutputStream(dest));
-//	        document.open();
-//	        Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
-//	        Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
-//	        Chunk chunk = new Chunk("This is the title", chapterFont);
-//	        Chapter chapter = new Chapter(new Paragraph(chunk), 1);
-//	        chapter.setNumberDepth(0);
-//	        chapter.add(new Paragraph("This is the paragraph", paragraphFont));
-//	        document.add(chapter);
-//	        document.close();
-//	    }
-	  
+	System.out.println("Start creating contract");
+	
+	 RentalOrder order;
+	  Customer customer;
+	  Collection<Car> cars;
+	  String surname, email, pickupLocation, returnLocation,
+	  insurancePac, carModel, rentalEnd, rentalStart, date, type, street, city, orderId_str;
+	  double totalPrice, insurancePrice, rentalPrice;
+	  Long orderId;
+	  	  
+ 	  // Get all process variables
+     Map<String, Object> variables = delegateExecution.getVariables();
+     orderId = (long) variables.get("orderId");
+     order = orderService.getOrder(orderId);
+     customer = order.getCustomer();
+     cars = order.getCars(); 
+     
+     surname = "surname";
+     email = "email";
+     pickupLocation = "pickupLocation"; 
+     returnLocation = "returnLocation"; 
+     carModel = "carmodel"; 
+     rentalStart = "rentalStart";
+     rentalEnd = "rentalEnd";
+     orderId_str = "orderId";
+     insurancePac = "insurancePac";
+     rentalPrice = 0;
+     insurancePrice = 0;
+     totalPrice = 0;
+     
+     //Get rental information   
+    if(order.isFleetRental()){
+    	type = "Fleet";
+    } else{
+    	type = "Private Single Rental";
+    }
+     orderId_str = orderId.toString();
+     surname = customer.getSurname();
+     street = customer.getStreet()+ " " +customer.getHouseNumber();
+     city = customer.getPostcode() + " " + customer.getCity();
+     email = customer.getEmail();    
+   	 rentalStart = order.getPick_up_date().toString();
+     rentalEnd = order.getReturn_date().toString();
+     pickupLocation = order.getPickUpStore().getContactDetails();    
+     returnLocation = order.getReturnStore().getContactDetails();
+     //insurancePac = order.getInsurance().getType();
+     rentalPrice = order.getPriceCars();
+     insurancePrice = order.getPriceInsurance_final();
+     totalPrice = order.getPrice();
+     
+     
+     carModel = "";
+     int i = 1;
+     for (Car loop_car : cars){
+   	  carModel += String.valueOf(i) + ": "+ loop_car.getHTMLCarDetails();
+     }   
+     
+     DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+     Date today = new Date();
+
+	date = formatter.format(today);
+	
+     //surname, email, pickupLocation, returnLocation,
+	 // insurancePac, carModel, rentalEnd, rentalStart, orderId_str, date, type, street, city;
+	 //double totalPrice, insurancePrice, rentalPrice;
+	 // Long orderId;
+     
+    final String[][] rentalData = {
+    		    {"Type:", type},
+    		    {"Pick-up date:", rentalStart},
+    		    {"Return date:", rentalEnd},
+    		    {"Pick-up location:", pickupLocation},
+    		    {"Return location:", returnLocation},
+    		    {"Car:", carModel},
+    		    {"Insurance type:", insurancePac},
+    		    {"Price insurance:", String.valueOf(insurancePrice)+ " EUR"},
+    		    {"Price car:", String.valueOf(rentalPrice)+ " EUR"},
+    		    {"Total:", String.valueOf(totalPrice)+ " EUR"}
+    		};
+	
+	try{		
+	    Document document = new Document();
+	    ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+	    PdfWriter pdf = null;
+	    pdf = PdfWriter.getInstance(document, baosPDF);
+	    document.open();
+	    Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
+	    Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+	    Paragraph pa0 = new Paragraph("Order ID: " + orderId_str, paragraphFont); 
+	    pa0.setAlignment(Element.ALIGN_RIGHT);
+	    pa0.setFont(FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL));
+	    document.add(pa0);
+	    
+	    Chunk chunk = new Chunk("BVIS Rental Contract", chapterFont);
+	    document.add(chunk);
+	    Paragraph pa1 = new Paragraph("The best choice", paragraphFont); 
+	    pa1.setSpacingAfter(15);
+	    document.add(pa1);
+	    
+	    List list = new List();          
+        list.setListSymbol("");
+        list.add(new ListItem("Mr/Mrs " + surname));
+        list.add(new ListItem(street));
+        list.add(new ListItem(city));
+        Paragraph pa2 = new Paragraph();
+        pa2.add(list);
+        pa2.setSpacingAfter(20);
+        document.add(pa2);
+        
+        Paragraph datePar = new Paragraph(date, paragraphFont);
+        datePar.setAlignment(Element.ALIGN_RIGHT);
+        document.add(datePar);
+        
+        document.add(new Paragraph("Dear Mr/Mrs " + surname + ",", paragraphFont));
+        Paragraph pa3 = new Paragraph("thank you for choosing BVIS as your transportation service provider. Please find your rental details below:", paragraphFont);
+        pa3.setSpacingAfter(10);
+        document.add(pa3);
+        
+	    PdfPTable table = new PdfPTable(2);
+	    table.setWidthPercentage(80);
+	    table.setHorizontalAlignment(Element.ALIGN_LEFT);
+	    table.setWidths(new int[]{5, 10});
+	    table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+	    table.addCell(rentalData[0][0]);
+	    table.addCell(rentalData[0][1]);
+	    table.addCell(rentalData[1][0]);
+	    table.addCell(rentalData[1][1]);
+	    table.addCell(rentalData[2][0]);
+	    table.addCell(rentalData[2][1]);
+	    table.addCell(rentalData[3][0]);
+	    table.addCell(rentalData[3][1]);
+	    table.addCell(rentalData[4][0]);
+	    table.addCell(rentalData[4][1]);
+	    table.addCell(rentalData[5][0]);
+	    table.addCell(rentalData[5][1]);
+	    table.addCell(rentalData[6][0]);
+	    table.addCell(rentalData[6][1]);
+	    table.addCell(rentalData[7][0]);
+	    table.addCell(rentalData[7][1]);
+	    table.addCell(rentalData[8][0]);
+	    table.addCell(rentalData[8][1]);
+	    table.addCell(rentalData[9][0]);
+	    table.addCell(rentalData[9][1]);
+	    
+	    Paragraph pa4 = new Paragraph();
+	    pa4.add(table);
+	    pa4.setSpacingAfter(15);	    
+	    document.add(pa4);
+	    
+        document.add(new Paragraph("Thank you and have a nice ride", paragraphFont));
+
+
+	    document.close();	
+	    pdf.close();	
+	    
+	    SendHTMLEmail.mainAtt("Final contract", "Dear Mr/Mrs " + surname +". <br> Please find attached your contract.", "bvis@test.de", email, baosPDF, "bvis_contract_"+surname);
+	} catch (DocumentException e){
+		System.out.println("Contracting DocumentException");	
+	}
   }
 
   public RentalOrder getOrder(Long orderId) {
@@ -235,7 +394,7 @@ public class ContractHandler {
 	      throw new RuntimeException("Cannot complete task", e);
 	    }
 	  }
-  }
+}
   
   //General send email method. State states the content of the email. Email information is caught from
   //process variables 

@@ -48,6 +48,11 @@ public class PickUpLocation implements Serializable {
 		return contactDetails;
 	}
 	
+	public String getContactDetails(){
+		String contactDetails = this.getStoreName() + ", " + this.getStreet() + " " + this.getHouseNumber() + ", " + this.getPostcode() + " " + this.getCity() + ", " + this.getPhoneNumber();
+		return contactDetails;
+	}
+	
 	public Long getStoreID() {
 		return storeID;
 	}

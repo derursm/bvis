@@ -482,7 +482,7 @@
     </businessRuleTask>
     <sequenceFlow id="sid-75A9FF7F-612E-4D90-AF0F-BB9493A0F7CA" name="" isImmediate="true" sourceRef="sid-412CF1D5-8B80-45E2-A7CE-C2BFF4303299" targetRef="sid-BEE10A82-D4C3-4E41-A510-C319F79F42AB" />
     <sequenceFlow id="sid-53AB7A90-02F2-468D-8BF4-BE03E025A2E3" name="" isImmediate="true" sourceRef="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" targetRef="sid-412CF1D5-8B80-45E2-A7CE-C2BFF4303299" />
-    <sendTask id="SendTask_1rz1l70" name="Finalize contract" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}">
+    <sendTask id="SendTask_1rz1l70" name="Finalize contract" camunda:expression="${contractHandler.sendContract(execution)}">
       <extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="state">send_cont</camunda:inputParameter>

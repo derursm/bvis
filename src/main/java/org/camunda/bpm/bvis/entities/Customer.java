@@ -181,8 +181,7 @@ public class Customer implements Serializable {
 	}
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-	}
-	
+	}	
 	public boolean getCompany() {
 		return company;
 	}
