@@ -97,17 +97,18 @@
 					<b:selectOneMenu id="insuranceType" value="#{placeInquiry.insuranceType}">
 						<f:selectItems value="#{order.insuranceTypes}" />
 					</b:selectOneMenu>
+					<br />
 					
+                  	<h:panelGroup />
+                  	<h:outputLabel for="insuranceType" value="" />
+                  	<h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{placeInquiry.recalculatePrice}" />
+                  	
 					<label class="label-bvis"  for="priceCars">Car price:</label>
-                  	<h:outputText id="priceCars" value="#{placeInquiry.priceCars} Euro" />
+                  	<b:inputText id="priceCars" value="#{placeInquiry.priceCars} Euro" readonly="true" />
                   
                   
                   	<label class="label-bvis"  for="priceInsurance_expected">Insurance price:</label>
-                  	<h:outputText id="priceInsurance_expected" value="#{placeInquiry.priceInsurance_expected} Euro" />
-                  
-                  	<h:panelGroup />
-                  	<h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{placeInquiry.recalculatePrice}" />
-                 
+                  	<b:inputText id="priceInsurance_expected" value="#{placeInquiry.priceInsurance_expected} Euro" readonly="true" />
 				</b:panelGrid>
 
 				<b:panelGrid col-spans="12" cellpadding="5" id="fleetComments">
