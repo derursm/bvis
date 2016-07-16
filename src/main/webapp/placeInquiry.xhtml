@@ -6,15 +6,12 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 	<ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
+	<ui:define name="headline">
+                <h1 class="bvis-h1"> Place your inquiry <small>Moving with elegance has never been easier</small></h1>
+    </ui:define>
+
 	<ui:define name="content">
 
-	<div class="container">
-        <header class="row">
-            <div class="col-lg-12 ">
-                <h1 class="bvis-h1"> Place your inquiry <small>Moving with elegance has never been easier</small></h1>
-            </div>
-        </header>
-    </div>
 
     <h:form id="submitForm">
     <div class="container form-inline" id="bg-img">
@@ -61,7 +58,7 @@
 			<div class="col-sm-6">
 				<h3><label>Car options</label></h3>
 				<b:panelGrid col-spans="5,7" cellpadding="5" cellspacing="1">
-					<label class="label-bvis"  for="fleet">Car fleet:</label>
+                    <h:outputLabel for="fleet" value="Car fleet:" />
 					<h:selectBooleanCheckbox id="fleet" value="#{placeInquiry.fleetRental}"  />
 				</b:panelGrid>
 				<br />

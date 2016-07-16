@@ -34,6 +34,7 @@
     <script src="/bvis/resources/js/myNavBar.js"></script>
 	<!--  <h:outputScript type="text/javascript" library="webjars/bootstrap/3.1.1/js" name="bootstrap.js" /> -->
 </h:head>
+
 <h:body>
 	<div class="container">
       <!-- Fixed Navigation -->
@@ -84,6 +85,13 @@
       </nav>
 	<!-- /. END NAVIGATION -->
 
+    <!-- /. Start headline -->
+    <div class="container">
+        <ui:insert name="headline">
+        </ui:insert>
+    </div>
+
+
     <!-- /. Start Body -->
 	<div class="clearfix">
 		<ui:insert name="content" >
@@ -95,7 +103,6 @@
 
             <div class="footer-left">
                 <h3>BVIS</h3>
-
                 <p class="footer-links">
                     <a href="#">BVIS Luxury Car Rental</a>
                     ·
@@ -103,7 +110,6 @@
                     ·
                     <a href="#">Contact</a>
                 </p>
-
                 <p class="footer-company-name">BVIS Ltd. 2016</p>
             </div>
 
@@ -112,12 +118,10 @@
                     <i class="fa fa-map-marker"></i>
                     <p><span>123 Sesame Street</span> Wonderland</p>
                 </div>
-
                 <div>
                     <i class="fa fa-phone"></i>
                     <p>+49 251 83 38 100</p>
                 </div>
-
                 <div>
                     <i class="fa fa-envelope"></i>
                     <p><a href="mailto:info@bvis.com">info@bvis.com</a></p>
@@ -143,5 +147,6 @@
 	</div> <!-- /container -->
   
 </h:body>
+
 </f:view>
 </html>

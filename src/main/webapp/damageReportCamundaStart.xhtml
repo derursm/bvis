@@ -1,145 +1,114 @@
 <ui:composition template="/resources/default.xhtml"
-	lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:b="http://bootsfaces.net/ui"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+                lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-	<ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
-	<ui:define name="content">
+    <ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
+    <ui:define name="headline">
+        <h1 class="bvis-h1">Shit happens, yes! <small>Send us your damage report</small></h1>
+    </ui:define>
 
-    <div class="container">
-        <header class="page-header">
-            <div class="col-lg-12 ">
-                <h1 class="bvis-h1">So sad that this happend! <small>Send us your damage report</small></h1>
-            </div>
-        </header>
-    </div>
+    <ui:define name="content">
 
-   <h:form id="submitForm">
-    <div class="container">
-        <div id="bg-img">
-        <img src="/bvis/resources/img/ny-street.jpg" alt="" />
-        </div>
+    <h:form id="submitForm">
 
-        <div class="row">
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
-            <div class="col-sm-16">
-            <div class="col-sm-6">
-                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                    <h3><label>Damage report</label></h3>
-                    <h:panelGroup />
-                    <label class="label-bvis" for="orderID">Order ID:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="orderID" value="#{damageReport.orderID}" required="true" />
-                    
-                    <label class="label-bvis" for="licensePlate">Vehicle identification number:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="licensePlate" value="#{damageReport.vehicleID}" required="true" />
+        <div class="container form-inline" id="bg-img">
+            <div class="row">
+                <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+                    <div class="col-sm-6">
+                        <h3><label>Damage report</label></h3>
+                        <b:panelGrid columns="2" cellpadding="5" cellspacing="1">
 
-               		<label class="label-bvis"  for="damageDate">Damage date:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="damageDate" value="#{damageReport.damageDate}" required="true" >
-                        <f:convertDateTime pattern="dd-mm-yyyy" />
-                    </h:inputText>
-                    
-                  	<label class="label-bvis"  for="towingServiceNeeded">Towing service needed?</label>
-                  	<h:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}"/>
-                         
-                  	<label class="label-bvis"  for="reportedByCustomer">Reported by customer?</label>
-                  	<h:selectBooleanCheckbox id="reportedByCustomer" value="#{damageReport.reportedByCustomer}" />
-                    
-                    <label class="label-bvis" for="country">Damage description:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="damageDescription" value="#{damageReport.damageDescription}" required="true" />
+                            <h:outputLabel for="orderID" value="Order ID:*" />
+                            <b:inputText id="orderID" value="#{damageReport.orderID}" required="true" />
 
-                </h:panelGrid>
+                            <h:outputLabel for="licensePlate" value="Vehicle identification number:" />
+                            <b:inputText id="licensePlate" value="#{damageReport.vehicleID}" required="true" />
 
-            </div> <!-- /. END COL -->
-                
-            <div class="col-sm-6">
-                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                    <h3><label>Other involved party</label></h3>
-                    <h4><label>Personal information</label></h4>
-                    <h:panelGroup />
-                    <label class="label-bvis" for="party1Firstname">First name:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Firstname" value="#{damageReport.party1Firstname}" required="true" />
-                    
-                    <label class="label-bvis" for="party1Surname">Surname:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Surname" value="#{damageReport.party1Surname}" required="true" />
-                    
-                    <label class="label-bvis" for="party1Email">EMail:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Email" value="#{damageReport.party1EMail}" required="false" />
-                    
-                    <label class="label-bvis" for="party1PhoneNumber">Phone number:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1PhoneNumber" value="#{damageReport.party1Phone}" required="true" />
-                    
-                    <label class="label-bvis" for="party1Street">Street:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Street" value="#{damageReport.party1Street}" required="true" />
-                    
-                    <label class="label-bvis" for="party1HouseNo">House number:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1HouseNo" value="#{damageReport.party1HouseNo}" required="true" />
-                    
-                    <label class="label-bvis" for="party1ZIP">Post code:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1ZIP" value="#{damageReport.party1ZIP}" required="true" />
-                    
-                    <label class="label-bvis" for="party1City">City:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1City" value="#{damageReport.party1City}" required="true" />
-                    
-                    <label class="label-bvis" for="party1Country">Country:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Country" value="#{damageReport.party1Country}" required="true" />
+                            <h:outputLabel for="damageDate" value="Damage date:" />
+                            <b:inputText id="damageDate" value="#{damageReport.damageDate}" required="true" >
+                                <f:convertDateTime pattern="dd-mm-yyyy" />
+                            </b:inputText>
 
-               		<label class="label-bvis"  for="party1Birthday">Birthday:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Birthday" value="#{damageReport.party1Birthday}" required="true" >
-                        <f:convertDateTime pattern="dd-mm-yyyy" />
-                    </h:inputText>
-                    
-                    <h4><label>Other information</label></h4>
-                    <h:panelGroup />
-                    <label class="label-bvis" for="party1Company">Employer:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Company" value="#{damageReport.party1Company}" required="false" />
-                    <label class="label-bvis" for="party1Insurance">Insurance:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Insurance" value="#{damageReport.party1Insurance}" required="false" />
+                            <h:outputLabel for="towingServiceNeeded" value="Towing service needed?" />
+                            <b:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}"/>
 
-                </h:panelGrid>
+                            <h:outputLabel for="reportedByCustomer" value="Reported by customer?" />
+                            <b:selectBooleanCheckbox id="reportedByCustomer" value="#{damageReport.reportedByCustomer}" />
 
-            </div> <!-- /. END COL -->
-           </div> <!-- /. END Col-sm-8 -->
-           </div> <!-- /. END Col-sm-8 OPACITY-->
-        </div> <!-- /. END Upper ROW -->
+                            <h:outputLabel for="damageDescription" value="Damage description:" />
+                            <b:inputText rows="12" id="damageDescription" value="#{damageReport.damageDescription}" required="true" />
+                        </b:panelGrid>
+                    </div> <!-- /. END COL -->
 
-    </div>
-      <!-- /. END CONTAINER -->
+                    <div class="col-sm-6">
+                        <h3><label>Other involved party</label></h3>
+                        <h4><label>Personal information</label></h4>
 
-    <div class="container bvis-padding">
-        <div class="row ">
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
-            <div class="col-lg-10">
-                <p class="p-bvis">Please submit your damage details</p>
-            </div>
-            <div class="col-lg-2 pull-right">
-                <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
-                  NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
-                -->
-                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{damageReport.reportDamageCamunda()}" />
-                    <h:messages style="color:red;margin:8px;" />
-            </div>
-        </div> <!-- /. END ROW -->
-      </div> <!-- /. END Jumpotron ROW -->
-    </div> <!-- /. END CONTAINER -->
-</h:form>
+                        <b:panelGrid columns="2" cellpadding="5" cellspacing="1">
+                            <h:outputLabel for="party1Firstname" value="First name:" />
+                            <b:inputText id="party1Firstname" value="#{damageReport.party1Firstname}" required="true" />
+
+                            <h:outputLabel for="party1Surname" value="Surname:" />
+                            <b:inputText id="party1Surname" value="#{damageReport.party1Surname}" required="true" />
+
+                            <h:outputLabel for="party1Email" value="E-Mail:" />
+                            <b:inputText id="party1Email" value="#{damageReport.party1EMail}" required="false" />
+
+                            <h:outputLabel for="party1PhoneNumber" value="Phone number:" />
+                            <b:inputText id="party1PhoneNumber" value="#{damageReport.party1Phone}" required="true" />
+
+                            <h:outputLabel for="party1Street" value="Street:" />
+                            <b:inputText id="party1Street" value="#{damageReport.party1Street}" required="true" />
+
+                            <h:outputLabel for="party1HouseNo" value="House number:" />
+                            <b:inputText id="party1HouseNo" value="#{damageReport.party1HouseNo}" required="true" />
+
+                            <h:outputLabel for="party1ZIP" value="Post code:" />
+                            <b:inputText id="party1ZIP" value="#{damageReport.party1ZIP}" required="true" />
+
+                            <h:outputLabel for="party1City" value="City:" />
+                            <b:inputText id="party1City" value="#{damageReport.party1City}" required="true" />
+
+                            <h:outputLabel for="party1Country" value="Country:" />
+                            <b:inputText id="party1Country" value="#{damageReport.party1Country}" required="true" />
+
+                            <h:outputLabel for="party1Birthday" value="Birthday:" />
+                            <b:inputText id="party1Birthday" value="#{damageReport.party1Birthday}" required="true" >
+                                <f:convertDateTime pattern="dd-mm-yyyy" />
+                            </b:inputText>
+                        </b:panelGrid>
+
+                        <h4><label>Other information</label></h4>
+                        <b:panelGrid columns="2" cellpadding="5" cellspacing="1">
+                            <h:outputLabel for="party1Company" value="Employer:" />
+                            <b:inputText id="party1Company" value="#{damageReport.party1Company}" required="false" />
+                            <h:outputLabel for="party1Insurance" value="Insurance:" />
+                            <b:inputText id="party1Insurance" value="#{damageReport.party1Insurance}" required="false" />
+                        </b:panelGrid>
+
+                    </div> <!-- /. END COL -->
+                </div> <!-- /. END Col-sm-8 -->
+            </div> <!-- /. END row-->
+
+            <div class="row ">
+                <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
+                    <div class="col-lg-10">
+                        <p class="p-bvis">Please submit your damage details</p>
+                    </div>
+                    <div class="col-lg-2 pull-right">
+                        <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{damageReport.reportDamageCamunda()}" />
+                    </div>
+                    <div class="col-lg-12">
+                        <h:messages class="error-message-bvis"/>
+                    </div>
+                </div> <!-- /. END Col-sm8 jumbotron-bvis-2 -->
+            </div> <!-- /. END ROW Jumbotron-->
+        </div> <!-- /. END CONTAINER -->
+    </h:form>
+
 
 </ui:define>
 </ui:composition>
