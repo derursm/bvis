@@ -69,11 +69,12 @@
 			<artifactId>resteasy-client</artifactId>
 			<version>3.0.9.Final</version>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>de.larmic.butterfaces</groupId>
-			<artifactId>components</artifactId>
-			<version>2.0.0</version>
+			<groupId>net.bootsfaces</groupId>
+			<artifactId>bootsfaces</artifactId>
+			<version>0.9.1</version>
+			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
@@ -85,6 +86,12 @@
 			<groupId>org.ocpsoft.rewrite</groupId>
 			<artifactId>rewrite-config-prettyfaces</artifactId>
 			<version>2.0.12.Final</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.0.6</version>
 		</dependency>
 
 	</dependencies>

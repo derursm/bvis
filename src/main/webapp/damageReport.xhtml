@@ -1,174 +1,101 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:h="http://xmlns.jcp.org/jsf/html"
-  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-  xmlns:b="http://butterfaces.org/components"
-  xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/resources/default.xhtml"
+	lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-
-<h:body>
-<ui:composition template="/resources/default.xhtml">
-<ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
-<ui:define name="content">
-      <!-- Fixed Navigation -->
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-          <div class="container">
-              <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="/bvis/index.xhtml">BVIS Luxury Car Rental</a>
-                  <ul class="nav navbar-nav navbar-left">
-                	<h:panelGroup rendered ="#{!webSession.loggedIn}">
-                    <li><a href="/bvis/placeInquiry.xhtml">Car Rental</a></li>
-                    <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
-                    </h:panelGroup>
-                    <h:panelGroup rendered ="#{webSession.loggedIn}">
-                    <li><a href="/bvis/placeInquiryLoggedIn.xhtml">Car Rental</a></li>
-                    <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
-                    <li><a href="/bvis/listOrders.xhtml">Orders overview</a></li>
-                    </h:panelGroup>
-                  </ul>
-              </div>
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav navbar-right">
-                      <li><a href="#">About</a></li>
-                      <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
-                          <ul class="dropdown-menu">
-                              <li><a href="#">Claim Report</a></li>
-                              <li><a href="#">Pick Up/ Drop Service</a></li>
-                              <li><a href="#">Long Term Rental Consulting</a></li>
-                          </ul>
-                      </li>
-                      <li><a href="#">Contact</a></li>
-                    <h:panelGroup rendered ="#{!webSession.loggedIn}">
-                    	<li><a href="login.xhtml">Login</a></li>
-                    	<li><a href="registration.xhtml">Register</a></li>
-                    </h:panelGroup>
-                    <h:panelGroup rendered ="#{webSession.loggedIn}">
-                    	<li><h:form><h:commandLink action="#{webSession.logout}">Logout</h:commandLink></h:form></li>
-                    </h:panelGroup>
-                  </ul>
-              </div>
-          </div>
-      </nav>
-
-    <!-- /. END NAVIGATION -->
+	<ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
+	<ui:define name="content">
+      
     <div class="container">
         <header class="page-header">
-            <div class="col-lg-12 ">
+            <div class="col-lg-12">
                 <h1 class="bvis-h1"> So sad that this happend! <small>Send us your damage report</small></h1>
             </div>
         </header>
     </div>
 
    <h:form id="submitForm">
-    <div class="container">
+    <div class="container form-inline">
         <div id="bg-img">
-        <img src="/bvis/resources/img/ny-street.jpg" alt="" />
+        	<img src="/bvis/resources/img/ny-street-bw.jpg" alt="" />
         </div>
 
-        <div class="row">
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
-            <div class="col-sm-16">
-            <div class="col-sm-6">
-                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                    <h3><label>Damage report</label></h3>
-                    <h:panelGroup />
-                    <label class="label-bvis" for="orderID">Order ID:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="orderID" value="#{damageReport.orderID}" required="true" />
-                    
-                    <label class="label-bvis" for="licensePlate">Vehicle identification number:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="licensePlate" value="#{damageReport.vehicleID}" required="true" />
+		<div class="row">
+			<div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+			<div class="col-sm-6">
+			<h3><label>Damage report</label></h3>
+			             
+			<b:panelGrid col-spans="5,7" cellpadding="5">
+                <h:outputLabel for="orderID" value="Order ID:*" />
+				<b:inputText id="orderID" value="#{damageReport.orderID}" required="true" />
+				
+                <h:outputLabel for="licensePlate" value="Vehicle identification number:*" />
+				<b:inputText id="licensePlate" value="#{damageReport.vehicleID}" required="true" />
+				
+                <h:outputLabel for="damageDate" value="Damage date:*" />
+				<b:dateTimePicker id="damageDate" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{damageReport.damageDate}" required="true" />
+				 
+                <h:outputLabel for="towingServiceNeeded" value="Towing service needed?:" />
+				<b:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}"/>
+				
+                <h:outputLabel for="damageDescription" value="Damage description:*" />
+				<b:inputText id="damageDescription" value="#{damageReport.damageDescription}" required="true" />
 
-               		<label class="label-bvis"  for="damageDate">Damage date:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="damageDate" value="#{damageReport.damageDate}" required="true" >
-                        <f:convertDateTime pattern="dd-mm-yyyy" />
-                    </h:inputText>
-                    
-                  	<label class="label-bvis"  for="towingServiceNeeded">Towing service needed?</label>
-                  	<h:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}"/>
-                    
-                    <label class="label-bvis" for="country">Damage description:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="damageDescription" value="#{damageReport.damageDescription}" required="true" />
+			</b:panelGrid>
 
-                </h:panelGrid>
+			</div> <!-- /. END COL -->
 
-            </div> <!-- /. END COL -->
-                
-            <div class="col-sm-6">
-                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                    <h3><label>Other involved party</label></h3>
-                    <h4><label>Personal information</label></h4>
-                    <h:panelGroup />
-                    <label class="label-bvis" for="party1Firstname">First name:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Firstname" value="#{damageReport.party1Firstname}" required="true" />
-                    
-                    <label class="label-bvis" for="party1Surname">Surname:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Surname" value="#{damageReport.party1Surname}" required="true" />
-                    
-                    <label class="label-bvis" for="party1Email">EMail:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Email" value="#{damageReport.party1EMail}" required="false" />
-                    
-                    <label class="label-bvis" for="party1PhoneNumber">Phone number:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1PhoneNumber" value="#{damageReport.party1Phone}" required="true" />
-                    
-                    <label class="label-bvis" for="party1Street">Street:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Street" value="#{damageReport.party1Street}" required="true" />
-                    
-                    <label class="label-bvis" for="party1HouseNo">House number:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1HouseNo" value="#{damageReport.party1HouseNo}" required="true" />
-                    
-                    <label class="label-bvis" for="party1ZIP">Post code:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1ZIP" value="#{damageReport.party1ZIP}" required="true" />
-                    
-                    <label class="label-bvis" for="party1City">City:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1City" value="#{damageReport.party1City}" required="true" />
-                    
-                    <label class="label-bvis" for="party1Country">Country:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Country" value="#{damageReport.party1Country}" required="true" />
+			<div class="col-sm-6">
+				<h3><label>Other involved party</label></h3>
+				<h4><label>Personal information</label></h4>
+				<b:panelGrid col-spans="5,7" cellpadding="5">
+					<h:outputLabel for="firstname" value="Firstname:*" />
+					<b:inputText id="firstname" value="#{damageReport.party1Firstname}" required="true" />
+					
+	                <h:outputLabel for="surname" value="Surname:*" />
+					<b:inputText id="surname" value="#{damageReport.party1Surname}" required="true" />
+					
+	                <h:outputLabel for="email" value="E-mail:*" />
+					<b:inputText id="email" value="#{damageReport.party1EMail}" required="true" />
+					
+	                <h:outputLabel for="phoneNumber" value="Phone number:*" />
+					<b:inputText id="phoneNumber" value="#{damageReport.party1Phone}" required="true" />
+					
+	                <h:outputLabel for="street" value="Street:*" />
+					<b:inputText id="street" value="#{damageReport.party1Street}" required="true" />
+					
+	                <h:outputLabel for="houseNumber" value="House number:*" />
+					<b:inputText id="houseNumber" value="#{damageReport.party1HouseNo}" required="true" />
+					
+	                <h:outputLabel for="postcode" value="Postcode:*" />
+					<b:inputText id="postcode" value="#{damageReport.party1ZIP}" required="true" />
+					
+	                <h:outputLabel for="city" value="City:*" />
+					<b:inputText id="city" value="#{damageReport.party1City}" required="true" />
+					
+	                <h:outputLabel for="country" value="Country:*" />
+					<b:inputText id="country" value="#{damageReport.party1Country}" required="true" />
+					
+	                <h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
+					<b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{damageReport.party1Birthday}" required="true" />
+					
+				</b:panelGrid>
+				<h4><label>Other information</label></h4>
+				<b:panelGrid col-spans="5,7" cellpadding="5">
+					
+	                <h:outputLabel for="party1Company" value="Employer:" />
+					<b:inputText id="party1Company" value="#{damageReport.party1Company}" required="false" />
+					
+	                <h:outputLabel for="party1Insurance" value="Insurance:" />
+					<b:inputText id="party1Insurance" value="#{damageReport.party1Insurance}" required="false" />
+				</b:panelGrid>
 
-               		<label class="label-bvis"  for="party1Birthday">Birthday:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Birthday" value="#{damageReport.party1Birthday}" required="true" >
-                        <f:convertDateTime pattern="dd-mm-yyyy" />
-                    </h:inputText>
-                    
-                    <h4><label>Other information</label></h4>
-                    <h:panelGroup />
-                    <label class="label-bvis" for="party1Company">Employer:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Company" value="#{damageReport.party1Company}" required="false" />
-                    <label class="label-bvis" for="party1Insurance">Insurance:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Insurance" value="#{damageReport.party1Insurance}" required="false" />
-
-                </h:panelGrid>
-
-            </div> <!-- /. END COL -->
-           </div> <!-- /. END Col-sm-8 -->
-           </div> <!-- /. END Col-sm-8 OPACITY-->
-        </div> <!-- /. END Upper ROW -->
-
-    </div>
-      <!-- /. END CONTAINER -->
+			</div> <!-- /. END COL -->
+			</div> <!-- /. END Col-sm-8 -->
+		</div> <!-- /. END Upper ROW -->
+	</div> <!-- /. END CONTAINER -->
 
     <div class="container bvis-padding">
         <div class="row ">
@@ -192,6 +119,3 @@
 
 </ui:define>
 </ui:composition>
-</h:body>
-
-</html>

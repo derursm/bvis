@@ -2,12 +2,9 @@ package org.camunda.bpm.bvis;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -42,14 +39,7 @@ import org.camunda.bpm.engine.filter.Filter;
 import org.camunda.bpm.engine.identity.Group;
 import org.camunda.bpm.engine.identity.User;
 import org.camunda.bpm.engine.impl.persistence.entity.AuthorizationEntity;
-import org.camunda.bpm.engine.impl.util.ClockUtil;
 import org.camunda.bpm.engine.task.TaskQuery;
-import org.camunda.bpm.engine.repository.ProcessDefinition;
-import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.task.Task;
-
-import static org.camunda.bpm.engine.variable.Variables.createVariables;
 
 import static org.camunda.bpm.engine.authorization.Authorization.ANY;
 import static org.camunda.bpm.engine.authorization.Authorization.AUTH_TYPE_GRANT;
@@ -111,7 +101,18 @@ public class ApplicationInitilizer {
 		
 		// Cars
 		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123456", CarType.car, true));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123456", CarType.car, true));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123457", CarType.car, true));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123458", CarType.car, true));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123459", CarType.car, true));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123460", CarType.car, true));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123461", CarType.car, true));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123462", CarType.car, true));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123463", CarType.car, true));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123464", CarType.car, true));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123465", CarType.car, true));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123466", CarType.car, true));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123467", CarType.car, true));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123468", CarType.car, true));
 		Car car = new Car("BMW", 2000, "Diesel", "5er BMW", 210, "abc", "MS1", CarType.kombi, true);
 		carService.create(car);
 		
@@ -155,9 +156,6 @@ public class ApplicationInitilizer {
 		addUsersToGroups();
 		adjustAuthorizations();
 		createFilters();
-		
-	    //startContractingInstances(null, car.getId(), loc.getStoreID());
-	    //startClaimInstances(null); */
 	}
 	
 	private void createCamundaUsers(){
@@ -358,120 +356,4 @@ public class ApplicationInitilizer {
 				.setOwner("admin").setQuery(query);
 		filterService.saveFilter(allTasksFilter);
 	}
-	
-	private void startContractingInstances(Integer version, long carId, long locationId) {
-
-	    ProcessDefinitionQuery processDefinitionQuery = engine
-	      .getRepositoryService()
-	      .createProcessDefinitionQuery()
-	      .processDefinitionKey("contracting");
-
-	    if (version != null) {
-	      processDefinitionQuery.processDefinitionVersion(version);
-	    }
-	    else {
-	      processDefinitionQuery.latestVersion();
-	    }
-
-	    ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
-
-	    
-	    // process instance 1
-	    /*engine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
-	        .putValue("creditor", "Great Pizza for Everyone Inc.")
-	        .putValue("customerFirstname", "Erik")
-			.putValue("customerSurname", "Weisz")
-			.putValue("customerCompanyName", "")
-			.putValue("customerEmail", "ErikWeisz@cuvox.de")
-			.putValue("customerPhoneNumber", "06096 49 86 90")
-			.putValue("customerDateOfBirth", new Date("01-03-1990") )
-			.putValue("customerStreet", "Konstanzer Strasse")
-			.putValue("customerHouseNumber", "74")
-			.putValue("customerPostcode", "63831")
-			.putValue("customerCity", "Wiesen")
-			.putValue("customerCountry", "Germany")
-			.putValue("fleet", false)
-			.putValue("pickUpDate", new Date())
-			.putValue("returnDate", new Date())
-			.putValue("pickUpLoc", locationId)
-			.putValue("returnStore", locationId)
-			.putValue("insuranceType", "total")
-			.putValue("car", carId)
-			.putValue("inquiryText", ""));
-			
-	    // process instance 2
-	    /*try {
-	      Calendar calendar = Calendar.getInstance();
-	      calendar.add(Calendar.DAY_OF_MONTH, -14);
-	      ClockUtil.setCurrentTime(calendar.getTime());
-
-	      ProcessInstance pi = processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
-	          .putValue("creditor", "Bobby's Office Supplies")
-	          .putValue("amount", 900.00d)
-	          .putValue("invoiceCategory", "Misc")
-	          .putValue("invoiceNumber", "BOS-43934"));
-
-	      calendar.add(Calendar.DAY_OF_MONTH, 14);
-	      ClockUtil.setCurrentTime(calendar.getTime());
-
-	      engine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.CAMUNDA_ADMIN));
-	      Task task = processEngine.getTaskService().createTaskQuery().processInstanceId(pi.getId()).singleResult();
-	      processEngine.getTaskService().claim(task.getId(), "demo");
-	      processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", true));
-	    }
-	    finally{
-	      ClockUtil.reset();
-	      processEngine.getIdentityService().clearAuthentication();
-	    }*/
-	  } 
-	
-	private void startClaimInstances(Integer version) {
-
-	    ProcessDefinitionQuery processDefinitionQuery = engine
-	      .getRepositoryService()
-	      .createProcessDefinitionQuery()
-	      .processDefinitionKey("claimHandling");
-
-	    if (version != null) {
-	      processDefinitionQuery.processDefinitionVersion(version);
-	    }
-	    else {
-	      processDefinitionQuery.latestVersion();
-	    }
-
-	    ProcessDefinition processDefinition = processDefinitionQuery.singleResult();
-
-	    
-	    // process instance 1
-	    engine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
-	        .putValue("creditor", "Great Pizza for Everyone Inc.")
-	        .putValue("amount", 30.00d)
-	        .putValue("invoiceCategory", "Travel Expenses")
-	        .putValue("invoiceNumber", "GPFE-23232323"));
-	    /*
-	    // process instance 2
-	    try {
-	      Calendar calendar = Calendar.getInstance();
-	      calendar.add(Calendar.DAY_OF_MONTH, -14);
-	      ClockUtil.setCurrentTime(calendar.getTime());
-
-	      ProcessInstance pi = processEngine.getRuntimeService().startProcessInstanceById(processDefinition.getId(), createVariables()
-	          .putValue("creditor", "Bobby's Office Supplies")
-	          .putValue("amount", 900.00d)
-	          .putValue("invoiceCategory", "Misc")
-	          .putValue("invoiceNumber", "BOS-43934"));
-
-	      calendar.add(Calendar.DAY_OF_MONTH, 14);
-	      ClockUtil.setCurrentTime(calendar.getTime());
-
-	      engine.getIdentityService().setAuthentication("demo", Arrays.asList(Groups.CAMUNDA_ADMIN));
-	      Task task = processEngine.getTaskService().createTaskQuery().processInstanceId(pi.getId()).singleResult();
-	      processEngine.getTaskService().claim(task.getId(), "demo");
-	      processEngine.getTaskService().complete(task.getId(), createVariables().putValue("approved", true));
-	    }
-	    finally{
-	      ClockUtil.reset();
-	      processEngine.getIdentityService().clearAuthentication();
-	    }*/
-	  } 
 }
