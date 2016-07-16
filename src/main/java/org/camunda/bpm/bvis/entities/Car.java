@@ -43,7 +43,7 @@ public class Car implements Serializable {
 	@NotNull
 	protected CarType type;
 	@NotNull
-	protected boolean returned;
+	protected CarStatus carStatus;
 	protected PickUpLocation currentLocation;
 
 	@ManyToMany(cascade = {DETACH,MERGE,PERSIST,REFRESH}, mappedBy = "cars")
@@ -51,7 +51,7 @@ public class Car implements Serializable {
 	
 	public Car(){}
 	
-	public Car(String brand, int constructionYear, String fuelType, String model, int ps, String registrationNumber, String vehicleIdentificationNumber, CarType type, boolean returned){
+	public Car(String brand, int constructionYear, String fuelType, String model, int ps, String registrationNumber, String vehicleIdentificationNumber, CarType type, CarStatus carStatus){
 		this.brand = brand;
 		this.constructionYear = constructionYear;
 		this.fuelType = fuelType;
@@ -60,7 +60,7 @@ public class Car implements Serializable {
 		this.registrationNumber = registrationNumber;
 		this.vehicleIdentificationNumber = vehicleIdentificationNumber;
 		this.type = type;
-		this.returned = returned;
+		this.carStatus = carStatus;
 		
 	}
 	
@@ -101,11 +101,11 @@ public class Car implements Serializable {
 		this.ps = ps;
 	}
 	
-	public boolean isReturned() {
-		return returned;
+	public CarStatus isReturned() {
+		return carStatus;
 	}
-	public void setRented(boolean returned) {
-		this.returned = returned;
+	public void setRented(CarStatus carStatus) {
+		this.carStatus = carStatus;
 	}
 	public PickUpLocation getCurrentLocation() {
 		return currentLocation;
