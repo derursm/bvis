@@ -1,22 +1,17 @@
 package org.camunda.bpm.bvis.web;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.ConversationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import org.camunda.bpm.bvis.ejb.ContractHandler;
 import org.camunda.bpm.bvis.ejb.beans.CarServiceBean;
@@ -151,4 +146,5 @@ public class OrderBackingBean {
 
 		
 	}
+	
 }
