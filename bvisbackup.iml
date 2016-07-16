@@ -92,7 +92,7 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.2.5" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
     <orderEntry type="library" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
-    <orderEntry type="library" name="Maven: de.larmic.butterfaces:components:2.0.0" level="project" />
+    <orderEntry type="library" name="Maven: net.bootsfaces:bootsfaces:0.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-servlet:2.0.12.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-config-prettyfaces:2.0.12.Final" level="project" />
     <orderEntry type="library" name="Maven: org.ocpsoft.rewrite:rewrite-annotations-impl:2.0.12.Final" level="project" />
