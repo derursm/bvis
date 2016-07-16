@@ -12,7 +12,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.camunda.bpm.bvis.entities.Car;
+import org.camunda.bpm.bvis.entities.CarStatus;
 import org.camunda.bpm.bvis.entities.ClaimInsurance;
+
+import com.itextpdf.text.List;
 
 @Stateless
 public class CarServiceBean {
@@ -51,5 +54,20 @@ public class CarServiceBean {
 		TypedQuery<Car> query = em.createQuery(querystring, Car.class);
 		query.setParameter("vehicleIdentificationNumber", vehicleIdentificationNumber);
 		return query.getResultList().get(0);
+	}
+	
+	public Car getAvailableCarByModel(String model) {
+		final String querystring = "SELECT c FROM Car c WHERE c.model = :model AND c.carStatus = :carStatus";
+		TypedQuery<Car> query = em.createQuery(querystring, Car.class);
+		query.setParameter("model", model);
+		query.setParameter("carStatus", CarStatus.available);
+		
+		Collection <Car> res = query.getResultList();
+		if (res.toArray().length == 0) {
+			return null;
+		}
+		else { 
+			return query.getResultList().get(0);
+		}
 	}
 }

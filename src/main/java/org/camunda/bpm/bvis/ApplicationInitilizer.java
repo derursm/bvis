@@ -101,19 +101,19 @@ public class ApplicationInitilizer {
 		pickupLocationService.create(loc);
 		
 		// Cars
-		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123456", CarType.car, CarStatus.available));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123456", CarType.car, CarStatus.inRepair));
 		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123457", CarType.car, CarStatus.available));
 		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123458", CarType.car, CarStatus.available));
 		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123459", CarType.car, CarStatus.available));
 		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123460", CarType.car, CarStatus.available));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123461", CarType.car, CarStatus.available));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123462", CarType.car, CarStatus.available));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123463", CarType.car, CarStatus.available));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123464", CarType.car, CarStatus.available));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123465", CarType.car, CarStatus.available));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123466", CarType.car, CarStatus.available));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123467", CarType.car, CarStatus.available));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123468", CarType.car, CarStatus.available));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123461", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123462", CarType.car, CarStatus.rented));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123463", CarType.car, CarStatus.rented));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123464", CarType.car, CarStatus.rented));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123465", CarType.car, CarStatus.rented));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123466", CarType.car, CarStatus.rented));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123467", CarType.car, CarStatus.rented));
+		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123468", CarType.car, CarStatus.rented));
 		Car car = new Car("BMW", 2000, "Diesel", "5er BMW", 210, "abc", "MS1", CarType.kombi, CarStatus.available);
 		carService.create(car);
 		

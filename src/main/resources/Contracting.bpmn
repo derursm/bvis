@@ -297,7 +297,7 @@
       <incoming>sid-D9D4A290-2855-4F50-9F68-5A144AA1593B</incoming>
     </endEvent>
     <sequenceFlow id="sid-D9D4A290-2855-4F50-9F68-5A144AA1593B" name="" sourceRef="sid-A37C4B31-B229-4BE0-92C2-BBE4981622BF" targetRef="sid-85049955-5FB4-4372-A0E4-27B0E5B62374" />
-    <serviceTask id="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76" name="Handle requirements" implementation="##WebService" camunda:expression="${true}">
+    <serviceTask id="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76" name="Handle requirements" implementation="##WebService" camunda:expression="${contractHandler.handleRequirements(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -403,10 +403,10 @@
       <outgoing>sid-2D52B35D-7330-4A42-A1B6-82C1B445E8A1</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="sid-B7CF4672-2886-4EE9-9C4D-340ABD0E8882" name="Requirements fullfilable" isImmediate="true" sourceRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" targetRef="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7">
-      <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${contractHandler.getOrder(orderId).cars.iterator().next().isReturned().toString() == "available"}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-2D52B35D-7330-4A42-A1B6-82C1B445E8A1" name="Requirements not fulfillable" isImmediate="true" sourceRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" targetRef="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D">
-      <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${contractHandler.getOrder(orderId).cars.iterator().next().isReturned().toString() != "available"}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-4930D20E-DD03-40C8-98CD-5C9227D03258" name="" isImmediate="true" sourceRef="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76" targetRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" />
     <sendTask id="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" name="Send &#10;rental request confirmation" implementation="##WebService" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}">

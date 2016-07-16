@@ -251,4 +251,12 @@ public class RentalOrder implements Serializable {
 	public int getDiscount() {
 		return this.discount;
 	}	
+	
+	public void addCar(Car car) {
+		cars.add(car);
+	}
+	
+	public void removeCar(Car car) {
+		cars.remove(car);
+	}
 }

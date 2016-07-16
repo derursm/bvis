@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.camunda.bpm.bvis.ejb.ContractHandler;
 import org.camunda.bpm.bvis.ejb.beans.CarServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.CustomerServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.InsuranceServiceBean;
@@ -77,7 +78,7 @@ public class PlaceInquiryBackingBean {
 	private CarServiceBean carService;
 
 	@Inject
-	private BusinessProcess businessProcess;
+	private ContractHandler contractHandler;
 
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
@@ -332,17 +333,11 @@ public class PlaceInquiryBackingBean {
 
 	public void recalculatePrice() {
 
-		// calculate price for rent service
-		Long diff = returnDate.getTime() - pickupDate.getTime();
-		long rentDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-
 		Car carToBook = carService.getCar(Long.parseLong(car));
-		long price = (long) CarPriceMap.getPrice(carToBook.getType());
-		priceCars = rentDays * price;
+		priceCars = contractHandler.calcCarPrice(carToBook, returnDate, pickupDate);
 
-		// calculate price for insurance
 		InsuranceType bookingInsuranceType = InsuranceType.valueOf(insuranceType);
-		priceInsurance_expected = calcInsurancePrice(carToBook, bookingInsuranceType);
+		priceInsurance_expected = contractHandler.calcInsurancePrice(carToBook, bookingInsuranceType);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String refreshpage = fc.getViewRoot().getViewId();
@@ -350,24 +345,6 @@ public class PlaceInquiryBackingBean {
 		UIViewRoot UIV = ViewH.createView(fc, refreshpage);
 		UIV.setViewId(refreshpage);
 		fc.setViewRoot(UIV);
-
-	}
-
-	public double calcInsurancePrice(Car carToBook, InsuranceType bookingInsuranceType) {
-
-		double carTypeFactor = InsurancePriceMap.getInsuranceFactor(carToBook.getType());
-		double insuranceTypeFactor = InsurancePriceMap.getInsuranceFactor(bookingInsuranceType);
-
-		int ps = carToBook.getPs();
-		int current_year = Calendar.getInstance().get(Calendar.YEAR);
-		int construction_year = carToBook.getConstructionYear();
-		int year_diff = current_year - construction_year;
-
-		double priceInsurance_expected = (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + 20
-				- Math.pow(1.2, year_diff);
-		DecimalFormat df = new DecimalFormat("#.##");
-
-		return Double.valueOf(df.format(priceInsurance_expected));
 
 	}
 
