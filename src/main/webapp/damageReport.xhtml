@@ -9,113 +9,104 @@
 	<ui:define name="content">
       
     <div class="container">
-        <header class="page-header">
+        <header class="container">
             <div class="col-lg-12">
                 <h1 class="bvis-h1"> So sad that this happend! <small>Send us your damage report</small></h1>
             </div>
         </header>
     </div>
 
-   <h:form id="submitForm">
-    <div class="container form-inline">
-        <div id="bg-img">
-        	<img src="/bvis/resources/img/ny-street-bw.jpg" alt="" />
-        </div>
+	<h:form id="submitForm">
+		<div class="container form-inline" id="bg-img">
+			<div class="row">
+				<div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+					<div class="col-sm-6">
+						<h3><label>Damage report</label></h3>
 
-		<div class="row">
-			<div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
-			<div class="col-sm-6">
-			<h3><label>Damage report</label></h3>
-			             
-			<b:panelGrid col-spans="5,7" cellpadding="5">
-                <h:outputLabel for="orderID" value="Order ID:*" />
-				<b:inputText id="orderID" value="#{damageReport.orderID}" required="true" />
-				
-                <h:outputLabel for="licensePlate" value="Vehicle identification number:*" />
-				<b:inputText id="licensePlate" value="#{damageReport.vehicleID}" required="true" />
-				
-                <h:outputLabel for="damageDate" value="Damage date:*" />
-				<b:dateTimePicker id="damageDate" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{damageReport.damageDate}" required="true" />
-				 
-                <h:outputLabel for="towingServiceNeeded" value="Towing service needed?:" />
-				<b:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}"/>
-				
-                <h:outputLabel for="damageDescription" value="Damage description:*" />
-				<b:inputText id="damageDescription" value="#{damageReport.damageDescription}" required="true" />
+						<b:panelGrid col-spans="5,7" cellpadding="5">
+							<h:outputLabel for="orderID" value="Order ID:*" />
+							<b:inputText id="orderID" value="#{damageReport.orderID}" required="true" />
 
-			</b:panelGrid>
+							<h:outputLabel for="licensePlate" value="Vehicle identification number:*" />
+							<b:inputText id="licensePlate" value="#{damageReport.vehicleID}" required="true" />
 
-			</div> <!-- /. END COL -->
+							<h:outputLabel for="damageDate" value="Damage date:*" />
+							<b:dateTimePicker id="damageDate" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{damageReport.damageDate}" required="true" />
 
-			<div class="col-sm-6">
-				<h3><label>Other involved party</label></h3>
-				<h4><label>Personal information</label></h4>
-				<b:panelGrid col-spans="5,7" cellpadding="5">
-					<h:outputLabel for="firstname" value="Firstname:*" />
-					<b:inputText id="firstname" value="#{damageReport.party1Firstname}" required="true" />
-					
-	                <h:outputLabel for="surname" value="Surname:*" />
-					<b:inputText id="surname" value="#{damageReport.party1Surname}" required="true" />
-					
-	                <h:outputLabel for="email" value="E-mail:*" />
-					<b:inputText id="email" value="#{damageReport.party1EMail}" required="true" />
-					
-	                <h:outputLabel for="phoneNumber" value="Phone number:*" />
-					<b:inputText id="phoneNumber" value="#{damageReport.party1Phone}" required="true" />
-					
-	                <h:outputLabel for="street" value="Street:*" />
-					<b:inputText id="street" value="#{damageReport.party1Street}" required="true" />
-					
-	                <h:outputLabel for="houseNumber" value="House number:*" />
-					<b:inputText id="houseNumber" value="#{damageReport.party1HouseNo}" required="true" />
-					
-	                <h:outputLabel for="postcode" value="Postcode:*" />
-					<b:inputText id="postcode" value="#{damageReport.party1ZIP}" required="true" />
-					
-	                <h:outputLabel for="city" value="City:*" />
-					<b:inputText id="city" value="#{damageReport.party1City}" required="true" />
-					
-	                <h:outputLabel for="country" value="Country:*" />
-					<b:inputText id="country" value="#{damageReport.party1Country}" required="true" />
-					
-	                <h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
-					<b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{damageReport.party1Birthday}" required="true" />
-					
-				</b:panelGrid>
-				<h4><label>Other information</label></h4>
-				<b:panelGrid col-spans="5,7" cellpadding="5">
-					
-	                <h:outputLabel for="party1Company" value="Employer:" />
-					<b:inputText id="party1Company" value="#{damageReport.party1Company}" required="false" />
-					
-	                <h:outputLabel for="party1Insurance" value="Insurance:" />
-					<b:inputText id="party1Insurance" value="#{damageReport.party1Insurance}" required="false" />
-				</b:panelGrid>
+							<h:outputLabel for="towingServiceNeeded" value="Towing service needed?:" />
+							<b:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}"/>
 
-			</div> <!-- /. END COL -->
-			</div> <!-- /. END Col-sm-8 -->
-		</div> <!-- /. END Upper ROW -->
-	</div> <!-- /. END CONTAINER -->
+							<h:outputLabel for="damageDescription" value="Damage description:*" />
+							<b:inputText id="damageDescription" value="#{damageReport.damageDescription}" required="true" />
 
-    <div class="container bvis-padding">
-        <div class="row ">
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
-            <div class="col-lg-10">
-                <p class="p-bvis">Please submit your damage details</p>
-            </div>
-            <div class="col-lg-2 pull-right">
-                <!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
-                  NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".
-                -->
-                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{damageReport.reportDamage()}" onclick="window.location = '/bvis/index.xhtml';"/>
-            </div>
-                <div class="col-lg-10">
-                    <h:messages class="error-message"/>
-                </div>
-        </div> <!-- /. END ROW -->
-      </div> <!-- /. END Jumpotron ROW -->
-    </div> <!-- /. END CONTAINER -->
-</h:form>
+						</b:panelGrid>
+					</div> <!-- /. END COL -->
+
+					<div class="col-sm-6">
+						<h3><label>Other involved party</label></h3>
+						<h4><label>Personal information</label></h4>
+						<b:panelGrid col-spans="5,7" cellpadding="5">
+							<h:outputLabel for="firstname" value="Firstname:*" />
+							<b:inputText id="firstname" value="#{damageReport.party1Firstname}" required="true" />
+
+							<h:outputLabel for="surname" value="Surname:*" />
+							<b:inputText id="surname" value="#{damageReport.party1Surname}" required="true" />
+
+							<h:outputLabel for="email" value="E-mail:*" />
+							<b:inputText id="email" value="#{damageReport.party1EMail}" required="true" />
+
+							<h:outputLabel for="phoneNumber" value="Phone number:*" />
+							<b:inputText id="phoneNumber" value="#{damageReport.party1Phone}" required="true" />
+
+							<h:outputLabel for="street" value="Street:*" />
+							<b:inputText id="street" value="#{damageReport.party1Street}" required="true" />
+
+							<h:outputLabel for="houseNumber" value="House number:*" />
+							<b:inputText id="houseNumber" value="#{damageReport.party1HouseNo}" required="true" />
+
+							<h:outputLabel for="postcode" value="Postcode:*" />
+							<b:inputText id="postcode" value="#{damageReport.party1ZIP}" required="true" />
+
+							<h:outputLabel for="city" value="City:*" />
+							<b:inputText id="city" value="#{damageReport.party1City}" required="true" />
+
+							<h:outputLabel for="country" value="Country:*" />
+							<b:inputText id="country" value="#{damageReport.party1Country}" required="true" />
+
+							<h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
+							<b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{damageReport.party1Birthday}" required="true" />
+
+						</b:panelGrid>
+						<h4><label>Other information</label></h4>
+						<b:panelGrid col-spans="5,7" cellpadding="5">
+
+							<h:outputLabel for="party1Company" value="Employer:" />
+							<b:inputText id="party1Company" value="#{damageReport.party1Company}" required="false" />
+
+							<h:outputLabel for="party1Insurance" value="Insurance:" />
+							<b:inputText id="party1Insurance" value="#{damageReport.party1Insurance}" required="false" />
+						</b:panelGrid>
+					</div> <!-- END Col-sm-6 -->
+				</div> <!-- /. END Col-sm-8 -->
+			</div> <!-- /. END ROW Forms-->
+
+			<div class="row ">
+				<div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
+					<div class="col-lg-10">
+						<p class="p-bvis">Please submit your damage details</p>
+					</div>
+					<div class="col-lg-2 pull-right">
+						<!-- The button starts a new process instance. This ends the conversation and redirects us to the tasklist.
+						  NOTE: Syntax is different when working on user task forms, see file "approveLoanRequest.xhtml".-->
+						<h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{damageReport.reportDamage()}" onclick="window.location = '/bvis/index.xhtml';"/>
+					</div>
+					<div class="col-lg-12">
+						<h:messages class="error-message-bvis"/>
+					</div>
+				</div> <!-- /. END Col-sm8 jumbotron-bvis-2 -->
+			</div> <!-- /. END ROW Jumbotron-->
+	</div> <!-- / END CONTAINER Background Forms -->
+	</h:form>
 
 </ui:define>
 </ui:composition>

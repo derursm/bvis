@@ -9,21 +9,15 @@
 	<ui:define name="content">
 
 	<div class="container">
-		<div class="container">
-			<header class="page-header">
-				<div class="col-lg-12 ">
-					<h1 class="bvis-h1"> Place your inquiry <small>Moving with elegance has never been easier</small></h1>
-				</div>
-			</header>
-		</div>
-	</div> <!-- / END CONTAINER -->
+        <header class="row">
+            <div class="col-lg-12 ">
+                <h1 class="bvis-h1"> Place your inquiry <small>Moving with elegance has never been easier</small></h1>
+            </div>
+        </header>
+    </div>
 
-	<h:form id="submitForm">
-	<div class="container form-inline">
-        <div id="bg-img">
-            <img src="/bvis/resources/img/ny-street-bw.jpg" alt="" />
-        </div>
-
+    <h:form id="submitForm">
+    <div class="container form-inline" id="bg-img">
         <div class="row">
             <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
 			<div class="col-sm-6">
@@ -63,7 +57,7 @@
                 <h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
 				<b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{placeInquiry.dateOfBirth}" required="true" />
 			</b:panelGrid>
-            </div> <!-- /. END COL -->
+            </div> <!-- /. END COL-sm-6 -->
 			<div class="col-sm-6">
 				<h3><label>Car options</label></h3>
 				<b:panelGrid col-spans="5,7" cellpadding="5" cellspacing="1">
@@ -97,17 +91,18 @@
 					<b:selectOneMenu id="insuranceType" value="#{placeInquiry.insuranceType}">
 						<f:selectItems value="#{order.insuranceTypes}" />
 					</b:selectOneMenu>
+					<br />
 					
+                  	<h:panelGroup />
+                  	<h:outputLabel for="insuranceType" value="" />
+                  	<h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{placeInquiry.recalculatePrice}" />
+                  	
 					<label class="label-bvis"  for="priceCars">Car price:</label>
-                  	<h:outputText id="priceCars" value="#{placeInquiry.priceCars} Euro" />
+                  	<b:inputText id="priceCars" value="#{placeInquiry.priceCars} Euro" readonly="true" />
                   
                   
                   	<label class="label-bvis"  for="priceInsurance_expected">Insurance price:</label>
-                  	<h:outputText id="priceInsurance_expected" value="#{placeInquiry.priceInsurance_expected} Euro" />
-                  
-                  	<h:panelGroup />
-                  	<h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{placeInquiry.recalculatePrice}" />
-                 
+                  	<b:inputText id="priceInsurance_expected" value="#{placeInquiry.priceInsurance_expected} Euro" readonly="true" />
 				</b:panelGrid>
 
 				<b:panelGrid col-spans="12" cellpadding="5" id="fleetComments">
@@ -115,30 +110,27 @@
 					<b:inputTextarea rows="14" id="inquiryText" value="#{placeInquiry.comment}" required="false" />
 				</b:panelGrid>
 
-            </div> <!-- END Col -->
+            </div> <!-- END Col-sm-6 -->
            </div> <!-- /. END Col-sm-8 -->
-        </div> <!-- /. END Upper ROW -->
+        </div> <!-- /. END ROW Forms-->
 
-    </div>
-      <!-- /. END CONTAINER -->
-
-	<div class="container bvis-padding">
 		<div class="row ">
 			<div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
-			<div class="col-lg-10">
-				<p class="p-bvis">Please submit your booking. You will be able to check your details on the next page</p>
-			</div>
-			<div class="col-lg-2 pull-right">
-				<h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{placeInquiry.placeInquiry}" />
-			</div>
-			<div class="col-lg-10">
-			    <h:messages class="error-message"/>
-			</div>
-		</div> <!-- /. END ROW -->
-	</div> <!-- /. END Jumpotron ROW -->
-    </div> <!-- /. END CONTAINER -->
-	</h:form>
-	<script type="text/javascript">
+                <div class="col-lg-10">
+                    <p class="p-bvis">Please submit your booking. You will shortly receive a confirmation email.</p>
+                </div>
+                <div class="col-lg-2 pull-right">
+                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{placeInquiry.placeInquiry}" />
+                </div>
+                <div class="col-lg-12">
+                    <h:messages class="error-message-bvis"/>
+                </div>
+		    </div> <!-- /. END Col-sm8 jumbotron-bvis-2 -->
+	    </div> <!-- /. END ROW Jumbotron-->
+    </div> <!-- / END CONTAINER Background Forms -->
+    </h:form>
+
+    <script type="text/javascript">
 		// increase the default animation speed to exaggerate the effect
 		$(function() {
 		    if($("#submitForm\\:fleet").is(":checked") == false) {
