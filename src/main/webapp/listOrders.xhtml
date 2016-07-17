@@ -24,32 +24,22 @@
                                 <h:dataTable value="#{listOrders.orders}" var="c" styleClass="data-table"
                                              columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
                                              headerClass="data-cell header-cell">
-                                    <h:column>
-                                        <f:facet name="header">Customer Name: </f:facet>
-                                        <b:dataTableColumn vlaue="#{c.customer}"/>
-                                    </h:column>
 
-                                    <h:column>
-                                        <f:facet name = "header">Order ID: </f:facet>
-                                        <b:dataTableColumn value="#{c.id}" />
-                                    </h:column>
+                                    <b:dataTableColumn vlaue="#{c.customer}" label="Customer Name"/>
 
-                                    <h:column>
-                                        <f:facet name = "header">Pickup location: </f:facet>
-                                        <b:dataTableColumn value="#{c.pickUpStore}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name = "header">Return location: </f:facet>
-                                        <b:dataTableColumn value="#{c.returnStore}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name = "header">Pickup date: </f:facet>
-                                        <b:dataTableColumn value="#{c.pick_up_date}" />
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet name = "header">Return date: </f:facet>
-                                        <b:dataTableColumn value="#{c.return_date}" />
-                                    </h:column>
+                                    <b:dataTableColumn value="#{c.id}" label="Order ID"/>
+
+                                    <b:dataTableColumn value="#{c.cars}" label="Ordered Cars" />
+
+                                    <b:dataTableColumn value="#{c.pickUpStore}" label="Pick Up Store"/>
+
+                                    <b:dataTableColumn value="#{c.returnStore}" label="Return Store"/>
+
+                                    <b:dataTableColumn value="#{c.pick_up_date}" label="Pick Up Date"/>
+
+                                    <b:dataTableColumn value="#{c.return_date}" label="Return Date"/>
+
+                                    <b:dataTableColumn vlaue="#{c.orderStatus}" label="Oder Status" />
 
                                 </h:dataTable>
                             </b:panelGrid>
