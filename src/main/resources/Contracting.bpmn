@@ -128,7 +128,7 @@
     <sequenceFlow id="sid-0ACCA590-4CF2-46FE-A6D9-A12B2C6128A2" name="Request cancelled" isImmediate="true" sourceRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" targetRef="sid-C1DDD379-D98D-405F-AEE1-0ED3837D3267">
       <conditionExpression xsi:type="tFormalExpression">${not customerAccepted}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" name="Adjust customer requirements and update" implementation="##WebService" camunda:formKey="app:modifySingleOrder.jsf" camunda:candidateGroups="clerks-contract">
+    <userTask id="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" name="Adjust customer requirements and update" implementation="##WebService" camunda:formKey="app:adjustRequirements.jsf" camunda:candidateGroups="clerks-contract">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -137,7 +137,9 @@
       <incoming>sid-2D52B35D-7330-4A42-A1B6-82C1B445E8A1</incoming>
       <outgoing>sid-93B8E830-C4E0-4D0C-A95E-64D7401E3E47</outgoing>
     </userTask>
-    <sequenceFlow id="sid-93B8E830-C4E0-4D0C-A95E-64D7401E3E47" name="" isImmediate="true" sourceRef="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" targetRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" />
+    <sequenceFlow id="sid-93B8E830-C4E0-4D0C-A95E-64D7401E3E47" name="" isImmediate="true" sourceRef="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" targetRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F">
+      <conditionExpression xsi:type="tFormalExpression">#{contractHandler.updateContract(execution)}</conditionExpression>
+    </sequenceFlow>
     <endEvent id="sid-07786F7D-5EFE-4695-9F66-5841822105BC" name="Send notificaton">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />

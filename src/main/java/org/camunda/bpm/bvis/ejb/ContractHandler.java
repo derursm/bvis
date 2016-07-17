@@ -160,6 +160,7 @@ public class ContractHandler {
 
 			// calculate price for insurance
 			estimatedInsurancPrice = calcInsurancePrice(cars, insuranceType, returnDate, pickUpDate);
+			if (estimatedInsurancPrice < 0) estimatedInsurancPrice = 0;
 			rentalOrder.setPriceInsurance_expected(estimatedInsurancPrice);
 		}
 		rentalOrder.setFleetRental(isFleet);
@@ -673,6 +674,19 @@ public class ContractHandler {
 
         return Math.round(priceInsurance*100)/100;
     }
+	
+	public boolean updateContract(DelegateExecution delegateExecution) {
+		Map<String, Object> variables = delegateExecution.getVariables();
+		long newCarID = Long.parseLong(variables.get("newCarId")+"");
+		Car newCar = carService.getCar(newCarID);
+		RentalOrder order = orderService.getOrder(Long.parseLong(variables.get("orderId")+""));
+		ArrayList<Car> cars = new ArrayList<Car>();
+		cars.add(newCar);
+		order.setCars(cars);
+		orderService.updateOrder(order);
+		System.out.println("NEW CAR: " + order.getCars().iterator().next().getModel());
+		return true;
+	}
 	
 	
 	public double calcCarPrice(Collection<Car> cars, Date returnDate, Date pickupDate) {
