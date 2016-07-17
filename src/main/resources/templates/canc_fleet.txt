@@ -21,7 +21,7 @@
                         <h2>Dear Mrs/ Mr %1$s,</h2>
 
                         <h4>Thank you for your interest in BVIS.</h4>
-                        <p>Please see below your the details of your order. Thhe booking number is: %7$s</p>
+                        <p>Please see below your the details of your order. The booking number is: %7$s</p>
                         <p><br>Unfortunately, we have to inform you, that we cannot complete the contract. <strong>The requested car fleet is not available.</strong></p>
                         <div class="col-md-2">
                             <ol>

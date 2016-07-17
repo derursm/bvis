@@ -18,7 +18,9 @@
 			<h:outputLabel value="New car model" for="newCarModel" />
 			<h:selectOneMenu id="newCarModel" value="#{processVariables['newCarId']}">
 				<f:selectItems value ="#{adjustRequirements.getAvailableCars(processVariables['orderId'])}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
-			</h:selectOneMenu>
+			</h:selectOneMenu><br></br>
+			<h:outputLabel value="Customer accepts?" for="customerAnswer" />
+			<h:selectBooleanCheckbox id="customerAnswer" value="#{processVariables['customerAccepted']}"/><br></br>
 			
       <h:commandButton id="complete" value="Task Completed"
           action="#{camundaTaskForm.completeTask()}" />

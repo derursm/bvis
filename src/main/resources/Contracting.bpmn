@@ -126,7 +126,7 @@
       <outgoing>sid-06642223-4818-40BF-AB0D-A9684219BD84</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="sid-0ACCA590-4CF2-46FE-A6D9-A12B2C6128A2" name="Request cancelled" isImmediate="true" sourceRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" targetRef="sid-C1DDD379-D98D-405F-AEE1-0ED3837D3267">
-      <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${not customerAccepted}</conditionExpression>
     </sequenceFlow>
     <userTask id="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" name="Adjust customer requirements and update" implementation="##WebService" camunda:formKey="app:adjustRequirements.jsf" camunda:candidateGroups="clerks-contract">
       <extensionElements>
@@ -354,7 +354,7 @@
     </exclusiveGateway>
     <sequenceFlow id="SequenceFlow_0cnszio" sourceRef="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7" targetRef="sid-20EE7783-E808-4C9A-B751-5B2F7B259933" />
     <sequenceFlow id="sid-06642223-4818-40BF-AB0D-A9684219BD84" name="Requirements updated" isImmediate="true" sourceRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" targetRef="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7">
-      <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${customerAccepted}</conditionExpression>
     </sequenceFlow>
     <exclusiveGateway id="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" name="" gatewayDirection="Diverging">
       <extensionElements>
