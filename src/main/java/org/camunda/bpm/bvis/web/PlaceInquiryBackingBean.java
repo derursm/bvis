@@ -20,27 +20,19 @@ import org.camunda.bpm.bvis.ejb.beans.InsuranceServiceBean;
 import org.camunda.bpm.bvis.entities.Car;
 import org.camunda.bpm.bvis.entities.CarPriceMap;
 import org.camunda.bpm.bvis.entities.Customer;
-import org.camunda.bpm.bvis.entities.Insurance;
-import org.camunda.bpm.bvis.entities.InsurancePriceMap;
 import org.camunda.bpm.bvis.entities.InsuranceType;
 import org.camunda.bpm.bvis.web.util.EmailValidator;
 import org.camunda.bpm.bvis.web.util.WebUrls;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.cdi.BusinessProcess;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Named
 @RequestScoped
@@ -65,7 +57,7 @@ public class PlaceInquiryBackingBean {
 	private Date returnDate;
 	private long pickupLocation;
 	private long returnLocation;
-	private String insuranceType;
+	private InsuranceType insuranceType;
 	private double priceCars;
 	private double priceInsurance_expected;
 
@@ -225,11 +217,11 @@ public class PlaceInquiryBackingBean {
 		this.returnLocation = returnLocation;
 	}
 
-	public String getInsuranceType() {
+	public InsuranceType getInsuranceType() {
 		return insuranceType;
 	}
 
-	public void setInsuranceType(String insuranceType) {
+	public void setInsuranceType(InsuranceType insuranceType) {
 		this.insuranceType = insuranceType;
 	}
 
@@ -340,7 +332,7 @@ public class PlaceInquiryBackingBean {
 		
 		priceCars = contractHandler.calcCarPrice(cars, returnDate, pickupDate);
 
-		InsuranceType bookingInsuranceType = InsuranceType.valueOf(insuranceType);
+		InsuranceType bookingInsuranceType = insuranceType;
 		priceInsurance_expected = contractHandler.calcInsurancePrice(cars, bookingInsuranceType, returnDate, pickupDate);
 
 		FacesContext fc = FacesContext.getCurrentInstance();

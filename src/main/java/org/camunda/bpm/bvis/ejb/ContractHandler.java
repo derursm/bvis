@@ -140,7 +140,7 @@ public class ContractHandler {
 			rentalOrder.setPickUpStore((PickUpLocation) locationService.getPickUpLocation(pickUpLocationId));
 			rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
 
-			InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
+			InsuranceType insuranceType = (InsuranceType) variables.get("insuranceType");
 			rentalOrder.setInsurance_type((InsuranceType) insuranceType);
 
 			Long carId = (Long) variables.get("car");

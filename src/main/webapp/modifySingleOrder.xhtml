@@ -30,12 +30,12 @@
           </h:selectOneMenu>
       
           <label for="pickUpDate">Pickup date:</label>
-          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" >
+          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" required="true">
             <f:convertDateTime pattern="dd-MM-yyyy" />
           </h:inputText>
           
           <label for="returnDate">Return date:</label>
-          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}">
+          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" required="true">
             <f:convertDateTime pattern="dd-MM-yyyy" />
           </h:inputText>
           

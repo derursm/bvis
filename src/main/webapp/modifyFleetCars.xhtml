@@ -37,13 +37,13 @@
           
           <label for="pickUpDate">Pickup date:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" >
+          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" required="true">
             <f:convertDateTime pattern="dd-MM-yyyy" />
           </h:inputText>
           
           <label for="returnDate">Return date:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" >
+          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" required="true">
             <f:convertDateTime pattern="dd-MM-yyyy" />
           </h:inputText>
           
