@@ -1,7 +1,9 @@
 package org.camunda.bpm.bvis.ejb;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.Map;
@@ -39,10 +41,27 @@ import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.List;
+import com.itextpdf.text.ListItem;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
+
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 
@@ -355,14 +374,135 @@ public class ClaimHandler {
 		else return 2;
 	}
 	
-	/**
-	 * Either inform customer about 
-	 * 1) He has to pay
-	 * 2) Insurance pays
-	 * 3) Third party has to pay
-	 * @param delegateExecution
-	 */
-	public void sendFinalCustomerNotification(DelegateExecution delegateExecution) {
+	// Create contract and send to user's email
+	public void sendInvoice(DelegateExecution delegateExecution) {
+		System.out.println("Start creating claim pdf");
+
+		RentalOrder order;
+		Customer customer;
+		Claim claim;
+		Collection<Car> cars;
+		String surname, email, insurancePac, date,
+				street, city, orderId_str;
+		BigDecimal workshopPrice, customerPrice, customerCosts, costsCoverage;
+		Long claimID, orderId;
+		Integer insurance_decision;
+
+		// Get all process variables
+		Map<String, Object> variables = delegateExecution.getVariables();
+		claimID = (long) variables.get("claimID");
+		claim = claimService.getClaim(claimID);
+		order = claim.getRentalOrder();
+		orderId = order.getOrderID();
+		customer = order.getCustomer();
+		cars = order.getCars();
+		workshopPrice = claim.getWorkshopPrice();
+		customerCosts = claim.getCustomerCosts();
+		costsCoverage = claim.getCostsCoverage();
+		insurance_decision = claim.getInsurance_decision();
 		
+		surname = "surname";
+		email = "email";
+		orderId_str = "orderId";
+		insurancePac = "insurancePac";
+		workshopPrice = BigDecimal.valueOf(0);
+		customerCosts = BigDecimal.valueOf(0);
+		costsCoverage = BigDecimal.valueOf(0);
+
+		
+		orderId_str = orderId.toString();
+		surname = customer.getSurname();
+		street = customer.getStreet() + " " + customer.getHouseNumber();
+		city = customer.getPostcode() + " " + customer.getCity();
+		email = customer.getEmail();
+		
+		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date today = new Date();
+
+		date = formatter.format(today);
+
+		// surname, email, pickupLocation, returnLocation,
+		// insurancePac, carModel, rentalEnd, rentalStart, orderId_str, date,
+		// type, street, city;
+		// double totalPrice, insurancePrice, rentalPrice;
+		// Long orderId;
+
+		final String[][] rentalData = { { "Your insurance:", insurancePac }, 
+				{ "Repair costs:", workshopPrice.toString() },
+				{ "Costs covered by insurance:", costsCoverage.toString() },
+				{ "Billing amount:", customerCosts.toString()}
+				};
+
+		try {
+			Document document = new Document();
+			ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+			PdfWriter pdf = null;
+			pdf = PdfWriter.getInstance(document, baosPDF);
+			document.open();
+			Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
+			Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+			Paragraph pa0 = new Paragraph("Order ID: " + orderId_str, paragraphFont);
+			pa0.setAlignment(Element.ALIGN_RIGHT);
+			pa0.setFont(FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL));
+			document.add(pa0);
+
+			Chunk chunk = new Chunk("BVIS Car Rental", chapterFont);
+			document.add(chunk);
+			Paragraph pa1 = new Paragraph("Claim Invoice", paragraphFont);
+			pa1.setSpacingAfter(15);
+			document.add(pa1);
+
+			List list = new List();
+			list.setListSymbol("");
+			list.add(new ListItem("Mr/Mrs " + surname));
+			list.add(new ListItem(street));
+			list.add(new ListItem(city));
+			Paragraph pa2 = new Paragraph();
+			pa2.add(list);
+			pa2.setSpacingAfter(20);
+			document.add(pa2);
+
+			Paragraph datePar = new Paragraph(date, paragraphFont);
+			datePar.setAlignment(Element.ALIGN_RIGHT);
+			document.add(datePar);
+
+			document.add(new Paragraph("Dear Mr/Mrs " + surname + ",", paragraphFont));
+			Paragraph pa3 = new Paragraph(
+					"we are kindly asking to settle the bill regarding your claim:",
+					paragraphFont);
+			pa3.setSpacingAfter(10);
+			document.add(pa3);
+
+			PdfPTable table = new PdfPTable(2);
+			table.setWidthPercentage(80);
+			table.setHorizontalAlignment(Element.ALIGN_LEFT);
+			table.setWidths(new int[] { 5, 10 });
+			table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+			table.addCell(rentalData[0][0]);
+			table.addCell(rentalData[0][1]);
+			table.addCell(rentalData[1][0]);
+			table.addCell(rentalData[1][1]);
+			table.addCell(rentalData[2][0]);
+			table.addCell(rentalData[2][1]);
+			table.addCell(rentalData[3][0]);
+			table.addCell(rentalData[3][1]);
+			
+
+			Paragraph pa4 = new Paragraph();
+			pa4.add(table);
+			pa4.setSpacingAfter(15);
+			document.add(pa4);
+
+			document.add(new Paragraph("Thank you!", paragraphFont));
+
+			document.close();
+			pdf.close();
+
+			SendHTMLEmail.mainAtt("Claim Invoice (Order no." + orderId_str + ")",
+					"Dear Mr/Mrs " + surname + ". <br> Please find attached your claim invoice.", "bvis@test.de", email,
+					baosPDF, "bvis_claim_invoice" + surname);
+		} catch (DocumentException e) {
+			System.out.println("Claim DocumentException");
+		}
 	}
 }
