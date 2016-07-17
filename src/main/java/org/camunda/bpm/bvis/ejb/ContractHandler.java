@@ -177,22 +177,24 @@ public class ContractHandler {
 		insurance.setReturnDate((Date) variables.get("returnDate"));
 		insurance.setOrder(rentalOrder);
 		System.out.println(variables.get("insuranceType"));
-		if(Objects.equals((String) variables.get("insuranceType"),"total")){
-			insurance.setDeductible(new BigDecimal(0));
-			insurance.setType(InsuranceType.total);
-			System.out.println("Set total insurance");
-		} 
-		if(Objects.equals((String) variables.get("insuranceType"),"partial")){
-			insurance.setDeductible(new BigDecimal(1000));
-			insurance.setType(InsuranceType.partial);
-			System.out.println("Set partial insurance");
-		} 
-		if(Objects.equals((String) variables.get("insuranceType"),"liability")){
-			insurance.setDeductible(new BigDecimal(2000));
-			insurance.setType(InsuranceType.liability);
-			System.out.println("Set liablilty insurance");
-		} 
+//		if(Objects.equals((String) variables.get("insuranceType"),"total")){
+//			insurance.setDeductible(new BigDecimal(0));
+//			insurance.setType(InsuranceType.total);
+//			System.out.println("Set total insurance");
+//		} 
+//		if(Objects.equals((String) variables.get("insuranceType"),"partial")){
+//			insurance.setDeductible(new BigDecimal(1000));
+//			insurance.setType(InsuranceType.partial);
+//			System.out.println("Set partial insurance");
+//		} 
+//		if(Objects.equals((String) variables.get("insuranceType"),"liability")){
+//			insurance.setDeductible(new BigDecimal(2000));
+//			insurance.setType(InsuranceType.liability);
+//			System.out.println("Set liablilty insurance");
+//		} 
 		
+ 		insurance.setDeductible(new BigDecimal(0));
+		insurance.setType(InsuranceType.total);
 		insurance.setEstimatedCosts(new BigDecimal(estimatedInsurancPrice));
 		
 		rentalOrder.setInsurance(insurance);
