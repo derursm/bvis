@@ -21,18 +21,18 @@
                         <h2>Dear Mrs/ Mr %1$s,</h2>
 
                         <h4>We are so excited to welcome you as our customer.</h4>
-                        <p>This is the beginning of something awesoem. Please see below your & booking details:</p>
+                        <p>This is the beginning of something awesome. Please see below your & booking details:</p>
                         <div class="col-md-2">
                             <ol>
                                 <li class="mail-li"><b>booking number:</b> %7$s</li>
                                 <li class="mail-li"></li>
                                 <li class="mail-li"><b>Car model:</b> %2$s</li>
-                                <li class="mail-li"><b>Car Number:</b> %10$s</li>
-                                <li class="mail-li">Pickup location: %3$s</li>
-                                <li class="mail-li">Pickup date: %4$s</li>
-                                <li class="mail-li">Return location: %5$s</li>
-                                <li class="mail-li">Return date: %6$s</li>
-                                <li class="mail-li">Insurance package: %9$s</li>
+                                <li class="mail-li"><b>Car number:</b> %10$s</li>
+                                <li class="mail-li"><b>Pickup location:</b> %3$s</li>
+                                <li class="mail-li"><b>Pickup date:</b> %4$s</li>
+                                <li class="mail-li"><b>Return location:</b> %5$s</li>
+                                <li class="mail-li"><b>Return date:</b> %6$s</li>
+                                <li class="mail-li"><b>Insurance package:</b> %9$s</li>
                             </ol>
                         </div>
                         <samp>IMPORTANT: This is a reservation notification. The contract will be sent to you as soon as our team has handled your request.</samp>
@@ -56,7 +56,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://baconipsum.com">BVIS Car Rental</a>.</p>
+                                    <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://camunda-bvis.uni-muenster.de/bvis/index.xhtml">BVIS Car Rental</a>.</p>
                                     <p><em>Your Beavis and Butt-Head Team</em></p>
                                 </td>
                                 <td>
@@ -76,7 +76,7 @@
             <table>
                 <tr>
                     <td class="content footer footer-mail" align="center">
-                        <p>Sent by <a href="#">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 098765</p>
+                        <p>Sent by <a href="http://camunda-bvis.uni-muenster.de/bvis/index.xhtml">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 098765</p>
                         <p><a href="mailto:">awesomeness@bvis.com</a> | <a href="#">Unsubscribe - Not Possible</a></p>
                     </td>
                 </tr>

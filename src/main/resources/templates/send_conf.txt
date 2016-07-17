@@ -18,7 +18,7 @@
                 <tr>
                     <td class="content">
 
-                        <h2>Dear Mr/Mrs %1$s</h2>
+                        <h2>Dear Mrs/Mr %1$s</h2>
 
                         <h4>We would like to inform you about finishing the claim.</h4>
                         <p>Fortunately, the insurance will defray the costs of the damage.</p>
@@ -27,12 +27,15 @@
                         <p>Please see below the referenced booking</p>
                         <div class="col-md-2">
                             <ol>
-                                <li class="mail-li">Car model: %2$s</li>
-                                <li class="mail-li">Pickup location: %3$s</li>
-                                <li class="mail-li">Pickup date: %4$s</li>
-                                <li class="mail-li">Return location: %5$s</li>
-                                <li class="mail-li">Return date: %6$s</li>
-                                <li class="mail-li">Insurance package: %9$s</li>
+                                <li class="mail-li"><b>booking number:</b> %7$s</li>
+                                <li class="mail-li"></li>
+                                <li class="mail-li"><b>Car model:</b> %2$s</li>
+                                <li class="mail-li"><b>License plate:</b> %10$s</li>
+                                <li class="mail-li"><b>Pickup location:</b> %3$s</li>
+                                <li class="mail-li"><b>Pickup date:</b> %4$s</li>
+                                <li class="mail-li"><b>Return location:</b> %5$s</li>
+                                <li class="mail-li"><b>Return date:</b> %6$s</li>
+                                <li class="mail-li"><b>Insurance package:</b> %9$s</li>
                             </ol>
                         </div>
                         <p>In case of any questions, please contact our customer service at +49 251 83 38 100</p>
@@ -56,7 +59,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://baconipsum.com">BVIS Car Rental</a>.</p>
+                                    <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://camunda-bvis.uni-muenster.de/bvis/index.xhtml">BVIS Car Rental</a>.</p>
                                     <p><em>Your Beavis and Butt-Head Team</em></p>
                                 </td>
                                 <td>
@@ -77,7 +80,7 @@
                 <tr>
                     <td class="content footer footer-mail" align="center">
                         <p>This is an automatically created mail. Do not reply on this mail or the FBI will take you down, bastard.</p>
-                        <p>Sent by <a href="#">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 098765</p>
+                        <p>Sent by <a href="http://camunda-bvis.uni-muenster.de/bvis/index.xhtml">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 098765</p>
                         <p><a href="mailto:">awesomeness@bvis.com</a> | <a href="#">Unsubscribe - Not Possible</a></p>
                     </td>
                 </tr>
