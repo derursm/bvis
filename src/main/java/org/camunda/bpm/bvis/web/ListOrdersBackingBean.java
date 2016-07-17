@@ -33,12 +33,13 @@ public class ListOrdersBackingBean {
 		if (orders == null && sessionBean.isLoggedIn()) {
 			orders = customerService.getCustomer(sessionBean.getUid()).getOrders();
 			System.out.println(orders.size() + " ORDERS FOUND");
+			System.out.println("print orders element " + orders.iterator().next().getOrderID());
 			if (orders == null) return new ArrayList<RentalOrder>();
 			else {
 				return orders;
 			}
 		}
-		return new ArrayList<RentalOrder>(); 
+		return orders;
 	}
 	
 }

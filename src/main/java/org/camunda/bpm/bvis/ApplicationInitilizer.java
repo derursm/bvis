@@ -115,20 +115,20 @@ public class ApplicationInitilizer {
 		carService.create(new Car("Audi", 2015, "petrol", "Audi TT RS", 400, "BVISAUDI004", "B-VIS 204", CarType.van, CarStatus.available));
 		carService.create(new Car("Audi", 2015, "petrol", "Audi R8 Coupe", 610, "BVISAUDI005", "B-VIS 205", CarType.limousine, CarStatus.available));
 		carService.create(new Car("Audi", 2015, "electricity", "Audi A3 sportback e-tron", 204, "BVISAUDI006", "B-VIS 206", CarType.mini_car, CarStatus.available));
-		carService.create(new Car("BMW", 2016, "electricity", "BMW i3", 170, "BVISBMW007", "B-VIS 207", CarType.kombi, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "petrol and electricity", "BMW i8", 362, "BVISBMW008", "B-VIS 208", CarType.limousine, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW i3", 170, "BVISBMW007", "B-VIS 207", CarType.kombi, CarStatus.available));
+		carService.create(new Car("BMW", 2016, "petrol and electricity", "BMW i8", 362, "BVISBMW008", "B-VIS 208", CarType.limousine, CarStatus.available));
 		carService.create(new Car("BMW", 2016, "petrol", "BMW Z4", 340, "BVISBMW009", "B-VIS 209", CarType.van, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "electricity", "BMW M4 cabrio", 431, "BVISBMW010", "B-VIS 210", CarType.van, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "diesel", "BMW M6 gran coupe", 560, "BVISBMW011", "B-VIS 211", CarType.pickup, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "electricity", "BMW M6 cabrio", 560, "BVISBMW012", "B-VIS 212", CarType.kombi, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "electricity", "BMW X6 m", 575, "BVISBMW013", "B-VIS 213", CarType.truck, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW014", "B-VIS 214", CarType.pickup, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW015", "B-VIS 215", CarType.van, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 75D", 332, "BVISBMW016", "B-VIS 216", CarType.kombi, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 90D", 422, "BVISBMW017", "B-VIS 217", CarType.limousine, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S P90D", 1008, "BVISBMW018", "B-VIS 218", CarType.limousine, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW M4 cabrio", 431, "BVISBMW010", "B-VIS 210", CarType.van, CarStatus.available));
+		carService.create(new Car("BMW", 2016, "diesel", "BMW M6 gran coupe", 560, "BVISBMW011", "B-VIS 211", CarType.pickup, CarStatus.available));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW M6 cabrio", 560, "BVISBMW012", "B-VIS 212", CarType.kombi, CarStatus.available));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW X6 m", 575, "BVISBMW013", "B-VIS 213", CarType.truck, CarStatus.available));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW014", "B-VIS 214", CarType.pickup, CarStatus.available));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW015", "B-VIS 215", CarType.van, CarStatus.available));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 75D", 332, "BVISBMW016", "B-VIS 216", CarType.kombi, CarStatus.available));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 90D", 422, "BVISBMW017", "B-VIS 217", CarType.limousine, CarStatus.available));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S P90D", 1008, "BVISBMW018", "B-VIS 218", CarType.limousine, CarStatus.available));
 
-		Car car = new Car("Mercedes Benz", 1957, "petrol", "Mercedes Benz 300 SL Roadster", 215, "BVISBMW019", "B-VIS 219", CarType.kombi, CarStatus.available);
+		Car car = new Car("Mercedes Benz", 1957, "petrol", "Mercedes Benz 300 SL Roadster", 215, "BVISBMW019", "B-VIS 219", CarType.kombi, CarStatus.rented);
 		carService.create(car);
 		
 		// Dummy insurance policy
