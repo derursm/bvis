@@ -127,6 +127,7 @@ public class ContractHandler {
 		rentalOrder.setCustomer(customer);
 		rentalOrder.setRequestDate(new Date());
 
+		Insurance insurance = new Insurance();
 		boolean isFleet = (Boolean) variables.get("fleet");
 		if (!isFleet) {
 			Date PickUpDate = (Date) variables.get("pickUpDate");
@@ -141,7 +142,7 @@ public class ContractHandler {
 			rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
 
 			InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
-			rentalOrder.setInsurance_type((InsuranceType) insuranceType);
+			insurance.setType((InsuranceType) insuranceType);
 
 			Long carId = (Long.parseLong((String) variables.get("car")));
 
@@ -157,7 +158,7 @@ public class ContractHandler {
 
 			// calculate price for insurance
 			double price_for_insurance = calcInsurancePrice(car, insuranceType);
-			rentalOrder.setPriceInsurance_expected(price_for_insurance);
+			insurance.setEstimatedCosts(new BigDecimal(price_for_insurance));
 		}
 		rentalOrder.setFleetRental(isFleet);
 		rentalOrder.setInquiryText((String) variables.get("inquiryText"));
@@ -165,13 +166,8 @@ public class ContractHandler {
 		rentalOrder.setClerkComments("");
 		rentalOrder.setApproveStatus(false);
 
-		rentalOrder.setInsurance_ID(0);
-
-		// TODO GENERATE A PROPER INSURANCE. THIS IS JUST A DUMMY FOR TESTING
-		// PURPOSES
-		Insurance insurance = new Insurance();
-		insurance.setDeductible(new BigDecimal(1000));
-		insurance.setEstimatedCosts(new BigDecimal(20));
+		insurance.setDeductible(new BigDecimal(0));
+		insurance.setEstimatedCosts(new BigDecimal(0));
 		insurance.setPickUpDate((Date) variables.get("pickUpDate"));
 		insurance.setReturnDate((Date) variables.get("returnDate"));
 		insurance.setOrder(rentalOrder);
@@ -241,7 +237,7 @@ public class ContractHandler {
 		returnLocation = order.getReturnStore().getContactDetails();
 		// insurancePac = order.getInsurance().getType();
 		rentalPrice = order.getPriceCars();
-		insurancePrice = order.getPriceInsurance_final();
+		insurancePrice = order.getInsurance().getEstimatedCosts().doubleValue();
 		totalPrice = order.getPrice();
 
 		carModel = "";
