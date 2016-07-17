@@ -130,10 +130,10 @@ public class ContractHandler {
 		Insurance insurance = new Insurance();
 		boolean isFleet = (Boolean) variables.get("fleet");
 		if (!isFleet) {
-			Date PickUpDate = (Date) variables.get("pickUpDate");
-			rentalOrder.setPick_up_date(PickUpDate);
-			Date ReturnDate = (Date) variables.get("returnDate");
-			rentalOrder.setReturn_date(ReturnDate);
+			Date pickUpDate = (Date) variables.get("pickUpDate");
+			rentalOrder.setPick_up_date(pickUpDate);
+			Date returnDate = (Date) variables.get("returnDate");
+			rentalOrder.setReturn_date(returnDate);
 
 			Long pickUpLocationId = (Long) variables.get("pickUpLoc");
 			Long returnStoreId = (Long) variables.get("returnStore");
@@ -153,11 +153,11 @@ public class ContractHandler {
 			rentalOrder.setCars((Collection<Car>) cars);
 
 			// calculate price for cars
-			double priceCars = calcCarPrice(car, ReturnDate, PickUpDate);
+			double priceCars = calcCarPrice(car, returnDate, pickUpDate);
 			rentalOrder.setPriceCars(priceCars);
 
 			// calculate price for insurance
-			double price_for_insurance = calcInsurancePrice(car, insuranceType);
+			double price_for_insurance = calcInsurancePrice(car, insuranceType, returnDate, pickUpDate);
 			insurance.setEstimatedCosts(new BigDecimal(price_for_insurance));
 		}
 		rentalOrder.setFleetRental(isFleet);
@@ -185,6 +185,9 @@ public class ContractHandler {
 		delegateExecution.setVariable("orderId", rentalOrder.getId());
 		delegateExecution.setVariable("fleet", rentalOrder.isFleetRental());
 		delegateExecution.setVariable("processId", delegateExecution.getActivityInstanceId());
+		delegateExecution.setVariable("phoneNumber", rentalOrder.getCustomer().getPhoneNumber());
+		delegateExecution.setVariable("surname", rentalOrder.getCustomer().getSurname());
+		delegateExecution.setVariable("firstname", rentalOrder.getCustomer().getFirstname());
 		System.out.println("CREATED ORDER WITH ORDER ID: " + rentalOrder.getId());
 	}
 
@@ -620,24 +623,27 @@ public class ContractHandler {
 		delegateExecution.setVariable("fulfillable", foundOne);
 		
 	}
+	
+	public double calcInsurancePrice(Car carToBook, InsuranceType bookingInsuranceType, Date returnDate, Date pickupDate) {
 
-	public double calcInsurancePrice(Car carToBook, InsuranceType bookingInsuranceType) {
+        double carTypeFactor = InsurancePriceMap.getInsuranceFactor(carToBook.getType());
+        double insuranceTypeFactor = InsurancePriceMap.getInsuranceFactor(bookingInsuranceType);
 
-		double carTypeFactor = InsurancePriceMap.getInsuranceFactor(carToBook.getType());
-		double insuranceTypeFactor = InsurancePriceMap.getInsuranceFactor(bookingInsuranceType);
+        int ps = carToBook.getPs();
+        int current_year = Calendar.getInstance().get(Calendar.YEAR);
+        int construction_year = carToBook.getConstructionYear();
+        int year_diff = current_year - construction_year;
 
-		int ps = carToBook.getPs();
-		int current_year = Calendar.getInstance().get(Calendar.YEAR);
-		int construction_year = carToBook.getConstructionYear();
-		int year_diff = current_year - construction_year;
+        double priceInsurance_expected = (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + (20
+                - Math.pow(1.2, year_diff) ) / 30.0;
+        
+        Long diff = returnDate.getTime() - pickupDate.getTime();
+        long rentDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        
+        double priceInsurance = priceInsurance_expected * (double) rentDays;
 
-		double priceInsurance_expected = (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + 20
-				- Math.pow(1.2, year_diff);
-		DecimalFormat df = new DecimalFormat("#.##");
-
-		return Double.valueOf(df.format(priceInsurance_expected));
-
-	}
+        return Math.round(priceInsurance*100)/100;
+    }
 	
 	public double calcCarPrice(Car carToBook, Date returnDate, Date pickupDate) {
 		Long diff = returnDate.getTime() - pickupDate.getTime();
