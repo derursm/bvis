@@ -134,8 +134,8 @@ public class ContractHandler {
 			Date ReturnDate = (Date) variables.get("returnDate");
 			rentalOrder.setReturn_date(ReturnDate);
 
-			Long pickUpLocationId = (Long.parseLong((String) variables.get("pickUpLoc")));
-			Long returnStoreId = (Long.parseLong((String) variables.get("returnStore")));
+			Long pickUpLocationId = (Long) variables.get("pickUpLoc");
+			Long returnStoreId = (Long) variables.get("returnStore");
 
 			rentalOrder.setPickUpStore((PickUpLocation) locationService.getPickUpLocation(pickUpLocationId));
 			rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));

@@ -62,8 +62,8 @@ public class PlaceInquiryBackingBean {
 	private String comment;
 	private Date pickupDate;
 	private Date returnDate;
-	private String pickupLocation;
-	private String returnLocation;
+	private long pickupLocation;
+	private long returnLocation;
 	private String insuranceType;
 	private double priceCars;
 	private double priceInsurance_expected;
@@ -208,19 +208,19 @@ public class PlaceInquiryBackingBean {
 		return returnDate;
 	}
 
-	public String getPickupLocation() {
+	public long getPickupLocation() {
 		return pickupLocation;
 	}
 
-	public void setPickupLocation(String pickupLocation) {
+	public void setPickupLocation(long pickupLocation) {
 		this.pickupLocation = pickupLocation;
 	}
 
-	public String getReturnLocation() {
+	public long getReturnLocation() {
 		return returnLocation;
 	}
 
-	public void setReturnLocation(String returnLocation) {
+	public void setReturnLocation(long returnLocation) {
 		this.returnLocation = returnLocation;
 	}
 
