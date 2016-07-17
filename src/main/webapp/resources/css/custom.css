@@ -164,3 +164,8 @@ h5,
     color: white;
     display: inline-flex;
 }
+
+.logout-button {
+    @extend: li;
+    padding: 15px;
+}

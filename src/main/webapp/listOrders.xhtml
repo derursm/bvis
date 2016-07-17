@@ -26,29 +26,29 @@
                                              headerClass="data-cell header-cell">
                                     <h:column>
                                         <f:facet name="header">Customer Name: </f:facet>
-                                        #{c.customer}
+                                        <b:dataTableColumn vlaue="#{c.customer}"/>
                                     </h:column>
 
                                     <h:column>
                                         <f:facet name = "header">Order ID: </f:facet>
-                                        #{c.id}
+                                        <b:dataTableColumn value="#{c.id}" />
                                     </h:column>
 
                                     <h:column>
                                         <f:facet name = "header">Pickup location: </f:facet>
-                                        #{c.pickUpStore}
+                                        <b:dataTableColumn value="#{c.pickUpStore}" />
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Return location: </f:facet>
-                                        #{c.returnStore}
+                                        <b:dataTableColumn value="#{c.returnStore}" />
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Pickup date: </f:facet>
-                                        #{c.pick_up_date}
+                                        <b:dataTableColumn value="#{c.pick_up_date}" />
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Return date: </f:facet>
-                                        #{c.return_date}
+                                        <b:dataTableColumn value="#{c.return_date}" />
                                     </h:column>
 
                                 </h:dataTable>

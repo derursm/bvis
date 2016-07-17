@@ -110,23 +110,23 @@ public class ApplicationInitilizer {
 		
 		// Cars
 		carService.create(new Car("Audi", 2015, "petrol", "Audi RS 3 sportback", 367, "BVISAUDI001", "B-VIS 201", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("Audi", 2015, "petrol", "Audi S8 plus", 605, "BVISAUDI002", "B-VIS 202", CarType.car, CarStatus.available));
-		carService.create(new Car("Audi", 2015, "petrol", "Audi RS Q3", 340, "BVISAUDI003", "B-VIS 203", CarType.car, CarStatus.available));
-		carService.create(new Car("Audi", 2015, "petrol", "Audi TT RS", 400, "BVISAUDI004", "B-VIS 204", CarType.car, CarStatus.available));
-		carService.create(new Car("Audi", 2015, "petrol", "Audi R8 Coupe", 610, "BVISAUDI005", "B-VIS 205", CarType.car, CarStatus.available));
-		carService.create(new Car("Audi", 2015, "electricity", "Audi A3 sportback e-tron", 204, "BVISAUDI006", "B-VIS 206", CarType.car, CarStatus.available));
-		carService.create(new Car("BMW", 2016, "electricity", "BMW i3", 170, "BVISBMW007", "B-VIS 207", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "petrol and electricity", "BMW i8", 362, "BVISBMW008", "B-VIS 208", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "petrol", "BMW Z4", 340, "BVISBMW009", "B-VIS 209", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "electricity", "BMW M4 cabrio", 431, "BVISBMW010", "B-VIS 210", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "diesel", "BMW M6 gran coupe", 560, "BVISBMW011", "B-VIS 211", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "electricity", "BMW M6 cabrio", 560, "BVISBMW012", "B-VIS 212", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("BMW", 2016, "electricity", "BMW X6 m", 575, "BVISBMW013", "B-VIS 213", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW014", "B-VIS 214", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW015", "B-VIS 215", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 75D", 332, "BVISBMW016", "B-VIS 216", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 90D", 422, "BVISBMW017", "B-VIS 217", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S P90D", 1008, "BVISBMW018", "B-VIS 218", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi S8 plus", 605, "BVISAUDI002", "B-VIS 202", CarType.limousine, CarStatus.available));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi RS Q3", 340, "BVISAUDI003", "B-VIS 203", CarType.van, CarStatus.available));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi TT RS", 400, "BVISAUDI004", "B-VIS 204", CarType.van, CarStatus.available));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi R8 Coupe", 610, "BVISAUDI005", "B-VIS 205", CarType.limousine, CarStatus.available));
+		carService.create(new Car("Audi", 2015, "electricity", "Audi A3 sportback e-tron", 204, "BVISAUDI006", "B-VIS 206", CarType.mini_car, CarStatus.available));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW i3", 170, "BVISBMW007", "B-VIS 207", CarType.kombi, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "petrol and electricity", "BMW i8", 362, "BVISBMW008", "B-VIS 208", CarType.limousine, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "petrol", "BMW Z4", 340, "BVISBMW009", "B-VIS 209", CarType.van, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW M4 cabrio", 431, "BVISBMW010", "B-VIS 210", CarType.van, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "diesel", "BMW M6 gran coupe", 560, "BVISBMW011", "B-VIS 211", CarType.pickup, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW M6 cabrio", 560, "BVISBMW012", "B-VIS 212", CarType.kombi, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW X6 m", 575, "BVISBMW013", "B-VIS 213", CarType.truck, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW014", "B-VIS 214", CarType.pickup, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW015", "B-VIS 215", CarType.van, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 75D", 332, "BVISBMW016", "B-VIS 216", CarType.kombi, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 90D", 422, "BVISBMW017", "B-VIS 217", CarType.limousine, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S P90D", 1008, "BVISBMW018", "B-VIS 218", CarType.limousine, CarStatus.inRepair));
 
 		Car car = new Car("Mercedes Benz", 1957, "petrol", "Mercedes Benz 300 SL Roadster", 215, "BVISBMW019", "B-VIS 219", CarType.kombi, CarStatus.available);
 		carService.create(car);
@@ -143,8 +143,11 @@ public class ApplicationInitilizer {
 		insurance.setEstimatedCosts(new BigDecimal(999));
 		
 		// ClaimInsurances
-		insuranceService.createClaimInsurance(new ClaimInsurance("Allianz", "Marienplatz", "10", "40699", "Munich", "Germany")); 
-		insuranceService.createClaimInsurance(new ClaimInsurance("Capitol", "Koelner Strasse", "20", "50678", "Cologne", "Germany")); 
+		insuranceService.createClaimInsurance(new ClaimInsurance("Allianz", "Marienplatz", "10", "40699", "Munich", "Germany"));
+		insuranceService.createClaimInsurance(new ClaimInsurance("Capitol", "Koelner Strasse", "20", "50678", "Cologne", "Germany"));
+		insuranceService.createClaimInsurance(new ClaimInsurance("Devk", "Riehler Strasse", "190", "50735", "Cologne", "Germany"));
+		insuranceService.createClaimInsurance(new ClaimInsurance("AXA", "Colonia-Allee", "10", "51067", "Cologne", "Germany"));
+		insuranceService.createClaimInsurance(new ClaimInsurance("BavariaDirekt", "Am Karlsbad", "4", "10785", "Berlin", "Germany"));
 		
 		//Customer
 		Customer cust = new Customer("Becker", "0123 456789", "Leonardo Campus", "3", "48159", "Muenster", "Germany");

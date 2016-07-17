@@ -388,7 +388,7 @@ public class ContractHandler {
 		Car car;
 		Collection<Car> cars;
 		String surname, subject, text, from, email, state, path, pickupLocation, returnLocation, insurancePac, carModel,
-				rentalEnd, rentalStart, orderId_str, clerkComment, towingAddress, pathCss, textCss;
+				rentalEnd, rentalStart, orderId_str, clerkComment, towingAddress, pathCss, textCss, vehicleIdent;
 		Long orderId;
 		boolean isFleetRental;
 		// tbc..
@@ -416,6 +416,7 @@ public class ContractHandler {
 		orderId_str = "orderId";
 		towingAddress = "towingAddress";
 		insurancePac = "insurancePac";
+		vehicleIdent = " ";
 
 		// Get rental information
 		isFleetRental = order.isFleetRental();
@@ -436,6 +437,7 @@ public class ContractHandler {
 			carModel = "";
 			for (Car loop_car : cars) {
 				carModel += loop_car.getHTMLCarDetails() + "<br>";
+				vehicleIdent += loop_car.getVehicleIdentificationNumber() + " ";
 			}
 		}
 
@@ -501,7 +503,7 @@ public class ContractHandler {
 
 		try {
 			text = String.format(text, surname, carModel, pickupLocation, rentalStart, returnLocation, rentalEnd,
-					orderId_str, towingAddress, insurancePac);
+					orderId_str, towingAddress, insurancePac, vehicleIdent);
 		} catch (IllegalFormatException e) {
 			subject = "illegal conversion ";
 			email = "bvis@bvis.com";
