@@ -30,7 +30,7 @@
           <label for="cars">Car Models:</label>
           <ui:repeat id="cars" var="car" value="#{order.rentalOrder.cars}" varStatus="status"> 
           <h:selectOneMenu id="carIds" value="#{car.id}">
-              <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
+              <f:selectItems value ="#{order.allCarsAvailableForFleet}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
           </h:selectOneMenu>
           <br />
           </ui:repeat>

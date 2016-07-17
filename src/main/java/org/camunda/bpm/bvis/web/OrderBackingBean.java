@@ -107,6 +107,18 @@ public class OrderBackingBean {
 	public Collection<Car> getAllAvailableCars() {
 		return carService.getAvailableCarsForPeriod(rentalOrder.getPick_up_date(), rentalOrder.getReturn_date());
 	}
+	
+	public Collection<Car> getAllCarsAvailableForFleet() {
+		ArrayList<Car> fleet = new ArrayList<Car>();
+		fleet = (ArrayList<Car>) carService.getAvailableCarsForPeriod(rentalOrder.getPick_up_date(), rentalOrder.getReturn_date());
+		
+		for(Car carX : rentalOrder.getCars()) {
+			if(fleet.contains(carX) == false) {
+				fleet.add(carX);
+			}
+		}
+		return fleet;
+	}
 
 	public Collection<String> getAllCarNames() {
 		return carService.getAllCarNames();
@@ -173,7 +185,7 @@ public class OrderBackingBean {
 	public void recalculateFleetPrice() throws IOException {
 		Map<String, String> params =FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		ArrayList <Car> cars = new ArrayList<Car>();
-		System.out.println("!!!!!!!!!!!" + params);
+
 		for (int i=0; i<rentalOrder.getCars().size(); i++) {
 			long carId = Long.parseLong(params.get("submitForm:cars:"+i+":carIds"));
 			cars.add(carService.getCar(carId));
