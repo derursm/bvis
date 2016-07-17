@@ -337,7 +337,7 @@ public class PlaceInquiryBackingBean {
 		priceCars = contractHandler.calcCarPrice(carToBook, returnDate, pickupDate);
 
 		InsuranceType bookingInsuranceType = InsuranceType.valueOf(insuranceType);
-		priceInsurance_expected = contractHandler.calcInsurancePrice(carToBook, bookingInsuranceType);
+		priceInsurance_expected = contractHandler.calcInsurancePrice(carToBook, bookingInsuranceType, returnDate, pickupDate);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String refreshpage = fc.getViewRoot().getViewId();
