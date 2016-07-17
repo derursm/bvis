@@ -286,8 +286,9 @@ public class ClaimHandler {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		long claimID = (long)variables.get("claimID");
 		Claim claim = claimService.getClaim(claimID);
+		System.out.println("INITIATING SENDING CLAIM FOR ORDER " + claim.getRentalOrder().getOrderID());
 		SendClaim sender = new SendClaim();
-		String result = sender.sendClaim(claim, delegateExecution.getActivityInstanceId());
+		String result = sender.sendClaim(claim, delegateExecution.getProcessInstanceId());
 		System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
 		//TODO handle failures		
 	}
@@ -329,7 +330,7 @@ public class ClaimHandler {
 		claimReview.setClaimStatus((int)variables.get("bvisAnswer"));
 		claimReview.setProcessIDCapitol((String)variables.get("processIDCapitol"));
 		SendClaimReview sender = new SendClaimReview();
-		String result = sender.sendClaimReview(claimReview, delegateExecution.getActivityInstanceId());
+		String result = sender.sendClaimReview(claimReview, delegateExecution.getProcessInstanceId());
 		System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
 		//TODO handle failures		
 	}

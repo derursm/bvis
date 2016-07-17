@@ -42,7 +42,7 @@ public class SendInquiry {
 		contractDetails.setProcessinstance_id_bvis(processInstanceID);
 		System.out.println("SENDING OBJECT SUCCESSFULLY PARSED");
 
-		System.out.println("SENDING PARSED OBJECT");
+		System.out.println("SENDING PARSED OBJECT ORDER ID: " + contractDetails.getOrder().getOrder_id());
 		RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 		ResteasyWebTarget target = new ResteasyClientBuilder().build().target(BASE_URI);
 		SendInquiryClient senderClient = target.proxy(SendInquiryClient.class);
