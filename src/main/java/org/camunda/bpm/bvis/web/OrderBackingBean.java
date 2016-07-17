@@ -85,7 +85,20 @@ public class OrderBackingBean {
 	}
 
 	public Collection<Car> getAllCars() {
-		return carService.getAllCars();
+		Collection<Car> allCars = carService.getAllCars();
+		ArrayList<Car> distinctCarTypes = new ArrayList<Car>();
+		for (Car c : allCars) {
+			boolean contained = false;
+			for (Car c1 : distinctCarTypes) {
+				if (c.getModel().equals(c1.getModel())) {
+					contained = true;
+					break;
+				}
+			}
+			if (!contained) distinctCarTypes.add(c);
+		}
+		System.out.println("Number of distinct cars: " + distinctCarTypes.size());
+		return distinctCarTypes;
 	}
 
 	public Collection<String> getAllCarNames() {
