@@ -14,7 +14,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 @Named
 public class SendClaimReview {
 
-	private static final String BASE_URI = "http://ec2-52-42-80-207.us-west-2.compute.amazonaws.com/partner-interface/";
+	private static final String BASE_URI = "http://ec2-52-59-43-126.eu-central-1.compute.amazonaws.com/partner-interface/";
 	
 	public String sendClaimReview(ClaimReview entityReview,
 			String processInstanceID) {

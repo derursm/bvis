@@ -24,7 +24,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 @Named
 public class SendInquiry {
 
-	private static final String BASE_URI = "http://ec2-52-42-80-207.us-west-2.compute.amazonaws.com/partner-interface/";
+	private static final String BASE_URI = "http://ec2-52-59-43-126.eu-central-1.compute.amazonaws.com/partner-interface/";
 	
 	
 	@EJB
