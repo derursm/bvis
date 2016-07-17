@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.application.ViewHandler;
@@ -135,10 +136,20 @@ public class OrderBackingBean {
 		rentalOrder.setPriceInsurance_expected(contractHandler.calcInsurancePrice(rentalOrder.getCars(), 
 				rentalOrder.getInsurance_type(), rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
 
+		Map<String, String> params =FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		ArrayList <Car> cars = new ArrayList<Car>();
+		
+		for (int i=0; i<rentalOrder.getCars().size(); i++) {
+			long carId = Long.parseLong(params.get("submitForm:cars:"+i+":carIds"));
+			cars.add(carService.getCar(carId));
+		}
+		
+		rentalOrder.setCars(cars);
+		
 		contractHandler.updateOrder(rentalOrder, false);
 		if (reload) {
 			contractHandler.updateOrder(rentalOrder, false);
-			
+
 			FacesContext fc = FacesContext.getCurrentInstance();
 			String refreshpage = fc.getViewRoot().getViewId();
 			ViewHandler ViewH = fc.getApplication().getViewHandler();
