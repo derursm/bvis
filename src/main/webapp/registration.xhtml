@@ -48,10 +48,8 @@
                                     <label class="label-bvis" for="country">Country:</label>
                                     <b:inputText id="country" value="#{registration.country}" required="true" />
 
-                                    <label class="label-bvis"  for="customer.dateOfBirth">Date of birth:</label>
-                                    <b:inputText id="dateOfBirth" value="#{registration.dateOfBirth}" required="true" >
-                                        <f:convertDateTime pattern="dd-mm-yyyy" />
-                                    </b:inputText>
+                                    <h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
+                                    <b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{placeInquiry.dateOfBirth}" required="true" />
 
                                   <label class="label-bvis"  for="companyCustomer">Company customer?</label>
                                   <b:selectBooleanCheckbox id="companyCustomer" value="#{registration.company}" required="true" />
@@ -79,6 +77,7 @@
 
                             <label class="label-bvis" for="password">Password:</label>
                             <h:inputSecret id="password" value="#{registration.password}" required="true" />
+
                         </h:panelGrid>
 
                     </div> <!-- END Col 6 -->
