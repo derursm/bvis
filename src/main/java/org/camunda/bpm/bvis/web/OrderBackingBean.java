@@ -1,13 +1,16 @@
 package org.camunda.bpm.bvis.web;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -18,6 +21,7 @@ import org.camunda.bpm.bvis.ejb.beans.CarServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.PickUpLocationServiceBean;
 import org.camunda.bpm.bvis.entities.Car;
+import org.camunda.bpm.bvis.entities.Insurance;
 import org.camunda.bpm.bvis.entities.InsuranceType;
 import org.camunda.bpm.bvis.entities.PickUpLocation;
 import org.camunda.bpm.bvis.entities.RentalOrder;
@@ -100,6 +104,10 @@ public class OrderBackingBean {
 		System.out.println("Number of distinct cars: " + distinctCarTypes.size());
 		return distinctCarTypes;
 	}
+	
+	public Collection<Car> getAllAvailableCars() {
+		return carService.getAvailableCarsForPeriod(rentalOrder.getPick_up_date(), rentalOrder.getReturn_date());
+	}
 
 	public Collection<String> getAllCarNames() {
 		return carService.getAllCarNames();
@@ -121,9 +129,35 @@ public class OrderBackingBean {
 		return InsuranceType.values();
 	}
 
-	public void submitForm() throws IOException {
-		// Persist updated order entity and complete task form
-		contractHandler.updateOrder(rentalOrder, true);
+	public void updateSingleOrder(boolean reload) throws IOException {
+		
+		rentalOrder.setPriceCars(contractHandler.calcCarPrice(rentalOrder.getCars().iterator().next(), 
+				rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
+		/*
+		BigDecimal estimatedCosts
+		Insurance insurance = new Insurance();
+		insurance.setPickUpDate(rentalOrder.getPick_up_date());
+		insurance.setReturnDate(rentalOrder.getReturn_date());
+		insurance.setType(rentalOrder.in);
+		insurance.setEstimatedCosts(estimatedCosts);
+
+		rentalOrder.setInsurance(insurance);*/
+
+		contractHandler.updateOrder(rentalOrder, false);
+		if (reload) {
+			contractHandler.updateOrder(rentalOrder, false);
+			
+			FacesContext fc = FacesContext.getCurrentInstance();
+			String refreshpage = fc.getViewRoot().getViewId();
+			ViewHandler ViewH = fc.getApplication().getViewHandler();
+			UIViewRoot UIV = ViewH.createView(fc, refreshpage);
+			UIV.setViewId(refreshpage);
+			fc.setViewRoot(UIV);
+		}
+		
+		else {
+			contractHandler.updateOrder(rentalOrder, true);
+		}
 	}
 
 	public void setFleetSize() throws IOException {

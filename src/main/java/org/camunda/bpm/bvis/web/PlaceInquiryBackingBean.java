@@ -58,12 +58,12 @@ public class PlaceInquiryBackingBean {
 	private String country;
 	private Date dateOfBirth;
 	private boolean fleetRental;
-	private String car;
+	private long car;
 	private String comment;
 	private Date pickupDate;
 	private Date returnDate;
-	private String pickupLocation;
-	private String returnLocation;
+	private long pickupLocation;
+	private long returnLocation;
 	private String insuranceType;
 	private double priceCars;
 	private double priceInsurance_expected;
@@ -184,11 +184,11 @@ public class PlaceInquiryBackingBean {
 		this.fleetRental = fleetRental;
 	}
 
-	public String getCar() {
+	public long getCar() {
 		return car;
 	}
 
-	public void setCar(String car) {
+	public void setCar(long car) {
 		this.car = car;
 	}
 
@@ -208,19 +208,19 @@ public class PlaceInquiryBackingBean {
 		return returnDate;
 	}
 
-	public String getPickupLocation() {
+	public long getPickupLocation() {
 		return pickupLocation;
 	}
 
-	public void setPickupLocation(String pickupLocation) {
+	public void setPickupLocation(long pickupLocation) {
 		this.pickupLocation = pickupLocation;
 	}
 
-	public String getReturnLocation() {
+	public long getReturnLocation() {
 		return returnLocation;
 	}
 
-	public void setReturnLocation(String returnLocation) {
+	public void setReturnLocation(long returnLocation) {
 		this.returnLocation = returnLocation;
 	}
 
@@ -333,7 +333,7 @@ public class PlaceInquiryBackingBean {
 
 	public void recalculatePrice() {
 
-		Car carToBook = carService.getCar(Long.parseLong(car));
+		Car carToBook = carService.getCar(car);
 		priceCars = contractHandler.calcCarPrice(carToBook, returnDate, pickupDate);
 
 		InsuranceType bookingInsuranceType = InsuranceType.valueOf(insuranceType);
