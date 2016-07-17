@@ -35,18 +35,6 @@
           <br />
           </ui:repeat>
           
-          <label for="pickUpDate">Pickup date:</label>
-          <!-- create process variables using the processVariables map. -->
-          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" required="true">
-            <f:convertDateTime pattern="dd-MM-yyyy" />
-          </h:inputText>
-          
-          <label for="returnDate">Return date:</label>
-          <!-- create process variables using the processVariables map. -->
-          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" required="true">
-            <f:convertDateTime pattern="dd-MM-yyyy" />
-          </h:inputText>
-          
           <label for="pickUpLocation">Pickup location:</label>
           <h:selectOneMenu id="storeID" value="#{processVariables['pickUpLoc']}" >
        	  <f:selectItems value="#{order.allPickUpLocations}" var="l" itemValue="#{l.storeID}" itemLabel="#{l.storeName}" />
@@ -69,7 +57,7 @@
           <h:outputText id="priceInsurance_expected" value="#{order.rentalOrder.priceInsurance_expected} Euro" readonly="true" />
       
       	  <h:panelGroup />
-          <h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.updateSingleOrder(true)}" />
+          <h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.recalculateFleetPrice()}" />
       
           
           <h3><label>Clerk comments</label></h3>
@@ -83,7 +71,7 @@
        
       </h:panelGrid>
      <h:commandButton id="return_button" value="Back" action="#{order.backToModifyFleetOrder()}" />
-  	 <h:commandButton id="submit_button" value="Save" action="#{order.updateFleetOrder()}" />
+  	 <h:commandButton id="submit_button" value="Save" action="#{order.saveFleetOrder()}" />
     </h:form>
   </h:body>
   </f:view>

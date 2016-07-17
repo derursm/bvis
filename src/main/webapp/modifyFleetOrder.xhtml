@@ -31,6 +31,18 @@
           <h:selectOneMenu id="numberOfCars" name="numberOfCars" value="#{order.numberOfCars}" >
        	  	<f:selectItems value="#{order.validAmounts}" />
           </h:selectOneMenu>
+          
+          <label for="pickUpDate">Pickup date:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" required="true">
+            <f:convertDateTime pattern="dd-MM-yyyy" />
+          </h:inputText>
+          
+          <label for="returnDate">Return date:</label>
+          <!-- create process variables using the processVariables map. -->
+          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" required="true">
+            <f:convertDateTime pattern="dd-MM-yyyy" />
+          </h:inputText>
          
           <h3><label>Contact details</label></h3>
           <h:panelGroup />

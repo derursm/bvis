@@ -61,7 +61,7 @@
           <h:outputText id="priceInsurance_expected" value="#{order.rentalOrder.priceInsurance_expected} Euro" readonly="true" />
       
       	  <h:panelGroup />
-          <h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.updateSingleOrder(true)}" />
+          <h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.updateOrder(true)}" />
       
          
           <h3><label>Contact details</label></h3>
@@ -112,7 +112,7 @@
       </h:panelGrid>
      <h:commandButton id="postpone" value="Postpone Task"
           action="#{order.postponeTask()}" />
-     <h:commandButton id="submit_button" value="Submit" action="#{order.updateSingleOrder(false)}" />
+     <h:commandButton id="submit_button" value="Submit" action="#{order.updateOrder(false)}" />
     </h:form>
   </h:body>
   </f:view>

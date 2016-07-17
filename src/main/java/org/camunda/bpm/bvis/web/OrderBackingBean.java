@@ -128,25 +128,14 @@ public class OrderBackingBean {
 		return InsuranceType.values();
 	}
 
-	public void updateSingleOrder(boolean reload) throws IOException {
+	public void updateOrder(boolean reload) throws IOException {
 		
 		rentalOrder.setPriceCars(contractHandler.calcCarPrice(rentalOrder.getCars(), 
 				rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
 		
 		rentalOrder.setPriceInsurance_expected(contractHandler.calcInsurancePrice(rentalOrder.getCars(), 
 				rentalOrder.getInsurance_type(), rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
-
-		Map<String, String> params =FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		ArrayList <Car> cars = new ArrayList<Car>();
 		
-		for (int i=0; i<rentalOrder.getCars().size(); i++) {
-			long carId = Long.parseLong(params.get("submitForm:cars:"+i+":carIds"));
-			cars.add(carService.getCar(carId));
-		}
-		
-		rentalOrder.setCars(cars);
-		
-		contractHandler.updateOrder(rentalOrder, false);
 		if (reload) {
 			contractHandler.updateOrder(rentalOrder, false);
 
@@ -162,9 +151,11 @@ public class OrderBackingBean {
 			contractHandler.updateOrder(rentalOrder, true);
 		}
 	}
+    
+	
 
 	public void setFleetSize() throws IOException {
-		Car car = getAllCars().iterator().next();
+		Car car = getAllAvailableCars().iterator().next();
 		Collection<Car> cars = new ArrayList<Car>();
 
 		for (int i = 0; i < numberOfCars; i++) {
@@ -179,14 +170,28 @@ public class OrderBackingBean {
 
 	}
 
-	public void updateFleetOrder() {
+	public void recalculateFleetPrice() throws IOException {
+		Map<String, String> params =FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		ArrayList <Car> cars = new ArrayList<Car>();
+		System.out.println("!!!!!!!!!!!" + params);
+		for (int i=0; i<rentalOrder.getCars().size(); i++) {
+			long carId = Long.parseLong(params.get("submitForm:cars:"+i+":carIds"));
+			cars.add(carService.getCar(carId));
+		}
+		
+		rentalOrder.setCars(cars);
+		updateOrder(true);
+		
+	}
+	
+	public void saveFleetOrder() throws IOException {
 		Long pickUpLocationId = (Long.parseLong((String) businessProcess.getVariable("pickUpLoc")));
 		Long returnStoreId = (Long.parseLong((String) businessProcess.getVariable("returnStore")));
 
 		rentalOrder.setPickUpStore((PickUpLocation) locationService.getPickUpLocation(pickUpLocationId));
 		rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
 
-		contractHandler.updateOrder(rentalOrder, true);
+		updateOrder(false);
 	}
 	
 	public void backToModifyFleetOrder() throws IOException {
