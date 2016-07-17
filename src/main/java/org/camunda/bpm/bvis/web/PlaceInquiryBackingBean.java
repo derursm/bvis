@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -334,10 +335,13 @@ public class PlaceInquiryBackingBean {
 	public void recalculatePrice() {
 
 		Car carToBook = carService.getCar(car);
-		priceCars = contractHandler.calcCarPrice(carToBook, returnDate, pickupDate);
+		ArrayList <Car> cars = new ArrayList<Car>();
+		cars.add(carToBook);
+		
+		priceCars = contractHandler.calcCarPrice(cars, returnDate, pickupDate);
 
 		InsuranceType bookingInsuranceType = InsuranceType.valueOf(insuranceType);
-		priceInsurance_expected = contractHandler.calcInsurancePrice(carToBook, bookingInsuranceType, returnDate, pickupDate);
+		priceInsurance_expected = contractHandler.calcInsurancePrice(cars, bookingInsuranceType, returnDate, pickupDate);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String refreshpage = fc.getViewRoot().getViewId();

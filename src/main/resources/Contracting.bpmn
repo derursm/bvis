@@ -68,7 +68,7 @@
         <flowNodeRef>UserTask_0nt3b79</flowNodeRef>
       </lane>
     </laneSet>
-    <userTask id="UserTask_1pqacb0" name="Negotiate customer requirements" camunda:candidateGroups="management-contract">
+    <userTask id="UserTask_1pqacb0" name="Negotiate customer requirements" camunda:formKey="app:modifyFleetOrder.jsf" camunda:candidateGroups="management-contract">
       <incoming>SequenceFlow_0nqiz4b</incoming>
       <outgoing>SequenceFlow_1qrfjth</outgoing>
     </userTask>
@@ -163,7 +163,7 @@
       <extensionElements>
         <signavio:signavioLabel align="right" distance="7.600745" from="1" orientation="lr" ref="text_name" to="2" valign="bottom" x="1427.8020047418315" y="1222.5226127241529" />
       </extensionElements>
-      <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${not contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="SequenceFlow_1qrfjth" sourceRef="UserTask_1pqacb0" targetRef="sid-8EAD1CDF-4B22-413A-85CF-1FC79AB33F00" />
     <parallelGateway id="sid-2C73E35B-A2C4-4486-9A41-FBF5365F8FB6" name="" gatewayDirection="Diverging">
@@ -342,7 +342,7 @@
       <extensionElements>
         <signavio:signavioLabel align="left" distance="7.409446" from="0" orientation="ll" ref="text_name" to="1" valign="bottom" x="1325.0" y="1166.3313208083175" />
       </extensionElements>
-      <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
     </sequenceFlow>
     <exclusiveGateway id="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7" name="" gatewayDirection="Converging">
       <extensionElements>

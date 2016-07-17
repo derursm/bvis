@@ -18,18 +18,12 @@
     <title>Check the car rental order</title>
   </h:head>
   <h:body>
-    The following car rental order was rejected due to the fact that provided information do not fulfill our requirements <br />
-    Please edit if needed and then confirm or reject the order
-    <h1>Car Order:</h1>
+    <p>Please contact customer and approve the following fleet order</p>
     <h:form id="submitForm">
       <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
     <h3><label>Car options</label></h3>
     <h:panelGroup />
-      <label for="customer.company">Car fleet:</label>
-          <!-- create process variables using the processVariables map. -->
-          <h:selectBooleanCheckbox id="fleet" value="#{order.rentalOrder.fleetRental}" required="true" disabled="true"/>
-          
-          <label for="inquiryText">Comments:</label>
+          <label for="inquiryText">Customer comments:</label>
           <!-- create process variables using the processVariables map. -->
           <h:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
     
@@ -79,7 +73,7 @@
           <label for="customer.dateOfBirth">Date of birth:</label>
           <!-- create process variables using the processVariables map. -->
           <h:inputText id="dateOfBirth" value="#{order.rentalOrder.customer.dateOfBirth}" required="true" >
-            <f:convertDateTime pattern="dd-mm-yyyy" />
+            <f:convertDateTime pattern="dd-MM-yyyy" />
           </h:inputText>
             
           <label for="customer.companyName">Company:</label>

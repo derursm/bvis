@@ -129,10 +129,10 @@ public class OrderBackingBean {
 
 	public void updateSingleOrder(boolean reload) throws IOException {
 		
-		rentalOrder.setPriceCars(contractHandler.calcCarPrice(rentalOrder.getCars().iterator().next(), 
+		rentalOrder.setPriceCars(contractHandler.calcCarPrice(rentalOrder.getCars(), 
 				rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
 		
-		rentalOrder.setPriceInsurance_expected(contractHandler.calcInsurancePrice(rentalOrder.getCars().iterator().next(), 
+		rentalOrder.setPriceInsurance_expected(contractHandler.calcInsurancePrice(rentalOrder.getCars(), 
 				rentalOrder.getInsurance_type(), rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
 
 		contractHandler.updateOrder(rentalOrder, false);

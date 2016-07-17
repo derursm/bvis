@@ -15,20 +15,15 @@
   </f:metadata>
   <h:head>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <title>Check the car rental order</title>
+    <title>Modify fleet cars</title>
   </h:head>
   <h:body>
-    Text here
-    <h1>Car Order:</h1>
+    Please contact customer and approve the following fleet order
     <h:form id="submitForm">
       <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
     <h3><label>Car options</label></h3>
     <h:panelGroup />
-      <label for="customer.company">Car fleet:</label>
-          <!-- create process variables using the processVariables map. -->
-          <h:selectBooleanCheckbox id="fleet" value="#{order.rentalOrder.fleetRental}" required="true" disabled="true"/>
-          
-          <label for="inquiryText">Comments:</label>
+          <label for="inquiryText">Customer comments:</label>
           <!-- create process variables using the processVariables map. -->
           <h:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
          
@@ -42,14 +37,14 @@
           
           <label for="pickUpDate">Pickup date:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" placeholder="dd-mm-yyyy" >
-            <f:convertDateTime pattern="dd-mm-yyyy" />
+          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" >
+            <f:convertDateTime pattern="dd-MM-yyyy" />
           </h:inputText>
           
           <label for="returnDate">Return date:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" placeholder="dd-mm-yyyy">
-            <f:convertDateTime pattern="dd-mm-yyyy" />
+          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" >
+            <f:convertDateTime pattern="dd-MM-yyyy" />
           </h:inputText>
           
           <label for="pickUpLocation">Pickup location:</label>
@@ -67,12 +62,25 @@
       	  <f:selectItems value="#{order.insuranceTypes}" />
           </h:selectOneMenu>
           
+          <label class="label-bvis"  for="priceCars">Fleet price:</label>
+          <h:outputText id="priceCars" value="#{order.rentalOrder.priceCars} Euro" readonly="true" />
+
+          <label class="label-bvis"  for="priceInsurance_expected">Insurance price:</label>
+          <h:outputText id="priceInsurance_expected" value="#{order.rentalOrder.priceInsurance_expected} Euro" readonly="true" />
+      
+      	  <h:panelGroup />
+          <h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.updateSingleOrder(true)}" />
+      
+          
           <h3><label>Clerk comments</label></h3>
           <h:panelGroup />
           <label for="clerkComments">Clerk comments</label>
           <!-- create process variables using the processVariables map. -->
           <h:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
-        
+          
+          <label>Approve Order?</label>
+          <h:selectBooleanCheckbox id="approved" value="#{order.rentalOrder.approveStatus}" required="false" />
+       
       </h:panelGrid>
      <h:commandButton id="return_button" value="Back" action="#{order.backToModifyFleetOrder()}" />
   	 <h:commandButton id="submit_button" value="Save" action="#{order.updateFleetOrder()}" />
