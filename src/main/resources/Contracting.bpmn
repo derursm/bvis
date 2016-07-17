@@ -97,7 +97,7 @@
       <outgoing>sid-28677BF2-86F6-41E7-8CC7-E83406A6A8F2</outgoing>
     </userTask>
     <sequenceFlow id="sid-28677BF2-86F6-41E7-8CC7-E83406A6A8F2" name="" isImmediate="true" sourceRef="sid-59A05E34-58CE-4658-8FBE-A237E3F90FC0" targetRef="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" />
-    <userTask id="sid-7EBAD71E-27E6-4373-897F-29709FAC45A0" name="Handle rejection" implementation="##WebService" camunda:candidateGroups="clerks-contract">
+    <userTask id="sid-7EBAD71E-27E6-4373-897F-29709FAC45A0" name="Handle rejection" implementation="##WebService" camunda:formKey="app:insuranceRejected.jsf" camunda:candidateGroups="clerks-contract">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />

@@ -12,13 +12,24 @@
     <title>Send insurance reminder</title>
   </h:head>
   <h:body>
-    <h1>#{task.name}</h1>
+  <p>The insurance company has not provide any resolution according to the following rental order. Please contact the insurance company.</p>
     <h:form id="someForm">
-		<h:panelGrid columns="6" columnClasses="form-label,form-input,form-message error" footerClass="form-footer">
-			Order ID: <h:outputLabel value="#{processVariables['orderId']}"/> <br></br>
-			Process Instance ID: <h:outputLabel value="#{processVariables['processId']}"/> <br></br>
-		</h:panelGrid>
-      <h:commandButton id="complete" value="Task Completed"
+        <h:panelGrid columns="2" cellpadding="5" cellspacing="1" columnClasses="form-label,form-input,form-message error" footerClass="form-footer">
+          <label for="orderId">Order ID:</label>
+           <h:outputText id="orderId" value="#{processVariables['orderId']}" />
+      
+          <h3><label>Contact details</label></h3>
+          <h:panelGroup />
+          
+          <label for="firstname">Firstname:</label>
+          <h:outputText id="firstname" value="#{order.rentalOrder.customer.firstname}" />
+          
+          <label for="surname">Surname:</label>
+          <h:outputText id="surname" value="#{order.rentalOrder.customer.surname}" />
+      </h:panelGrid> 
+      <h:commandButton id="postpone" value="Postpone Task"
+          action="#{order.postponeTask()}" />
+      <h:commandButton id="complete" value="Complete Task"
           action="#{camundaTaskForm.completeTask()}" />
     </h:form>
   </h:body>
