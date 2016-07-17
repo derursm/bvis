@@ -159,7 +159,7 @@ public class ContractHandler {
 			rentalOrder.setPriceCars(priceCars);
 
 			// calculate price for insurance
-			estimatedInsurancPrice = calcInsurancePrice(car, insuranceType, returnDate, pickUpDate);
+			estimatedInsurancPrice = calcInsurancePrice(cars, insuranceType, returnDate, pickUpDate);
 			rentalOrder.setPriceInsurance_expected(estimatedInsurancPrice);
 		}
 		
