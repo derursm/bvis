@@ -98,7 +98,7 @@ public class ApplicationInitilizer {
 				"08820", "Barcelona", "Spain"));
 		pickupLocationService.create(new PickUpLocation("Madrid Airport", "+34 913 21 10 00", "Avenida de la Hispanidad, s/n", "",
 				"28042", "Madrid", "Spain"));
-        pickupLocationService.create(new PickUpLocation("Münster-Osnabrück Airport", "+49 2571 94 3360", "Airportallee", "1",
+        pickupLocationService.create(new PickUpLocation("Muenster-Osnabrueck Airport", "+49 2571 94 3360", "Airportallee", "1",
                 "48268", "Greven", "Germany"));
         pickupLocationService.create(new PickUpLocation("Hamburg Airport", "+49 40 507 50", "Flughafenstrasse", "1",
                 "22335", "Hamburg", "Germany"));

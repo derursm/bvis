@@ -9,13 +9,4 @@
       <property name="isScanForProcessDefinitions">true</property>
     </properties>
   </process-archive>
-  
-  <process-archive name="Contracting">
-    <process-engine>default</process-engine>
-    <properties>
-      <property name="isDeleteUponUndeploy">true</property>
-      <property name="isScanForProcessDefinitions">true</property>
-    </properties>
-  </process-archive>
-
 </process-application>

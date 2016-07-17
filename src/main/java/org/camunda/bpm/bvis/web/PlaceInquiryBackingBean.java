@@ -58,12 +58,12 @@ public class PlaceInquiryBackingBean {
 	private String country;
 	private Date dateOfBirth;
 	private boolean fleetRental;
-	private long car;
+	private String car;
 	private String comment;
 	private Date pickupDate;
 	private Date returnDate;
-	private long pickupLocation;
-	private long returnLocation;
+	private String pickupLocation;
+	private String returnLocation;
 	private String insuranceType;
 	private double priceCars;
 	private double priceInsurance_expected;
@@ -184,11 +184,11 @@ public class PlaceInquiryBackingBean {
 		this.fleetRental = fleetRental;
 	}
 
-	public long getCar() {
+	public String getCar() {
 		return car;
 	}
 
-	public void setCar(long car) {
+	public void setCar(String car) {
 		this.car = car;
 	}
 
@@ -208,19 +208,19 @@ public class PlaceInquiryBackingBean {
 		return returnDate;
 	}
 
-	public long getPickupLocation() {
+	public String getPickupLocation() {
 		return pickupLocation;
 	}
 
-	public void setPickupLocation(long pickupLocation) {
+	public void setPickupLocation(String pickupLocation) {
 		this.pickupLocation = pickupLocation;
 	}
 
-	public long getReturnLocation() {
+	public String getReturnLocation() {
 		return returnLocation;
 	}
 
-	public void setReturnLocation(long returnLocation) {
+	public void setReturnLocation(String returnLocation) {
 		this.returnLocation = returnLocation;
 	}
 
@@ -333,11 +333,11 @@ public class PlaceInquiryBackingBean {
 
 	public void recalculatePrice() {
 
-		Car carToBook = carService.getCar(car);
+		Car carToBook = carService.getCar(Long.parseLong(car));
 		priceCars = contractHandler.calcCarPrice(carToBook, returnDate, pickupDate);
 
 		InsuranceType bookingInsuranceType = InsuranceType.valueOf(insuranceType);
-		priceInsurance_expected = contractHandler.calcInsurancePrice(carToBook, bookingInsuranceType, returnDate, pickupDate);
+		priceInsurance_expected = contractHandler.calcInsurancePrice(carToBook, bookingInsuranceType);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String refreshpage = fc.getViewRoot().getViewId();

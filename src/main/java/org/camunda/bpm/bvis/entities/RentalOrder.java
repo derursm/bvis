@@ -37,11 +37,13 @@ public class RentalOrder implements Serializable {
 	protected PickUpLocation pickUpStore;
 	@ManyToOne
 	protected PickUpLocation returnStore;
+	protected InsuranceType insuranceType;
 	protected String inquiryText;
 	@NotNull
 	protected boolean fleetRental;
 	@ManyToMany(fetch = FetchType.EAGER)
 	protected Collection<Car> cars;
+	protected long insuranceID;
 	
 	@OneToOne(cascade = {DETACH,MERGE,PERSIST,REFRESH}, fetch = FetchType.EAGER)
 	protected Insurance insurance;
@@ -50,6 +52,8 @@ public class RentalOrder implements Serializable {
 	protected Date requestDate;
 	
 	protected double priceCars;
+	protected double priceInsurance_expected;
+	protected double priceInsurance_final;
 	protected int discount;
 	protected double price;	
 
@@ -120,6 +124,14 @@ public class RentalOrder implements Serializable {
 	public void setReturn_date(Date return_date) {
 		this.returnDate = return_date;
 	}
+
+	public InsuranceType getInsurance_type() {
+		return insuranceType;
+	}
+	
+	public void setInsurance_type(InsuranceType insurance_type) {
+		this.insuranceType = insurance_type;
+	}
 	
 	public Long getOrderID() {
 		return orderID;
@@ -145,6 +157,14 @@ public class RentalOrder implements Serializable {
 		this.returnStore = returnStore;
 	}
 
+	public InsuranceType getInsuranceType() {
+		return insuranceType;
+	}
+
+	public void setInsuranceType(InsuranceType insuranceType) {
+		this.insuranceType = insuranceType;
+	}
+
 	public String getInquiryText() {
 		return inquiryText;
 	}
@@ -161,12 +181,28 @@ public class RentalOrder implements Serializable {
 		this.fleetRental = fleetRental;
 	}
 
+	public long getInsuranceID() {
+		return insuranceID;
+	}
+
+	public void setInsuranceID(long insuranceID) {
+		this.insuranceID = insuranceID;
+	}
+
 	public Collection<Car> getCars() {
 		return cars;
 	}
 	
 	public void setCars(Collection<Car> cars) {
 		this.cars = cars;
+	}
+	
+	public long getInsurance_ID() {
+		return insuranceID;
+	}
+	
+	public void setInsurance_ID(long insurance_ID) {
+		this.insuranceID = insurance_ID;
 	}
 	
 	public String getClerkComments() {
@@ -190,6 +226,18 @@ public class RentalOrder implements Serializable {
 	}
 	public double getPriceCars() {
 		return this.priceCars;
+	}
+	public void setPriceInsurance_expected(double priceInsurance_expected) {
+		this.priceInsurance_expected = priceInsurance_expected;
+	}
+	public double getPriceInsurance_expected() {
+		return this.priceInsurance_expected;
+	}
+	public void setPriceInsurance_final(double priceInsurance_fina) {
+		this.priceInsurance_final = priceInsurance_fina;
+	}
+	public double getPriceInsurance_final() {
+		return this.priceInsurance_final;
 	}
 	public void setPrice(double price) {
 		this.price = price;

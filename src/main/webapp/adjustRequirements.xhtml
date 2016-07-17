@@ -15,9 +15,6 @@
     <h1>#{task.name}</h1>
     <h:form id="someForm">
 			Order ID: <h:outputLabel value="#{processVariables['orderId']}"/> <br></br>
-			Customer surname: <h:outputLabel value="#{processVariables['surname']}"/> <br></br>
-			Customer firstname: <h:outputLabel value="#{processVariables['firstname']}"/> <br></br>
-			Customer phone number: <h:outputLabel value="#{processVariables['phoneNumber']}"/> <br></br>
 			<h:outputLabel value="New car model" for="newCarModel" />
 			<h:selectOneMenu id="newCarModel" value="#{processVariables['newCarId']}">
 				<f:selectItems value ="#{adjustRequirements.getAvailableCars(processVariables['orderId'])}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
