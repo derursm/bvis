@@ -36,7 +36,7 @@
                             </ol>
                         </div>
                         <samp>IMPORTANT: This is a reservation notification. The contract will be sent to you as soon as our team has handled your request.</samp>
-                        <p>If you wish to make any changes to your booking, please contact our customer service at +49 251 83 38 100</p>
+                        <p><br>If you wish to make any changes to your booking, please contact our customer service at +49 251 83 38 100</p>
 
                         <table>
                             <tr>
