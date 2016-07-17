@@ -188,7 +188,7 @@ public class ContractHandler {
 		// Add newly created order id as process variable
 		delegateExecution.setVariable("orderId", rentalOrder.getId());
 		delegateExecution.setVariable("fleet", rentalOrder.isFleetRental());
-		delegateExecution.setVariable("processId", delegateExecution.getActivityInstanceId());
+		delegateExecution.setVariable("processId", delegateExecution.getProcessInstanceId());
 		System.out.println("CREATED ORDER WITH ORDER ID: " + rentalOrder.getId());
 	}
 
@@ -551,9 +551,11 @@ public class ContractHandler {
 		int orderID = Integer.parseInt(variables.get("orderID").toString());
 		RentalOrder order = orderService.getOrder(orderID);
 		SendContractConfirmation client = new SendContractConfirmation();
+		System.out.println("SENDING CONTRACT CONFIRMATION");
 		String processInstanceIDBVIS = (String) variables.get("processId");
 		String processInstanceIDCapitol = (String) variables.get("processIdCapitol");
-		client.sendContractConfirmation(order, processInstanceIDBVIS, processInstanceIDCapitol, 1); // TODO
+		client.sendContractConfirmation(order, processInstanceIDBVIS, processInstanceIDCapitol, 1);
+		System.out.println("CONTRACT CONFIRMATION SUCCESSFULLY SENT");										 // TODO
 																									// insert
 																									// proper
 																									// contract

@@ -21,7 +21,7 @@ import org.jboss.resteasy.spi.ResteasyProviderFactory;
 @Named
 public class SendClaim {
 
-	private static final String BASE_URI = "http://ec2-52-59-43-126.eu-central-1.compute.amazonaws.com//partner-interface/";
+	private static final String BASE_URI = "http://ec2-52-59-43-126.eu-central-1.compute.amazonaws.com/partner-interface/";
 	
 	public String sendClaim(org.camunda.bpm.bvis.entities.Claim claim, String processInstanceID) {
 		ClaimDetailsDTO claimDetails = new ClaimDetailsDTO();
@@ -32,6 +32,7 @@ public class SendClaim {
 		RegisterBuiltin.register(ResteasyProviderFactory.getInstance());
 		ResteasyWebTarget target = new ResteasyClientBuilder().build().target(BASE_URI);
 		SendClaimClient senderClient = target.proxy(SendClaimClient.class);
+		System.out.println("SENDING CLAIM FOR ORDER ID: " + claimDetails.getClaim().getOrder_id());
 		String result = senderClient.sendClaim(claimDetails);
 		return result;
 	}
