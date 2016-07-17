@@ -235,7 +235,7 @@
       <outgoing>SequenceFlow_1qi1gpu</outgoing>
       <messageEventDefinition camunda:expression="${true}" />
     </intermediateThrowEvent>
-    <userTask id="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03" name="Review claim decision" implementation="##WebService" camunda:candidateGroups="clerks-claims">
+    <userTask id="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03" name="Review claim decision" implementation="##WebService" camunda:formKey="app:reviewClaimDecision.jsf" camunda:candidateGroups="clerks-claims">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
