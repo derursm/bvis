@@ -12,6 +12,7 @@ import org.camunda.bpm.bvis.entities.Insurance;
 import org.camunda.bpm.bvis.entities.InsuranceAnswer;
 import org.camunda.bpm.bvis.entities.InsurancePriceMap;
 import org.camunda.bpm.bvis.entities.InsuranceType;
+import org.camunda.bpm.bvis.entities.OrderStatus;
 import org.camunda.bpm.bvis.entities.PickUpLocation;
 import org.camunda.bpm.bvis.entities.RentalOrder;
 import org.camunda.bpm.bvis.rest.send.service.SendContractConfirmation;
@@ -176,6 +177,7 @@ public class ContractHandler {
 		insurance.setOrder(rentalOrder);
 		insurance.setType(InsuranceType.partial);
 		rentalOrder.setInsurance(insurance);
+		rentalOrder.setOrderStatus(OrderStatus.PENDING);
 
 		orderService.create(rentalOrder);
 		System.out.println("Cars: " + rentalOrder.getCars());
@@ -563,22 +565,64 @@ public class ContractHandler {
 	}
 
 	public void handleRequirements(DelegateExecution delegateExecution) {
-		RentalOrder rentalOrder = getOrder((Long) businessProcess.getVariable("orderId"));
-		Collection<Car> cars = rentalOrder.getCars();
-
-		for (Car carX : cars) {
-			if (carX.isReturned().toString() != "available") {
-				Car carNew = carService.getAvailableCarByModel(carX.getModel());
-
-				if (carNew != null) {
-					rentalOrder.removeCar(carX);
-					rentalOrder.addCar(carNew);
-
+		Map<String, Object> variables = delegateExecution.getVariables();
+		
+		// only gets called for single car rentals
+		RentalOrder rentalOrder = getOrder((Long) variables.get("orderId"));
+		Car car = rentalOrder.getCars().iterator().next();
+		
+		// get all cars that have the same model
+		Collection<Car> sameCars = carService.getAllCarsByModel(car.getModel());
+		
+		// find a car that is available in the requested period for the current rental order
+		Date begin = rentalOrder.getPick_up_date();
+		Date end = rentalOrder.getReturn_date();
+		boolean foundOne = false;
+		for (Car c : sameCars) {
+			boolean available = true;
+			for (RentalOrder o : c.getRentalOrders()) {
+				// if it is the same rental order as the current one continue
+				if (o.equals(rentalOrder)) continue;
+				// not available when
+				// case 1: pickup before pickup and return after pickup
+				// case 2: pickup after pickup and before return
+				if ((o.getPick_up_date().before(begin) || o.getPick_up_date().equals(begin))
+						&& (o.getReturn_date().after(begin) || o.getReturn_date().equals(begin))) {
+					available = false;
+					break;
+				}
+				else if ((o.getPick_up_date().after(begin) || o.getPick_up_date().equals(begin))
+						&& (o.getPick_up_date().before(end) || o.getPick_up_date().equals(end))) {
+					available = false;
+					break;
 				}
 			}
+			// if current car is available
+			if (available) {
+				foundOne = true;
+				// update newly assigned car
+				Collection<RentalOrder> currentOrders = c.getRentalOrders();
+				currentOrders.add(rentalOrder);
+				c.setRentalOrders(currentOrders);
+				carService.updateCar(c);
+				
+				// update original car
+				currentOrders = car.getRentalOrders();
+				currentOrders.remove(rentalOrder);
+				carService.updateCar(car);
+				
+				// update rental order
+				ArrayList<Car> newCarList = new ArrayList<Car>();
+				newCarList.add(c);
+				rentalOrder.setCars(newCarList);
+				orderService.updateOrder(rentalOrder);
+			}
 		}
-		System.out.println(cars.iterator().next().isReturned());
-		updateOrder(rentalOrder, false);
+		
+		if (foundOne) System.out.println("Car available");
+		else System.out.println("No car available");
+		delegateExecution.setVariable("fulfillable", foundOne);
+		
 	}
 
 	public double calcInsurancePrice(Car carToBook, InsuranceType bookingInsuranceType) {

@@ -1,6 +1,8 @@
 package org.camunda.bpm.bvis;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -145,6 +147,17 @@ public class ApplicationInitilizer {
 		// RentalOrder
 		RentalOrder order = new RentalOrder(cust, false);
 		order.setInsurance(insurance);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			Date pickup = sdf.parse("17/07/2016");
+			Date end = sdf.parse("24/07/2016");
+			order.setPick_up_date(pickup);
+			order.setReturn_date(end);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		
 		Collection<Car> cars = new ArrayList<Car>();
 		cars.add(car);

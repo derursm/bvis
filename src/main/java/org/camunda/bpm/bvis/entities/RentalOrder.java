@@ -60,7 +60,7 @@ public class RentalOrder implements Serializable {
 	protected String clerkComments;
 	protected boolean approveStatus;
 	
-	protected int contractStatus;
+	protected OrderStatus orderStatus;
 	
 	public RentalOrder(){}
 	
@@ -85,12 +85,12 @@ public class RentalOrder implements Serializable {
 		this.insurance = insurance;
 	}
 	
-	public int getContractStatus() {
-		return contractStatus;
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
 	}
 
-	public void setContractStatus(int contractStatus) {
-		this.contractStatus = contractStatus;
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 	public Long getId() {

@@ -26,6 +26,7 @@ public class OrderServiceBean {
 	
 	public void updateOrder(RentalOrder rentalOrder) {
 		em.merge(rentalOrder);
+		em.flush();
 	}
 	 
 	public boolean orderExists(long id) {

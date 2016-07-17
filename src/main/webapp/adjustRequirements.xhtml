@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+  <h:head>
+    <f:metadata>
+      <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
+    </f:metadata>
+    <title>Review insurance claim decision</title>
+  </h:head>
+  <h:body>
+    <h1>#{task.name}</h1>
+    <h:form id="someForm">
+			Order ID: <h:outputLabel value="#{processVariables['orderId']}"/> <br></br>
+			<h:outputLabel value="New car model" for="newCarModel" />
+			<h:selectOneMenu id="newCarModel" value="#{processVariables['newCarId']}">
+				<f:selectItems value ="#{adjustRequirements.getAvailableCars(processVariables['orderId'])}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
+			</h:selectOneMenu>
+			
+      <h:commandButton id="complete" value="Task Completed"
+          action="#{camundaTaskForm.completeTask()}" />
+    </h:form>
+  </h:body>
+</f:view>
+</html>
