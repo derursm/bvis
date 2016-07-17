@@ -98,25 +98,37 @@ public class ApplicationInitilizer {
 				"08820", "Barcelona", "Spain"));
 		pickupLocationService.create(new PickUpLocation("Madrid Airport", "+34 913 21 10 00", "Avenida de la Hispanidad, s/n", "",
 				"28042", "Madrid", "Spain"));
-		PickUpLocation loc = new PickUpLocation("Valencia Airport", "+34 902 40 47 04",
-				"Carretera del Aeropuerto, s/n", "", "46940", "Valencia", "Spain");
+        pickupLocationService.create(new PickUpLocation("Münster-Osnabrück Airport", "+49 2571 94 3360", "Airportallee", "1",
+                "48268", "Greven", "Germany"));
+        pickupLocationService.create(new PickUpLocation("Hamburg Airport", "+49 40 507 50", "Flughafenstrasse", "1",
+                "22335", "Hamburg", "Germany"));
+        pickupLocationService.create(new PickUpLocation("New York Airport", "+1 718 244 44 44", "New York", "NY",
+                "11430", "New York", "United States of America"));
+		PickUpLocation loc = new PickUpLocation("Hong Kong Airport", "+852 2181 88 88", "Sky Plaza Road", "1",
+                "1", "Hong Kong", "China - special treatment");
 		pickupLocationService.create(loc);
 		
 		// Cars
-		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123456", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123457", CarType.car, CarStatus.available));
-		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123458", CarType.car, CarStatus.available));
-		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123459", CarType.car, CarStatus.available));
-		carService.create(new Car("Audi", 2015, "petrol", "Audi A3", 1, "BC00BC", "W0L000051T2123460", CarType.car, CarStatus.available));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123461", CarType.car, CarStatus.inRepair));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123462", CarType.car, CarStatus.rented));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123463", CarType.car, CarStatus.rented));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123464", CarType.car, CarStatus.rented));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123465", CarType.car, CarStatus.rented));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123466", CarType.car, CarStatus.rented));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123467", CarType.car, CarStatus.rented));
-		carService.create(new Car("Toyota", 2014, "petrol", "Toyota Corolla", 1, "AB00AB", "W0L000051T2123468", CarType.car, CarStatus.rented));
-		Car car = new Car("BMW", 2000, "Diesel", "5er BMW", 210, "abc", "MS1", CarType.kombi, CarStatus.available);
+		carService.create(new Car("Audi", 2015, "petrol", "Audi RS 3 sportback", 367, "BVISAUDI001", "B-VIS 201", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi S8 plus", 605, "BVISAUDI002", "B-VIS 202", CarType.car, CarStatus.available));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi RS Q3", 340, "BVISAUDI003", "B-VIS 203", CarType.car, CarStatus.available));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi TT RS", 400, "BVISAUDI004", "B-VIS 204", CarType.car, CarStatus.available));
+		carService.create(new Car("Audi", 2015, "petrol", "Audi R8 Coupe", 610, "BVISAUDI005", "B-VIS 205", CarType.car, CarStatus.available));
+		carService.create(new Car("Audi", 2015, "electricity", "Audi A3 sportback e-tron", 204, "BVISAUDI006", "B-VIS 206", CarType.car, CarStatus.available));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW i3", 170, "BVISBMW007", "B-VIS 207", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "petrol and electricity", "BMW i8", 362, "BVISBMW008", "B-VIS 208", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "petrol", "BMW Z4", 340, "BVISBMW009", "B-VIS 209", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW M4 cabrio", 431, "BVISBMW010", "B-VIS 210", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "diesel", "BMW M6 gran coupe", 560, "BVISBMW011", "B-VIS 211", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW M6 cabrio", 560, "BVISBMW012", "B-VIS 212", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("BMW", 2016, "electricity", "BMW X6 m", 575, "BVISBMW013", "B-VIS 213", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW014", "B-VIS 214", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA X P90D", 773, "BVISBMW015", "B-VIS 215", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 75D", 332, "BVISBMW016", "B-VIS 216", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S 90D", 422, "BVISBMW017", "B-VIS 217", CarType.car, CarStatus.inRepair));
+		carService.create(new Car("TESLA", 2016, "electricity", "TESLA S P90D", 1008, "BVISBMW018", "B-VIS 218", CarType.car, CarStatus.inRepair));
+
+		Car car = new Car("Mercedes Benz", 1957, "petrol", "Mercedes Benz 300 SL Roadster", 215, "BVISBMW019", "B-VIS 219", CarType.kombi, CarStatus.available);
 		carService.create(car);
 		
 		// Dummy insurance policy

@@ -22,7 +22,7 @@ hs_err_pid*
 
 # IntelliJ IDEA
 .idea
-pom.xml
+/pom.xml
 .DS_Store
 
 ~/

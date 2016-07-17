@@ -20,35 +20,35 @@
                         <div class="col-sm-6">
                             <h3><label>Listed Orders</label></h3>
 
-                            <b:panelGrid col-spans="5,7" cellpadding="5">
-                                <h:dataTable value="#{listOrders.orders}" var="cur" styleClass="data-table"
+                            <b:panelGrid col-spans="10,2" cellpadding="6">
+                                <h:dataTable value="#{listOrders.orders}" var="c" styleClass="data-table"
                                              columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
                                              headerClass="data-cell header-cell">
                                     <h:column>
                                         <f:facet name="header">Customer Name: </f:facet>
-                                        #{cur.customer}
+                                        #{c.customer}
                                     </h:column>
 
                                     <h:column>
                                         <f:facet name = "header">Order ID: </f:facet>
-                                        #{cur.id}
+                                        #{c.id}
                                     </h:column>
 
                                     <h:column>
                                         <f:facet name = "header">Pickup location: </f:facet>
-                                        #{cur.pickUpStore}
+                                        #{c.pickUpStore}
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Return location: </f:facet>
-                                        #{cur.returnStore}
+                                        #{c.returnStore}
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Pickup date: </f:facet>
-                                        #{cur.pick_up_date}
+                                        #{c.pick_up_date}
                                     </h:column>
                                     <h:column>
                                         <f:facet name = "header">Return date: </f:facet>
-                                        #{cur.return_date}
+                                        #{c.return_date}
                                     </h:column>
 
                                 </h:dataTable>
