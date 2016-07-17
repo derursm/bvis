@@ -28,6 +28,7 @@ public class ClaimDecisionImpl implements ClaimDecision{
 		}
 		catch (Exception e) {
 			System.out.println("WRONG PROCESS INSTANCE ID RETURNED BY INSURANCE");
+			System.out.println("PROCESS ID: " + processInstanceID);
 			Response response = Response.ok("Wrong process instance ID").build();
 			return response;
 		}

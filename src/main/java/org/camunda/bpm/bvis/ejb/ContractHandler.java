@@ -134,16 +134,16 @@ public class ContractHandler {
 			Date returnDate = (Date) variables.get("returnDate");
 			rentalOrder.setReturn_date(returnDate);
 
-			Long pickUpLocationId = (Long.parseLong((String) variables.get("pickUpLoc")));
-			Long returnStoreId = (Long.parseLong((String) variables.get("returnStore")));
+			Long pickUpLocationId = (Long) variables.get("pickUpLoc");
+			Long returnStoreId = (Long) variables.get("returnStore");
 
 			rentalOrder.setPickUpStore((PickUpLocation) locationService.getPickUpLocation(pickUpLocationId));
 			rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
 
-			InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
+			InsuranceType insuranceType = (InsuranceType) variables.get("insuranceType");
 			rentalOrder.setInsurance_type((InsuranceType) insuranceType);
 
-			Long carId = (Long.parseLong((String) variables.get("car")));
+			Long carId = (Long) variables.get("car");
 
 			Car car = carService.getCar(carId);
 			Collection<Car> cars = new ArrayList<Car>();
@@ -152,11 +152,11 @@ public class ContractHandler {
 			rentalOrder.setCars((Collection<Car>) cars);
 
 			// calculate price for cars
-			double priceCars = calcCarPrice(car, returnDate, pickUpDate);
+			double priceCars = calcCarPrice(cars, returnDate, pickUpDate);
 			rentalOrder.setPriceCars(priceCars);
 
 			// calculate price for insurance
-			double price_for_insurance = calcInsurancePrice(car, insuranceType, returnDate, pickUpDate);
+			double price_for_insurance = calcInsurancePrice(cars, insuranceType, returnDate, pickUpDate);
 			rentalOrder.setPriceInsurance_expected(price_for_insurance);
 		}
 		rentalOrder.setFleetRental(isFleet);
@@ -188,7 +188,7 @@ public class ContractHandler {
 		// Add newly created order id as process variable
 		delegateExecution.setVariable("orderId", rentalOrder.getId());
 		delegateExecution.setVariable("fleet", rentalOrder.isFleetRental());
-		delegateExecution.setVariable("processId", delegateExecution.getActivityInstanceId());
+		delegateExecution.setVariable("processId", delegateExecution.getProcessInstanceId());
 		System.out.println("CREATED ORDER WITH ORDER ID: " + rentalOrder.getId());
 	}
 
@@ -551,9 +551,11 @@ public class ContractHandler {
 		int orderID = Integer.parseInt(variables.get("orderID").toString());
 		RentalOrder order = orderService.getOrder(orderID);
 		SendContractConfirmation client = new SendContractConfirmation();
+		System.out.println("SENDING CONTRACT CONFIRMATION");
 		String processInstanceIDBVIS = (String) variables.get("processId");
 		String processInstanceIDCapitol = (String) variables.get("processIdCapitol");
-		client.sendContractConfirmation(order, processInstanceIDBVIS, processInstanceIDCapitol, 1); // TODO
+		client.sendContractConfirmation(order, processInstanceIDBVIS, processInstanceIDCapitol, 1);
+		System.out.println("CONTRACT CONFIRMATION SUCCESSFULLY SENT");										 // TODO
 																									// insert
 																									// proper
 																									// contract
@@ -627,19 +629,21 @@ public class ContractHandler {
 		
 	}
 
-	public double calcInsurancePrice(Car carToBook, InsuranceType bookingInsuranceType, Date returnDate, Date pickupDate) {
-
-        double carTypeFactor = InsurancePriceMap.getInsuranceFactor(carToBook.getType());
+	public double calcInsurancePrice(Collection<Car> cars, InsuranceType bookingInsuranceType, Date returnDate, Date pickupDate) {
         double insuranceTypeFactor = InsurancePriceMap.getInsuranceFactor(bookingInsuranceType);
-
-        int ps = carToBook.getPs();
         int current_year = Calendar.getInstance().get(Calendar.YEAR);
-        int construction_year = carToBook.getConstructionYear();
-        int year_diff = current_year - construction_year;
-
-        double priceInsurance_expected = (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + (20
-                - Math.pow(1.2, year_diff) ) / 30.0;
+        double priceInsurance_expected = 0;
         
+		for(Car carItem : cars) {
+	        double carTypeFactor = InsurancePriceMap.getInsuranceFactor(carItem.getType());
+	        int ps = carItem.getPs();
+	        int construction_year = carItem.getConstructionYear();
+	        int year_diff = current_year - construction_year;
+	        
+	        priceInsurance_expected += (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + (20
+	                - Math.pow(1.2, year_diff) ) / 30.0;
+		}
+		
         Long diff = returnDate.getTime() - pickupDate.getTime();
         long rentDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
         
@@ -649,11 +653,13 @@ public class ContractHandler {
     }
 	
 	
-	public double calcCarPrice(Car carToBook, Date returnDate, Date pickupDate) {
+	public double calcCarPrice(Collection<Car> cars, Date returnDate, Date pickupDate) {
 		Long diff = returnDate.getTime() - pickupDate.getTime();
 		long rentDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-		long price = (long) CarPriceMap.getPrice(carToBook.getType());
-
+		long price = 0;
+		for(Car carItem : cars) {
+			price += (long) CarPriceMap.getPrice(carItem.getType());
+		}
 		return rentDays * price;
 	}
 }

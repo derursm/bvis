@@ -68,7 +68,7 @@
         <flowNodeRef>UserTask_0nt3b79</flowNodeRef>
       </lane>
     </laneSet>
-    <userTask id="UserTask_1pqacb0" name="Negotiate customer requirements" camunda:candidateGroups="management-contract">
+    <userTask id="UserTask_1pqacb0" name="Negotiate customer requirements" camunda:formKey="app:modifyFleetOrder.jsf" camunda:candidateGroups="management-contract">
       <incoming>SequenceFlow_0nqiz4b</incoming>
       <outgoing>SequenceFlow_1qrfjth</outgoing>
     </userTask>
@@ -126,9 +126,9 @@
       <outgoing>sid-06642223-4818-40BF-AB0D-A9684219BD84</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="sid-0ACCA590-4CF2-46FE-A6D9-A12B2C6128A2" name="Request cancelled" isImmediate="true" sourceRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" targetRef="sid-C1DDD379-D98D-405F-AEE1-0ED3837D3267">
-      <conditionExpression xsi:type="tFormalExpression">${not customerAccepted}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${not contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" name="Adjust customer requirements and update" implementation="##WebService" camunda:formKey="app:adjustRequirements.jsf" camunda:candidateGroups="clerks-contract">
+    <userTask id="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" name="Adjust customer requirements and update" implementation="##WebService" camunda:formKey="app:modifySingleOrder.jsf" camunda:candidateGroups="clerks-contract">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -163,7 +163,7 @@
       <extensionElements>
         <signavio:signavioLabel align="right" distance="7.600745" from="1" orientation="lr" ref="text_name" to="2" valign="bottom" x="1427.8020047418315" y="1222.5226127241529" />
       </extensionElements>
-      <conditionExpression xsi:type="tFormalExpression">${false}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${not contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="SequenceFlow_1qrfjth" sourceRef="UserTask_1pqacb0" targetRef="sid-8EAD1CDF-4B22-413A-85CF-1FC79AB33F00" />
     <parallelGateway id="sid-2C73E35B-A2C4-4486-9A41-FBF5365F8FB6" name="" gatewayDirection="Diverging">
@@ -342,7 +342,7 @@
       <extensionElements>
         <signavio:signavioLabel align="left" distance="7.409446" from="0" orientation="ll" ref="text_name" to="1" valign="bottom" x="1325.0" y="1166.3313208083175" />
       </extensionElements>
-      <conditionExpression xsi:type="tFormalExpression">${true}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
     </sequenceFlow>
     <exclusiveGateway id="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7" name="" gatewayDirection="Converging">
       <extensionElements>
@@ -354,7 +354,7 @@
     </exclusiveGateway>
     <sequenceFlow id="SequenceFlow_0cnszio" sourceRef="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7" targetRef="sid-20EE7783-E808-4C9A-B751-5B2F7B259933" />
     <sequenceFlow id="sid-06642223-4818-40BF-AB0D-A9684219BD84" name="Requirements updated" isImmediate="true" sourceRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" targetRef="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7">
-      <conditionExpression xsi:type="tFormalExpression">${customerAccepted}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
     </sequenceFlow>
     <exclusiveGateway id="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" name="" gatewayDirection="Diverging">
       <extensionElements>
@@ -365,10 +365,10 @@
       <outgoing>sid-2D52B35D-7330-4A42-A1B6-82C1B445E8A1</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="sid-B7CF4672-2886-4EE9-9C4D-340ABD0E8882" name="Requirements fullfilable" isImmediate="true" sourceRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" targetRef="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7">
-      <conditionExpression xsi:type="tFormalExpression">${fulfillable}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${contractHandler.getOrder(orderId).cars.iterator().next().isReturned().toString() == "available"}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-2D52B35D-7330-4A42-A1B6-82C1B445E8A1" name="Requirements not fulfillable" isImmediate="true" sourceRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" targetRef="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D">
-      <conditionExpression xsi:type="tFormalExpression">${not fulfillable}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${contractHandler.getOrder(orderId).cars.iterator().next().isReturned().toString() != "available"}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-4930D20E-DD03-40C8-98CD-5C9227D03258" name="" isImmediate="true" sourceRef="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76" targetRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" />
     <sendTask id="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" name="Send &#10;rental request confirmation" implementation="##WebService" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}">
@@ -407,7 +407,7 @@
     <sequenceFlow id="sid-E1FA9C14-2732-4445-9423-705038FBCCC6" name="" isImmediate="true" sourceRef="sid-6EF324ED-6A57-46DF-BFBC-5A28A24CDCC7" targetRef="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" />
     <sequenceFlow id="SequenceFlow_1bi6h6c" sourceRef="StartEvent_0m2odij" targetRef="sid-6EF324ED-6A57-46DF-BFBC-5A28A24CDCC7" />
     <sequenceFlow id="sid-53AB7A90-02F2-468D-8BF4-BE03E025A2E3" name="" isImmediate="true" sourceRef="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" targetRef="sid-42AA59C1-337A-4E54-AB37-AD9A2DCC5F9F" />
-    <sendTask id="SendTask_1rz1l70" name="Finalize contract" camunda:expression="${contractHandler.sendContract(execution)}">
+    <sendTask id="SendTask_1rz1l70" name="Finalize contract" camunda:expression="${contractHandler.sendContractConfirmation(execution)}">
       <extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="state">send_cont</camunda:inputParameter>

@@ -20,26 +20,19 @@ import org.camunda.bpm.bvis.ejb.beans.InsuranceServiceBean;
 import org.camunda.bpm.bvis.entities.Car;
 import org.camunda.bpm.bvis.entities.CarPriceMap;
 import org.camunda.bpm.bvis.entities.Customer;
-import org.camunda.bpm.bvis.entities.Insurance;
-import org.camunda.bpm.bvis.entities.InsurancePriceMap;
 import org.camunda.bpm.bvis.entities.InsuranceType;
 import org.camunda.bpm.bvis.web.util.EmailValidator;
 import org.camunda.bpm.bvis.web.util.WebUrls;
 import org.camunda.bpm.engine.ProcessEngine;
 import org.camunda.bpm.engine.ProcessEngines;
 import org.camunda.bpm.engine.RuntimeService;
-import org.camunda.bpm.engine.cdi.BusinessProcess;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 
 import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 @Named
 @RequestScoped
@@ -58,13 +51,13 @@ public class PlaceInquiryBackingBean {
 	private String country;
 	private Date dateOfBirth;
 	private boolean fleetRental;
-	private String car;
+	private long car;
 	private String comment;
 	private Date pickupDate;
 	private Date returnDate;
-	private String pickupLocation;
-	private String returnLocation;
-	private String insuranceType;
+	private long pickupLocation;
+	private long returnLocation;
+	private InsuranceType insuranceType;
 	private double priceCars;
 	private double priceInsurance_expected;
 
@@ -184,11 +177,11 @@ public class PlaceInquiryBackingBean {
 		this.fleetRental = fleetRental;
 	}
 
-	public String getCar() {
+	public long getCar() {
 		return car;
 	}
 
-	public void setCar(String car) {
+	public void setCar(long car) {
 		this.car = car;
 	}
 
@@ -208,27 +201,27 @@ public class PlaceInquiryBackingBean {
 		return returnDate;
 	}
 
-	public String getPickupLocation() {
+	public long getPickupLocation() {
 		return pickupLocation;
 	}
 
-	public void setPickupLocation(String pickupLocation) {
+	public void setPickupLocation(long pickupLocation) {
 		this.pickupLocation = pickupLocation;
 	}
 
-	public String getReturnLocation() {
+	public long getReturnLocation() {
 		return returnLocation;
 	}
 
-	public void setReturnLocation(String returnLocation) {
+	public void setReturnLocation(long returnLocation) {
 		this.returnLocation = returnLocation;
 	}
 
-	public String getInsuranceType() {
+	public InsuranceType getInsuranceType() {
 		return insuranceType;
 	}
 
-	public void setInsuranceType(String insuranceType) {
+	public void setInsuranceType(InsuranceType insuranceType) {
 		this.insuranceType = insuranceType;
 	}
 
@@ -333,11 +326,14 @@ public class PlaceInquiryBackingBean {
 
 	public void recalculatePrice() {
 
-		Car carToBook = carService.getCar(Long.parseLong(car));
-		priceCars = contractHandler.calcCarPrice(carToBook, returnDate, pickupDate);
+		Car carToBook = carService.getCar(car);
+		ArrayList <Car> cars = new ArrayList<Car>();
+		cars.add(carToBook);
+		
+		priceCars = contractHandler.calcCarPrice(cars, returnDate, pickupDate);
 
-		InsuranceType bookingInsuranceType = InsuranceType.valueOf(insuranceType);
-		priceInsurance_expected = contractHandler.calcInsurancePrice(carToBook, bookingInsuranceType, returnDate, pickupDate);
+		InsuranceType bookingInsuranceType = insuranceType;
+		priceInsurance_expected = contractHandler.calcInsurancePrice(cars, bookingInsuranceType, returnDate, pickupDate);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 		String refreshpage = fc.getViewRoot().getViewId();

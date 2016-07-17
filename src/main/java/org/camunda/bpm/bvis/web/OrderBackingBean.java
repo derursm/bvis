@@ -6,8 +6,10 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.faces.application.ViewHandler;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
@@ -100,6 +102,10 @@ public class OrderBackingBean {
 		System.out.println("Number of distinct cars: " + distinctCarTypes.size());
 		return distinctCarTypes;
 	}
+	
+	public Collection<Car> getAllAvailableCars() {
+		return carService.getAvailableCarsForPeriod(rentalOrder.getPick_up_date(), rentalOrder.getReturn_date());
+	}
 
 	public Collection<String> getAllCarNames() {
 		return carService.getAllCarNames();
@@ -121,9 +127,29 @@ public class OrderBackingBean {
 		return InsuranceType.values();
 	}
 
-	public void submitForm() throws IOException {
-		// Persist updated order entity and complete task form
-		contractHandler.updateOrder(rentalOrder, true);
+	public void updateSingleOrder(boolean reload) throws IOException {
+		
+		rentalOrder.setPriceCars(contractHandler.calcCarPrice(rentalOrder.getCars(), 
+				rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
+		
+		rentalOrder.setPriceInsurance_expected(contractHandler.calcInsurancePrice(rentalOrder.getCars(), 
+				rentalOrder.getInsurance_type(), rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
+
+		contractHandler.updateOrder(rentalOrder, false);
+		if (reload) {
+			contractHandler.updateOrder(rentalOrder, false);
+			
+			FacesContext fc = FacesContext.getCurrentInstance();
+			String refreshpage = fc.getViewRoot().getViewId();
+			ViewHandler ViewH = fc.getApplication().getViewHandler();
+			UIViewRoot UIV = ViewH.createView(fc, refreshpage);
+			UIV.setViewId(refreshpage);
+			fc.setViewRoot(UIV);
+		}
+		
+		else {
+			contractHandler.updateOrder(rentalOrder, true);
+		}
 	}
 
 	public void setFleetSize() throws IOException {
