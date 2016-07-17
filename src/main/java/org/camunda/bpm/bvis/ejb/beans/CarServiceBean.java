@@ -89,8 +89,10 @@ public class CarServiceBean {
 	}
 	
 	public Collection<Car> getAvailableCarsForPeriod(Date begin, Date end) {
-		final String querystring = "SELECT c FROM Car c";
+		final String querystring = "SELECT c FROM Car c WHERE c.carStatus = :carStatus";
 		TypedQuery<Car> query = em.createQuery(querystring, Car.class);
+		query.setParameter("carStatus", CarStatus.available);
+		
 		Collection<Car> allCars = query.getResultList();
 		ArrayList<Car> availableCars = new ArrayList<Car>();
 		for (Car car : allCars) {

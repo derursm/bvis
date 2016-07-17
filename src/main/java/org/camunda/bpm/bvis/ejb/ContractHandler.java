@@ -134,8 +134,8 @@ public class ContractHandler {
 			Date returnDate = (Date) variables.get("returnDate");
 			rentalOrder.setReturn_date(returnDate);
 
-			Long pickUpLocationId = (Long.parseLong((String) variables.get("pickUpLoc")));
-			Long returnStoreId = (Long.parseLong((String) variables.get("returnStore")));
+			Long pickUpLocationId = (Long) variables.get("pickUpLoc");
+			Long returnStoreId = (Long) variables.get("returnStore");
 
 			rentalOrder.setPickUpStore((PickUpLocation) locationService.getPickUpLocation(pickUpLocationId));
 			rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
@@ -143,7 +143,7 @@ public class ContractHandler {
 			InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
 			rentalOrder.setInsurance_type((InsuranceType) insuranceType);
 
-			Long carId = (Long.parseLong((String) variables.get("car")));
+			Long carId = (Long) variables.get("car");
 
 			Car car = carService.getCar(carId);
 			Collection<Car> cars = new ArrayList<Car>();

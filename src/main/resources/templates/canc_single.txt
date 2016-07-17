@@ -25,14 +25,15 @@
                         <p>Please see below your the details of your order. The booking number is: %7$s</p>
                         <div class="col-md-2">
                             <ol>
-                                <li class="mail-li">Car model: %2$s</li>
-                                <li class="mail-li">Pickup location: %3$s</li>
-                                <li class="mail-li">Pickup date: %4$s</li>
-                                <li class="mail-li">Return location: %5$s</li>
-                                <li class="mail-li">Return date: %6$s</li>
-                                <li class="mail-li">Insurance package: %9$s</li>
-                                <li class="mail-li">booking number: %7$s</li>
+                                <li class="mail-li"><b>booking number:</b> %7$s</li>
                                 <li class="mail-li"></li>
+                                <li class="mail-li"><b>Car model:</b> %2$s</li>
+                                <li class="mail-li"><b>Pickup location:</b> %3$s</li>
+                                <li class="mail-li"><b>Pickup date:</b> %4$s</li>
+                                <li class="mail-li"><b>Return location:</b> %5$s</li>
+                                <li class="mail-li"><b>Return date:</b> %6$s</li>
+                                <li class="mail-li"><b>Insurance package:</b> %9$s</li>
+
                             </ol>
                         </div>
                         <p>Nevertheless, we hope that you will contact us again for a future request.</p>
@@ -51,7 +52,7 @@
                             </tr>
                         </table>
 
-                            <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://baconipsum.com">BVIS Car Rental</a>.</p>
+                            <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://camunda-bvis.uni-muenster.de/bvis/index.xhtml">BVIS Car Rental</a>.</p>
 
                             <p><em>Your Sincerely, Beavis and Butt-Head</em></p>
                             <p><em>from BVIS Car Rental</em></p>
@@ -69,7 +70,7 @@
             <table>
                 <tr>
                     <td class="content footer footer-mail" align="center">
-                        <p>Sent by <a href="#">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 98765</p>
+                        <p>Sent by <a href="http://camunda-bvis.uni-muenster.de/bvis/index.xhtml">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 98765</p>
                         <p><a href="mailto:">awesomeness@bvis.com</a> | <a href="#">Unsubscribe - Not Possible</a></p>
                     </td>
                 </tr>

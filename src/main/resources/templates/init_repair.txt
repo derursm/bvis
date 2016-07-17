@@ -25,8 +25,9 @@
                         <p>Please see below the referenced booking</p>
                         <div class="col-md-2">
                             <ol>
-                                <li class="mail-li">Car model: %2$s</li>
-                                <li class="mail-li">Pickup location: %5$s</li>
+                                <li class="mail-li"><b>Car model:</b> %2$s</li>
+                                <li class="mail-li"><b>License plate:</b> %10$s</li>
+                                <li class="mail-li"><b>Pickup location:</b> %5$s</li>
                             </ol>
                         </div>
                         <p>In case of any questions, please contact our customer service at +49 251 83 38 100</p>
@@ -50,7 +51,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://baconipsum.com">BVIS Car Rental</a>.</p>
+                                    <p>By the way, if you would like to find more of this fine, elegant, smooth movement. <a href="http://camunda-bvis.uni-muenster.de/bvis/index.xhtml">BVIS Car Rental</a>.</p>
                                     <p><em>Your Beavis and Butt-Head Team</em></p>
                                 </td>
                                 <td>
@@ -70,7 +71,7 @@
             <table>
                 <tr>
                     <td class="content footer footer-mail" align="center">
-                        <p>Sent by <a href="#">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 098765</p>
+                        <p>Sent by <a href="http://camunda-bvis.uni-muenster.de/bvis/index.xhtml">BVIS</a>, 1234 ABC SESAM STREET, Wonderland, 098765</p>
                         <p><a href="mailto:">awesomeness@bvis.com</a> | <a href="#">Unsubscribe - Not Possible</a></p>
                     </td>
                 </tr>
