@@ -41,7 +41,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 //pdf
@@ -90,8 +89,6 @@ public class ContractHandler {
 	// private static SendHTMLEmail sendMail;
 
 	public void persistOrder(DelegateExecution delegateExecution) throws ParseException {
-		double estimatedInsurancPrice = 0;
-		
 		// Create new order instance
 		System.out.println("Process instance ID " + businessProcess.getProcessInstanceId());
 		System.out.println("Execution ID: " + businessProcess.getExecutionId());
@@ -137,16 +134,16 @@ public class ContractHandler {
 			Date returnDate = (Date) variables.get("returnDate");
 			rentalOrder.setReturn_date(returnDate);
 
-			Long pickUpLocationId = (Long.parseLong((String) variables.get("pickUpLoc")));
-			Long returnStoreId = (Long.parseLong((String) variables.get("returnStore")));
+			Long pickUpLocationId = (Long) variables.get("pickUpLoc");
+			Long returnStoreId = (Long) variables.get("returnStore");
 
 			rentalOrder.setPickUpStore((PickUpLocation) locationService.getPickUpLocation(pickUpLocationId));
 			rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
 
-			InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
+			InsuranceType insuranceType = (InsuranceType) variables.get("insuranceType");
 			rentalOrder.setInsurance_type((InsuranceType) insuranceType);
 
-			Long carId = (Long.parseLong((String) variables.get("car")));
+			Long carId = (Long) variables.get("car");
 
 			Car car = carService.getCar(carId);
 			Collection<Car> cars = new ArrayList<Car>();
@@ -159,37 +156,9 @@ public class ContractHandler {
 			rentalOrder.setPriceCars(priceCars);
 
 			// calculate price for insurance
-			estimatedInsurancPrice = calcInsurancePrice(cars, insuranceType, returnDate, pickUpDate);
-			rentalOrder.setPriceInsurance_expected(estimatedInsurancPrice);
+			double price_for_insurance = calcInsurancePrice(cars, insuranceType, returnDate, pickUpDate);
+			rentalOrder.setPriceInsurance_expected(price_for_insurance);
 		}
-		
-		// TODO GENERATE A PROPER INSURANCE. THIS IS JUST A DUMMY FOR TESTING
-		// PURPOSES
-		Insurance insurance = new Insurance();		
-		insurance.setPickUpDate((Date) variables.get("pickUpDate"));
-		insurance.setReturnDate((Date) variables.get("returnDate"));
-		insurance.setOrder(rentalOrder);
-		if(Objects.equals((String) variables.get("insuranceType"),"total")){
-			insurance.setDeductible(new BigDecimal(0));
-			insurance.setType(InsuranceType.total);
-			System.out.println("Set total insurance");
-		} 
-		if(Objects.equals((String) variables.get("insuranceType"),"partial")){
-			insurance.setDeductible(new BigDecimal(1000));
-			insurance.setType(InsuranceType.partial);
-			System.out.println("Set partial insurance");
-		} 
-		if(Objects.equals((String) variables.get("insuranceType"),"liability")){
-			insurance.setDeductible(new BigDecimal(2000));
-			insurance.setType(InsuranceType.liability);
-			System.out.println("Set liablilty insurance");
-		} 
-		
-		insurance.setEstimatedCosts(new BigDecimal(estimatedInsurancPrice));
-
-		rentalOrder.setInsurance(insurance);		
-		rentalOrder.setOrderStatus(OrderStatus.PENDING);
-		
 		rentalOrder.setFleetRental(isFleet);
 		rentalOrder.setInquiryText((String) variables.get("inquiryText"));
 
@@ -197,6 +166,18 @@ public class ContractHandler {
 		rentalOrder.setApproveStatus(false);
 
 		rentalOrder.setInsurance_ID(0);
+
+		// TODO GENERATE A PROPER INSURANCE. THIS IS JUST A DUMMY FOR TESTING
+		// PURPOSES
+		Insurance insurance = new Insurance();
+		insurance.setDeductible(new BigDecimal(1000));
+		insurance.setEstimatedCosts(new BigDecimal(20));
+		insurance.setPickUpDate((Date) variables.get("pickUpDate"));
+		insurance.setReturnDate((Date) variables.get("returnDate"));
+		insurance.setOrder(rentalOrder);
+		insurance.setType(InsuranceType.partial);
+		rentalOrder.setInsurance(insurance);
+		rentalOrder.setOrderStatus(OrderStatus.PENDING);
 
 		orderService.create(rentalOrder);
 		System.out.println("Cars: " + rentalOrder.getCars());
@@ -448,7 +429,6 @@ public class ContractHandler {
 
 		from = "bvis@bvis.com";
 		if (!isFleetRental) {
-			insurancePac = order.getInsurance().getType().toString();
 			rentalStart = order.getPick_up_date().toString();
 			rentalEnd = order.getReturn_date().toString();
 			pickupLocation = order.getPickUpStore().getHTMLContactDetails();
