@@ -329,7 +329,7 @@ public class ClaimHandler {
 		Claim claim = claimService.getClaim((long)variables.get("claimID"));
 		claimReview.setClaim(claim);
 		claimReview.setRemarks((String)variables.get("remarks"));
-		claimReview.setClaimStatus((int)variables.get("bvisAnswer"));
+		claimReview.setClaimStatus(Integer.parseInt(variables.get("bvisAnswer")+""));
 		claimReview.setProcessIDCapitol((String)variables.get("processIDCapitol"));
 		SendClaimReview sender = new SendClaimReview();
 		String result = sender.sendClaimReview(claimReview, delegateExecution.getProcessInstanceId());
@@ -339,7 +339,7 @@ public class ClaimHandler {
 	
 	public boolean claimDecisionAccepted(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
-		if ((int)variables.get("bvisAnswer") == 1) return true;
+		if (Integer.parseInt(variables.get("bvisAnswer")+"") == 1) return true;
 		else return false;
 	}
 	
@@ -348,12 +348,12 @@ public class ClaimHandler {
 	 * @param delegateExecution
 	 * @return
 	 */
-	public int rewordDecision(DelegateExecution delegateExecution) {
+	public int reworkDecision(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		// 0 = customer has to pay
-		if ((int)variables.get("customerCosts") > 0) return 0;
+		if (Double.parseDouble(variables.get("customerCosts")+"") > 0) return 0;
 		// insurance pays
-		else if ((int)variables.get("coverageCosts") > 0) return 1;
+		else if (Double.parseDouble(variables.get("coverageCosts")+"") > 0) return 1;
 		// else if insurance does not cover costs and customer does not have to pay -> third party has to pay
 		else return 2;
 	}
