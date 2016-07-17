@@ -6,109 +6,98 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 	<ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
-	<ui:define name="content">
+    <ui:define name="headline">
+        <h1 class="bvis-h1">Customer Registration <small> You will soon move with elegance, promised! </small></h1>
+    </ui:define>
+    <ui:define name="content">
 
-    <div class="container">
-        <header class="page-header">
-            <div class="col-lg-12 ">
-                <h1 class="bvis-h1">Customer Registration <small>Moving with elegance has never been easier</small></h1>
-            </div>
-        </header>
-    </div>
 
    <h:form id="submitForm">
-    <div class="container">
-        <div id="bg-img">
-        <img src="/bvis/resources/img/ny-street-bw.jpg" alt="" />
-        </div>
+    <div class="container" id="bg-img">
 
-        <div class="row">
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
-            <div class="col-sm-16">
-            <div class="col-sm-6">
-                <h3><label>Contact details</label></h3>
-                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                    
-                    <label class="label-bvis" for="customer.firstname">First name:</label>
-                    <h:inputText id="firstname" value="#{registration.firstname}" required="true" />
+           <div class="row">
+               <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+                    <div class="col-sm-6">
+                            <h3><label>Contact details</label></h3>
+                                <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
 
-                    <label class="label-bvis" for="customer.surname">Last name:</label>
-                    <h:inputText id="surname" value="#{registration.surname}" required="true" />
+                                    <h:outputLabel for="customer.firstname" value="Firstname: " />
+                                    <b:inputText id="firstname" value="#{registration.firstname}" required="true" />
 
-                    <label class="label-bvis" for="customer.email">E-mail:</label>
-                    <h:inputText id="email" value="#{registration.email}" required="true" />
+                                    <label class="label-bvis" for="customer.surname">Last name:</label>
+                                    <b:inputText id="surname" value="#{registration.surname}" required="true" />
 
-                    <label class="label-bvis" for="phoneNumber">Phone number:</label>
-                    <h:inputText id="phoneNumber" value="#{registration.phoneNumber}" required="true" />
+                                    <label class="label-bvis" for="customer.email">E-mail:</label>
+                                    <b:inputText id="email" value="#{registration.email}" required="true" />
 
-                    <label class="label-bvis"  for="street">Street:</label>
-                    <h:inputText id="street" value="#{registration.street}" required="true" />
+                                    <label class="label-bvis" for="phoneNumber">Phone number:</label>
+                                    <b:inputText id="phoneNumber" value="#{registration.phoneNumber}" required="true" />
 
-                    <label class="label-bvis" for="houseNumber">House number:</label>
-                    <h:inputText id="houseNumber" value="#{registration.houseNumber}" required="true" />
+                                    <label class="label-bvis"  for="street">Street:</label>
+                                    <b:inputText id="street" value="#{registration.street}" required="true" />
 
-                    <label class="label-bvis"  for="postcode">Postcode:</label>
-                    <h:inputText id="postcode" value="#{registration.postcode}" required="true" />
+                                    <label class="label-bvis" for="houseNumber">House number:</label>
+                                    <b:inputText id="houseNumber" value="#{registration.houseNumber}" required="true" />
 
-                    <label class="label-bvis"  for="city">City:</label>
-                    <h:inputText id="city" value="#{registration.city}" required="true" />
+                                    <label class="label-bvis"  for="postcode">Postcode:</label>
+                                    <b:inputText id="postcode" value="#{registration.postcode}" required="true" />
 
-                    <label class="label-bvis" for="country">Country:</label>
-                    <h:inputText id="country" value="#{registration.country}" required="true" />
+                                    <label class="label-bvis"  for="city">City:</label>
+                                    <b:inputText id="city" value="#{registration.city}" required="true" />
 
-                    <label class="label-bvis"  for="customer.dateOfBirth">Date of birth:</label>
-                    <h:inputText id="dateOfBirth" value="#{registration.dateOfBirth}" required="true" >
-                        <f:convertDateTime pattern="dd-mm-yyyy" />
-                    </h:inputText>
-                  <label class="label-bvis"  for="companyCustomer">Company customer?</label>
-                  <h:selectBooleanCheckbox id="companyCustomer" value="#{registration.company}" required="true" />
-                  
-                   <label class="label-bvis" for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
-                    <!-- Generated markup by the plugin -->
-                    <div class="tooltip top" role="tooltip">
-                        <div class="tooltip-arrow"></div>
-                        <div class="tooltip-inner">
-                            If you are a company, state your name!
-                        </div>
+                                    <label class="label-bvis" for="country">Country:</label>
+                                    <b:inputText id="country" value="#{registration.country}" required="true" />
+
+                                    <label class="label-bvis"  for="customer.dateOfBirth">Date of birth:</label>
+                                    <b:inputText id="dateOfBirth" value="#{registration.dateOfBirth}" required="true" >
+                                        <f:convertDateTime pattern="dd-mm-yyyy" />
+                                    </b:inputText>
+
+                                  <label class="label-bvis"  for="companyCustomer">Company customer?</label>
+                                  <b:selectBooleanCheckbox id="companyCustomer" value="#{registration.company}" required="true" />
+
+                                   <label class="label-bvis" for="customer.companyName">Company name:</label><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right"></span>
+                                    <!-- Generated markup by the plugin -->
+                                    <div class="tooltip top" role="tooltip">
+                                        <div class="tooltip-arrow"></div>
+                                        <div class="tooltip-inner">
+                                            If you are a company, state your name!
+                                        </div>
+                                    </div>
+                                    <b:inputText id="companyName" value="#{registration.companyName}" required="false" />
+
+                                </h:panelGrid>
+
+                    </div> <!-- /. END COL 6 -->
+            
+                    <div class="col-sm-6">
+                      <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
+                        <h3><label>Credentials</label></h3>
+                        <h:panelGroup />
+                            <label class="label-bvis" for="username">Username:</label>
+                            <h:inputText id="username" value="#{registration.username}" required="true" />
+
+                            <label class="label-bvis" for="password">Password:</label>
+                            <h:inputSecret id="password" value="#{registration.password}" required="true" />
+                        </h:panelGrid>
+
+                    </div> <!-- END Col 6 -->
+                </div> <!-- /. END Col 8 -->
+           </div> <!-- /. END ROW -->
+
+           <div class="row ">
+               <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
+                    <div class="col-lg-10">
+                        <p class="p-bvis">Register</p>
                     </div>
-                    <h:inputText id="companyName" value="#{registration.companyName}" required="false" />
-
-                </h:panelGrid>
-
-            </div> <!-- /. END COL -->
-            
-            <div class="col-sm-6">
-              <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                <h3><label>Credentials</label></h3>
-                <h:panelGroup />
-                    <label class="label-bvis" for="username">Username:</label>
-                    <h:inputText id="username" value="#{registration.username}" required="true" />
-
-                    <label class="label-bvis" for="password">Password:</label>
-                    <h:inputSecret id="password" value="#{registration.password}" required="true" />
-                </h:panelGrid>
-
-            </div> <!-- END Col -->
-            
-           </div> <!-- /. END Col-sm-8 -->
-           </div> <!-- /. END Col-sm-8 OPACITY-->
-        </div> <!-- /. END Upper ROW -->
-
-    </div>
-      <!-- /. END CONTAINER -->
-
-    <div class="container bvis-padding">
-        <div class="row ">
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
-            <div class="col-lg-10">
-                <p class="p-bvis">Register</p>
-            </div>
-            <div class="col-lg-2 pull-right">
-                    <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{registration.register}" />
-                    <h:messages style="color:red;margin:8px;" />
-            </div>
-        </div> <!-- /. END ROW -->
-      </div> <!-- /. END Jumpotron ROW -->
+                    <div class="col-lg-2 pull-right">
+                        <h:commandButton class="btn btn-default" id="submit_button" value="Submit" action="#{registration.register}" />
+                    </div>
+                    <div class="col-lg-12">
+                        <h:messages class="error-message-bvis"/>
+                    </div>
+               </div> <!-- /. END Col 8 -->
+           </div> <!-- /. END  Row -->
     </div> <!-- /. END CONTAINER -->
 </h:form>
 

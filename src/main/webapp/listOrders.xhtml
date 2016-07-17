@@ -1,120 +1,66 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:h="http://xmlns.jcp.org/jsf/html"
-  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-  xmlns:b="http://butterfaces.org/components"
-  xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="/resources/default.xhtml"
+                lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
+    <ui:define name="headline">
+        <h1 class="bvis-h1">Your order history <small>remember all the good rides! </small></h1>
+    </ui:define>
+
+    <ui:define name="content">
 
 
-<f:view>
-  <h:head>
-    <title>Orders overview</title>
-      <!-- Custom CSS Files -->
-      <link href="/bvis/resources/css/custom.css" rel="stylesheet" />
+        <h:form id="submitForm">
+            <div class="container form-inline" id="bg-img">
+                <div class="row">
+                    <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+                        <div class="col-sm-6">
+                            <h3><label>Listed Orders</label></h3>
 
-  </h:head>
+                            <b:panelGrid col-spans="5,7" cellpadding="5">
+                                <h:dataTable value="#{listOrders.orders}" var="cur" styleClass="data-table"
+                                             columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
+                                             headerClass="data-cell header-cell">
+                                    <h:column>
+                                        <f:facet name="header">Customer Name: </f:facet>
+                                        #{cur.customer}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name = "header">Order ID: </f:facet>
+                                        #{cur.id}
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name = "header">Pickup location: </f:facet>
+                                        #{cur.pickUpStore}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Return location: </f:facet>
+                                        #{cur.returnStore}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Pickup date: </f:facet>
+                                        #{cur.pick_up_date}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name = "header">Return date: </f:facet>
+                                        #{cur.return_date}
+                                    </h:column>
+
+                                </h:dataTable>
+                            </b:panelGrid>
 
 
-  <h:body>
-      <!-- Fixed Navigation -->
-      <nav class="navbar navbar-inverse navbar-fixed-top">
-          <div class="container">
-              <div class="navbar-header">
-                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                      <span class="sr-only">Toggle navigation</span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="/bvis/index.xhtml">BVIS Luxury Car Rental</a>
-                  <ul class="nav navbar-nav navbar-left">
-                	<h:panelGroup rendered ="#{!webSession.loggedIn}">
-                    <li><a href="/bvis/placeInquiry.xhtml">Car Rental</a></li>
-                    <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
-                    </h:panelGroup>
-                    <h:panelGroup rendered ="#{webSession.loggedIn}">
-                    <li><a href="/bvis/placeInquiryLoggedIn.xhtml">Car Rental</a></li>
-                    <li><a href="/bvis/damageReport.xhtml">Damage Report</a></li>
-                    <li><a href="/bvis/listOrders.xhtml">Orders overview</a></li>
-                    </h:panelGroup>
-                  </ul>
-              </div>
-              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav navbar-right">
-                      <li><a href="/login.xhtml">Login</a></li>
-                      <li class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Services<span class="caret"></span></a>
-                          <ul class="dropdown-menu">
-                              <li><a href="#">Claim Report</a></li>
-                              <li><a href="#">Pick Up/ Drop Service</a></li>
-                              <li><a href="#">Long Term Rental Consulting</a></li>
-                          </ul>
-                      </li>
-                      <li><a href="#">Contact</a></li>
-                    <h:panelGroup rendered ="#{!webSession.loggedIn}">
-                    	<li><a href="login.xhtml">Login</a></li>
-                    	<li><a href="registration.xhtml">Register</a></li>
-                    </h:panelGroup>
-                    <h:panelGroup rendered ="#{webSession.loggedIn}">
-                    	<li><h:form><h:commandLink action="#{webSession.logout}">Logout</h:commandLink></h:form></li>
-                    </h:panelGroup>
-                  </ul>
-              </div>
-          </div>
-      </nav>
-
-    <!-- /. END NAVIGATION -->
-
-   <ui:composition>
-    <div class="container">
-        <div id="bg-img">
-        <img src="/bvis/resources/img/ny-street.jpg" alt="" />
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <div class="row">
-        <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
-        <div class="col-sm-16">
-        <div class="col-sm-6">
-                    <label class="label-bvis" for="party1Firstname">First name:</label>
-                    <!-- create process variables using the processVariables map. -->
-                    <h:inputText id="party1Firstname" value="#{damageReport.party1Firstname}" required="true" />
+        <!-- /. END CONTAINER -->
+    </h:form>
 
-      		<h:dataTable rendered="#{not empty listOrders.orders}"
-      		value="#{listOrders.orders}" var = "cur" styleClass="data-table"
-      		columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
-      		headerClass="data-cell header-cell">
-       		<h:column>
-       			<f:facet name = "header">Order ID</f:facet>
-       			#{cur.id}
-       		</h:column>
-       		<h:column>
-       			<f:facet name = "header">Pickup location</f:facet>
-       			#{cur.pickUpStore}
-       		</h:column>
-       		<h:column>
-       			<f:facet name = "header">Return location</f:facet>
-       			#{cur.returnStore}
-       		</h:column>
-       		<h:column>
-       			<f:facet name = "header">Pickup date</f:facet>
-       			#{cur.pick_up_date}
-       		</h:column>
-       		<h:column>
-       			<f:facet name = "header">Return date</f:facet>
-       			#{cur.return_date}
-       		</h:column>
-      		</h:dataTable>	
-
-      </div>
-      </div>
-      </div>
-      </div>
-      </div>
-      <!-- /. END CONTAINER -->
-
-	</ui:composition>
-
-  </h:body>
-</f:view>
-
-</html>
+</ui:define>
+</ui:composition>
