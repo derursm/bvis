@@ -178,7 +178,7 @@
       </extensionElements>
       <incoming>sid-08E288AA-A415-4644-A36F-76B766B3F4E9</incoming>
     </endEvent>
-    <sendTask id="sid-87C5D90C-2677-483C-B015-0760F9C944AA" name="Send invoice to customer" implementation="##WebService" camunda:expression="${claimHandler.sendClaimStateNotification(execution)}">
+    <sendTask id="sid-87C5D90C-2677-483C-B015-0760F9C944AA" name="Send invoice to customer" implementation="##WebService" camunda:expression="${claimHandler.sendInvoice(execution)}">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
