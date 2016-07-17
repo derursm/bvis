@@ -9,7 +9,7 @@
     <f:metadata>
       <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
     </f:metadata>
-    <title>Send insurance reminder</title>
+    <title>Inform on rejection</title>
   </h:head>
   <h:body>
   <p>The following order was rejected by the insurance company. Please inform the customer</p>
@@ -18,10 +18,6 @@
           <label for="orderId">Order ID:</label>
           <h:outputText id="orderId" value="#{processVariables['orderId']}" />
           
-          <label for="fleet">Fleet:</label>
-          <h:selectBooleanCheckbox id="fleet" value="#{order.rentalOrder.fleetRental}" disabled="true" />
-          
-          <h3><label>Contact details</label></h3>
           <h:panelGroup />
           
           <label for="firstname">Firstname:</label>

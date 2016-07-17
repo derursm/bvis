@@ -188,7 +188,7 @@
     </exclusiveGateway>
     <sequenceFlow id="SequenceFlow_12109qr" sourceRef="sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30" targetRef="SendTask_1rz1l70" />
     <sequenceFlow id="sid-172CF00F-245E-419B-90CB-EFA0684C2013" name="Accepted" isImmediate="true" sourceRef="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" targetRef="sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30">
-      <conditionExpression xsi:type="tFormalExpression">${contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">#{customerAcceptedNewInsurance}</conditionExpression>
     </sequenceFlow>
     <endEvent id="sid-F87B7534-2839-49A3-9D8B-9A5574F413FF" name="Inform customer&#10;about rejection">
       <extensionElements>
@@ -215,7 +215,7 @@
       <messageEventDefinition id="sid-41139564-6b1b-470e-b722-91591422f12f" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}" />
     </endEvent>
     <sequenceFlow id="sid-72173456-DA96-4699-B777-27388AEB719D" name="Rejected" isImmediate="true" sourceRef="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" targetRef="sid-9BDFA628-513F-47D5-A564-A8BE3DB8A6B3">
-      <conditionExpression xsi:type="tFormalExpression">${not contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">#{not customerAcceptedNewInsurance}</conditionExpression>
     </sequenceFlow>
     <exclusiveGateway id="sid-22422370-BA2B-4DFF-9C95-95F2C0FDA602" name="Insurance&#10;response" gatewayDirection="Diverging">
       <extensionElements>
