@@ -288,6 +288,8 @@ public class ClaimHandler {
 		Claim claim = claimService.getClaim(claimID);
 		System.out.println("INITIATING SENDING CLAIM FOR ORDER " + claim.getRentalOrder().getOrderID());
 		SendClaim sender = new SendClaim();
+		System.out.println("Sending inquiry with vehicle identification number: " + claim.getRentalOrder().getCars().
+				iterator().next().getVehicleIdentificationNumber());
 		String result = sender.sendClaim(claim, delegateExecution.getProcessInstanceId());
 		System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
 		//TODO handle failures		

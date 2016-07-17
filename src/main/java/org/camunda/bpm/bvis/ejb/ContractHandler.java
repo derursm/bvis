@@ -536,6 +536,8 @@ public class ContractHandler {
 		System.out.println("SENDING TO CAPITOL INITIALIZED");
 		SendInquiry sender = new SendInquiry();
 		RentalOrder entityOrder = orderService.getOrder((Long) businessProcess.getVariable("orderId"));
+		System.out.println("Sending inquiry with vehicle identification number: " + entityOrder.getCars().
+				iterator().next().getVehicleIdentificationNumber());
 		String result = sender.sendInquiry(entityOrder, delegateExecution.getProcessInstanceId());
 		System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
 		// TODO handle failures
