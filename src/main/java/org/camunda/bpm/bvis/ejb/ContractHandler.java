@@ -144,7 +144,7 @@ public class ContractHandler {
 			InsuranceType insuranceType = InsuranceType.valueOf((String) variables.get("insuranceType"));
 			insurance.setType((InsuranceType) insuranceType);
 
-			Long carId = (Long.parseLong((String) variables.get("car")));
+			Long carId = (Long) variables.get("car");
 
 			Car car = carService.getCar(carId);
 			Collection<Car> cars = new ArrayList<Car>();
