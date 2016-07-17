@@ -41,6 +41,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 //pdf
@@ -89,6 +90,8 @@ public class ContractHandler {
 	// private static SendHTMLEmail sendMail;
 
 	public void persistOrder(DelegateExecution delegateExecution) throws ParseException {
+		double estimatedInsurancPrice = 0;
+		
 		// Create new order instance
 		System.out.println("Process instance ID " + businessProcess.getProcessInstanceId());
 		System.out.println("Execution ID: " + businessProcess.getExecutionId());
@@ -156,8 +159,8 @@ public class ContractHandler {
 			rentalOrder.setPriceCars(priceCars);
 
 			// calculate price for insurance
-			double price_for_insurance = calcInsurancePrice(cars, insuranceType, returnDate, pickUpDate);
-			rentalOrder.setPriceInsurance_expected(price_for_insurance);
+			estimatedInsurancPrice = calcInsurancePrice(cars, insuranceType, returnDate, pickUpDate);
+			rentalOrder.setPriceInsurance_expected(estimatedInsurancPrice);
 		}
 		rentalOrder.setFleetRental(isFleet);
 		rentalOrder.setInquiryText((String) variables.get("inquiryText"));
@@ -169,16 +172,31 @@ public class ContractHandler {
 
 		// TODO GENERATE A PROPER INSURANCE. THIS IS JUST A DUMMY FOR TESTING
 		// PURPOSES
-		Insurance insurance = new Insurance();
-		insurance.setDeductible(new BigDecimal(1000));
-		insurance.setEstimatedCosts(new BigDecimal(20));
+		Insurance insurance = new Insurance();		
 		insurance.setPickUpDate((Date) variables.get("pickUpDate"));
 		insurance.setReturnDate((Date) variables.get("returnDate"));
 		insurance.setOrder(rentalOrder);
-		insurance.setType(InsuranceType.partial);
+		System.out.println(variables.get("insuranceType"));
+		if(Objects.equals((String) variables.get("insuranceType"),"total")){
+			insurance.setDeductible(new BigDecimal(0));
+			insurance.setType(InsuranceType.total);
+			System.out.println("Set total insurance");
+		} 
+		if(Objects.equals((String) variables.get("insuranceType"),"partial")){
+			insurance.setDeductible(new BigDecimal(1000));
+			insurance.setType(InsuranceType.partial);
+			System.out.println("Set partial insurance");
+		} 
+		if(Objects.equals((String) variables.get("insuranceType"),"liability")){
+			insurance.setDeductible(new BigDecimal(2000));
+			insurance.setType(InsuranceType.liability);
+			System.out.println("Set liablilty insurance");
+		} 
+		
+		insurance.setEstimatedCosts(new BigDecimal(estimatedInsurancPrice));
+		
 		rentalOrder.setInsurance(insurance);
 		rentalOrder.setOrderStatus(OrderStatus.PENDING);
-
 		orderService.create(rentalOrder);
 		System.out.println("Cars: " + rentalOrder.getCars());
 
