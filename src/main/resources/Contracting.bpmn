@@ -72,7 +72,7 @@
       <incoming>SequenceFlow_0nqiz4b</incoming>
       <outgoing>SequenceFlow_1qrfjth</outgoing>
     </userTask>
-    <sendTask id="SendTask_0zsnakw" name="Inform insurance partner about contract" camunda:expression="${true}">
+    <sendTask id="SendTask_0zsnakw" name="Inform insurance partner about contract" camunda:expression="${contractHandler.sendContractConfirmation(execution)}">
       <incoming>SequenceFlow_1g70gey</incoming>
       <outgoing>SequenceFlow_19vljn8</outgoing>
     </sendTask>
@@ -407,7 +407,7 @@
     <sequenceFlow id="sid-E1FA9C14-2732-4445-9423-705038FBCCC6" name="" isImmediate="true" sourceRef="sid-6EF324ED-6A57-46DF-BFBC-5A28A24CDCC7" targetRef="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" />
     <sequenceFlow id="SequenceFlow_1bi6h6c" sourceRef="StartEvent_0m2odij" targetRef="sid-6EF324ED-6A57-46DF-BFBC-5A28A24CDCC7" />
     <sequenceFlow id="sid-53AB7A90-02F2-468D-8BF4-BE03E025A2E3" name="" isImmediate="true" sourceRef="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" targetRef="sid-42AA59C1-337A-4E54-AB37-AD9A2DCC5F9F" />
-    <sendTask id="SendTask_1rz1l70" name="Finalize contract" camunda:expression="${contractHandler.sendContractConfirmation(execution)}">
+    <sendTask id="SendTask_1rz1l70" name="Finalize contract" camunda:expression="${contractHandler.sendContract(execution)}">
       <extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="state">send_cont</camunda:inputParameter>

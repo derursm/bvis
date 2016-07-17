@@ -212,7 +212,7 @@ public class ContractHandler {
 	}
 
 	// Create contract and send to user's email
-	public void sentContract(DelegateExecution delegateExecution) {
+	public void sendContract(DelegateExecution delegateExecution) {
 		System.out.println("Start creating contract");
 
 		RentalOrder order;
