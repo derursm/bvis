@@ -14,41 +14,41 @@
     <h:form id="submitForm">
     <div class="container form-inline" id="bg-img">
         <div class="row">
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+            <div class="col-sm-10 col-md-offset-1 jumbotron-bvis">
 			<div class="col-sm-6">
 			<h3><label>Contact details</label></h3>
 
 			<b:panelGrid col-spans="5,7" cellpadding="5">
                 <h:outputLabel for="firstname" value="Firstname:*" />
 				<b:inputText id="firstname" value="#{placeInquiry.firstname}" required="true" />
-				
+
                 <h:outputLabel for="surname" value="Surname:*" />
 				<b:inputText id="surname" value="#{placeInquiry.lastname}" required="true" />
-				
+
                 <h:outputLabel for="companyName" value="Company name:" />
 				<b:inputText id="companyName" value="#{placeInquiry.companyName}" required="false" />
-				
+
                 <h:outputLabel for="email" value="E-mail:*" />
 				<b:inputText id="email" value="#{placeInquiry.email}" required="true" />
-				
+
                 <h:outputLabel for="phoneNumber" value="Phone number:*" />
 				<b:inputText id="phoneNumber" value="#{placeInquiry.phoneNumber}" required="true" />
-				
+
                 <h:outputLabel for="street" value="Street:*" />
 				<b:inputText id="street" value="#{placeInquiry.street}" required="true" />
-				
+
                 <h:outputLabel for="houseNumber" value="House number:*" />
 				<b:inputText id="houseNumber" value="#{placeInquiry.houseNumber}" required="true" />
-				
+
                 <h:outputLabel for="postcode" value="Postcode:*" />
 				<b:inputText id="postcode" value="#{placeInquiry.postcode}" required="true" />
-				
+
                 <h:outputLabel for="city" value="City:*" />
 				<b:inputText id="city" value="#{placeInquiry.city}" required="true" />
-				
+
                 <h:outputLabel for="country" value="Country:*" />
 				<b:inputText id="country" value="#{placeInquiry.country}" required="true" />
-				
+
                 <h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
 				<b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{placeInquiry.dateOfBirth}" required="true" />
 			</b:panelGrid>
@@ -65,37 +65,37 @@
 					<b:selectOneMenu id="car" value="#{placeInquiry.car}">
 						<f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
 					</b:selectOneMenu>
-					
+
 					<h:outputLabel for="pickUpDate" value="Pickup date:" />
 					<b:dateTimePicker id="pickUpDate" format="DD.MM.YYYY" show-time="false" value="#{placeInquiry.pickupDate}" />
-					
+
 					<h:outputLabel for="returnDate" value="Return date:" />
 					<b:dateTimePicker id="returnDate" format="DD.MM.YYYY" show-time="false" value="#{placeInquiry.returnDate}" />
-				
+
 					<h:outputLabel for="pickUpLoc" value="Pickup location:" />
 					<b:selectOneMenu id="pickUpLoc" value="#{placeInquiry.pickupLocation}">
 						<f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
 					</b:selectOneMenu>
-					
+
 					<h:outputLabel for="returnStore" value="Return location:" />
 					<b:selectOneMenu id="returnStore" value="#{placeInquiry.returnLocation}">
 						<f:selectItems value="#{order.allPickUpLocations}" var="r" itemLabel="#{r.storeName}" itemValue="#{r.storeID}" />
 					</b:selectOneMenu>
-					
+
 					<h:outputLabel for="insuranceType" value="Insurance type:" />
 					<b:selectOneMenu id="insuranceType" value="#{placeInquiry.insuranceType}">
 						<f:selectItems value="#{order.insuranceTypes}" />
 					</b:selectOneMenu>
 					<br />
-					
+
                   	<h:panelGroup />
                   	<h:outputLabel for="insuranceType" value="" />
                   	<h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{placeInquiry.recalculatePrice}" />
-                  	
+
 					<label class="label-bvis"  for="priceCars">Car price:</label>
                   	<b:inputText id="priceCars" value="#{placeInquiry.priceCars} Euro" readonly="true" />
-                  
-                  
+
+
                   	<label class="label-bvis"  for="priceInsurance_expected">Insurance price:</label>
                   	<b:inputText id="priceInsurance_expected" value="#{placeInquiry.priceInsurance_expected} Euro" readonly="true" />
 				</b:panelGrid>
