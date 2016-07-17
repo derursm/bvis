@@ -58,7 +58,7 @@
           <h:outputText id="priceCars" value="#{order.rentalOrder.priceCars} Euro" readonly="true" />
 
           <label class="label-bvis"  for="priceInsurance_expected">Insurance price:</label>
-          <h:outputText id="priceInsurance_expected" value="#{order.rentalOrder.insurance.estimatedCosts} Euro" readonly="true" />
+          <h:outputText id="priceInsurance_expected" value="#{order.rentalOrder.priceInsurance_expected} Euro" readonly="true" />
       
       <h:panelGroup />
           <h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.updateSingleOrder(true)}" />

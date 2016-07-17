@@ -1,7 +1,6 @@
 package org.camunda.bpm.bvis.web;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +20,6 @@ import org.camunda.bpm.bvis.ejb.beans.CarServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.PickUpLocationServiceBean;
 import org.camunda.bpm.bvis.entities.Car;
-import org.camunda.bpm.bvis.entities.Insurance;
 import org.camunda.bpm.bvis.entities.InsuranceType;
 import org.camunda.bpm.bvis.entities.PickUpLocation;
 import org.camunda.bpm.bvis.entities.RentalOrder;
@@ -133,15 +131,9 @@ public class OrderBackingBean {
 		
 		rentalOrder.setPriceCars(contractHandler.calcCarPrice(rentalOrder.getCars().iterator().next(), 
 				rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
-		/*
-		BigDecimal estimatedCosts
-		Insurance insurance = new Insurance();
-		insurance.setPickUpDate(rentalOrder.getPick_up_date());
-		insurance.setReturnDate(rentalOrder.getReturn_date());
-		insurance.setType(rentalOrder.in);
-		insurance.setEstimatedCosts(estimatedCosts);
-
-		rentalOrder.setInsurance(insurance);*/
+		
+		rentalOrder.setPriceInsurance_expected(contractHandler.calcInsurancePrice(rentalOrder.getCars().iterator().next(), 
+				rentalOrder.getInsurance_type(), rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
 
 		contractHandler.updateOrder(rentalOrder, false);
 		if (reload) {
