@@ -17,9 +17,9 @@ public final class InsurancePriceMap {
         map.put("truck", 2.5);
         
         // insurance types and their insurance price factors
-        map.put("total", 2.2);
-        map.put("partial", 1.1);   
-        map.put("liability", 0.7);
+        map.put("total", 220.0);
+        map.put("partial", 110.0);   
+        map.put("liability", 70.0);
     }
     
     public static double getInsuranceFactor(CarType carType) {
