@@ -100,31 +100,36 @@ public class ContractHandler {
 		// Get all process variables
 		Map<String, Object> variables = delegateExecution.getVariables();
 		Customer customer = new Customer();
-
-		customer.setFirstname((String) variables.get("customerFirstname"));
-		customer.setSurname((String) variables.get("customerSurname"));
-		String customerCompanyName = (String) variables.get("customerCompanyName");
-
-		boolean isCompany = true;
-		if (customerCompanyName.isEmpty()) {
-			isCompany = false;
+		
+		if (variables.get("customerID") != null) {
+			customer = customerService.getCustomer(Long.parseLong(variables.get("customerID")+""));
 		}
+		else {
+			customer.setFirstname((String) variables.get("customerFirstname"));
+			customer.setSurname((String) variables.get("customerSurname"));
+			String customerCompanyName = (String) variables.get("customerCompanyName");
 
-		customer.setCompanyName(customerCompanyName);
-		customer.setCompany(isCompany);
+			boolean isCompany = true;
+			if (customerCompanyName.isEmpty()) {
+				isCompany = false;
+			}
 
-		customer.setEmail((String) variables.get("customerEmail"));
-		customer.setPhoneNumber((String) variables.get("customerPhoneNumber"));
-		System.out.println(variables.get("customerDateOfBirth"));
-		customer.setDateOfBirth((Date) variables.get("customerDateOfBirth"));
-		customer.setStreet((String) variables.get("customerStreet"));
-		customer.setHouseNumber((String) variables.get("customerHouseNumber"));
-		customer.setPostcode((String) variables.get("customerPostcode"));
-		customer.setCity((String) variables.get("customerCity"));
-		customer.setCountry((String) variables.get("customerCountry"));
-		customer.setEligibility(false);
+			customer.setCompanyName(customerCompanyName);
+			customer.setCompany(isCompany);
 
-		customerService.create(customer);
+			customer.setEmail((String) variables.get("customerEmail"));
+			customer.setPhoneNumber((String) variables.get("customerPhoneNumber"));
+			System.out.println(variables.get("customerDateOfBirth"));
+			customer.setDateOfBirth((Date) variables.get("customerDateOfBirth"));
+			customer.setStreet((String) variables.get("customerStreet"));
+			customer.setHouseNumber((String) variables.get("customerHouseNumber"));
+			customer.setPostcode((String) variables.get("customerPostcode"));
+			customer.setCity((String) variables.get("customerCity"));
+			customer.setCountry((String) variables.get("customerCountry"));
+			customer.setEligibility(false);
+
+			customerService.create(customer);
+		}
 
 		// Set order attributes
 		rentalOrder.setCustomer(customer);
@@ -664,7 +669,7 @@ public class ContractHandler {
 	        int year_diff = current_year - construction_year;
 	        
 	        priceInsurance_expected += (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + (20
-	                - Math.pow(1.2, year_diff) ) / 30.0;
+	                - Math.pow(1.2, year_diff) / 30.0);
 		}
 		
         Long diff = returnDate.getTime() - pickupDate.getTime();

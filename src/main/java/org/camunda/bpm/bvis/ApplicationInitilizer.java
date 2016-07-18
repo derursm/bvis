@@ -26,6 +26,7 @@ import org.camunda.bpm.bvis.entities.Customer;
 import org.camunda.bpm.bvis.entities.Insurance;
 import org.camunda.bpm.bvis.entities.InsuranceAnswer;
 import org.camunda.bpm.bvis.entities.InsuranceType;
+import org.camunda.bpm.bvis.entities.OrderStatus;
 import org.camunda.bpm.bvis.entities.PickUpLocation;
 import org.camunda.bpm.bvis.entities.RentalOrder;
 
@@ -94,10 +95,13 @@ public class ApplicationInitilizer {
 		filterService = engine.getFilterService();
 		
 		// PickUpLocations
-		pickupLocationService.create(new PickUpLocation("Barcelona Airport", "+34 902 40 47 04", "El Prat de Llobregat", "",
-				"08820", "Barcelona", "Spain"));
-		pickupLocationService.create(new PickUpLocation("Madrid Airport", "+34 913 21 10 00", "Avenida de la Hispanidad, s/n", "",
-				"28042", "Madrid", "Spain"));
+		PickUpLocation pickup1 = new PickUpLocation("Barcelona Airport", "+34 902 40 47 04", "El Prat de Llobregat", "",
+				"08820", "Barcelona", "Spain");
+		PickUpLocation pickup2 = new PickUpLocation("Madrid Airport", "+34 913 21 10 00", "Avenida de la Hispanidad, s/n", "",
+				"28042", "Madrid", "Spain");
+		
+		pickupLocationService.create(pickup1);
+		pickupLocationService.create(pickup2);
         pickupLocationService.create(new PickUpLocation("Muenster-Osnabrueck Airport", "+49 2571 94 3360", "Airportallee", "1",
                 "48268", "Greven", "Germany"));
         pickupLocationService.create(new PickUpLocation("Hamburg Airport", "+49 40 507 50", "Flughafenstrasse", "1",
@@ -152,6 +156,7 @@ public class ApplicationInitilizer {
 		//Customer
 		Customer cust = new Customer("Becker", "0123 456789", "Leonardo Campus", "3", "48159", "Muenster", "Germany");
 		cust.setCompanyName("ERCIS");
+		cust.setFirstname("Joerg");
 		cust.setCompany(true);
 		cust.setUsername("test");
 		cust.setPassword("test");
@@ -162,6 +167,9 @@ public class ApplicationInitilizer {
 		// RentalOrder
 		RentalOrder order = new RentalOrder(cust, false);
 		order.setInsurance(insurance);
+		order.setOrderStatus(OrderStatus.PENDING);
+		order.setPickUpStore(pickup1);
+		order.setReturnStore(pickup2);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
@@ -179,6 +187,9 @@ public class ApplicationInitilizer {
 		order.setCars(cars);
 		orderService.create(order);
 		System.out.println("DUMMY ORDER ID: " + order.getId());
+		ArrayList<RentalOrder> orders = new ArrayList<RentalOrder>();
+		orders.add(order);
+		cust.setOrders(orders);
 		
 		createCamundaUsers();
 		createCamundaGroups();

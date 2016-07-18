@@ -14,59 +14,65 @@
 <h:form id="submitForm">
     <div class="container form-inline" id="bg-img">
         <b:row>
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+            <div class="col-sm-10 col-md-offset-1 jumbotron-bvis">
                 <div class="col-sm-6">
-                    <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-                        <h3><label>Car options</label></h3>
-                        <h:panelGroup />
-
-                        <label class="label-bvis"  for="customer.company">Car fleet:</label>
-                        <h:selectBooleanCheckbox id="fleet" value="#placeInquiry.fleetRental}" required="true" />
-                    </h:panelGrid>
-
-                    <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="carOptions">
-                        <label class="label-bvis"  for="car">Select a car:</label>
-                        <h:selectOneMenu id="car" value="#{placeInquiry.car}">
+                    <h3><label>Car options</label></h3>
+                    <b:panelGrid col-spans="5,7" cellpadding="5" cellspacing="1">
+                        <h:outputLabel for="fleet" value="Car fleet:" />
+                        <h:selectBooleanCheckbox id="fleet" value="#{placeInquiry.fleetRental}"  />
+                    </b:panelGrid>
+                    <br />
+                    <b:panelGrid col-spans="5,7" cellpadding="5" cellspacing="1" id="carOptions">
+                        <h:outputLabel for="car" value="Select a car:" />
+                        <b:selectOneMenu id="car" value="#{placeInquiry.car}">
                             <f:selectItems value ="#{order.allCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
-                        </h:selectOneMenu>
+                        </b:selectOneMenu>
 
-                        <label class="label-bvis"  for="pickUpDate">Pickup date:</label>
-                        <h:inputText id="pickUpDate" value="#{placeInquiry.pickupDate}" placeholder="dd-mm-yyyy" >
-                            <f:convertDateTime pattern="dd-mm-yyyy" />
-                        </h:inputText>
+                        <h:outputLabel for="pickUpDate" value="Pickup date:" />
+                        <b:dateTimePicker id="pickUpDate" format="DD.MM.YYYY" show-time="false" value="#{placeInquiry.pickupDate}" />
 
-                        <label class="label-bvis"  for="returnDate">Return date:</label>
-                        <h:inputText id="returnDate" value="#{placeInquiry.returnDate}" placeholder="dd-mm-yyyy">
-                            <f:convertDateTime pattern="dd-mm-yyyy" />
-                        </h:inputText>
+                        <h:outputLabel for="returnDate" value="Return date:" />
+                        <b:dateTimePicker id="returnDate" format="DD.MM.YYYY" show-time="false" value="#{placeInquiry.returnDate}" />
 
-                        <label class="label-bvis"  for="pickUpLocation">Pickup location:</label>
-                        <h:selectOneMenu id="pickUpLoc" value="#{placeInquiry.pickupLocation}">
+                        <h:outputLabel for="pickUpLoc" value="Pickup location:" />
+                        <b:selectOneMenu id="pickUpLoc" value="#{placeInquiry.pickupLocation}">
                             <f:selectItems value="#{order.allPickUpLocations}" var="l" itemLabel="#{l.storeName}" itemValue="#{l.storeID}" />
-                        </h:selectOneMenu>
+                        </b:selectOneMenu>
 
-                        <label for="returnStore">Return location:</label>
-                        <h:selectOneMenu id="returnStore" value="#{placeInquiry.returnLocation}">
+                        <h:outputLabel for="returnStore" value="Return location:" />
+                        <b:selectOneMenu id="returnStore" value="#{placeInquiry.returnLocation}">
                             <f:selectItems value="#{order.allPickUpLocations}" var="r" itemLabel="#{r.storeName}" itemValue="#{r.storeID}" />
-                        </h:selectOneMenu>
+                        </b:selectOneMenu>
 
-                        <label class="label-bvis"  for="insuranceType">Insurance type:</label>
-                        <h:selectOneMenu id="insuranceType" value="#{placeInquiry.insuranceType}">
+                        <h:outputLabel for="insuranceType" value="Insurance type:" />
+                        <b:selectOneMenu id="insuranceType" value="#{placeInquiry.insuranceType}">
                             <f:selectItems value="#{order.insuranceTypes}" />
-                        </h:selectOneMenu>
-                    </h:panelGrid>
+                        </b:selectOneMenu>
+                        <br />
 
-                    <h:panelGrid columns="2" cellpadding="5" cellspacing="1" id="fleetComments">
-                        <label class="label-bvis"  for="inquiryText">Comments:</label>
-                        <h:inputTextarea id="inquiryText" value="#{placeInquiry.comment}" required="false" />
-                    </h:panelGrid>
+                        <h:panelGroup />
+                        <h:outputLabel for="insuranceType" value="" />
+                        <h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{placeInquiry.recalculatePrice}" />
 
-                </div>
+                        <label class="label-bvis"  for="priceCars">Car price:</label>
+                        <b:inputText id="priceCars" value="#{placeInquiry.priceCars} Euro" readonly="true" />
+
+
+                        <label class="label-bvis"  for="priceInsurance_expected">Insurance price:</label>
+                        <b:inputText id="priceInsurance_expected" value="#{placeInquiry.priceInsurance_expected} Euro" readonly="true" />
+                    </b:panelGrid>
+
+                    <b:panelGrid col-spans="12" cellpadding="5" id="fleetComments">
+                        <h:outputLabel value="Comments:" />
+                        <b:inputTextarea rows="14" id="inquiryText" value="#{placeInquiry.comment}" required="false" />
+                    </b:panelGrid>
+
+                </div> <!-- END Col-sm-6 -->
             </div>
         </b:row>
 
         <b:row>
-            <div class="col-sm-8 col-md-offset-2 jumbotron-bvis-2">
+            <div class="col-sm-10 col-md-offset-1 jumbotron-bvis-2">
                 <div class="col-lg-10">
                     <p class="p-bvis">Please submit your booking. You will shortly receive a confirmation email.</p>
                 </div>

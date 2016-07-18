@@ -30,15 +30,14 @@ public class ListOrdersBackingBean {
 	}
 	
 	public Collection<RentalOrder> getOrders() {
-		if (orders == null && sessionBean.isLoggedIn()) {
+		if (sessionBean.isLoggedIn()) {
 			orders = customerService.getCustomer(sessionBean.getUid()).getOrders();
-			System.out.println(orders.size() + " ORDERS FOUND");
 			if (orders == null) return new ArrayList<RentalOrder>();
 			else {
 				return orders;
 			}
 		}
-		return new ArrayList<RentalOrder>(); 
+		return orders;
 	}
 	
 }
