@@ -3,6 +3,7 @@
   xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:b="http://bootsfaces.net/ui"
   xmlns:c="http://java.sun.com/jsp/jstl/core">
 
   <f:view>
@@ -25,49 +26,49 @@
     <h:panelGroup />
           <label for="inquiryText">Customer comments:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
+          <b:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
          
           <label for="cars">Car Models:</label>
           <ui:repeat id="cars" var="car" value="#{order.rentalOrder.cars}" varStatus="status"> 
-          <h:selectOneMenu id="carIds" value="#{car.id}">
+          <b:selectOneMenu id="carIds" value="#{car.id}">
               <f:selectItems value ="#{order.allCarsAvailableForFleet}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
-          </h:selectOneMenu>
+          </b:selectOneMenu>
           <br />
           </ui:repeat>
           
           <label for="pickUpLocation">Pickup location:</label>
-          <h:selectOneMenu id="storeID" value="#{processVariables['pickUpLoc']}" >
-       	  <f:selectItems value="#{order.allPickUpLocations}" var="l" itemValue="#{l.storeID}" itemLabel="#{l.storeName}" />
-          </h:selectOneMenu>
+          <b:selectOneMenu id="storeID" value="#{processVariables['pickUpLoc']}" >
+       	  	<f:selectItems value="#{order.allPickUpLocations}" var="l" itemValue="#{l.storeID}" itemLabel="#{l.storeName}" />
+          </b:selectOneMenu>
           
           <label for="returnStore">Return location:</label>
-          <h:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}" >
-      	  <f:selectItems value="#{order.allPickUpLocations}" var="r" itemValue="#{r.storeID}" itemLabel="#{r.storeName}" />
-          </h:selectOneMenu>
+          <b:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}" >
+      	  	<f:selectItems value="#{order.allPickUpLocations}" var="r" itemValue="#{r.storeID}" itemLabel="#{r.storeName}" />
+          </b:selectOneMenu>
           
           <label for="insuranceType">Insurance type:</label>
-          <h:selectOneMenu id="insuranceType" value="#{order.rentalOrder.insuranceType}">
-      	  <f:selectItems value="#{order.insuranceTypes}" />
-          </h:selectOneMenu>
+          <b:selectOneMenu id="insuranceType" value="#{order.rentalOrder.insuranceType}">
+      	  	<f:selectItems value="#{order.insuranceTypes}" />
+          </b:selectOneMenu>
           
           <label class="label-bvis"  for="priceCars">Fleet price:</label>
-          <h:outputText id="priceCars" value="#{order.rentalOrder.priceCars} Euro" readonly="true" />
+          <b:outputText id="priceCars" value="#{order.rentalOrder.priceCars} Euro" readonly="true" />
 
           <label class="label-bvis"  for="priceInsurance_expected">Insurance price:</label>
-          <h:outputText id="priceInsurance_expected" value="#{order.rentalOrder.priceInsurance_expected} Euro" readonly="true" />
+          <b:outputText id="priceInsurance_expected" value="#{order.rentalOrder.priceInsurance_expected} Euro" readonly="true" />
       
       	  <h:panelGroup />
-          <h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.recalculateFleetPrice()}" />
+          <b:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.recalculateFleetPrice()}" />
       
           
           <h3><label>Clerk comments</label></h3>
           <h:panelGroup />
           <label for="clerkComments">Clerk comments</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
+          <b:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
           
           <label>Approve Order?</label>
-          <h:selectBooleanCheckbox id="approved" value="#{order.rentalOrder.approveStatus}" required="false" />
+          <b:selectBooleanCheckbox id="approved" value="#{order.rentalOrder.approveStatus}" required="false" />
        
       </h:panelGrid>
      <h:commandButton id="return_button" value="Back" action="#{order.backToModifyFleetOrder()}" />

@@ -3,6 +3,7 @@
   xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:h="http://java.sun.com/jsf/html"
   xmlns:f="http://java.sun.com/jsf/core"
+  xmlns:b="http://bootsfaces.net/ui"
   xmlns:c="http://java.sun.com/jsp/jstl/core">
 
   <f:view>
@@ -25,72 +26,64 @@
     <h:panelGroup />
           <label for="inquiryText">Customer comments:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
+          <b:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
     
           <label for="numberOfCars">Number of Cars:</label>
-          <h:selectOneMenu id="numberOfCars" name="numberOfCars" value="#{order.numberOfCars}" >
+          <b:selectOneMenu id="numberOfCars" name="numberOfCars" value="#{order.numberOfCars}" >
        	  	<f:selectItems value="#{order.validAmounts}" />
-          </h:selectOneMenu>
+          </b:selectOneMenu>
           
-          <label for="pickUpDate">Pickup date:</label>
-          <!-- create process variables using the processVariables map. -->
-          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" required="true">
-            <f:convertDateTime pattern="dd-MM-yyyy" />
-          </h:inputText>
+          <h:outputLabel for="pickUpDate" value="Pickup date:" />
+		  <b:dateTimePicker id="pickUpDate" format="DD.MM.YYYY" show-time="false" value="#{order.rentalOrder.pick_up_date}" />
+
+		  <h:outputLabel for="returnDate" value="Return date:" />
+		  <b:dateTimePicker id="returnDate" format="DD.MM.YYYY" show-time="false" value="#{order.rentalOrder.return_date}" />
           
-          <label for="returnDate">Return date:</label>
-          <!-- create process variables using the processVariables map. -->
-          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" required="true">
-            <f:convertDateTime pattern="dd-MM-yyyy" />
-          </h:inputText>
-         
           <h3><label>Contact details</label></h3>
           <h:panelGroup />
           <label for="customer.firstname">First name:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="firstname" value="#{order.rentalOrder.customer.firstname}" required="true" />
+          <b:inputText id="firstname" value="#{order.rentalOrder.customer.firstname}" required="true" />
           
           <label for="customer.surname">Last name:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="surname" value="#{order.rentalOrder.customer.surname}" required="true" />
+          <b:inputText id="surname" value="#{order.rentalOrder.customer.surname}" required="true" />
           
           <label for="customer.email">E-mail:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="email" value="#{order.rentalOrder.customer.email}" required="true" />
+          <b:inputText id="email" value="#{order.rentalOrder.customer.email}" required="true" />
           
           <label for="phoneNumber">Phone number:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" required="true" />
+          <b:inputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" required="true" />
           
           <label for="street">Street:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="street" value="#{order.rentalOrder.customer.street}" required="true" />
+          <b:inputText id="street" value="#{order.rentalOrder.customer.street}" required="true" />
           
           <label for="houseNumber">House number:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="houseNumber" value="#{order.rentalOrder.customer.houseNumber}" required="true" />
+          <b:inputText id="houseNumber" value="#{order.rentalOrder.customer.houseNumber}" required="true" />
           
           <label for="postcode">Postcode:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="postcode" value="#{order.rentalOrder.customer.postcode}" required="true" />
+          <b:inputText id="postcode" value="#{order.rentalOrder.customer.postcode}" required="true" />
           
           <label for="city">City:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="city" value="#{order.rentalOrder.customer.city}" required="true" />
+          <b:inputText id="city" value="#{order.rentalOrder.customer.city}" required="true" />
           
           <label for="country">Country:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="country" value="#{order.rentalOrder.customer.country}" required="true" />
+          <b:inputText id="country" value="#{order.rentalOrder.customer.country}" required="true" />
           
-          <label for="customer.dateOfBirth">Date of birth:</label>
-          <!-- create process variables using the processVariables map. -->
-          <h:inputText id="dateOfBirth" value="#{order.rentalOrder.customer.dateOfBirth}" required="true" >
-            <f:convertDateTime pattern="dd-MM-yyyy" />
-          </h:inputText>
-            
+          <h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
+		  <b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" 
+		  		value="#{order.rentalOrder.customer.dateOfBirth}" required="true" />
+			
           <label for="customer.companyName">Company:</label>
           <!-- create process variables using the processVariables map. -->
-          <h:inputText id="companyName" value="#{order.rentalOrder.customer.companyName}" required="false" />        
+          <b:inputText id="companyName" value="#{order.rentalOrder.customer.companyName}" required="false" />        
        </h:panelGrid>
   	 <h:commandButton id="submit_button" value="Next" action="#{order.setFleetSize()}" />
     </h:form>
