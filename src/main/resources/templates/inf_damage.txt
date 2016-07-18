@@ -31,10 +31,6 @@
                                 <li class="mail-li"></li>
                                 <li class="mail-li"><b>Car model:</b> %2$s</li>
                                 <li class="mail-li"><b>License plate:</b> %10$s</li>
-                                <li class="mail-li"><b>Pickup location:</b> %3$s</li>
-                                <li class="mail-li"><b>Pickup date:</b> %4$s</li>
-                                <li class="mail-li"><b>Return location:</b> %5$s</li>
-                                <li class="mail-li"><b>Return date:</b> %6$s</li>
                                 <li class="mail-li"><b>Insurance package:</b> %9$s</li>
                             </ol>
                         </div>

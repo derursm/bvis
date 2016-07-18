@@ -1,6 +1,7 @@
 package org.camunda.bpm.bvis.web;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -145,9 +146,10 @@ public class OrderBackingBean {
 		rentalOrder.setPriceCars(contractHandler.calcCarPrice(rentalOrder.getCars(), 
 				rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
 		
-		rentalOrder.setPriceInsurance_expected(contractHandler.calcInsurancePrice(rentalOrder.getCars(), 
-				rentalOrder.getInsurance_type(), rentalOrder.getReturn_date(), rentalOrder.getPick_up_date()));
-		
+		rentalOrder.getInsurance().setEstimatedCosts(new BigDecimal(contractHandler.calcInsurancePrice(rentalOrder.getCars(), 
+				rentalOrder.getInsurance().getType(), rentalOrder.getReturn_date(), rentalOrder.getPick_up_date())));
+
+		contractHandler.updateOrder(rentalOrder, false);
 		if (reload) {
 			contractHandler.updateOrder(rentalOrder, false);
 

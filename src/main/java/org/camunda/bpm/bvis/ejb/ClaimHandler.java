@@ -209,6 +209,7 @@ public class ClaimHandler {
 	          claimId_str = "claimId";
 	          towingAddress = "towingAddress";
 	          insurancePac = "insurancePac";
+	          insurancePac = order.getInsurance().getType().toString();
 	          vehicleIdent = " ";
 	            
 	          
@@ -227,11 +228,8 @@ public class ClaimHandler {
 	          claimId_str = claimId.toString();
 	          vehicleIdent = car.getVehicleIdentificationNumber();
 	          //check for special recepient, else take customer mail
-	          try{
-	              email = (String) variables.get("receiver");
-	          } catch (NullPointerException  e){
-	              email = customer.getEmail();
-	          }
+	          email = (String) variables.get("receiver");
+	          if (email == null) email = customer.getEmail();
 	          
 	          orderId = order.getId();
 	          orderId_str = orderId.toString();
@@ -313,8 +311,10 @@ public class ClaimHandler {
 		Map<String, Object> variables = delegateExecution.getVariables();
 		long claimID = (Long)variables.get("claimID");
 		Claim claim = claimService.getClaim(claimID);
-		claim.setCostsCoverage(new BigDecimal((Double)variables.get("coverageCosts")));
-		claim.setCustomerCosts(new BigDecimal((Double)variables.get("customerCosts")));
+		claim.setCostsCoverage(new BigDecimal(Double.parseDouble(variables.get("coverageCosts")+"")));
+		System.out.println("COSTS COVERED: " + claim.getCostsCoverage());
+		claim.setCustomerCosts(new BigDecimal(Double.parseDouble(variables.get("customerCosts")+"")));
+		System.out.println("CUSTOMER COSTS: " + claim.getCustomerCosts());
 		int insuranceDecision = ((Integer)variables.get("insuranceDecision"));
 		variables.remove("insuranceDecision");
 		  if (insuranceDecision == 0) {
@@ -403,9 +403,7 @@ public class ClaimHandler {
         email = "email";
         orderId_str = "orderId";
         insurancePac = "insurancePac";
-        workshopPrice = BigDecimal.valueOf(0);
-        customerCosts = BigDecimal.valueOf(0);
-        costsCoverage = BigDecimal.valueOf(0);
+		insurancePac = order.getInsurance().getType().toString();
         
         orderId_str = orderId.toString();
         surname = customer.getSurname();

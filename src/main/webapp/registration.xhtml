@@ -13,7 +13,7 @@
 
 
    <h:form id="submitForm">
-    <div class="container" id="bg-img-color">
+    <div class="container" id="bg-img">
 
            <div class="row">
                <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
@@ -51,7 +51,7 @@
                             <b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{registration.dateOfBirth}" required="true" />
 
                             <h:outputLabel for="companyCustomer" value="Company customer? " />
-                            <b:selectBooleanCheckbox id="companyCustomer" value="#{registration.company}" required="true" />
+                            <b:selectBooleanCheckbox id="companyCustomer" value="#{registration.company}" />
 
                             <h:outputLabel for="companyName" value="Company Name: "/>
                             <b:inputText id="companyName" value="#{registration.companyName}" required="false" />
