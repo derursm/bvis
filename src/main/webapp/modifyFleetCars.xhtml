@@ -28,7 +28,7 @@
 
                             <b:panelGrid col-spans="5,7" cellpadding="5">
 
-                                <h3><label>Car options<label></h3>
+                                <h3><label>Car options</label></h3>
                                     <h:outputLabel for="inquiryText" value="Customer comments: " />
                                     <!-- create process variables using the processVariables map. -->
                                     <b:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
@@ -65,7 +65,7 @@
 
                             </b:panelGrid>
 
-                                    <h3><label>Clerk comments /></h3>
+                                    <h3><label>Clerk comments </label></h3>
                             <b:panelGrid>
 
                                       <h:panelGroup />
@@ -73,7 +73,7 @@
                                       <!-- create process variables using the processVariables map. -->
                                       <b:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
         
-                                      <label>Approve Order? />
+                                      <label>Approve Order? </label>
                                       <b:selectBooleanCheckbox id="approved" value="#{order.rentalOrder.approveStatus}" required="false" />
         
                             </b:panelGrid>
