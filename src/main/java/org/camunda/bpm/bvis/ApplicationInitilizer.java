@@ -327,63 +327,6 @@ public class ApplicationInitilizer {
 		globalGroupFilterRead.setResourceId(groupTasksFilter.getId());
 		globalGroupFilterRead.addPermission(READ);
 		authorizationService.saveAuthorization(globalGroupFilterRead);
-		
-		// Contracting Clerk Tasks
-		
-		filterProperties.clear();
-		filterProperties.put("description",	"New Claims");
-		filterProperties.put("priority", 0);
-		filterProperties.put("refresh", true);
-		query = taskService.createTaskQuery().taskName("check the claim's eligibility");
-		Filter newLiabilityCasesFilter = filterService.newTaskFilter()
-				.setName("New Insurance Claims").setProperties(filterProperties)
-				.setOwner("admin").setQuery(query);
-		filterService.saveFilter(newLiabilityCasesFilter);
-
-		Authorization newLiabilityCaseGroup1FilterRead = authorizationService
-				.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
-		newLiabilityCaseGroup1FilterRead.setResource(FILTER);
-		newLiabilityCaseGroup1FilterRead.setResourceId(newLiabilityCasesFilter
-				.getId());
-		newLiabilityCaseGroup1FilterRead.addPermission(READ);
-		newLiabilityCaseGroup1FilterRead.setGroupId("ClaimHandler");
-		authorizationService
-				.saveAuthorization(newLiabilityCaseGroup1FilterRead);
-
-
-		/* New Insurance Contract */
-		filterProperties.clear();
-		filterProperties.put("description", "All Rental Request");
-		filterProperties.put("priority", 0);
-		filterProperties.put("refresh", true);
-		//filterProperties.put("color", "#8ad69a");
-		query = taskService.createTaskQuery()
-				.taskName("negotiate agreement conditions with customer (via telephone or face2face)");
-		Filter openIncuranceContractsFilter = filterService.newTaskFilter()
-				.setName("New Cases")
-				.setProperties(filterProperties).setOwner("bvis")
-				.setQuery(query);
-		filterService.saveFilter(openIncuranceContractsFilter);
-
-		Authorization newRentalAgreementGroupFilterRead = authorizationService
-				.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
-		newRentalAgreementGroupFilterRead.setResource(FILTER);
-		newRentalAgreementGroupFilterRead
-				.setResourceId(openIncuranceContractsFilter.getId());
-		newRentalAgreementGroupFilterRead.addPermission(READ);
-		newRentalAgreementGroupFilterRead.setGroupId("Contracting");
-		authorizationService
-				.saveAuthorization(newRentalAgreementGroupFilterRead);
-		
-		Authorization newRentalAgreementGroup1FilterRead = authorizationService
-				.createNewAuthorization(Authorization.AUTH_TYPE_GRANT);
-		newRentalAgreementGroup1FilterRead.setResource(FILTER);
-		newRentalAgreementGroup1FilterRead
-				.setResourceId(openIncuranceContractsFilter.getId());
-		newRentalAgreementGroup1FilterRead.addPermission(READ);
-		newRentalAgreementGroup1FilterRead.setGroupId("Negotiations");
-		authorizationService
-				.saveAuthorization(newRentalAgreementGroup1FilterRead);
 
 		// All tasks
 		

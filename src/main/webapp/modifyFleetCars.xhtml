@@ -51,7 +51,7 @@
                                     </b:selectOneMenu>
         
                                     <h:outputLabel for="insuranceType" value="Insurance type: "/>
-                                    <b:selectOneMenu id="insuranceType" value="#{order.rentalOrder.insuranceType}">
+                                    <b:selectOneMenu id="insuranceType" value="#{order.rentalOrder.insurance.type}">
                                         <f:selectItems value="#{order.insuranceTypes}" />
                                     </b:selectOneMenu>
         
@@ -59,17 +59,17 @@
                                       <h:outputText id="priceCars" value="#{order.rentalOrder.priceCars} Euro" readonly="true" />
         
                                       <h:outputLabel  for="priceInsurance_expected" value="Insurance price: " />
-                                      <h:outputText id="priceInsurance_expected" value="#{order.rentalOrder.priceInsurance_expected} Euro" readonly="true" />
+                                      <h:outputText id="priceInsurance_expected" value="#{order.rentalOrder.insurance.estimatedCosts} Euro" readonly="true" />
 
                                       <b:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.recalculateFleetPrice()}" />
 
                             </b:panelGrid>
 
                                     <h3><label>Clerk comments </label></h3>
-                            <b:panelGrid>
+                            <b:panelGrid col-spans="5,7" cellpadding="5">
 
                                       <h:panelGroup />
-                                      <h:outputLabel for="clerkComments">Clerk comments />
+                                      <h:outputLabel for="clerkComments" value="Clerk comments" />
                                       <!-- create process variables using the processVariables map. -->
                                       <b:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
         

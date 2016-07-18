@@ -22,31 +22,31 @@
             <div class="container" id="bg-img">
                 <b:row>
                     <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
-                        <b:panelGrid>
+                        <b:panelGrid col-spans="5,7">
                             <h1>#{task.name}</h1>
 
                                 <h:outputLabel value="Order ID: "/>
-                                <h:outputText value="Order ID: #{processVariables['orderId']}"/>
+                                <b:inputText value="#{processVariables['orderId']}"/>
                                 <br></br>
                                 <h:outputLabel for="firstname" value="Firstname: " />
-                                <h:outputText id="firstname" value="#{order.rentalOrder.customer.firstname}" />
+                                <b:inputText id="firstname" value="#{order.rentalOrder.customer.firstname}" />
                                 <br></br>
                                 <h:outputLabel for="surname" value="Surname: " />
-                                <h:outputText id="surname" value="#{order.rentalOrder.customer.surname}" />
+                                <b:inputText id="surname" value="#{order.rentalOrder.customer.surname}" />
                                 <br></br>
 
                                 <h:outputLabel for="email" value="E-mail: " />
-                                <h:outputText id="email" value="#{order.rentalOrder.customer.email}" />
+                                <b:inputText id="email" value="#{order.rentalOrder.customer.email}" />
                                 <br></br>
                                 <h:outputLabel for="phoneNumber" value="Phone number: " />
-                                <h:outputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" />
+                                <b:inputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" />
                                 <br></br>
                                 <h:outputLabel value="New car model" for="newCarModel" />
-                                    <h:selectOneMenu id="newCarModel" value="#{processVariables['newCarId']}">
+                                    <b:selectOneMenu id="newCarModel" value="#{processVariables['newCarId']}">
                                         <f:selectItems value ="#{adjustRequirements.getAvailableCars(processVariables['orderId'])}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
-                                    </h:selectOneMenu><br></br>
+                                    </b:selectOneMenu><br></br>
                                 <h:outputLabel value="Customer accepts?" for="customerAnswer" />
-                                <h:selectBooleanCheckbox id="customerAnswer" value="#{processVariables['customerAccepted']}"/><br></br>
+                                <b:selectBooleanCheckbox id="customerAnswer" value="#{processVariables['customerAccepted']}"/><br></br>
 
                               <h:commandButton id="complete" value="Task Completed" action="#{camundaTaskForm.completeTask()}" />
                         </b:panelGrid>
