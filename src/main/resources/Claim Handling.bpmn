@@ -57,7 +57,9 @@
         <flowNodeRef>UserTask_0zzizkn</flowNodeRef>
       </lane>
     </laneSet>
-    <sequenceFlow id="sid-1EA2D805-C57A-495A-B1CD-970412EB73F1" name="" sourceRef="ReceiveTask_InsuranceClaimDecision" targetRef="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03" />
+    <sequenceFlow id="sid-1EA2D805-C57A-495A-B1CD-970412EB73F1" name="" sourceRef="ReceiveTask_InsuranceClaimDecision" targetRef="sid-55B0A8EE-D00D-42A4-90BB-24E4A1B07E03">
+      <conditionExpression xsi:type="tFormalExpression">#{claimHandler.handleInsuranceReponse(execution)}</conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="sid-BD0B70A9-A00D-4B87-AF2A-BC1D20FF5005" name="No" sourceRef="sid-26944CC1-6357-43F7-9795-3A7738CE0A80" targetRef="sid-C54E9D7D-C238-4A43-BEE0-4DA53D994EB2">
       <conditionExpression xsi:type="tFormalExpression">${not claimHandler.towingServiceNeeded(execution)}</conditionExpression>
     </sequenceFlow>

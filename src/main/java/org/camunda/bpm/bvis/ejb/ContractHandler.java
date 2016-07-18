@@ -149,7 +149,6 @@ public class ContractHandler {
 			rentalOrder.setReturnStore((PickUpLocation) locationService.getPickUpLocation(returnStoreId));
 
 			InsuranceType insuranceType = (InsuranceType) variables.get("insuranceType");
-			rentalOrder.setInsurance_type((InsuranceType) insuranceType);
 
 			Long carId = (Long) variables.get("car");
 
@@ -166,15 +165,12 @@ public class ContractHandler {
 			// calculate price for insurance
 			estimatedInsurancPrice = calcInsurancePrice(cars, insuranceType, returnDate, pickUpDate);
 			if (estimatedInsurancPrice < 0) estimatedInsurancPrice = 0;
-			rentalOrder.setPriceInsurance_expected(estimatedInsurancPrice);
 		}
 		rentalOrder.setFleetRental(isFleet);
 		rentalOrder.setInquiryText((String) variables.get("inquiryText"));
 
 		rentalOrder.setClerkComments("");
 		rentalOrder.setApproveStatus(false);
-
-		rentalOrder.setInsurance_ID(0);
 
 		// TODO GENERATE A PROPER INSURANCE. THIS IS JUST A DUMMY FOR TESTING
 		// PURPOSES
@@ -183,24 +179,22 @@ public class ContractHandler {
 		insurance.setReturnDate((Date) variables.get("returnDate"));
 		insurance.setOrder(rentalOrder);
 		System.out.println(variables.get("insuranceType"));
-//		if(Objects.equals((String) variables.get("insuranceType"),"total")){
-//			insurance.setDeductible(new BigDecimal(0));
-//			insurance.setType(InsuranceType.total);
-//			System.out.println("Set total insurance");
-//		} 
-//		if(Objects.equals((String) variables.get("insuranceType"),"partial")){
-//			insurance.setDeductible(new BigDecimal(1000));
-//			insurance.setType(InsuranceType.partial);
-//			System.out.println("Set partial insurance");
-//		} 
-//		if(Objects.equals((String) variables.get("insuranceType"),"liability")){
-//			insurance.setDeductible(new BigDecimal(2000));
-//			insurance.setType(InsuranceType.liability);
-//			System.out.println("Set liablilty insurance");
-//		} 
-		
- 		insurance.setDeductible(new BigDecimal(0));
-		insurance.setType(InsuranceType.total);
+		if(Objects.equals(((InsuranceType) variables.get("insuranceType")).toString(),"total")){
+			insurance.setDeductible(new BigDecimal(0));
+			insurance.setType(InsuranceType.total);
+			System.out.println("Set total insurance");
+		} 
+		if(Objects.equals(((InsuranceType) variables.get("insuranceType")).toString(),"partial")){
+			insurance.setDeductible(new BigDecimal(1000));
+			insurance.setType(InsuranceType.partial);
+			System.out.println("Set partial insurance");
+		} 
+		if(Objects.equals(((InsuranceType) variables.get("insuranceType")).toString(),"liability")){
+			insurance.setDeductible(new BigDecimal(2000));
+			insurance.setType(InsuranceType.liability);
+			System.out.println("Set liablilty insurance");
+		} 
+	
 		insurance.setEstimatedCosts(new BigDecimal(estimatedInsurancPrice));
 		
 		rentalOrder.setInsurance(insurance);
@@ -226,7 +220,7 @@ public class ContractHandler {
 		Customer customer;
 		Collection<Car> cars;
 		String surname, email, pickupLocation, returnLocation, insurancePac, carModel, rentalEnd, rentalStart, date,
-				type, street, city, orderId_str;
+				type, street, city, orderId_str, vehicleIdent;
 		double totalPrice, insurancePrice, rentalPrice;
 		Long orderId;
 
@@ -236,6 +230,7 @@ public class ContractHandler {
 		order = orderService.getOrder(orderId);
 		customer = order.getCustomer();
 		cars = order.getCars();
+		order.setOrderStatus(OrderStatus.ACCEPTED);
 
 		surname = "surname";
 		email = "email";
@@ -249,6 +244,7 @@ public class ContractHandler {
 		rentalPrice = 0;
 		insurancePrice = 0;
 		totalPrice = 0;
+		vehicleIdent = order.getCars().iterator().next().getVehicleIdentificationNumber();
 
 		// Get rental information
 		if (order.isFleetRental()) {
@@ -267,8 +263,9 @@ public class ContractHandler {
 		returnLocation = order.getReturnStore().getContactDetails();
 		// insurancePac = order.getInsurance().getType();
 		rentalPrice = order.getPriceCars();
-		insurancePrice = order.getPriceInsurance_final();
+		insurancePrice = order.getInsurance().getActualCosts().doubleValue();
 		totalPrice = order.getPrice();
+		insurancePac = order.getInsurance().getType().toString();
 
 		carModel = "";
 		int i = 1;
@@ -292,7 +289,8 @@ public class ContractHandler {
 				{ "Return location:", returnLocation }, { "Car:", carModel }, { "Insurance type:", insurancePac },
 				{ "Price insurance:", String.valueOf(insurancePrice) + " EUR" },
 				{ "Price car:", String.valueOf(rentalPrice) + " EUR" },
-				{ "Total:", String.valueOf(totalPrice) + " EUR" } };
+				{ "Vehicle identification number:", String.valueOf(vehicleIdent) },
+				{ "Total:", String.valueOf(totalPrice) + " EUR" }, };
 
 		try {
 			Document document = new Document();
@@ -359,6 +357,8 @@ public class ContractHandler {
 			table.addCell(rentalData[8][1]);
 			table.addCell(rentalData[9][0]);
 			table.addCell(rentalData[9][1]);
+			table.addCell(rentalData[10][0]);
+			table.addCell(rentalData[10][1]);
 
 			Paragraph pa4 = new Paragraph();
 			pa4.add(table);
@@ -460,7 +460,7 @@ public class ContractHandler {
 			pickupLocation = order.getPickUpStore().getHTMLContactDetails();
 			returnLocation = order.getReturnStore().getHTMLContactDetails();
 			clerkComment = order.getClerkComments();
-			carModel = "";
+			insurancePac = order.getInsurance().getType().toString();
 			for (Car loop_car : cars) {
 				carModel += loop_car.getHTMLCarDetails() + "<br>";
 				vehicleIdent += loop_car.getVehicleIdentificationNumber() + " ";
@@ -508,6 +508,7 @@ public class ContractHandler {
 		case "send_sorrow":
 			path += "send_sorrow.txt";
 			subject = "Good bye (No. " + orderId_str + ")";
+			order.setOrderStatus(OrderStatus.REJECTED);
 			break;
 		}
 
@@ -556,13 +557,16 @@ public class ContractHandler {
 		Insurance insurance = order.getInsurance();
 		insurance.setActualCosts(new BigDecimal(Double.parseDouble(variables.get("finalPrice").toString())));
 		insurance.setInquiryText(variables.get("inquiryText").toString());
+		order.setPrice(insurance.getActualCosts().doubleValue() + order.getPriceCars());
 		int insuranceAnswer = Integer.parseInt(variables.get("insuranceResult").toString());
 		if (insuranceAnswer == 0) {
 			insurance.setInsuranceAnswer(InsuranceAnswer.REJECTED);
 			System.out.println("INSURANCE REJECTED");
+			order.setOrderStatus(OrderStatus.REJECTED);
 		} else if (insuranceAnswer == 1) {
 			insurance.setInsuranceAnswer(InsuranceAnswer.ACCEPTED);
 			System.out.println("INSURANCE ACCEPTED");
+			order.setOrderStatus(OrderStatus.ACCEPTED);
 		} else {
 			insurance.setInsuranceAnswer(InsuranceAnswer.ADJUSTED);
 			System.out.println("INSURANCE ADJUSTED");
