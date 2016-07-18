@@ -12,6 +12,7 @@ import javax.inject.Named;
 import org.camunda.bpm.bvis.ejb.beans.ClaimServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.InsuranceServiceBean;
 import org.camunda.bpm.bvis.ejb.beans.OrderServiceBean;
+import org.camunda.bpm.bvis.entities.RentalOrder;
 import org.camunda.bpm.bvis.web.util.EmailValidator;
 import org.camunda.bpm.bvis.web.util.WebUrls;
 import org.camunda.bpm.engine.ProcessEngine;
@@ -21,6 +22,8 @@ import org.camunda.bpm.engine.cdi.compat.CamundaTaskForm;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -184,35 +187,49 @@ public class DamageReportBackingBean  {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Invalid Email format"));
 		}
 		else {
-			Map<String, Object> variables = new HashMap<String, Object>();
-			variables.put("orderID", orderID);
-			variables.put("damageDescription", damageDescription);
-			variables.put("damageDate", damageDate);
-			variables.put("vehicleID", vehicleID);
-			// set to true per default, since this bean method is only invoked if the damage is reported by customer
-			reportedByCustomer = true;
-			variables.put("reportedByCustomer", reportedByCustomer);
-			variables.put("towingServiceNeeded", towingServiceNeeded);
-			variables.put("party1Firstname", party1Firstname);
-			variables.put("party1Surname", party1Surname);
-			variables.put("party1Street", party1Street);
-			variables.put("party1HouseNo", party1HouseNo);
-			variables.put("party1Country", party1Country);
-			variables.put("party1ZIP", party1ZIP);
-			variables.put("party1City", party1City);
-			variables.put("party1Company", party1Company);
-			variables.put("party1Insurance", party1Insurance);
-			variables.put("party1Phone", party1Phone);
-			variables.put("party1EMail", party1EMail);
-			variables.put("party1Birthday", party1Birthday);
-			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-			RuntimeService runtimeService = processEngine.getRuntimeService();
-			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("claimHandling", variables);
+			RentalOrder order = orderService.getOrder(orderID);
+			Date begin = order.getPick_up_date();
 
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect(WebUrls.getUrl(WebUrls.DAMAGE_REPORT_SUBMITTED, false, false));
-			} catch (IOException e) {
-				e.printStackTrace();
+			Date end = order.getReturn_date();
+			// increment end date by one
+			Calendar c = Calendar.getInstance();
+			c.setTime(end);
+			c.add(Calendar.DATE, 1);  // number of days to add
+			end = c.getTime();
+			if (!((this.damageDate.after(begin) || this.damageDate.equals(begin)) && 
+					(this.damageDate.before(end) || this.damageDate.equals(end)))) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Damage date must be in the rental period"));
+			}
+			else {
+				Map<String, Object> variables = new HashMap<String, Object>();
+				variables.put("orderID", orderID);
+				variables.put("damageDescription", damageDescription);
+				variables.put("damageDate", damageDate);
+				variables.put("vehicleID", vehicleID);
+				// set to true per default, since this bean method is only invoked if the damage is reported by customer
+				reportedByCustomer = true;
+				variables.put("reportedByCustomer", reportedByCustomer);
+				variables.put("towingServiceNeeded", towingServiceNeeded);
+				variables.put("party1Firstname", party1Firstname);
+				variables.put("party1Surname", party1Surname);
+				variables.put("party1Street", party1Street);
+				variables.put("party1HouseNo", party1HouseNo);
+				variables.put("party1Country", party1Country);
+				variables.put("party1ZIP", party1ZIP);
+				variables.put("party1City", party1City);
+				variables.put("party1Company", party1Company);
+				variables.put("party1Insurance", party1Insurance);
+				variables.put("party1Phone", party1Phone);
+				variables.put("party1EMail", party1EMail);
+				variables.put("party1Birthday", party1Birthday);
+				ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+				RuntimeService runtimeService = processEngine.getRuntimeService();
+				ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("claimHandling", variables);	
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect(WebUrls.getUrl(WebUrls.DAMAGE_REPORT_SUBMITTED, false, false));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}		
 			}
 		}
 	}
@@ -230,33 +247,47 @@ public class DamageReportBackingBean  {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Invalid Email format"));
 		}
 		else {
-			Map<String, Object> variables = new HashMap<String, Object>();
-			variables.put("orderID", orderID);
-			variables.put("damageDescription", damageDescription);
-			variables.put("damageDate", damageDate);
-			variables.put("vehicleID", vehicleID);
-			variables.put("reportedByCustomer", reportedByCustomer);
-			variables.put("towingServiceNeeded", towingServiceNeeded);
-			variables.put("party1Firstname", party1Firstname);
-			variables.put("party1Surname", party1Surname);
-			variables.put("party1Street", party1Street);
-			variables.put("party1HouseNo", party1HouseNo);
-			variables.put("party1Country", party1Country);
-			variables.put("party1ZIP", party1ZIP);
-			variables.put("party1City", party1City);
-			variables.put("party1Company", party1Company);
-			variables.put("party1Insurance", party1Insurance);
-			variables.put("party1Phone", party1Phone);
-			variables.put("party1EMail", party1EMail);
-			variables.put("party1Birthday", party1Birthday);
-			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
-			RuntimeService runtimeService = processEngine.getRuntimeService();
-			ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("claimHandling", variables);
+			RentalOrder order = orderService.getOrder(orderID);
+			Date begin = order.getPick_up_date();
+			Date end = order.getReturn_date();
+			// increment end date by one
+			Calendar c = Calendar.getInstance();
+			c.setTime(end);
+			c.add(Calendar.DATE, 1);  // number of days to add
+			end = c.getTime();
+			if (!((this.damageDate.after(begin) || this.damageDate.equals(begin)) && 
+					(this.damageDate.before(end) || this.damageDate.equals(end)))) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Damage date must be in the rental period"));
+			}
+			else {
+				Map<String, Object> variables = new HashMap<String, Object>();
+				variables.put("orderID", orderID);
+				variables.put("damageDescription", damageDescription);
+				variables.put("damageDate", damageDate);
+				variables.put("vehicleID", vehicleID);
+				variables.put("reportedByCustomer", reportedByCustomer);
+				variables.put("towingServiceNeeded", towingServiceNeeded);
+				variables.put("party1Firstname", party1Firstname);
+				variables.put("party1Surname", party1Surname);
+				variables.put("party1Street", party1Street);
+				variables.put("party1HouseNo", party1HouseNo);
+				variables.put("party1Country", party1Country);
+				variables.put("party1ZIP", party1ZIP);
+				variables.put("party1City", party1City);
+				variables.put("party1Company", party1Company);
+				variables.put("party1Insurance", party1Insurance);
+				variables.put("party1Phone", party1Phone);
+				variables.put("party1EMail", party1EMail);
+				variables.put("party1Birthday", party1Birthday);
+				ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
+				RuntimeService runtimeService = processEngine.getRuntimeService();
+				ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("claimHandling", variables);
 
-			try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("/camunda/app/tasklist/default/#/");
-			} catch (IOException e) {
-				e.printStackTrace();
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("/camunda/app/tasklist/default/#/");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}				
 			}
 		}
 	}
