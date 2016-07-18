@@ -1,4 +1,4 @@
-package org.camunda.bpm.bvis.rest.send.service;
+package org.camunda.bpm.bvis.web;
 
 import java.util.Collection;
 import java.util.Date;

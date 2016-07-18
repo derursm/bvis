@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:h="http://java.sun.com/jsf/html"
+  xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view>
+  <h:head>
+    <f:metadata>
+      <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
+    </f:metadata>
+    <title>Inform customer on changed insurances prices</title>
+  </h:head>
+  <h:body>
+    <h1>#{task.name}</h1>
+    <h:form id="someForm">
+			Order ID: <h:outputLabel value="#{processVariables['orderId']}"/> <br></br>
+			<label for="firstname">Firstname:</label>
+          <h:outputText id="firstname" value="#{order.rentalOrder.customer.firstname}" />
+          <br></br>
+          <label for="surname">Surname:</label>
+          <h:outputText id="surname" value="#{order.rentalOrder.customer.surname}" />
+          <br></br>
+          <label for="email">E-mail:</label>
+          <h:outputText id="email" value="#{order.rentalOrder.customer.email}" />
+          <br></br>
+          <label for="phoneNumber">Phone number:</label>
+          <h:outputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" />
+          <br></br>
+          <label for="newInsuranceCosts">New insurance costs:</label>
+          <h:outputText id="newInsuranceCosts" value="#{order.rentalOrder.insurance.actualCosts}" />
+		
+			<h:outputLabel value="Customer accepts?" for="customerAnswer" />
+			<h:selectBooleanCheckbox id="customerAnswer" value="#{processVariables['customerAcceptedNewInsurance']}"/><br></br>
+			
+      <h:commandButton id="complete" value="Task Completed"
+          action="#{camundaTaskForm.completeTask()}" />
+    </h:form>
+  </h:body>
+</f:view>
+</html>

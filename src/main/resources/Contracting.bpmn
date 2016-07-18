@@ -126,9 +126,9 @@
       <outgoing>sid-06642223-4818-40BF-AB0D-A9684219BD84</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="sid-0ACCA590-4CF2-46FE-A6D9-A12B2C6128A2" name="Request cancelled" isImmediate="true" sourceRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" targetRef="sid-C1DDD379-D98D-405F-AEE1-0ED3837D3267">
-      <conditionExpression xsi:type="tFormalExpression">${not contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${not customerAccepted}</conditionExpression>
     </sequenceFlow>
-    <userTask id="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" name="Adjust customer requirements and update" implementation="##WebService" camunda:formKey="app:modifySingleOrder.jsf" camunda:candidateGroups="clerks-contract">
+    <userTask id="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" name="Adjust customer requirements and update" implementation="##WebService" camunda:formKey="app:adjustRequirements.jsf" camunda:candidateGroups="clerks-contract">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc" />
         <signavio:signavioMetaData metaKey="risklevel" metaValue="" />
@@ -137,7 +137,9 @@
       <incoming>sid-2D52B35D-7330-4A42-A1B6-82C1B445E8A1</incoming>
       <outgoing>sid-93B8E830-C4E0-4D0C-A95E-64D7401E3E47</outgoing>
     </userTask>
-    <sequenceFlow id="sid-93B8E830-C4E0-4D0C-A95E-64D7401E3E47" name="" isImmediate="true" sourceRef="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" targetRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" />
+    <sequenceFlow id="sid-93B8E830-C4E0-4D0C-A95E-64D7401E3E47" name="" isImmediate="true" sourceRef="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D" targetRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F">
+      <conditionExpression xsi:type="tFormalExpression">#{contractHandler.updateContract(execution)}</conditionExpression>
+    </sequenceFlow>
     <endEvent id="sid-07786F7D-5EFE-4695-9F66-5841822105BC" name="Send notificaton">
       <extensionElements>
         <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff" />
@@ -186,7 +188,7 @@
     </exclusiveGateway>
     <sequenceFlow id="SequenceFlow_12109qr" sourceRef="sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30" targetRef="SendTask_1rz1l70" />
     <sequenceFlow id="sid-172CF00F-245E-419B-90CB-EFA0684C2013" name="Accepted" isImmediate="true" sourceRef="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" targetRef="sid-A3326F1D-DEC2-4039-9964-C9CFD87CBD30">
-      <conditionExpression xsi:type="tFormalExpression">${contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">#{customerAcceptedNewInsurance}</conditionExpression>
     </sequenceFlow>
     <endEvent id="sid-F87B7534-2839-49A3-9D8B-9A5574F413FF" name="Inform customer&#10;about rejection">
       <extensionElements>
@@ -213,7 +215,7 @@
       <messageEventDefinition id="sid-41139564-6b1b-470e-b722-91591422f12f" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}" />
     </endEvent>
     <sequenceFlow id="sid-72173456-DA96-4699-B777-27388AEB719D" name="Rejected" isImmediate="true" sourceRef="sid-C38E09EF-798B-4838-9E9D-3E6AC0334408" targetRef="sid-9BDFA628-513F-47D5-A564-A8BE3DB8A6B3">
-      <conditionExpression xsi:type="tFormalExpression">${not contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">#{not customerAcceptedNewInsurance}</conditionExpression>
     </sequenceFlow>
     <exclusiveGateway id="sid-22422370-BA2B-4DFF-9C95-95F2C0FDA602" name="Insurance&#10;response" gatewayDirection="Diverging">
       <extensionElements>
@@ -354,7 +356,7 @@
     </exclusiveGateway>
     <sequenceFlow id="SequenceFlow_0cnszio" sourceRef="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7" targetRef="sid-20EE7783-E808-4C9A-B751-5B2F7B259933" />
     <sequenceFlow id="sid-06642223-4818-40BF-AB0D-A9684219BD84" name="Requirements updated" isImmediate="true" sourceRef="sid-C7DC4297-12EB-4FC6-B1B9-0760B0A43F2F" targetRef="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7">
-      <conditionExpression xsi:type="tFormalExpression">${contractHandler.getOrder(orderId).approveStatus}</conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${customerAccepted}</conditionExpression>
     </sequenceFlow>
     <exclusiveGateway id="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" name="" gatewayDirection="Diverging">
       <extensionElements>
@@ -365,10 +367,10 @@
       <outgoing>sid-2D52B35D-7330-4A42-A1B6-82C1B445E8A1</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="sid-B7CF4672-2886-4EE9-9C4D-340ABD0E8882" name="Requirements fullfilable" isImmediate="true" sourceRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" targetRef="sid-DB5DE3E8-6065-4CA5-B5CB-4EE45781A7E7">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${contractHandler.getOrder(orderId).cars.iterator().next().isReturned().toString() == "available"}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${fulfillable}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-2D52B35D-7330-4A42-A1B6-82C1B445E8A1" name="Requirements not fulfillable" isImmediate="true" sourceRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" targetRef="sid-AD497BE2-75EC-4BBD-A140-6CE6FA53168D">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${contractHandler.getOrder(orderId).cars.iterator().next().isReturned().toString() != "available"}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression">${not fulfillable}</conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="sid-4930D20E-DD03-40C8-98CD-5C9227D03258" name="" isImmediate="true" sourceRef="sid-997CC090-57C8-4485-BAC6-153D6BC0AD76" targetRef="sid-8D8DE980-B618-4DB6-A564-A74CFD4F74C8" />
     <sendTask id="sid-28D1E10C-5834-4C50-BDE7-2DD235722704" name="Send &#10;rental request confirmation" implementation="##WebService" camunda:expression="${contractHandler.sendOrderStateNotification(execution)}">

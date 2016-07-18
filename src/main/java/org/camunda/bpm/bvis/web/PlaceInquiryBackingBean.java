@@ -287,17 +287,7 @@ public class PlaceInquiryBackingBean {
 		long cid = sessionBean.getUid();
 		Customer customer = customerService.getCustomer(cid);
 		Map<String, Object> variables = new HashMap<String, Object>();
-		variables.put("customerFirstname", customer.getFirstname());
-		variables.put("customerSurname", customer.getSurname());
-		variables.put("customerCompanyName", customer.getCompanyName());
-		variables.put("customerEmail", customer.getEmail());
-		variables.put("customerPhoneNumber", customer.getPhoneNumber());
-		variables.put("customerDateOfBirth", customer.getDateOfBirth());
-		variables.put("customerStreet", customer.getStreet());
-		variables.put("customerHouseNumber", customer.getHouseNumber());
-		variables.put("customerPostcode", customer.getPostcode());
-		variables.put("customerCity", customer.getCity());
-		variables.put("customerCountry", customer.getCountry());
+		variables.put("customerID", customer.getCustomerID());
 		variables.put("fleet", fleetRental);
 		variables.put("pickUpDate", pickupDate);
 		variables.put("returnDate", returnDate);

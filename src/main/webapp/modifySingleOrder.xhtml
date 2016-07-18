@@ -107,7 +107,7 @@
           <h:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
  
           <label>Approve Order?</label>
-          <h:selectBooleanCheckbox id="approved" value="#{order.rentalOrder.approveStatus}" required="false" />
+          <h:selectBooleanCheckbox id="approved" value="#{processVariables['customerAccepted']}" required="false" />
                 
       </h:panelGrid>
      <h:commandButton id="postpone" value="Postpone Task"

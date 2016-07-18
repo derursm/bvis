@@ -2,6 +2,7 @@ package org.camunda.bpm.bvis.ejb;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.IllegalFormatException;
 import java.util.Map;
@@ -39,10 +40,27 @@ import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.List;
+import com.itextpdf.text.ListItem;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
+
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 
@@ -157,119 +175,115 @@ public class ClaimHandler {
 		
 	}
 	
-	//General send email method. State states the content of the email. Email information from
-	  //process variables 
-	public void sendClaimStateNotification(DelegateExecution delegateExecution)throws ParseException{
-				  
-		  //RentalOrder order;
-		  Customer customer;
-		  Claim claim;
-		  Car car;
-		  RentalOrder order;
-		  
-		  String surname, subject, text, textCss, from, email, state, path, pathCss, pickupLocation, returnLocation,
-		  insurancePac, carModel, rentalEnd, rentalStart, claimId_str, orderId_str, clerkComment, towingAddress;
-		  Long claimId, orderId;
-		  boolean isFleetRental;
-		  //tbc..
-		  	  
-	  	  // Get all process variables
-	      Map<String, Object> variables = delegateExecution.getVariables();
-	      claimId = (long) variables.get("claimID");
-	      state = variables.get("state").toString();
-	      claim = claimService.getClaim(claimId);
-	      car = claim.getCar();
-	      order = claim.getRentalOrder();
-	      customer = order.getCustomer();
-
-	           
+	   public void sendClaimStateNotification(DelegateExecution delegateExecution)throws ParseException{
+           
+	          //RentalOrder order;
+	          Customer customer;
+	          Claim claim;
+	          Car car;
+	          RentalOrder order;
+	          
+	          String surname, subject, text, textCss, from, email, state, path, pathCss, pickupLocation, returnLocation,
+	          insurancePac, carModel, rentalEnd, rentalStart, claimId_str, orderId_str, clerkComment, towingAddress, vehicleIdent;
+	          Long claimId, orderId;
+	          //tbc..
+	              
+	          // Get all process variables
+	          Map<String, Object> variables = delegateExecution.getVariables();
+	          claimId = (long) variables.get("claimID");
+	          state = variables.get("state").toString();
+	          claim = claimService.getClaim(claimId);
+	          car = claim.getCar();
+	          order = claim.getRentalOrder();
+	          customer = order.getCustomer();
+	               
+	                
+	          surname = "surname";
+	          email = "email";
+	          from = "from";
+	          pickupLocation = "pickupLocation"; //order.getPick_up_store().getStoreName() + order.getPick_up_store().getCity();
+	          returnLocation = "returnLocation"; //order.getReturn_store().getStoreName() + order.getReturn_store().getCity();
+	          carModel = "carmodel"; //order.getCars();
+	          rentalStart = "rentalStart";
+	          rentalEnd = "rentalEnd";
+	          claimId_str = "claimId";
+	          towingAddress = "towingAddress";
+	          insurancePac = "insurancePac";
+	          vehicleIdent = " ";
 	            
-	      surname = "surname";
-	      email = "email";
-	      from = "from";
-	      pickupLocation = "pickupLocation"; //order.getPick_up_store().getStoreName() + order.getPick_up_store().getCity();
-	      returnLocation = "returnLocation"; //order.getReturn_store().getStoreName() + order.getReturn_store().getCity();
-	      carModel = "carmodel"; //order.getCars();
-	      rentalStart = "rentalStart";
-	      rentalEnd = "rentalEnd";
-	      claimId_str = "claimId";
-	      towingAddress = "towingAddress";
-	      insurancePac = "insurancePac";
-	      
-	      surname = customer.getSurname();
-	      email = customer.getEmail();
-	      from = "bvis@bvis.com";
-	      
-	      //rentalStart = order.getPick_up_date().toString();
-	      //rentalEnd = order.getReturn_date().toString();
-	      //pickupLocation = order.getPickUpStore().getHTMLContactDetails();    
-	      //returnLocation = order.getReturnStore().getHTMLContactDetails();
-	      clerkComment = order.getClerkComments();
-	      carModel = car.getHTMLCarDetails();	      
-	    		  
-	      //Get rental information
-	      claimId_str = claimId.toString();
-	      
-	      //check for special recepient, else take customer mail
-	      try{
-	    	  email = (String) variables.get("receiver");
-	      } catch (NullPointerException  e){
-		      email = customer.getEmail();
+	          
+	          surname = customer.getSurname();
+	          email = customer.getEmail();
+	          from = "bvis@bvis.com";
+	          
+	          //rentalStart = order.getPick_up_date().toString();
+	          //rentalEnd = order.getReturn_date().toString();
+	          //pickupLocation = order.getPickUpStore().getHTMLContactDetails();    
+	          //returnLocation = order.getReturnStore().getHTMLContactDetails();
+	          clerkComment = order.getClerkComments();
+	          carModel = car.getHTMLCarDetails();         
+	                  
+	          //Get rental information
+	          claimId_str = claimId.toString();
+	          vehicleIdent = car.getVehicleIdentificationNumber();
+	          //check for special recepient, else take customer mail
+	          try{
+	              email = (String) variables.get("receiver");
+	          } catch (NullPointerException  e){
+	              email = customer.getEmail();
+	          }
+	          
+	          orderId = order.getId();
+	          orderId_str = orderId.toString();
+	          
+	          from = "bvis@bvis.com";
+	                      
+	          subject = "";
+	          
+	          path = "/templates/";
+	          pathCss = "/templates/css.txt";
+	          
+	          System.out.println("Email sent status: " + state);        
+	          
+	          //built email template path by state
+	          switch(state){
+	                case "inf_costs": path += "inf_costs.txt"; subject = "Claim settled (Claim No. " + claimId_str + ")" ; break;
+	                case "inf_damage": path += "inf_damage.txt"; subject = "Damage found (Claim No. " + claimId_str + ")" ; break;
+	                case "init_repair": 
+	                    if(claim.isTowingServiceNeeded()){
+	                        path += "init_repair_with_towing.txt";
+	                    }else {
+	                        path += "init_repair.txt";
+	                    }
+	                    subject = "New order (Claim No. " + claimId_str + ")" ; break;                          
+	                case "init_towing": path += "init_towing.txt"; subject = "New order (Claim No. " + claimId_str + ")" ; break;
+	                case "send_conf": path += "send_conf.txt"; subject = "Claim settled (Claim No. " + claimId_str + ")" ; break;
+	                case "send_inv": path += "send_inv.txt"; subject = "Invoice (Claim No. " + claimId_str + ")" ; break;
+	          }   
+	                          
+	          InputStream in = this.getClass().getResourceAsStream(path);
+	          InputStream inCss = this.getClass().getResourceAsStream(pathCss);
+	          try{
+	              text = IOUtils.toString(in, "UTF-8");  
+	               textCss = IOUtils.toString(inCss, "UTF-8"); 
+	          } catch (IOException e) {
+	              text = "error in file reading. path: " + path;
+	              textCss= "";
+	              email = "bvis@bvis.com";
+	          } catch (NullPointerException  e){
+	              text = "null pointer file reading. path: " + path;
+	              textCss= "";
+	              email = "bvis@bvis.com";
+	          } 
+	          
+	          try{
+	          text = String.format(text, surname, carModel, pickupLocation, rentalStart, returnLocation, rentalEnd, orderId_str, towingAddress, insurancePac, vehicleIdent);  
+	          } catch( IllegalFormatException e){   
+	             subject = "illegal conversion ";      
+	             email = "bvis@bvis.com";          
+	          }
+	          SendHTMLEmail.main(subject, textCss+text , from, email);
 	      }
-	      
-	      orderId = order.getId();
-	      orderId_str = orderId.toString();
-	      
-	      from = "bvis@bvis.com";
-	           	      
-	      subject = "";
-	      
-	      path = "/templates/";
-	      pathCss = "/templates/css.txt";
-	      
-	      System.out.println("Email sent status: " + state);	      
-	      
-	      //built email template path by state
-	      switch(state){
-	  			case "inf_costs": path += "inf_costs.txt"; subject = "Claim settled (Claim No. " + claimId_str + ")" ; break;
-	  			case "inf_damage": path += "inf_damage.txt"; subject = "Damage found (Claim No. " + claimId_str + ")" ; break;
-	  			case "init_repair": 
-	  				if(claim.isTowingServiceNeeded()){
-	  					path += "init_repair_with_towing.txt";
-	  				}else {
-	  					path += "init_repair.txt";
-	  				}
-	  				subject = "New order (Claim No. " + claimId_str + ")" ; break;	  						
-	  			case "init_towing": path += "init_towing.txt"; subject = "New order (Claim No. " + claimId_str + ")" ; break;
-	  			case "send_conf": path += "send_conf.txt"; subject = "Claim settled (Claim No. " + claimId_str + ")" ; break;
-	  			case "send_inv": path += "send_inv.txt"; subject = "Invoice (Claim No. " + claimId_str + ")" ; break;
-	      }	  
-	             		  
-	      InputStream in = this.getClass().getResourceAsStream(path);
-	      InputStream inCss = this.getClass().getResourceAsStream(pathCss);
-
-	      try{
-	    	  text = IOUtils.toString(in, "UTF-8");  
-	    	   textCss = IOUtils.toString(inCss, "UTF-8"); 
-	      } catch (IOException e) {
-	    	  text = "error in file reading. path: " + path;
-	    	  textCss= "";
-	    	  email = "bvis@bvis.com";
-	      } catch (NullPointerException  e){
-	    	  text = "null pointer file reading. path: " + path;
-	    	  textCss= "";
-	    	  email = "bvis@bvis.com";
-	      } 
-	      
-	      try{
-	      text = String.format(text, surname, carModel, pickupLocation, rentalStart, returnLocation, rentalEnd, orderId_str, towingAddress, insurancePac);  
-	      } catch( IllegalFormatException e){	
-	    	 subject = "illegal conversion ";    	 
-	    	 email = "bvis@bvis.com";	    	 
-	      }
-	      SendHTMLEmail.main(subject, textCss+text , from, email);
-	  }
-	
 	public void informTowingService(DelegateExecution delegateExecution) {
 		
 	}
@@ -288,6 +302,8 @@ public class ClaimHandler {
 		Claim claim = claimService.getClaim(claimID);
 		System.out.println("INITIATING SENDING CLAIM FOR ORDER " + claim.getRentalOrder().getOrderID());
 		SendClaim sender = new SendClaim();
+		System.out.println("Sending inquiry with vehicle identification number: " + claim.getRentalOrder().getCars().
+				iterator().next().getVehicleIdentificationNumber());
 		String result = sender.sendClaim(claim, delegateExecution.getProcessInstanceId());
 		System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
 		//TODO handle failures		
@@ -327,7 +343,7 @@ public class ClaimHandler {
 		Claim claim = claimService.getClaim((long)variables.get("claimID"));
 		claimReview.setClaim(claim);
 		claimReview.setRemarks((String)variables.get("remarks"));
-		claimReview.setClaimStatus((int)variables.get("bvisAnswer"));
+		claimReview.setClaimStatus(Integer.parseInt(variables.get("bvisAnswer")+""));
 		claimReview.setProcessIDCapitol((String)variables.get("processIDCapitol"));
 		SendClaimReview sender = new SendClaimReview();
 		String result = sender.sendClaimReview(claimReview, delegateExecution.getProcessInstanceId());
@@ -337,7 +353,7 @@ public class ClaimHandler {
 	
 	public boolean claimDecisionAccepted(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
-		if ((int)variables.get("bvisAnswer") == 1) return true;
+		if (Integer.parseInt(variables.get("bvisAnswer")+"") == 1) return true;
 		else return false;
 	}
 	
@@ -346,24 +362,131 @@ public class ClaimHandler {
 	 * @param delegateExecution
 	 * @return
 	 */
-	public int rewordDecision(DelegateExecution delegateExecution) {
+	public int reworkDecision(DelegateExecution delegateExecution) {
 		Map<String, Object> variables = delegateExecution.getVariables();
+		System.out.println("Customer costs: " + variables.get("customerCosts"));
+		System.out.println("Costs covered: " + variables.get("coverageCosts"));
 		// 0 = customer has to pay
-		if ((int)variables.get("customerCosts") > 0) return 0;
+		if (Double.parseDouble(variables.get("customerCosts")+"") > 0) return 0;
 		// insurance pays
-		else if ((int)variables.get("coverageCosts") > 0) return 1;
+		else if (Double.parseDouble(variables.get("coverageCosts")+"") > 0) return 1;
 		// else if insurance does not cover costs and customer does not have to pay -> third party has to pay
 		else return 2;
 	}
 	
-	/**
-	 * Either inform customer about 
-	 * 1) He has to pay
-	 * 2) Insurance pays
-	 * 3) Third party has to pay
-	 * @param delegateExecution
-	 */
-	public void sendFinalCustomerNotification(DelegateExecution delegateExecution) {
-		
-	}
+	// Create contract and send to user's email
+    public void sendInvoice(DelegateExecution delegateExecution) {
+        System.out.println("Start creating claim pdf");
+        RentalOrder order;
+        Customer customer;
+        Claim claim;
+        Collection<Car> cars;
+        String surname, email, insurancePac, date,
+                street, city, orderId_str;
+        BigDecimal workshopPrice, customerPrice, customerCosts, costsCoverage;
+        Long claimID, orderId;
+        Integer insurance_decision;
+        // Get all process variables
+        Map<String, Object> variables = delegateExecution.getVariables();
+        claimID = (long) variables.get("claimID");
+        claim = claimService.getClaim(claimID);
+        order = claim.getRentalOrder();
+        orderId = order.getOrderID();
+        customer = order.getCustomer();
+        cars = order.getCars();
+        workshopPrice = claim.getWorkshopPrice();
+        customerCosts = claim.getCustomerCosts();
+        costsCoverage = claim.getCostsCoverage();
+        insurance_decision = claim.getInsurance_decision();
+        
+        surname = "surname";
+        email = "email";
+        orderId_str = "orderId";
+        insurancePac = "insurancePac";
+        workshopPrice = BigDecimal.valueOf(0);
+        customerCosts = BigDecimal.valueOf(0);
+        costsCoverage = BigDecimal.valueOf(0);
+        
+        orderId_str = orderId.toString();
+        surname = customer.getSurname();
+        street = customer.getStreet() + " " + customer.getHouseNumber();
+        city = customer.getPostcode() + " " + customer.getCity();
+        email = customer.getEmail();
+        
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date today = new Date();
+        date = formatter.format(today);
+        // surname, email, pickupLocation, returnLocation,
+        // insurancePac, carModel, rentalEnd, rentalStart, orderId_str, date,
+        // type, street, city;
+        // double totalPrice, insurancePrice, rentalPrice;
+        // Long orderId;
+        final String[][] rentalData = { { "Your insurance:", insurancePac }, 
+                { "Repair costs:", workshopPrice.toString() },
+                { "Costs covered by insurance:", costsCoverage.toString() },
+                { "Billing amount:", customerCosts.toString()}
+                };
+        try {
+            Document document = new Document();
+            ByteArrayOutputStream baosPDF = new ByteArrayOutputStream();
+            PdfWriter pdf = null;
+            pdf = PdfWriter.getInstance(document, baosPDF);
+            document.open();
+            Font chapterFont = FontFactory.getFont(FontFactory.HELVETICA, 16, Font.BOLDITALIC);
+            Font paragraphFont = FontFactory.getFont(FontFactory.HELVETICA, 12, Font.NORMAL);
+            Paragraph pa0 = new Paragraph("Order ID: " + orderId_str, paragraphFont);
+            pa0.setAlignment(Element.ALIGN_RIGHT);
+            pa0.setFont(FontFactory.getFont(FontFactory.HELVETICA, 10, Font.NORMAL));
+            document.add(pa0);
+            Chunk chunk = new Chunk("BVIS Car Rental", chapterFont);
+            document.add(chunk);
+            Paragraph pa1 = new Paragraph("Claim Invoice", paragraphFont);
+            pa1.setSpacingAfter(15);
+            document.add(pa1);
+            List list = new List();
+            list.setListSymbol("");
+            list.add(new ListItem("Mr/Mrs " + surname));
+            list.add(new ListItem(street));
+            list.add(new ListItem(city));
+            Paragraph pa2 = new Paragraph();
+            pa2.add(list);
+            pa2.setSpacingAfter(20);
+            document.add(pa2);
+            Paragraph datePar = new Paragraph(date, paragraphFont);
+            datePar.setAlignment(Element.ALIGN_RIGHT);
+            document.add(datePar);
+            document.add(new Paragraph("Dear Mr/Mrs " + surname + ",", paragraphFont));
+            Paragraph pa3 = new Paragraph(
+                    "we are kindly asking to settle the bill regarding your claim:",
+                    paragraphFont);
+            pa3.setSpacingAfter(10);
+            document.add(pa3);
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(80);
+            table.setHorizontalAlignment(Element.ALIGN_LEFT);
+            table.setWidths(new int[] { 5, 10 });
+            table.getDefaultCell().setBorder(Rectangle.NO_BORDER);
+            table.addCell(rentalData[0][0]);
+            table.addCell(rentalData[0][1]);
+            table.addCell(rentalData[1][0]);
+            table.addCell(rentalData[1][1]);
+            table.addCell(rentalData[2][0]);
+            table.addCell(rentalData[2][1]);
+            table.addCell(rentalData[3][0]);
+            table.addCell(rentalData[3][1]);
+            
+            Paragraph pa4 = new Paragraph();
+            pa4.add(table);
+            pa4.setSpacingAfter(15);
+            document.add(pa4);
+            document.add(new Paragraph("Thank you!", paragraphFont));
+            document.close();
+            pdf.close();
+            SendHTMLEmail.mainAtt("Claim Invoice (Order no." + orderId_str + ")",
+                    "Dear Mr/Mrs " + surname + ". <br> Please find attached your claim invoice.", "bvis@test.de", email,
+                    baosPDF, "bvis_claim_invoice" + surname);
+        } catch (DocumentException e) {
+            System.out.println("Claim DocumentException");
+        }
+    }
 }

@@ -100,31 +100,36 @@ public class ContractHandler {
 		// Get all process variables
 		Map<String, Object> variables = delegateExecution.getVariables();
 		Customer customer = new Customer();
-
-		customer.setFirstname((String) variables.get("customerFirstname"));
-		customer.setSurname((String) variables.get("customerSurname"));
-		String customerCompanyName = (String) variables.get("customerCompanyName");
-
-		boolean isCompany = true;
-		if (customerCompanyName.isEmpty()) {
-			isCompany = false;
+		
+		if (variables.get("customerID") != null) {
+			customer = customerService.getCustomer(Long.parseLong(variables.get("customerID")+""));
 		}
+		else {
+			customer.setFirstname((String) variables.get("customerFirstname"));
+			customer.setSurname((String) variables.get("customerSurname"));
+			String customerCompanyName = (String) variables.get("customerCompanyName");
 
-		customer.setCompanyName(customerCompanyName);
-		customer.setCompany(isCompany);
+			boolean isCompany = true;
+			if (customerCompanyName.isEmpty()) {
+				isCompany = false;
+			}
 
-		customer.setEmail((String) variables.get("customerEmail"));
-		customer.setPhoneNumber((String) variables.get("customerPhoneNumber"));
-		System.out.println(variables.get("customerDateOfBirth"));
-		customer.setDateOfBirth((Date) variables.get("customerDateOfBirth"));
-		customer.setStreet((String) variables.get("customerStreet"));
-		customer.setHouseNumber((String) variables.get("customerHouseNumber"));
-		customer.setPostcode((String) variables.get("customerPostcode"));
-		customer.setCity((String) variables.get("customerCity"));
-		customer.setCountry((String) variables.get("customerCountry"));
-		customer.setEligibility(false);
+			customer.setCompanyName(customerCompanyName);
+			customer.setCompany(isCompany);
 
-		customerService.create(customer);
+			customer.setEmail((String) variables.get("customerEmail"));
+			customer.setPhoneNumber((String) variables.get("customerPhoneNumber"));
+			System.out.println(variables.get("customerDateOfBirth"));
+			customer.setDateOfBirth((Date) variables.get("customerDateOfBirth"));
+			customer.setStreet((String) variables.get("customerStreet"));
+			customer.setHouseNumber((String) variables.get("customerHouseNumber"));
+			customer.setPostcode((String) variables.get("customerPostcode"));
+			customer.setCity((String) variables.get("customerCity"));
+			customer.setCountry((String) variables.get("customerCountry"));
+			customer.setEligibility(false);
+
+			customerService.create(customer);
+		}
 
 		// Set order attributes
 		rentalOrder.setCustomer(customer);
@@ -160,6 +165,7 @@ public class ContractHandler {
 
 			// calculate price for insurance
 			estimatedInsurancPrice = calcInsurancePrice(cars, insuranceType, returnDate, pickUpDate);
+			if (estimatedInsurancPrice < 0) estimatedInsurancPrice = 0;
 			rentalOrder.setPriceInsurance_expected(estimatedInsurancPrice);
 		}
 		rentalOrder.setFleetRental(isFleet);
@@ -536,6 +542,8 @@ public class ContractHandler {
 		System.out.println("SENDING TO CAPITOL INITIALIZED");
 		SendInquiry sender = new SendInquiry();
 		RentalOrder entityOrder = orderService.getOrder((Long) businessProcess.getVariable("orderId"));
+		System.out.println("Sending inquiry with vehicle identification number: " + entityOrder.getCars().
+				iterator().next().getVehicleIdentificationNumber());
 		String result = sender.sendInquiry(entityOrder, delegateExecution.getProcessInstanceId());
 		System.out.println("SENDING DONE. INSURANCE API RESPONSE: " + result);
 		// TODO handle failures
@@ -661,7 +669,7 @@ public class ContractHandler {
 	        int year_diff = current_year - construction_year;
 	        
 	        priceInsurance_expected += (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + (20
-	                - Math.pow(1.2, year_diff) / 30.0 );
+	                - Math.pow(1.2, year_diff) / 30.0);
 		}
 		
         Long diff = returnDate.getTime() - pickupDate.getTime();
@@ -671,6 +679,19 @@ public class ContractHandler {
 
         return Math.round(priceInsurance*100)/100;
     }
+	
+	public boolean updateContract(DelegateExecution delegateExecution) {
+		Map<String, Object> variables = delegateExecution.getVariables();
+		long newCarID = Long.parseLong(variables.get("newCarId")+"");
+		Car newCar = carService.getCar(newCarID);
+		RentalOrder order = orderService.getOrder(Long.parseLong(variables.get("orderId")+""));
+		ArrayList<Car> cars = new ArrayList<Car>();
+		cars.add(newCar);
+		order.setCars(cars);
+		orderService.updateOrder(order);
+		System.out.println("NEW CAR: " + order.getCars().iterator().next().getModel());
+		return true;
+	}
 	
 	
 	public double calcCarPrice(Collection<Car> cars, Date returnDate, Date pickupDate) {

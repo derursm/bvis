@@ -25,21 +25,21 @@
                                              columnClasses="data-cell,data-cell,data-cell,data-cell,data-cell"
                                              headerClass="data-cell header-cell" searching="false" >
 
-                                    <b:dataTableColumn vlaue="#{order.customer}" label="Customer Name"/>
+                                    <b:dataTableColumn value="#{order.customer.surname}" label="Customer Name"/>
 
                                     <b:dataTableColumn value="#{order.id}" label="Order ID"/>
 
-                                    <b:dataTableColumn value="#{order.cars}" label="Ordered Cars" />
+                                    <b:dataTableColumn value="#{order.cars.iterator().next().vehicleIdentificationNumber}" label="Ordered Cars" />
 
-                                    <b:dataTableColumn value="#{order.pickUpStore}" label="Pick Up Store"/>
+                                    <b:dataTableColumn value="#{order.pickUpStore.storeName}" label="Pick Up Store"/>
 
-                                    <b:dataTableColumn value="#{order.returnStore}" label="Return Store"/>
+                                    <b:dataTableColumn value="#{order.returnStore.storeName}" label="Return Store"/>
 
-                                    <b:dataTableColumn value="#{order.pick_up_date}" label="Pick Up Date"/>
+                                    <b:dataTableColumn value="#{order.pick_up_date.toGMTString()}" label="Pick Up Date"/>
 
-                                    <b:dataTableColumn value="#{order.return_date}" label="Return Date"/>
+                                    <b:dataTableColumn value="#{order.return_date.toGMTString()}" label="Return Date"/>
 
-                                    <b:dataTableColumn vlaue="#{order.orderStatus}" label="Oder Status" />
+                                    <b:dataTableColumn value="#{order.orderStatus.toString()}" label="Oder Status" />
 
                                 </b:dataTable>
                             </b:panelGrid>
