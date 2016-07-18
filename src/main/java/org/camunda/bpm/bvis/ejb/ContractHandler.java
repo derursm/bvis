@@ -668,16 +668,17 @@ public class ContractHandler {
 	        int construction_year = carItem.getConstructionYear();
 	        int year_diff = current_year - construction_year;
 	        
-	        priceInsurance_expected += (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + (20
-	                - Math.pow(1.2, year_diff) / 30.0);
+	        priceInsurance_expected += ((insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + (20
+	                - Math.pow(1.2, year_diff) / 30.0)) / 100;
 		}
 		
         Long diff = returnDate.getTime() - pickupDate.getTime();
         long rentDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+        rentDays ++;
         
         double priceInsurance = priceInsurance_expected * (double) rentDays;
 
-        return Math.round(priceInsurance*100)/100;
+        return ((double) Math.round(priceInsurance*100))/100;
     }
 	
 	public boolean updateContract(DelegateExecution delegateExecution) {
@@ -697,6 +698,7 @@ public class ContractHandler {
 	public double calcCarPrice(Collection<Car> cars, Date returnDate, Date pickupDate) {
 		Long diff = returnDate.getTime() - pickupDate.getTime();
 		long rentDays = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+		rentDays ++;
 		long price = 0;
 		for(Car carItem : cars) {
 			price += (long) CarPriceMap.getPrice(carItem.getType());
