@@ -7,14 +7,14 @@
 
     <ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
     <ui:define name="headline">
-        <h1 class="bvis-h1">Shit happens, yes! <small>Send us your damage report</small></h1>
+        <h1 class="bvis-h1">Let's fix this <small> Satisfaction of our customer has the highest priority! </small></h1>
     </ui:define>
 
     <ui:define name="content">
 
     <h:form id="submitForm">
 
-        <div class="container form-inline" id="bg-img">
+        <div class="container form-inline">
             <div class="row">
                 <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
                     <div class="col-sm-6">
@@ -28,9 +28,7 @@
                             <b:inputText id="licensePlate" value="#{damageReport.vehicleID}" required="true" />
 
                             <h:outputLabel for="damageDate" value="Damage date:" />
-                            <b:inputText id="damageDate" value="#{damageReport.damageDate}" required="true" >
-                                <f:convertDateTime pattern="dd-mm-yyyy" />
-                            </b:inputText>
+                            <b:dateTimePicker id="damageDate" format="DD.MM.YYYY" tooltip="Date of Damage" show-time="false" value="#{damageReport.damageDate}" required="true" />
 
                             <h:outputLabel for="towingServiceNeeded" value="Towing service needed?" />
                             <b:selectBooleanCheckbox id="towingServiceNeeded" value="#{damageReport.towingServiceNeeded}"/>
@@ -77,8 +75,8 @@
 
                             <h:outputLabel for="party1Birthday" value="Birthday:" />
                             <b:inputText id="party1Birthday" value="#{damageReport.party1Birthday}" required="true" >
-                                <f:convertDateTime pattern="dd-mm-yyyy" />
-                            </b:inputText>
+                            <b:dateTimePicker id="party1Birthday" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{damageReport.party1Birthday}" required="true" />
+
                         </b:panelGrid>
 
                         <h4><label>Other information</label></h4>

@@ -53,6 +53,7 @@
 				<b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{placeInquiry.dateOfBirth}" required="true" />
 			</b:panelGrid>
             </div> <!-- /. END COL-sm-6 -->
+
 			<div class="col-sm-6">
 				<h3><label>Car options</label></h3>
 				<b:panelGrid col-spans="5,7" cellpadding="5" cellspacing="1">
@@ -90,7 +91,7 @@
 
                   	<h:panelGroup />
                   	<h:outputLabel for="insuranceType" value="" />
-                  	<h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{placeInquiry.recalculatePrice}" />
+                  	<b:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{placeInquiry.recalculatePrice}" />
 
 					<label class="label-bvis"  for="priceCars">Car price:</label>
                   	<b:inputText id="priceCars" value="#{placeInquiry.priceCars} Euro" readonly="true" />
