@@ -21,42 +21,39 @@
                             <h3><label>Contact details</label></h3>
                         <b:panelGrid col-spans="5,7" cellpadding="5">
                             <h:outputLabel for="firstname" value="Firstname:*" />
-                            <b:inputText id="firstname" value="#{placeInquiry.firstname}" required="true" />
+                            <b:inputText id="firstname" value="#{registration.firstname}" required="true" />
 
                             <h:outputLabel for="surname" value="Surname:*" />
-                            <b:inputText id="surname" value="#{placeInquiry.lastname}" required="true" />
-
-                            <h:outputLabel for="companyName" value="Company name:" />
-                            <b:inputText id="companyName" value="#{placeInquiry.companyName}" required="false" />
+                            <b:inputText id="surname" value="#{registration.surname}" required="true" />
 
                             <h:outputLabel for="email" value="E-mail:*" />
-                            <b:inputText id="email" value="#{placeInquiry.email}" required="true" />
+                            <b:inputText id="email" value="#{registration.email}" required="true" />
 
                             <h:outputLabel for="phoneNumber" value="Phone number:*" />
-                            <b:inputText id="phoneNumber" value="#{placeInquiry.phoneNumber}" required="true" />
+                            <b:inputText id="phoneNumber" value="#{registration.phoneNumber}" required="true" />
 
                             <h:outputLabel for="street" value="Street:*" />
-                            <b:inputText id="street" value="#{placeInquiry.street}" required="true" />
+                            <b:inputText id="street" value="#{registration.street}" required="true" />
 
                             <h:outputLabel for="houseNumber" value="House number:*" />
-                            <b:inputText id="houseNumber" value="#{placeInquiry.houseNumber}" required="true" />
+                            <b:inputText id="houseNumber" value="#{registration.houseNumber}" required="true" />
 
                             <h:outputLabel for="postcode" value="Postcode:*" />
-                            <b:inputText id="postcode" value="#{placeInquiry.postcode}" required="true" />
+                            <b:inputText id="postcode" value="#{registration.postcode}" required="true" />
 
                             <h:outputLabel for="city" value="City:*" />
-                            <b:inputText id="city" value="#{placeInquiry.city}" required="true" />
+                            <b:inputText id="city" value="#{registration.city}" required="true" />
 
                             <h:outputLabel for="country" value="Country:*" />
-                            <b:inputText id="country" value="#{placeInquiry.country}" required="true" />
+                            <b:inputText id="country" value="#{registration.country}" required="true" />
 
                             <h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
-                            <b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{placeInquiry.dateOfBirth}" required="true" />
+                            <b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{registration.dateOfBirth}" required="true" />
 
                             <h:outputLabel for="companyCustomer" value="Company customer? " />
-                            <b:selectBooleanCheckbox id="companyCustomer" value="#{registration.company}" required="true" />
+                            <b:selectBooleanCheckbox id="companyCustomer" value="#{registration.company}" />
 
-                            <h:outputLabel for="customer.companyName" value="Company Name: "/>
+                            <h:outputLabel for="companyName" value="Company Name: "/>
                             <b:inputText id="companyName" value="#{registration.companyName}" required="false" />
 
                         </b:panelGrid>
