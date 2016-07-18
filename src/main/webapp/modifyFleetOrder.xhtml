@@ -1,92 +1,105 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:f="http://java.sun.com/jsf/core"
-  xmlns:b="http://bootsfaces.net/ui"
-  xmlns:c="http://java.sun.com/jsp/jstl/core">
+<ui:composition template="/resources/default.xhtml"
+                lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-  <f:view>
-    <f:metadata>
-      <!-- Start working on a task. Task Id is read internally from
-       request parameters and cached in the CDI conversation scope.
-      -->
+    <ui:define name="title">Check the fleet rental order</ui:define>
+    <ui:define name="headline"><h1 class="bvis-h1"> Modify fleet order <small> Keep our customer satisfied! </small></h1></ui:define>
 
-    <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
-  </f:metadata>
-  <h:head>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <title>Check the car rental order</title>
-  </h:head>
-  <h:body>
-    <p>Please contact customer and approve the following fleet order</p>
-    <h:form id="submitForm">
-      <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-    <h3><label>Car options</label></h3>
-    <h:panelGroup />
-          <label for="inquiryText">Customer comments:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
-    
-          <label for="numberOfCars">Number of Cars:</label>
-          <b:selectOneMenu id="numberOfCars" name="numberOfCars" value="#{order.numberOfCars}" >
-       	  	<f:selectItems value="#{order.validAmounts}" />
-          </b:selectOneMenu>
-          
-          <h:outputLabel for="pickUpDate" value="Pickup date:" />
-		  <b:dateTimePicker id="pickUpDate" format="DD.MM.YYYY" show-time="false" value="#{order.rentalOrder.pick_up_date}" />
+    <f:view>
+        <f:metadata>
+            <!-- Start working on a task. Task Id is read internally from
+             request parameters and cached in the CDI conversation scope.-->
+            <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
+        </f:metadata>
+    </f:view>
 
-		  <h:outputLabel for="returnDate" value="Return date:" />
-		  <b:dateTimePicker id="returnDate" format="DD.MM.YYYY" show-time="false" value="#{order.rentalOrder.return_date}" />
-          
-          <h3><label>Contact details</label></h3>
-          <h:panelGroup />
-          <label for="customer.firstname">First name:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="firstname" value="#{order.rentalOrder.customer.firstname}" required="true" />
-          
-          <label for="customer.surname">Last name:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="surname" value="#{order.rentalOrder.customer.surname}" required="true" />
-          
-          <label for="customer.email">E-mail:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="email" value="#{order.rentalOrder.customer.email}" required="true" />
-          
-          <label for="phoneNumber">Phone number:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" required="true" />
-          
-          <label for="street">Street:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="street" value="#{order.rentalOrder.customer.street}" required="true" />
-          
-          <label for="houseNumber">House number:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="houseNumber" value="#{order.rentalOrder.customer.houseNumber}" required="true" />
-          
-          <label for="postcode">Postcode:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="postcode" value="#{order.rentalOrder.customer.postcode}" required="true" />
-          
-          <label for="city">City:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="city" value="#{order.rentalOrder.customer.city}" required="true" />
-          
-          <label for="country">Country:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="country" value="#{order.rentalOrder.customer.country}" required="true" />
-          
-          <h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
-		  <b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" 
-		  		value="#{order.rentalOrder.customer.dateOfBirth}" required="true" />
-			
-          <label for="customer.companyName">Company:</label>
-          <!-- create process variables using the processVariables map. -->
-          <b:inputText id="companyName" value="#{order.rentalOrder.customer.companyName}" required="false" />        
-       </h:panelGrid>
-  	 <h:commandButton id="submit_button" value="Next" action="#{order.setFleetSize()}" />
-    </h:form>
-  </h:body>
-  </f:view>
-</html>
+
+    <ui:define name="content">
+
+        <h:form id="submitForm">
+            <div class="container form-inline" id="bg-img">
+                <b:row>
+                    <div class="col-sm-10 col-md-offset-1 jumbotron-bvis">
+                        <div class="col-sm-6">
+                            <h2>Please contact customer and approve the following fleet order</h2>
+
+                                <b:panelGrid columns="2" cellpadding="5" cellspacing="1">
+                                    <h3><label>Car options</label></h3>
+
+                                        <h:outputLabel for="inquiryText" value="Customer comments: "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
+
+                                        <h:outputLabel for="numberOfCars" value="Number of Cars: "/>
+                                        <b:selectOneMenu id="numberOfCars" name="numberOfCars" value="#{order.numberOfCars}" >
+                                            <f:selectItems value="#{order.validAmounts}" />
+                                        </b:selectOneMenu>
+
+                                        <h:outputLabel for="pickUpDate" value="Pickup date:" />
+                                        <b:dateTimePicker id="pickUpDate" format="DD.MM.YYYY" show-time="false" value="#{order.rentalOrder.pick_up_date}" />
+
+                                        <h:outputLabel for="returnDate" value="Return date:" />
+                                        <b:dateTimePicker id="returnDate" format="DD.MM.YYYY" show-time="false" value="#{order.rentalOrder.return_date}" />
+                                </b:panelGrid>
+
+                                        <h3><label>Contact details</label></h3>
+                                <b:panelGrid columns="2" cellpadding="5" cellspacing="1">
+
+                                        <h:outputLabel for="customer.firstname" value="First name: "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="firstname" value="#{order.rentalOrder.customer.firstname}" required="true" />
+
+                                        <h:outputLabel for="customer.surname" value="Last name: "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="surname" value="#{order.rentalOrder.customer.surname}" required="true" />
+
+                                        <h:outputLabel  for="customer.email" value="E-mail: " />
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="email" value="#{order.rentalOrder.customer.email}" required="true" />
+
+                                        <h:outputLabel for="phoneNumber" value="Phone number: "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" required="true" />
+
+                                        <h:outputLabel for="street" value="Street: "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="street" value="#{order.rentalOrder.customer.street}" required="true" />
+
+                                        <h:outputLabel for="houseNumber" value="House number: "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="houseNumber" value="#{order.rentalOrder.customer.houseNumber}" required="true" />
+
+                                        <h:outputLabel for="postcode" value="Postcode: "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="postcode" value="#{order.rentalOrder.customer.postcode}" required="true" />
+
+                                        <h:outputLabel for="city" value="City "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="city" value="#{order.rentalOrder.customer.city}" required="true" />
+
+                                        <h:outputLabel for="country" value="Country: "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="country" value="#{order.rentalOrder.customer.country}" required="true" />
+
+                                        <h:outputLabel for="dateOfBirth" value="Date of Birth:*" />
+                                        <b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{order.rentalOrder.customer.dateOfBirth}" required="true" />
+
+                                        <h:outputLabel for="customer.companyName" value="Company: "/>
+                                        <!-- create process variables using the processVariables map. -->
+                                        <b:inputText id="companyName" value="#{order.rentalOrder.customer.companyName}" required="false" />
+
+                                </b:panelGrid>
+
+                                        <h:commandButton id="submit_button" value="Next" action="#{order.setFleetSize()}" />
+
+
+                        </div> <!-- /. END Col 6 -->
+                    </div> <!-- /. END Col 10 -->
+                </b:row>
+            </div> <!-- /. END Container -->
+        </h:form>
+    </ui:define>
+</ui:composition>
