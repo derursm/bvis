@@ -1,119 +1,137 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/resources/default.xhtml"
+                lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-  <f:view>
-    <f:metadata>
-      <!-- Start working on a task. Task Id is read internally from
-       request parameters and cached in the CDI conversation scope.
-      -->
+    <ui:define name="title">BVIS Luxury Car Rental - keep on rolling</ui:define>
+    <ui:define name="headline"><h1 class="bvis-h1"> Modify the car rental order <small> Keep our customer satisfied! </small></h1></ui:define>
 
-    <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
-  </f:metadata>
-  <h:head>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <title>Check the car rental order</title>
-  </h:head>
-  <h:body>
-    The following car rental order was rejected due to the fact that the reserved "#{order.rentalOrder.cars.iterator().next().model}" is not longer available. 
-    Please contact the customer to agree on another car.
-    <h:form id="submitForm">
-      <h:panelGrid columns="2" cellpadding="5" cellspacing="1">
-      <h3><label>Car options</label></h3>
-      <h:panelGroup />
+    <f:view>
+        <f:metadata>
+            <!-- Start working on a task. Task Id is read internally from
+             request parameters and cached in the CDI conversation scope.-->
+            <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
+        </f:metadata>
+    </f:view>
 
-          <label for="car">Available cars:</label>
-          <h:selectOneMenu id="car" value="#{order.rentalOrder.cars.iterator().next().id}">
-              <f:selectItems value ="#{order.allAvailableCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
-          </h:selectOneMenu>
-      
-          <label for="pickUpDate">Pickup date:</label>
-          <h:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" required="true">
-            <f:convertDateTime pattern="dd-MM-yyyy" />
-          </h:inputText>
-          
-          <label for="returnDate">Return date:</label>
-          <h:inputText id="returnDate" value="#{order.rentalOrder.return_date}" required="true">
-            <f:convertDateTime pattern="dd-MM-yyyy" />
-          </h:inputText>
-          
-          <label for="pickUpLocation">Pickup location:</label>
-          <h:selectOneMenu id="storeID" value="#{order.rentalOrder.pickUpStore.storeID}" >
-          <f:selectItems value="#{order.allPickUpLocations}" var="l" itemValue="#{l.storeID}" itemLabel="#{l.storeName}" />
-          </h:selectOneMenu>
-          
-          <label for="returnStore">Return location:</label>
-          <h:selectOneMenu id="returnStore" value="#{order.rentalOrder.returnStore.storeID}" >
-          <f:selectItems value="#{order.allPickUpLocations}" var="r" itemValue="#{r.storeID}" itemLabel="#{r.storeName}" />
-          </h:selectOneMenu>
-          
-          <label for="insuranceType">Insurance type:</label>
-          <h:selectOneMenu id="insuranceType" value="#{order.rentalOrder.insurance.type}">
-          <f:selectItems value="#{order.insuranceTypes}" />
-          </h:selectOneMenu>
-          
-          <label class="label-bvis"  for="priceCars">Car price:</label>
-          <h:outputText id="priceCars" value="#{order.rentalOrder.priceCars} Euro" readonly="true" />
 
-          <label class="label-bvis"  for="priceInsurance_expected">Insurance price:</label>
-          <h:outputText id="priceInsurance_expected" value="#{order.rentalOrder.priceInsurance_expected} Euro" readonly="true" />
-      
-      	  <h:panelGroup />
-          <h:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.updateOrder(true)}" />
-      
-         
-          <h3><label>Contact details</label></h3>
-          <h:panelGroup />
-          <label for="customer.firstname">First name:</label>
-          <h:inputText id="firstname" value="#{order.rentalOrder.customer.firstname}" required="true" />
-          
-          <label for="customer.surname">Last name:</label>
-          <h:inputText id="surname" value="#{order.rentalOrder.customer.surname}" required="true" />
-          
-          <label for="customer.email">E-mail:</label>
-          <h:inputText id="email" value="#{order.rentalOrder.customer.email}" required="true" />
-          
-          <label for="phoneNumber">Phone number:</label>
-          <h:inputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" required="true" />
-          
-          <label for="street">Street:</label>
-          <h:inputText id="street" value="#{order.rentalOrder.customer.street}" required="true" />
-          
-          <label for="houseNumber">House number:</label>
-          <h:inputText id="houseNumber" value="#{order.rentalOrder.customer.houseNumber}" required="true" />
-          
-          <label for="postcode">Postcode:</label>
-          <h:inputText id="postcode" value="#{order.rentalOrder.customer.postcode}" required="true" />
-          
-          <label for="city">City:</label>
-          <h:inputText id="city" value="#{order.rentalOrder.customer.city}" required="true" />
-          
-          <label for="country">Country:</label>
-          <h:inputText id="country" value="#{order.rentalOrder.customer.country}" required="true" />
-          
-          <label for="customer.dateOfBirth">Date of birth:</label>
-          <h:inputText id="dateOfBirth" value="#{order.rentalOrder.customer.dateOfBirth}" required="true" >
-            <f:convertDateTime pattern="dd-MM-yyyy" />
-          </h:inputText>
-            
-          <label for="customer.companyName">Company:</label>
-          <h:inputText id="companyName" value="#{order.rentalOrder.customer.companyName}" required="false" />
-               
-          <h3><label>Clerk comments</label></h3>
-          <h:panelGroup />
-          <label for="clerkComments">Clerk comments</label>
-          <h:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
- 
-          <label>Approve Order?</label>
-          <h:selectBooleanCheckbox id="approved" value="#{processVariables['customerAccepted']}" required="false" />
-                
-      </h:panelGrid>
-     <h:commandButton id="postpone" value="Postpone Task"
-          action="#{order.postponeTask()}" />
-     <h:commandButton id="submit_button" value="Submit" action="#{order.updateOrder(false)}" />
+    <ui:define name="content">
+
+        <h:form id="submitForm">
+            <div class="container form-inline" id="bg-img">
+                <b:row>
+                    <div class="col-sm-10 col-md-offset-1 jumbotron-bvis">
+                        <div class="col-sm-6">
+
+                              <b:panelGrid col-spans="5,7" cellpadding="5">
+                                  <h3><label>Car options</label></h3>
+
+                                  <p>The following fleet rental order was rejected due to the fact that the reserved "#{order.rentalOrder.cars.iterator().next().model}" is not longer available.
+                                      Please contact the customer to agree on another car.</p>
+
+                                  <h:outputLabel for="car" value="Available Car:" />
+                                  <b:selectOneMenu id="car" value="#{order.rentalOrder.cars.iterator().next().id}">
+                                      <f:selectItems value ="#{order.allAvailableCars}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
+                                  </b:selectOneMenu>
+
+                                  <h:outputLabel for="pickUpDate" value="Pick Up Date: " />
+                                  <b:inputText id="pickUpDate" value="#{order.rentalOrder.pick_up_date}" required="true">
+                                      <f:convertDateTime pattern="dd-MM-yyyy" />
+                                  </b:inputText>
+
+                                  <h:outputLabel for="returnDate" value="Return Date: " />
+                                  <b:inputText id="returnDate" value="#{order.rentalOrder.return_date}" required="true">
+                                      <f:convertDateTime pattern="dd-MM-yyyy" />
+                                  </b:inputText>
+
+                                  <h:outputLabel for="storeID" value="Pick Up Location: " />
+                                  <b:selectOneMenu id="storeID" value="#{order.rentalOrder.pickUpStore.storeID}" >
+                                      <f:selectItems value="#{order.allPickUpLocations}" var="l" itemValue="#{l.storeID}" itemLabel="#{l.storeName}" />
+                                  </b:selectOneMenu>
+
+                                  <h:outputLabel for="returnStore" value="Return Location: " />
+                                  <b:selectOneMenu id="returnStore" value="#{order.rentalOrder.returnStore.storeID}" >
+                                      <f:selectItems value="#{order.allPickUpLocations}" var="r" itemValue="#{r.storeID}" itemLabel="#{r.storeName}" />
+                                  </b:selectOneMenu>
+
+                                  <h:outputLabel for="insuranceType" value="Insurance Type: " />
+                                  <b:selectOneMenu id="insuranceType" value="#{order.rentalOrder.insurance.type}">
+                                      <f:selectItems value="#{order.insuranceTypes}" />
+                                  </b:selectOneMenu>
+
+                                  <br />
+
+                                  <h:panelGroup />
+                                  <h:outputLabel for="insuranceType" value="" />
+                                  <b:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{placeInquiry.recalculatePrice}" />
+
+                                  <h:outputLabel for="priceCars" value="Car Price: " />
+                                  <b:inputText id="priceCars" value="#{placeInquiry.priceCars} Euro" readonly="true" />
+
+                                  <h:outputLabel for="priceCars" value="Insurance Price: " />
+                                  <b:inputText id="priceInsurance_expected" value="#{placeInquiry.priceInsurance_expected} Euro" readonly="true" />
+
+                              </b:panelGrid>
+
+                        </div> <!-- /. END COL-sm-6 -->
+
+                        <div class="col-sm-6">
+                            <b:panelGrid col-spans="5,7" cellpadding="5">
+                                <h:outputLabel for="customer.firstname" value="Firstname: " />
+                                <b:inputText id="firstname" value="#{order.rentalOrder.customer.firstname}" required="true" />
+
+                                <h:outputLabel for="customer.surname" value="Surname: " />
+                                <b:inputText id="surname" value="#{order.rentalOrder.customer.surname}" required="true" />
+
+                                <h:outputLabel for="customer.companyName" value="Company name: " />
+                                <b:inputText id="companyName" value="#{order.rentalOrder.customer.companyName}" required="false" />
+
+                                <h:outputLabel for="customer.email" value="E-mail: " />
+                                <b:inputText id="email" value="#{order.rentalOrder.customer.email}" required="true" />
+
+                                <h:outputLabel for="phoneNumber" value="Phone number: " />
+                                <b:inputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" required="true" />
+
+                                <h:outputLabel for="street" value="Street: " />
+                                <b:inputText id="street" value="#{order.rentalOrder.customer.street}" required="true" />
+
+                                <h:outputLabel for="houseNumber" value="House number: " />
+                                <b:inputText id="houseNumber" value="#{order.rentalOrder.customer.houseNumber}" required="true" />
+
+                                <h:outputLabel for="postcode" value="Postcode: " />
+                                <b:inputText id="postcode" value="#{order.rentalOrder.customer.postcode}" required="true" />
+
+                                <h:outputLabel for="city" value="City: " />
+                                <b:inputText id="city" value="#{order.rentalOrder.customer.city}" required="true" />
+
+                                <h:outputLabel for="country" value="Country: " />
+                                <b:inputText id="country" value="#{order.rentalOrder.customer.country}" required="true" />
+
+                                <h:outputLabel for="customer.dateOfBirth" value="Date of Birth: " />
+                                <b:dateTimePicker id="dateOfBirth" format="DD.MM.YYYY" tooltip="Date of Birth" show-time="false" value="#{order.rentalOrder.customer.dateOfBirth}" required="true" />
+
+                                <h3><label>Clerk comments</label></h3>
+
+                                <label for="clerkComments">Clerk comments</label>
+                                <b:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
+
+                                <label>Approve Order?</label>
+                                <h:selectBooleanCheckbox id="approved" value="#{order.rentalOrder.approveStatus}" required="false" />
+
+                            </b:panelGrid>
+
+
+                                <h:commandButton id="postpone" value="Postpone Task"
+                                      action="#{order.postponeTask()}" />
+                                <h:commandButton id="submit_button" value="Submit" action="#{order.updateOrder(false)}" />
+
+                        </div> <!-- /. END Col 6 -->
+                    </div> <!-- /. END Col 10 -->
+                </b:row>
+             </div> <!-- /. END Container -->
+
     </h:form>
-  </h:body>
-  </f:view>
-</html>
+    </ui:define>
+</ui:composition>

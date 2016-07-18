@@ -1,43 +1,54 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  xmlns:h="http://java.sun.com/jsf/html"
-  xmlns:f="http://java.sun.com/jsf/core">
+<ui:composition template="/resources/default.xhtml"
+                lang="en" xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<f:view>
-  <h:head>
-    <f:metadata>
-      <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
-    </f:metadata>
-    <title>Inform on rejection</title>
-  </h:head>
-  <h:body>
-  <p>The following order was rejected by the insurance company. Please inform the customer</p>
-    <h:form id="someForm">
-        <h:panelGrid columns="2" cellpadding="5" cellspacing="1" columnClasses="form-label,form-input,form-message error" footerClass="form-footer">
-          <label for="orderId">Order ID:</label>
-          <h:outputText id="orderId" value="#{processVariables['orderId']}" />
-          
-          <h:panelGroup />
-          
-          <label for="firstname">Firstname:</label>
-          <h:outputText id="firstname" value="#{order.rentalOrder.customer.firstname}" />
-          
-          <label for="surname">Surname:</label>
-          <h:outputText id="surname" value="#{order.rentalOrder.customer.surname}" />
-          
-          <label for="email">E-mail:</label>
-          <h:outputText id="email" value="#{order.rentalOrder.customer.email}" />
-          
-          <label for="phoneNumber">Phone number:</label>
-          <h:outputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" />
-              
-      </h:panelGrid> 
-      <h:commandButton id="postpone" value="Postpone Task"
-          action="#{order.postponeTask()}" />
-      <h:commandButton id="complete" value="Complete Task"
-          action="#{camundaTaskForm.completeTask()}" />
-    </h:form>
-  </h:body>
-</f:view>
-</html>
+    <ui:define name="title">BVIS - adjust requirements </ui:define>
+    <ui:define name="headline">
+        <h1 class="bvis-h1">Inform on rejection <small> Keep our customer satisfied! </small></h1>
+    </ui:define>
+
+    <f:view>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
+        </f:metadata>
+    </f:view>
+
+    <ui:define name="content">
+
+        <h:form id="someForm">
+            <div class="container" id="bg-img">
+                <b:row>
+                    <div class="col-sm-8 col-md-offset-2 jumbotron-bvis">
+
+                        <p>The following order was rejected by the insurance company. Please inform the customer</p>
+
+
+                        <h:panelGrid columns="2" cellpadding="5" cellspacing="1" columnClasses="form-label,form-input,form-message error" footerClass="form-footer">
+                            <h:outputLabel for="orderId" value="Order ID: " />
+                            <h:outputText id="orderId" value="#{processVariables['orderId']}" />
+
+                            <h:outputLabel for="firstname" value="Firstname: "/>
+                            <h:outputText id="firstname" value="#{order.rentalOrder.customer.firstname}" />
+
+                            <h:outputLabel for="surname" value="Surname: " />
+                            <h:outputText id="surname" value="#{order.rentalOrder.customer.surname}" />
+
+                            <h:outputLabel for="email" value="E-mail: " />
+                            <h:outputText id="email" value="#{order.rentalOrder.customer.email}" />
+
+                            <h:outputLabel for="phoneNumber" value="Phone number: " />
+                            <h:outputText id="phoneNumber" value="#{order.rentalOrder.customer.phoneNumber}" />
+                        </h:panelGrid>
+
+                        <h:panelGrid>
+                            <h:commandButton id="postpone" value="Postpone Task" action="#{order.postponeTask()}" />
+                            <h:commandButton id="complete" value="Complete Task" action="#{camundaTaskForm.completeTask()}" />
+                        </h:panelGrid>
+                    </div> <!-- /. END Col 8 -->
+                </b:row>
+            </div>
+        </h:form>
+    </ui:define>

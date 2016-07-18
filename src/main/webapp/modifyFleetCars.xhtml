@@ -27,46 +27,46 @@
           <label for="inquiryText">Customer comments:</label>
           <!-- create process variables using the processVariables map. -->
           <b:inputTextarea id="inquiryText" value="#{order.rentalOrder.inquiryText}" required="false" />
-         
+
           <label for="cars">Car Models:</label>
-          <ui:repeat id="cars" var="car" value="#{order.rentalOrder.cars}" varStatus="status"> 
+          <ui:repeat id="cars" var="car" value="#{order.rentalOrder.cars}" varStatus="status">
           <b:selectOneMenu id="carIds" value="#{car.id}">
               <f:selectItems value ="#{order.allCarsAvailableForFleet}" var="c" itemLabel="#{c.model}" itemValue="#{c.id}"/>
           </b:selectOneMenu>
           <br />
           </ui:repeat>
-          
+
           <label for="pickUpLocation">Pickup location:</label>
           <b:selectOneMenu id="storeID" value="#{processVariables['pickUpLoc']}" >
        	  	<f:selectItems value="#{order.allPickUpLocations}" var="l" itemValue="#{l.storeID}" itemLabel="#{l.storeName}" />
           </b:selectOneMenu>
-          
+
           <label for="returnStore">Return location:</label>
           <b:selectOneMenu id="returnStore" value="#{processVariables['returnStore']}" >
       	  	<f:selectItems value="#{order.allPickUpLocations}" var="r" itemValue="#{r.storeID}" itemLabel="#{r.storeName}" />
           </b:selectOneMenu>
-          
+
           <label for="insuranceType">Insurance type:</label>
           <b:selectOneMenu id="insuranceType" value="#{order.rentalOrder.insuranceType}">
       	  	<f:selectItems value="#{order.insuranceTypes}" />
           </b:selectOneMenu>
-          
+
           <label class="label-bvis"  for="priceCars">Fleet price:</label>
           <b:outputText id="priceCars" value="#{order.rentalOrder.priceCars} Euro" readonly="true" />
 
           <label class="label-bvis"  for="priceInsurance_expected">Insurance price:</label>
           <b:outputText id="priceInsurance_expected" value="#{order.rentalOrder.priceInsurance_expected} Euro" readonly="true" />
-      
+
       	  <h:panelGroup />
           <b:commandButton class="btn btn-default" id="recalculate_price_button" value="Recalculate price" action="#{order.recalculateFleetPrice()}" />
-      
-          
+
+
           <h3><label>Clerk comments</label></h3>
           <h:panelGroup />
           <label for="clerkComments">Clerk comments</label>
           <!-- create process variables using the processVariables map. -->
           <b:inputTextarea id="clerkComments" value="#{order.rentalOrder.clerkComments}" required="false" />
-          
+
           <label>Approve Order?</label>
           <b:selectBooleanCheckbox id="approved" value="#{order.rentalOrder.approveStatus}" required="false" />
        
