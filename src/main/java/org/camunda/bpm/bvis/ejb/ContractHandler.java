@@ -661,7 +661,7 @@ public class ContractHandler {
 	        int year_diff = current_year - construction_year;
 	        
 	        priceInsurance_expected += (insuranceTypeFactor * carTypeFactor) + (ps * 0.15) + (20
-	                - Math.pow(1.2, year_diff) ) / 30.0;
+	                - Math.pow(1.2, year_diff) / 30.0 );
 		}
 		
         Long diff = returnDate.getTime() - pickupDate.getTime();

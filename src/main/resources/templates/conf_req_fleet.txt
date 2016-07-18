@@ -21,19 +21,11 @@
                         <h2>Dear Mrs/ Mr %1$s,</h2>
 
                         <h4>We are so excited to welcome you as our customer.</h4>
-                        <p>This is the beginning of something awesome. Please see below your & booking details:</p>
+                        <p>This is the beginning of something awesome. We will contact you soon.</p>
                         <div class="col-md-2">
-                            <ol>
+                            <ul>
                                 <li class="mail-li"><b>booking number:</b> %7$s</li>
-                                <li class="mail-li"></li>
-                                <li class="mail-li"><b>Car model:</b> %2$s</li>
-                                <li class="mail-li"><b>Car number:</b> %10$s</li>
-                                <li class="mail-li"><b>Pickup location:</b> %3$s</li>
-                                <li class="mail-li"><b>Pickup date:</b> %4$s</li>
-                                <li class="mail-li"><b>Return location:</b> %5$s</li>
-                                <li class="mail-li"><b>Return date:</b> %6$s</li>
-                                <li class="mail-li"><b>Insurance package:</b> %9$s</li>
-                            </ol>
+                            </ul>
                         </div>
                         <samp>IMPORTANT: This is a reservation notification. The contract will be sent to you as soon as our team has handled your request.</samp>
                         <p>If you wish to make any changes to your booking, please contact our customer service at +49 251 83 38 100</p>
